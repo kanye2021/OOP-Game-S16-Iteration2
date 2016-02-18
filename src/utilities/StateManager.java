@@ -29,4 +29,8 @@ public class StateManager {
             setActiveState(stateStack.peek());
         }
     }
+
+    public void refreshState() {
+        display.repaint();
+    }
 }

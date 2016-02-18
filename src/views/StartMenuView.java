@@ -1,8 +1,10 @@
 package views;
 
+import controllers.StartMenuViewController;
 import utilities.IOUtilities;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 /**
  * Created by Bradley on 2/17/16.
@@ -14,14 +16,24 @@ public class StartMenuView extends View {
     private final String START_MENU_IMAGE_LOCATION = IOUtilities.getFileSystemDependentPath("./src/res/start_menu/");
 
     // Scalable variables.
-    private int buttonWidth ;
+    private int buttonWidth;
     private int buttonHeight;
 
+    // Styling properties
     private Font titleFont;
+    private Font generalFont;
     private int titleButtonMargin;
+
+    // Data properties
+    StartMenuViewController.MenuOptions selected;
 
     public StartMenuView(int width, int height){
         super(width, height);
+        setSelected(StartMenuViewController.MenuOptions.CREATE_GAME);
+    }
+
+    public void setSelected(StartMenuViewController.MenuOptions option) {
+        selected = option;
     }
 
     @Override
@@ -31,8 +43,10 @@ public class StartMenuView extends View {
         buttonHeight = getScreenHeight() / 25;
 
         // Scale font
-        int fontSize = getScreenWidth() / 12;
-        titleFont = new Font("Brush Script MT", Font.BOLD, fontSize);
+        int titleFontSize = getScreenWidth() / 12;
+        titleFont = new Font("Brush Script MT", Font.BOLD, titleFontSize);
+        int generalFontSize = getScreenWidth() / 86;
+        generalFont = new Font("Helvetica", Font.BOLD, generalFontSize);
 
         titleButtonMargin = (int) (getScreenHeight() * 0.15);
     }
@@ -61,11 +75,47 @@ public class StartMenuView extends View {
         int x = getScreenWidth() / 2 - titleWidth / 2;
         int y = fm.getHeight();
 
-        g.setColor(Color.blue);
+        g.setColor(Color.white);
         g.drawString(TITLE, x, y);
     }
 
     private void renderButtons(Graphics g){
 
+
+        int start = g.getFontMetrics(titleFont).getHeight() + titleButtonMargin;
+
+        g.setFont(generalFont);
+        FontMetrics fm = g.getFontMetrics(generalFont);
+
+        for (StartMenuViewController.MenuOptions option : StartMenuViewController.MenuOptions.values()) {
+
+            Rectangle2D rectangle = fm.getStringBounds(option.toString(), g);
+
+            int boxX = getScreenWidth() / 2 - buttonWidth / 2;
+            int boxY = buttonHeight * option.ordinal() + start;
+            int boxDX = buttonWidth;
+            int boxDY = buttonHeight;
+
+            int stringX = getScreenWidth() / 2 - (int) (rectangle.getWidth() / 2);
+            int stringY = option.ordinal() * buttonHeight + (int) (rectangle.getHeight() / 2) + fm.getAscent() + start;
+
+            Color primaryColor;
+            Color secondaryColor;
+
+            if (option == selected) {
+                primaryColor = Color.WHITE;
+                secondaryColor = Color.BLACK;
+
+            } else {
+                primaryColor = Color.BLACK;
+                secondaryColor = Color.WHITE;
+
+            }
+
+            g.setColor(primaryColor);
+            g.fillRect(boxX, boxY, boxDX, boxDY);
+            g.setColor(secondaryColor);
+            g.drawString(option.toString(), stringX, stringY);
+        }
     }
 }
