@@ -2,6 +2,7 @@ package controllers;
 
 import utilities.State;
 import utilities.StateManager;
+import views.LoadGameView;
 import views.StartMenuView;
 import views.TestView;
 import views.View;
@@ -75,9 +76,9 @@ public class StartMenuViewController extends ViewController {
                     stateManager.setActiveState(nextState);
                     break;
                 case LOAD_GAME:
-                    TestView testView2 = new TestView(view.getScreenWidth(), view.getScreenHeight());
-                    TestViewController testController2 = new TestViewController(testView2, stateManager);
-                    nextState = new State(testController2, testView2);
+                    LoadGameView loadGameView = new LoadGameView(view.getScreenWidth(), view.getScreenHeight());
+                    LoadGameViewController loadGameViewController = new LoadGameViewController(loadGameView, stateManager);
+                    nextState = new State(loadGameViewController, loadGameView);
                     stateManager.setActiveState(nextState);
                     break;
                 case EXIT_GAME:
