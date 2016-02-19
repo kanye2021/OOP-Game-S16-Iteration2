@@ -7,15 +7,17 @@ import views.*;
 import java.awt.event.KeyEvent;
 
 /**
- * Created by Bradley on 2/17/16.
+ * Created by sergiopuleri on 2/18/16.
  */
-public class StartMenuViewController extends ViewController {
+public class AvatarCreationViewController extends ViewController {
 
 
-
-    public StartMenuViewController(View view, StateManager stateManager){
+    public AvatarCreationViewController(View view, StateManager stateManager){
         super(view, stateManager);
     }
+
+
+
 
     @Override
     public void handleKeyPress(KeyEvent e){
@@ -23,30 +25,29 @@ public class StartMenuViewController extends ViewController {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_UP) {
-            ((StartMenuView)view).previousOption();
+            ((AvatarCreationView)view).previousOption();
         } else if (key == KeyEvent.VK_DOWN) {
-            ((StartMenuView)view).nextOption();
+            ((AvatarCreationView)view).nextOption();
         } else if (key == KeyEvent.VK_ENTER) {
             // Can't use the enum to do this like we previously did, because
             // The enum is static and doesn't have access to this instance's
             // StateManager in order to set the state.
             // TODO: Actually go to the diff states instead of TestView.
             State nextState;
-
-            switch (((StartMenuView)view).getSelected()) {
-                case CREATE_GAME:
-                    AvatarCreationView avatarCreationView = new AvatarCreationView(view.getScreenWidth(), view.getScreenHeight());
-                    AvatarCreationViewController avatarCreationViewController = new AvatarCreationViewController(avatarCreationView, stateManager);
-                    nextState = new State(avatarCreationViewController, avatarCreationView);
+            switch (((AvatarCreationView)view).getSelected()) {
+                case SMASHER:
+                    TestView testView = new TestView(view.getScreenWidth(), view.getScreenHeight());
+                    TestViewController testController = new TestViewController(testView, stateManager);
+                    nextState = new State(testController, testView);
                     stateManager.setActiveState(nextState);
                     break;
-                case LOAD_GAME:
+                case SUMMONER:
                     LoadGameView loadGameView = new LoadGameView(view.getScreenWidth(), view.getScreenHeight());
                     LoadGameViewController loadGameViewController = new LoadGameViewController(loadGameView, stateManager);
                     nextState = new State(loadGameViewController, loadGameView);
                     stateManager.setActiveState(nextState);
                     break;
-                case EXIT_GAME:
+                case SNEAK:
                     System.exit(0);
 
             }
