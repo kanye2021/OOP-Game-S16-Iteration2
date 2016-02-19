@@ -45,9 +45,6 @@ public class RunGame extends JFrame {
         StartMenuViewController startMenuViewController = new StartMenuViewController(startMenuView, stateManager);
         State startState = new State(startMenuViewController, startMenuView);
 
-        // Load the default state.
-        stateManager.setActiveState(startState);
-
         // Initialize the JFrame
         add(display);
         pack(); // May or may not need this.
@@ -62,6 +59,10 @@ public class RunGame extends JFrame {
         setTitle("RPG GAME");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Load the default state.
+        stateManager.setActiveState(startState);
+
     }
 
     public static void main(String[] args) {
