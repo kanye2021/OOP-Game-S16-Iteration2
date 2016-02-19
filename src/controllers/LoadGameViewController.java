@@ -14,9 +14,9 @@ import java.util.ArrayList;
 /**
  * Created by dyeung on 2/18/16.
  */
-public class LoadGameViewController extends ViewController {
+public class LoadGameViewController {
     //Constants
-    private final String SAVE_FILE_LOCATION = IOUtilities.getFileSystemDependentPath("./src/res/save_files/");
+    /*private final String SAVE_FILE_LOCATION = IOUtilities.getFileSystemDependentPath("./src/res/save_files/");
     //Variables for game view
     private int myOption;
     private ArrayList<File> listOfSaveFiles; //This is only being retrieved from the LoadGameView
@@ -59,7 +59,7 @@ public class LoadGameViewController extends ViewController {
     }
 
 /*-------------------Main functions --------------*/
-    public void updateSaveFiles(){
+    /*public void updateSaveFiles(){
         File folder = new File(SAVE_FILE_LOCATION);
         if (!folder.exists()) {
             folder.mkdir();
@@ -99,5 +99,5 @@ public class LoadGameViewController extends ViewController {
         stateManager.setActiveState(nextState);
     }
 
-
+*/
 }

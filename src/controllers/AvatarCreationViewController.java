@@ -9,10 +9,10 @@ import java.awt.event.KeyEvent;
 /**
  * Created by sergiopuleri on 2/18/16.
  */
-public class AvatarCreationViewController extends ViewController {
+public class AvatarCreationViewController {
 
 
-    public AvatarCreationViewController(View view, StateManager stateManager){
+    /*public AvatarCreationViewController(View view, StateManager stateManager){
         super(view, stateManager);
     }
 
@@ -62,5 +62,5 @@ public class AvatarCreationViewController extends ViewController {
     public void handleKeyRelease(KeyEvent e) {
         // TODO: Implement this.
         System.out.println(e.getKeyChar());
-    }
+    }*/
 }
