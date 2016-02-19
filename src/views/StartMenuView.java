@@ -11,6 +11,22 @@ import java.awt.geom.Rectangle2D;
  */
 public class StartMenuView extends View {
 
+    public enum MenuOptions {
+        CREATE_GAME("Create Game"),
+        LOAD_GAME("Load Game"),
+        EXIT_GAME("Exit Game");
+
+        private String optionLabel;
+
+        MenuOptions(String s) {
+            this.optionLabel = s;
+        }
+
+        public String toString() {
+            return optionLabel;
+        }
+    }
+
     // Constants
     private final String TITLE = "Kanye 2020";
     private final String START_MENU_IMAGE_LOCATION = IOUtilities.getFileSystemDependentPath("./src/res/start_menu/");
@@ -25,15 +41,30 @@ public class StartMenuView extends View {
     private int titleButtonMargin;
 
     // Data properties
-    StartMenuViewController.MenuOptions selected;
+    private MenuOptions selected;
 
     public StartMenuView(int width, int height){
         super(width, height);
-        setSelected(StartMenuViewController.MenuOptions.CREATE_GAME);
+        selected = MenuOptions.CREATE_GAME;
     }
 
-    public void setSelected(StartMenuViewController.MenuOptions option) {
-        selected = option;
+    public MenuOptions getSelected() {
+        return selected;
+    }
+
+    public void previousOption() {
+        if (this.selected.ordinal() == 0) {
+            selected =  MenuOptions.values()[MenuOptions.values().length - 1];
+        } else {
+            selected = MenuOptions.values()[selected.ordinal() - 1];
+        }
+    }
+    public void nextOption() {
+        if (this.selected.ordinal() == MenuOptions.values().length - 1) {
+            selected = MenuOptions.values()[0];
+        } else {
+            selected = MenuOptions.values()[selected.ordinal() + 1];
+        }
     }
 
     @Override
@@ -61,9 +92,6 @@ public class StartMenuView extends View {
     }
 
 
-
-
-
     private void renderBackground(Graphics g){
 
     }
@@ -87,7 +115,7 @@ public class StartMenuView extends View {
         g.setFont(generalFont);
         FontMetrics fm = g.getFontMetrics(generalFont);
 
-        for (StartMenuViewController.MenuOptions option : StartMenuViewController.MenuOptions.values()) {
+        for (MenuOptions option : MenuOptions.values()) {
 
             Rectangle2D rectangle = fm.getStringBounds(option.toString(), g);
 
