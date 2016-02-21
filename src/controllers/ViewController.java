@@ -16,16 +16,14 @@ public abstract class ViewController {
     protected View view;
     protected StateManager stateManager;
     private InputMapping keyPressMapping;
-    private InputMapping keyReleaseMapping;
 
     public ViewController(View view, StateManager stateManager){
         this.view = view;
         this.stateManager = stateManager;
         keyPressMapping = new InputMapping();
-        keyReleaseMapping = new InputMapping();
 
+        initDefaultEscapeMapping();
         initKeyPressMapping();
-        initKeyReleaseMapping();
     }
 
     public final void handleKeyPress(KeyEvent e) {
@@ -34,26 +32,25 @@ public abstract class ViewController {
         stateManager.refreshState();
     }
 
-    public final void handleKeyRelease(KeyEvent e) {
-        System.out.println("Released: " + e.getKeyCode());
-        keyReleaseMapping.inputKey(e.getKeyCode());
-        stateManager.refreshState();
-    }
-
     protected abstract void initKeyPressMapping();
+
+    private final void initDefaultEscapeMapping() {
+
+        Task escapeTask = new Task() {
+            @Override
+            public void run() {
+                stateManager.goToPreviousState();
+            }
+        };
+
+        addKeyPressMapping(KeyEvent.VK_ESCAPE, escapeTask);
+
+    }
 
     protected final void addKeyPressMapping(int key, Task task) {
         keyPressMapping.put(key, task);
 
     }
-
-    protected final void addKeyReleaseMapping(int key, Task task) {
-
-        keyReleaseMapping.put(key, task);
-
-    }
-
-    protected abstract void initKeyReleaseMapping();
 
     public final void onWindowResize(Component component){
         view.onWindowResize(component);

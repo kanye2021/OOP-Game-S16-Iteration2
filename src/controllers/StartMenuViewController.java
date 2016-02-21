@@ -45,16 +45,16 @@ public class StartMenuViewController extends ViewController {
 
                 switch (((StartMenuView)view).getSelected()) {
                     case CREATE_GAME:
-//                    AvatarCreationView avatarCreationView = new AvatarCreationView(view.getScreenWidth(), view.getScreenHeight());
-//                    AvatarCreationViewController avatarCreationViewController = new AvatarCreationViewController(avatarCreationView, stateManager);
-//                    nextState = new State(avatarCreationViewController, avatarCreationView);
-//                    stateManager.setActiveState(nextState);
+                        AvatarCreationView avatarCreationView = new AvatarCreationView(view.getScreenWidth(), view.getScreenHeight());
+                        AvatarCreationViewController avatarCreationViewController = new AvatarCreationViewController(avatarCreationView, stateManager);
+                        nextState = new State(avatarCreationViewController, avatarCreationView);
+                        stateManager.setActiveState(nextState);
                         break;
                     case LOAD_GAME:
-//                    LoadGameView loadGameView = new LoadGameView(view.getScreenWidth(), view.getScreenHeight());
-//                    LoadGameViewController loadGameViewController = new LoadGameViewController(loadGameView, stateManager);
-//                    nextState = new State(loadGameViewController, loadGameView);
-//                    stateManager.setActi1veState(nextState);
+                    LoadGameView loadGameView = new LoadGameView(view.getScreenWidth(), view.getScreenHeight());
+                    LoadGameViewController loadGameViewController = new LoadGameViewController(loadGameView, stateManager);
+                    nextState = new State(loadGameViewController, loadGameView);
+                    stateManager.setActiveState(nextState);
                         break;
                     case EXIT_GAME:
                         System.exit(0);
@@ -68,8 +68,5 @@ public class StartMenuViewController extends ViewController {
         addKeyPressMapping(KeyEvent.VK_ENTER, selectOption);
 
     }
-
-    @Override
-    protected void initKeyReleaseMapping() {}
 
 }

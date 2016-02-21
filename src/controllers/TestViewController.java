@@ -11,25 +11,11 @@ import java.awt.event.KeyEvent;
  */
 public class TestViewController extends ViewController {
 
-    private Task goToPreviousState = new Task() {
-        @Override
-        public void run() {
-            stateManager.goToPreviousState();
-        }
-    };
-
     public TestViewController(View view, StateManager stateManager){
         super(view, stateManager);
     }
 
     @Override
-    protected final void initKeyPressMapping() {
-
-        addKeyPressMapping(KeyEvent.VK_ESCAPE, goToPreviousState);
-
-    }
-
-    @Override
-    protected void initKeyReleaseMapping() {}
+    protected final void initKeyPressMapping() {}
 
 }
