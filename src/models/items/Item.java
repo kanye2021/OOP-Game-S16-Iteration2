@@ -18,8 +18,6 @@ public abstract class Item {
 
     }
 
-    public abstract String getType();
-
     /*public final Sprite getSprite() {
 
         return sprite;

@@ -19,10 +19,4 @@ public abstract class TakeableItem extends Item {
 
     public abstract void onUse(); // Method for what should be done once the item is in the inventory and used
 
-    public String getType() {
-
-        return "take-able";
-
-    }
-
 }

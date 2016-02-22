@@ -13,10 +13,4 @@ public class OneShotItem extends Item {
 
     }
 
-    public String getType() {
-
-        return "one-shot";
-
-    }
-
 }

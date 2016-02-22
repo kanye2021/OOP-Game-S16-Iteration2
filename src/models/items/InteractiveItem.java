@@ -13,10 +13,4 @@ public class InteractiveItem extends Item {
 
     }
 
-    public String getType() {
-
-        return "interactive";
-
-    }
-
 }

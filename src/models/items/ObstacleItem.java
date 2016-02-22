@@ -13,10 +13,4 @@ public class ObstacleItem extends Item {
 
     }
 
-    public String getType() {
-
-        return "obstacle";
-
-    }
-
 }

@@ -29,10 +29,4 @@ public class EquippableItem extends TakeableItem {
 
     }
 
-    public String getType() {
-
-        return "equippable";
-
-    }
-
 }

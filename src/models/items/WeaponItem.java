@@ -23,10 +23,4 @@ public abstract class WeaponItem extends EquippableItem  {
 
     public abstract void onActivate(); // Method to describe what happens when a weapon is fired
 
-    public String getType() {
-
-        return "weapon";
-
-    }
-
 }
