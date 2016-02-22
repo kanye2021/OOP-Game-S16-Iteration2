@@ -5,13 +5,13 @@ import models.Equipment;
 /**
  * Created by aseber on 2/22/16.
  */
-public class WoodHelmet extends EquippableItem {
+public class SteelHelmet extends EquippableItem {
 
-    public WoodHelmet() {
+    public SteelHelmet() {
 
-        ID = ItemDictionary.WOOD_HELMET;
-        name = "Wood Helmet";
-        description = "A helmet made of wood";
+        ID = ItemDictionary.STEEL_HELMET;
+        name = "Steel Helmet";
+        description = "A helmet made of steel";
         component = Equipment.Component.HELMET;
         //sprite = new Sprite("path");
         /*onEquipStatModifications = new StatModificationList(

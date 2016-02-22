@@ -9,7 +9,7 @@ public class IronHelmet extends EquippableItem {
 
     public IronHelmet() {
 
-        id = 1;
+        ID = ItemDictionary.IRON_HELMET;
         name = "Wood Helmet";
         description = "A helmet made of wood";
         component = Equipment.Component.HELMET;

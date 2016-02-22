@@ -7,8 +7,14 @@ public class Equipment {
 
     public enum Component {
 
-        WEAPON,
-        HELMET;
+        HELMET,
+        CHESTPLATE,
+        GREAVES,
+        BOOTS,
+        GLOVES,
+        SHIELD,
+        ONE_HANDED_WEAPON,
+        TWO_HANDED_WEAPON;
 
     }
 
