@@ -13,9 +13,9 @@ import java.awt.geom.Rectangle2D;
 public class AvatarCreationView extends View {
 
     public enum OccupationOptions {
-        SMASHER("Smasher", "specialized in hand-to-hand combat"),
-        SUMMONER("Summoner", "specialized in spell-casting"),
-        SNEAK("Sneak", "specialized in ranged weapons, evading detection, finding/removing traps");
+        SMASHER("Smasher", "Specialized in hand-to-hand combat"),
+        SUMMONER("Summoner", "Specialized in spell-casting"),
+        SNEAK("Sneak", "Specialized in ranged weapons, evading detection, finding/removing traps");
 
         private String text;
         private String description;
@@ -40,6 +40,8 @@ public class AvatarCreationView extends View {
     // Scalable variables.
     private int buttonWidth;
     private int buttonHeight;
+    private int arrowWidth;
+    private int arrowHeight;
 
     // Styling properties
     private Font smallFont;
@@ -77,25 +79,21 @@ public class AvatarCreationView extends View {
 
     @Override
     public void scaleView(){
-        // Scale buttons
-//        buttonWidth = getScreenWidth() / 6;
-//        buttonHeight = getScreenHeight() / 25;
-
         // Scale font
         int titleFontSize = getScreenWidth() / 43;
-        titleFont = new Font("Brush Script MT", Font.BOLD, titleFontSize);
+        titleFont = new Font("Courier New", Font.BOLD, titleFontSize);
         int smallFontSize = getScreenWidth() / 85;
         smallFont = new Font("Helvetica", Font.BOLD, smallFontSize);
+        arrowWidth = getScreenWidth()/24;
+        arrowHeight = (int)(((double)getScreenHeight())/22.6);
 
-//        titleButtonMargin = (int) (getScreenHeight() * 0.15);
     }
 
 
     @Override
     public void render(Graphics g) {
 
-        // Text
-
+        // Title Text
         FontMetrics fm = g.getFontMetrics(titleFont);
         g.setColor(Color.white);
         g.setFont(titleFont);
@@ -106,20 +104,19 @@ public class AvatarCreationView extends View {
 
 
         // Paint Occupation Titles + Descriptions
-        int stringX = 100;
+        int stringX = getScreenWidth()/12;
         int arrow_x_offset = stringX;
-        int stringY = getScreenHeight() / 3;
+        int stringY = getScreenHeight()/3;
         int stringY2 = 0;
         int prevY = 0;
+        // Loop through menu options and display on screen
         for (OccupationOptions occupation : OccupationOptions.values()) {
-
             fm = g.getFontMetrics(titleFont);
             Rectangle2D rectangle1 = fm.getStringBounds(occupation.getText(), g);
             fm = g.getFontMetrics(smallFont);
             Rectangle2D rectangle2 = fm.getStringBounds(occupation.getDescription(), g);
 
-
-            stringY = prevY != 0 ? prevY + ((int) rectangle2.getHeight()) + 50 : stringY;
+            stringY = prevY != 0 ? prevY + ((int) rectangle2.getHeight()) + getScreenHeight()/16 : stringY;
             stringY2 = ((int) (rectangle1.getHeight()) + fm.getAscent()) + stringY;
 
             Color primaryColor = Color.white;
@@ -128,8 +125,8 @@ public class AvatarCreationView extends View {
                 // Drawing Arrow next to selection
                 ImageIcon ii = new ImageIcon(arrowFilePath);
                 Image arrow = ii.getImage();
-                arrow_x_offset -= arrow.getWidth(null) + 10;
-                g.drawImage(arrow, arrow_x_offset, stringY, null);
+                arrow_x_offset -= arrowWidth + getScreenWidth()/120;
+                g.drawImage(arrow, arrow_x_offset, stringY, arrowWidth, arrowHeight, null);
             }
 
             g.setColor(primaryColor);
@@ -137,10 +134,7 @@ public class AvatarCreationView extends View {
             g.drawString(occupation.getText(), stringX, stringY);
             g.setFont(smallFont);
             g.drawString(occupation.getDescription(), stringX, stringY2);
-
             prevY = stringY2;
-
-
         }
 
         Toolkit.getDefaultToolkit().sync();
