@@ -13,9 +13,9 @@ public class ObstacleItem extends Item {
 
     }
 
-    public void onUse() {
+    public String getType() {
 
-
+        return "obstacle";
 
     }
 

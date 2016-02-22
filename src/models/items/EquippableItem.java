@@ -6,9 +6,10 @@ import models.Equipment;
 /**
  * Created by aseber on 2/21/16.
  */
-public class EquippableItem extends Item {
+public class EquippableItem extends TakeableItem {
 
     protected Equipment.Component component;
+    //public StatModifications onEquipModifications;
 
     public boolean onTouch(Entity entity) {
 
@@ -19,6 +20,18 @@ public class EquippableItem extends Item {
     public void onUse() {
 
 
+
+    }
+
+    public final Equipment.Component getComponent() {
+
+        return component;
+
+    }
+
+    public String getType() {
+
+        return "equippable";
 
     }
 

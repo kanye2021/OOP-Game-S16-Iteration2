@@ -8,10 +8,36 @@ import models.Entity;
 public abstract class Item {
 
     int id;
-    String type;
+    //Sprite sprite;
 
-    public abstract boolean onTouch(Entity entity);
+    public abstract boolean onTouch(Entity entity); // Method to describe what happens when an item is touched
 
-    public abstract void onUse();
+    public final int getID() {
+
+        return id;
+
+    }
+
+    public abstract String getType();
+
+    /*public final Sprite getSprite() {
+
+        return sprite;
+
+    }*/
+
+    public final boolean equals(Object o) {
+
+        if (o instanceof Item) {
+
+            Item otherItem = (Item) o;
+
+            return this.getID() == otherItem.getID();
+
+        }
+
+        return false;
+
+    }
 
 }

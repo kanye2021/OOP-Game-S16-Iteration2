@@ -13,9 +13,9 @@ public class OneShotItem extends Item {
 
     }
 
-    public void onUse() {
+    public String getType() {
 
-
+        return "one-shot";
 
     }
 

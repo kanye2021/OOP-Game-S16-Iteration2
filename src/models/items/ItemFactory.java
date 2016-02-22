@@ -5,10 +5,14 @@ package models.items;
  */
 public class ItemFactory {
 
-    public static Item createItem(String ItemName) {
+    public static Item createItem(int id) {
 
-        // generate item here!
-        return null;
+        switch (id) {
+            case 1:
+                return new WoodHelmet();
+            default:
+                return null;
+        }
 
     }
 

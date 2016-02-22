@@ -7,7 +7,8 @@ public class Equipment {
 
     public enum Component {
 
-        WEAPON;
+        WEAPON,
+        HELMET;
 
     }
 

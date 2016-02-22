@@ -13,9 +13,9 @@ public class InteractiveItem extends Item {
 
     }
 
-    public void onUse() {
+    public String getType() {
 
-
+        return "interactive";
 
     }
 

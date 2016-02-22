@@ -19,4 +19,10 @@ public class ConsumableItem extends TakeableItem {
 
     }
 
+    public String getType() {
+
+        return "consumable";
+
+    }
+
 }
