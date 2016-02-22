@@ -1,6 +1,7 @@
 package models.items;
 
 import models.Entity;
+import models.items.takeable.equippable.helmets.*;
 
 /**
  * Created by aseber on 2/21/16.

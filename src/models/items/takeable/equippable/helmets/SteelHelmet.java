@@ -1,6 +1,7 @@
-package models.items;
+package models.items.takeable.equippable.helmets;
 
 import models.Equipment;
+import models.items.takeable.equippable.EquippableItem;
 
 /**
  * Created by aseber on 2/22/16.
