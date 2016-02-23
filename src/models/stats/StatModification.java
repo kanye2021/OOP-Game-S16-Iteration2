@@ -41,7 +41,7 @@ public class StatModification {
                 break;
             case WEAPON_MODIFIER:
                 break;
-            case ARMOMR_MODIFIER:
+            case ARMOR_MODIFIER:
                 break;
         }
 
