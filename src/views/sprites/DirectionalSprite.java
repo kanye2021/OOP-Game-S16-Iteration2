@@ -14,9 +14,17 @@ public class DirectionalSprite {
 
     HashMap<NavigationMediator.Direction, ImageIcon> images;
 
-    public void addImage(NavigationMediator.Direction direction, String imagePath) {
+    public DirectionalSprite(HashMap<NavigationMediator.Direction, String> imagePaths) {
 
-        images.put(direction, IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath(imagePath)));
+        ImageIcon image;
+
+        for (NavigationMediator.Direction direction : imagePaths.keySet()) {
+
+            String imagePath = IOUtilities.getFileSystemDependentPath(imagePaths.get(direction));
+            image = IOUtilities.getImageIcon(imagePath);
+            images.put(direction, image);
+
+        }
 
     }
 
