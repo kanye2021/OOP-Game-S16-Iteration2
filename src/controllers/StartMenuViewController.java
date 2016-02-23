@@ -1,12 +1,10 @@
 package controllers;
 
-import utilities.InputMapping;
 import utilities.State;
 import utilities.StateManager;
 import utilities.Task;
 import views.*;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
@@ -52,10 +50,10 @@ public class StartMenuViewController extends ViewController {
                         stateManager.setActiveState(nextState);
                         break;
                     case LOAD_GAME:
-                    LoadGameView loadGameView = new LoadGameView(view.getScreenWidth(), view.getScreenHeight());
-                    LoadGameViewController loadGameViewController = new LoadGameViewController(loadGameView, stateManager);
-                    nextState = new State(loadGameViewController, loadGameView);
-                    stateManager.setActiveState(nextState);
+                        LoadGameView loadGameView = new LoadGameView(view.getScreenWidth(), view.getScreenHeight());
+                        LoadGameViewController loadGameViewController = new LoadGameViewController(loadGameView, stateManager);
+                        nextState = new State(loadGameViewController, loadGameView);
+                        stateManager.setActiveState(nextState);
                         break;
                     case EXIT_GAME:
                         System.exit(0);

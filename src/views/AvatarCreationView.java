@@ -86,7 +86,6 @@ public class AvatarCreationView extends View {
         smallFont = new Font("Helvetica", Font.BOLD, smallFontSize);
         arrowWidth = getScreenWidth()/24;
         arrowHeight = (int)(((double)getScreenHeight())/22.6);
-
     }
 
 

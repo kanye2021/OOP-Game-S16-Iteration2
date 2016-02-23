@@ -20,7 +20,6 @@ public class AvatarCreationViewController extends ViewController {
         super(view, stateManager);
     }
 
-
     @Override
     protected void initKeyPressMapping() {
 
