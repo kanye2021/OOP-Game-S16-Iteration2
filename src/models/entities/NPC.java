@@ -20,7 +20,7 @@ public abstract class NPC extends Entity {
     @Override
     protected final EntityController initController() {
 
-        return null; // AIController
+        return null; // AIController!
 
     }
 

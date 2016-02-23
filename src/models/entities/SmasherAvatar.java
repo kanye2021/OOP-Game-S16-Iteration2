@@ -24,22 +24,6 @@ public class SmasherAvatar extends Avatar {
     }
 
     @Override
-    protected StatModificationList initInitialStats() {
-
-        StatModificationList initialStats = new StatModificationList(
-            /*new StatModification(Stats.Type.LIVES, 3, StatModification.NumberType.POINT),
-            new StatModification(Stats.Type.LEVEL, 1, StatModification.NumberType.POINT),
-            new StatModification(Stats.Type.AGILITY, 10, StatModification.NumberType.POINT),
-            new StatModification(Stats.Type.STRENGTH, 10, StatModification.NumberType.POINT),
-            new StatModification(Stats.Type.INTELLECT, 10, StatModification.NumberType.POINT),
-            new StatModification(Stats.Type.HARDINESS, 10, StatModification.NumberType.POINT)*/
-        );
-
-        return initialStats;
-
-    }
-
-    @Override
     protected HashMap<NavigationMediator.Direction, String> initSprites() {
 
         HashMap<NavigationMediator.Direction, String> imagePaths = new HashMap<>();
