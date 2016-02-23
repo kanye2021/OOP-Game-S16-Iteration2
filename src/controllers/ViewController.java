@@ -28,6 +28,11 @@ public abstract class ViewController {
 
     public final void handleKeyPress(KeyEvent e) {
         System.out.println("Pressed: " + e.getKeyCode());
+
+        /*
+         * All of the modifiers are dumped into the e.getModifiers() int. This number is then multiplied by 1000
+         * in order to ensure that there is no crossing paths with standard keys.
+         */
         keyPressMapping.inputKey(e.getKeyCode() + 1000*e.getModifiers());
         stateManager.refreshState();
     }
@@ -48,6 +53,12 @@ public abstract class ViewController {
     }
 
     protected final void addKeyPressMapping(Task task, int... key) {
+
+        /*
+         * The first key (key[0]) is the key we desire to be pressed.
+         * All subsequent keys are considered masks and multiplied by 1000 as stated above.
+         */
+
         int number = key[0];
 
         for (int i = 1; i < key.length; i++) {
