@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class GameState {//extends State {
 
-    /*private Avatar avatar;
+    /*private SmasherAvatar avatar;
     private Map map;
     private ArrayList<NPC> npcList;
 
@@ -44,10 +44,10 @@ public class GameState {//extends State {
 
 
     // Getters and Setters
-    public Avatar getAvatar(){
+    public SmasherAvatar getAvatar(){
         return avatar;
     }
-    public void setAvatar(Avatar avatar){
+    public void setAvatar(SmasherAvatar avatar){
         this.avatar = avatar;
     }
     public Map getMap() {

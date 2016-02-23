@@ -50,7 +50,7 @@ public class Stats {
     private TimerTask currentTask;
     private String lastTaskType;
 
-    public Stats(){
+    public Stats() {/*
 
         // Init primary stats.
         lives = 3;
@@ -70,7 +70,7 @@ public class Stats {
         health = maxHealth;
         mana = maxMana;
         lastLvlExpReq = 0; // Remember to update this on level up.
-    }
+    */}
 
     // Call this whenever a primary stat is changed. This holds the derived stats that won't be changed
     // by anything other than primary stats.
