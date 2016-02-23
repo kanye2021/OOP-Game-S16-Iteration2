@@ -18,7 +18,7 @@ public class Stats {
         HEALTH,
         MANA,
         WEAPON_MODIFIER,
-        ARMOMR_MODIFIER;
+        ARMOR_MODIFIER;
     }
 
 
@@ -94,9 +94,5 @@ public class Stats {
     public void modifyLives(int delta) {
         this.lives += delta;
     }
-
-
-
-
 
 }
