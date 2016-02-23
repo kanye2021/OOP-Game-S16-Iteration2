@@ -33,7 +33,7 @@ public class AvatarCreationView extends View {
 
     }
     // Constants
-    private final String AVATAR_CREATE_TEXT = "Please select an Occupation";
+    private final String AVATAR_CREATE_TEXT = "Please select an occupation";
     private String arrowFilePath;
 
 
@@ -86,7 +86,6 @@ public class AvatarCreationView extends View {
         smallFont = new Font("Helvetica", Font.BOLD, smallFontSize);
         arrowWidth = getScreenWidth()/24;
         arrowHeight = (int)(((double)getScreenHeight())/22.6);
-
     }
 
 
@@ -103,7 +102,7 @@ public class AvatarCreationView extends View {
         g.drawString(AVATAR_CREATE_TEXT, x, y);
 
 
-        // Paint Occupation Titles + Descriptions
+        // Paint occupation Titles + Descriptions
         int stringX = getScreenWidth()/12;
         int arrow_x_offset = stringX;
         int stringY = getScreenHeight()/3;

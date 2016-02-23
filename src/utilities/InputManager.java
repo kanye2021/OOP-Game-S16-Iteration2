@@ -24,8 +24,8 @@ public class InputManager extends ComponentAdapter implements KeyEventDispatcher
             activeController.handleKeyPress(e);
             return true;
         } else if (e.getID() == KeyEvent.KEY_RELEASED) {
-            activeController.handleKeyRelease(e);
-            return true;
+            //activeController.handleKeyRelease(e);
+            //return true;
         }
         return false;
     }
