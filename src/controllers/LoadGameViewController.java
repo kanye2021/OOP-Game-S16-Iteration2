@@ -3,10 +3,12 @@ package controllers;
 import utilities.IOUtilities;
 import utilities.State;
 import utilities.StateManager;
+import utilities.Task;
 import views.LoadGameView;
 import views.SaveGameView;
 import views.View;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -18,43 +20,50 @@ public class LoadGameViewController extends ViewController {
     //Constants
     private final String SAVE_FILE_LOCATION = IOUtilities.getFileSystemDependentPath("./src/res/save_files/");
     //Variables for game view
-    private int myOption;
-    private ArrayList<File> listOfSaveFiles; //This is only being retrieved from the LoadGameView
+    private int myOption = 0;
+    private ArrayList<File> listOfSaveFiles = new ArrayList<>(); //This is only being retrieved from the LoadGameView
+    private Task previousOption;
+    private Task nextOption;
+    private Task selectOption;
 
     public LoadGameViewController(View view, StateManager stateManager){
         super(view, stateManager);
-        myOption = 0;
-        listOfSaveFiles = new ArrayList<>();
         updateSaveFiles(); // Initial update for save files
     }
-    public void handleKeyPress(KeyEvent e){
 
-        updateSaveFiles(); //TODO: Try to make it so you don't have to call it every key press
+    @Override
+    protected void initKeyPressMapping() {
 
-        int key = e.getKeyCode();
-        switch (key){
-            case  KeyEvent.VK_UP:
+        previousOption = new Task() {
+            @Override
+            public void run() {
                 if (myOption > 0) {
                     myOption--;
+                    ((LoadGameView) view).updateOption(myOption);
                 }
-                break;
-            case  KeyEvent.VK_DOWN:
+            }
+        };
+
+        nextOption = new Task() {
+            @Override
+            public void run() {
                 if (myOption < listOfSaveFiles.size() - 1){
                     myOption++;
+                    ((LoadGameView) view).updateOption(myOption);
                 }
-                break;
-            case  KeyEvent.VK_ENTER:
-                if (listOfSaveFiles.size() != 0) {
-                    loadGame();
-                }
-                break;
-            case  KeyEvent.VK_ESCAPE:
-                break;
-        }
-        sendViewUpdatedOption();
-        stateManager.refreshState();
-    }
-    public void handleKeyRelease(KeyEvent e){
+            }
+        };
+
+        selectOption = new Task() {
+            @Override
+            public void run() {
+                loadGame();
+            }
+        };
+
+        addKeyPressMapping(previousOption, KeyEvent.VK_UP);
+        addKeyPressMapping(nextOption, KeyEvent.VK_DOWN);
+        addKeyPressMapping(selectOption, KeyEvent.VK_ENTER);
 
     }
 
@@ -101,6 +110,5 @@ public class LoadGameViewController extends ViewController {
         State nextState = new State(sGv, saveGameView);
         stateManager.setActiveState(nextState);
     }
-
 
 }

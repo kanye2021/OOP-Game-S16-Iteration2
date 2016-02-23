@@ -1,6 +1,7 @@
 package controllers;
 
 import utilities.StateManager;
+import utilities.Task;
 import views.View;
 
 import java.awt.event.KeyEvent;
@@ -15,20 +16,6 @@ public class TestViewController extends ViewController {
     }
 
     @Override
-    public void handleKeyPress(KeyEvent e){
-        // TODO: Implement key handling
-        int key = e.getKeyCode();
-        switch(key){
-            case KeyEvent.VK_K:
-                stateManager.goToPreviousState();
-                break;
-        }
-        System.out.println(e.getKeyChar());
-    }
+    protected final void initKeyPressMapping() {}
 
-    @Override
-    public void handleKeyRelease(KeyEvent e) {
-        // TODO: Implement this.
-        System.out.println(e.getKeyChar());
-    }
 }
