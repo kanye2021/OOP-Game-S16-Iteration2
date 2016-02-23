@@ -6,6 +6,7 @@ import utilities.StateManager;
 import utilities.Task;
 import views.*;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
@@ -63,9 +64,9 @@ public class StartMenuViewController extends ViewController {
             }
         };
 
-        addKeyPressMapping(KeyEvent.VK_UP, previousOption);
-        addKeyPressMapping(KeyEvent.VK_DOWN, nextOption);
-        addKeyPressMapping(KeyEvent.VK_ENTER, selectOption);
+        addKeyPressMapping(previousOption, KeyEvent.VK_UP);
+        addKeyPressMapping(nextOption, KeyEvent.VK_DOWN);
+        addKeyPressMapping(selectOption, KeyEvent.VK_ENTER);
 
     }
 

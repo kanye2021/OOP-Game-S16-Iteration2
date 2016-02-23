@@ -28,7 +28,7 @@ public abstract class ViewController {
 
     public final void handleKeyPress(KeyEvent e) {
         System.out.println("Pressed: " + e.getKeyCode());
-        keyPressMapping.inputKey(e.getKeyCode());
+        keyPressMapping.inputKey(e.getKeyCode() + 1000*e.getModifiers());
         stateManager.refreshState();
     }
 
@@ -43,12 +43,20 @@ public abstract class ViewController {
             }
         };
 
-        addKeyPressMapping(KeyEvent.VK_ESCAPE, escapeTask);
+        addKeyPressMapping(escapeTask, KeyEvent.VK_ESCAPE);
 
     }
 
-    protected final void addKeyPressMapping(int key, Task task) {
-        keyPressMapping.put(key, task);
+    protected final void addKeyPressMapping(Task task, int... key) {
+        int number = key[0];
+
+        for (int i = 1; i < key.length; i++) {
+
+            number += 1000*key[i];
+
+        }
+
+        keyPressMapping.put(number, task);
 
     }
 
