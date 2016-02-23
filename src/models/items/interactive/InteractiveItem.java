@@ -1,6 +1,6 @@
 package models.items.interactive;
 
-import models.Entity;
+import models.entities.Entity;
 import models.items.Item;
 
 /**

@@ -1,4 +1,4 @@
-package models;
+package models.stats;
 
 import java.util.ArrayList;
 
@@ -12,12 +12,6 @@ public class StatModificationList extends ArrayList<StatModification> {
         for(StatModification mod : modifications){
             add(mod);
         }
-    }
-
-    @Override
-    public boolean add(StatModification statMod){
-
-        return super.add(statMod);
     }
 
     public void applyStats(Stats stats){

@@ -27,13 +27,9 @@ public abstract class ViewController {
     }
 
     public final void handleKeyPress(KeyEvent e) {
-        System.out.println("Pressed: " + e.getKeyCode());
+        System.out.println("Pressed: " + getKeyIntMapping(e));
 
-        /*
-         * All of the modifiers are dumped into the e.getModifiers() int. This number is then multiplied by 1000
-         * in order to ensure that there is no crossing paths with standard keys.
-         */
-        keyPressMapping.inputKey(e.getKeyCode() + 1000*e.getModifiers());
+        keyPressMapping.inputKey(getKeyIntMapping(e));
         stateManager.refreshState();
     }
 
@@ -54,6 +50,27 @@ public abstract class ViewController {
 
     protected final void addKeyPressMapping(Task task, int... key) {
 
+        keyPressMapping.put(getKeyIntMapping(key), task);
+
+    }
+
+    public final void onWindowResize(Component component){
+        view.onWindowResize(component);
+    }
+
+    private final int getKeyIntMapping(KeyEvent e) {
+
+        /*
+         * All of the modifiers are dumped into the e.getModifiers() int. This number is then multiplied by 1000
+         * in order to ensure that there is no crossing paths with standard keys.
+         */
+
+        return e.getKeyCode() + 1000*e.getModifiers();
+
+    }
+
+    private final int getKeyIntMapping(int... key) {
+
         /*
          * The first key (key[0]) is the key we desire to be pressed.
          * All subsequent keys are considered masks and multiplied by 1000 as stated above.
@@ -67,11 +84,8 @@ public abstract class ViewController {
 
         }
 
-        keyPressMapping.put(number, task);
+        return number;
 
     }
 
-    public final void onWindowResize(Component component){
-        view.onWindowResize(component);
-    }
 }

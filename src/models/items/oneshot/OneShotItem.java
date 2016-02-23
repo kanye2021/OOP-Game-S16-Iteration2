@@ -1,6 +1,6 @@
 package models.items.oneshot;
 
-import models.Entity;
+import models.entities.Entity;
 import models.items.Item;
 
 /**

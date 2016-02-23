@@ -1,6 +1,6 @@
 package models.items.takeable.equippable.weapons;
 
-import models.Entity;
+import models.entities.Entity;
 import models.items.takeable.equippable.EquippableItem;
 
 /**

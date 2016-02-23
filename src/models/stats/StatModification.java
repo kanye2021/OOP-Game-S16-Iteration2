@@ -1,4 +1,4 @@
-package models;
+package models.stats;
 
 /**
  * Created by Bradley on 2/19/16.

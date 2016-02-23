@@ -2,6 +2,8 @@ package models.items.takeable.equippable.helmets;
 
 import models.Equipment;
 import models.items.takeable.equippable.EquippableItem;
+import models.stats.StatModificationList;
+import views.sprites.Sprite;
 
 /**
  * Created by aseber on 2/22/16.
@@ -14,10 +16,10 @@ public class SteelHelmet extends EquippableItem {
         name = "Steel Helmet";
         description = "A helmet made of steel";
         component = Equipment.Component.HELMET;
-        //sprite = new Sprite("path");
-        /*onEquipStatModifications = new StatModificationList(
-                new StatModification()
-        )*/
+        sprite = new Sprite("path");
+        onEquipModifications = new StatModificationList(
+//                new StatModification()
+        );
 
     }
 

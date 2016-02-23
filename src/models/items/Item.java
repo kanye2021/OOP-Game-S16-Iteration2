@@ -1,7 +1,8 @@
 package models.items;
 
-import models.Entity;
+import models.entities.Entity;
 import models.items.takeable.equippable.helmets.*;
+import views.sprites.Sprite;
 
 /**
  * Created by aseber on 2/21/16.
@@ -69,7 +70,7 @@ public abstract class Item {
     }
 
     protected ItemDictionary ID;
-    //Sprite sprite;
+    protected Sprite sprite;
 
     public abstract boolean onTouch(Entity entity); // Method to describe what happens when an item is touched
 
@@ -79,11 +80,11 @@ public abstract class Item {
 
     }
 
-    /*public final Sprite getSprite() {
+    public final Sprite getSprite() {
 
         return sprite;
 
-    }*/
+    }
 
     public final boolean equals(Object o) {
 

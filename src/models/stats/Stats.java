@@ -1,4 +1,4 @@
-package models;
+package models.stats;
 
 import java.util.TimerTask;
 
@@ -83,12 +83,12 @@ public class Stats {
         expReqLvUp = 100 + 10 * level;
     }
 
-    public void applyStatMod(StatModification statMod){
-        statMod.apply(this);
+    public void applyStatMod(StatModificationList statMod){
+        statMod.applyStats(this);
     }
 
-    public void removeStatMod(StatModification statMod){
-        statMod.remove(this);
+    public void removeStatMod(StatModificationList statMod){
+        statMod.removeStats(this);
     }
 
     public void modifyLives(int delta) {
