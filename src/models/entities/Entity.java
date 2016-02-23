@@ -25,6 +25,7 @@ public abstract class Entity {
     protected Inventory inventory;
     protected Equipment equipment;
     protected Occupation occupation;
+    protected EntityController controller;
     protected Map map;
 
     // Plans for sprite: Entity will have a getImage() method to return the image
@@ -40,6 +41,7 @@ public abstract class Entity {
         this.inventory = new Inventory();
         this.equipment = new Equipment();
         this.occupation = initOccupation();
+        this.controller = initController();
         //occupation.initStats(this.stats); // This will setup the stats and skills particular to this occupation.
         //occupation.initSkills(this.skills);
 
