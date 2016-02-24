@@ -67,5 +67,5 @@ public class StartMenuViewController extends ViewController {
         addKeyPressMapping(selectOption, KeyEvent.VK_ENTER);
 
     }
-
 }
+
