@@ -20,6 +20,7 @@ public class Equipment {
 
     }
 
+    //Equipped Items
     private TakeableItem helmet;
     private TakeableItem chestplate;
     private TakeableItem greaves;
@@ -29,6 +30,8 @@ public class Equipment {
     private TakeableItem oneHandedWeapon;
     private TakeableItem twoHandedWeapon;
 
+
+    //Setters for eequipment
     public void setHelmet(TakeableItem helmet) {
         this.helmet = helmet;
     }
@@ -61,6 +64,7 @@ public class Equipment {
         this.twoHandedWeapon = twoHandedWeapon;
     }
 
+    //Getters for equipment
     public TakeableItem getHelmet() {
         return helmet;
     }
