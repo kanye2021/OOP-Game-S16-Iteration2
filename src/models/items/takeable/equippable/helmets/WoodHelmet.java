@@ -4,6 +4,7 @@ import models.Equipment;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
+import models.stats.Stats;
 import views.sprites.Sprite;
 
 /**
@@ -18,8 +19,9 @@ public class WoodHelmet extends EquippableItem {
         description = "A helmet made of wood";
         component = Equipment.Component.HELMET;
         sprite = new Sprite("path");
+        monetaryValue = 10;
         onEquipModifications = new StatModificationList(
-//                new StatModification()
+                new StatModification(Stats.StatType.ARMOR_MODIFIER, 10)
         );
 
     }
