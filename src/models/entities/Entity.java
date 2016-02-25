@@ -1,10 +1,10 @@
 package models.entities;
 
 import models.*;
+import models.entityControllers.EntityController;
 import models.occupation.Occupation;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
-import models.skills.Skill;
 import models.skills.SkillList;
 import models.stats.StatModificationList;
 import models.stats.Stats;

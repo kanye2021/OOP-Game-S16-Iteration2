@@ -1,8 +1,7 @@
 package models.entities;
 
-import models.EntityController;
+import models.entityControllers.EntityController;
 import models.Map;
-import models.occupation.Occupation;
 
 import java.awt.*;
 
