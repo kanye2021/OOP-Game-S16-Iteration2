@@ -10,14 +10,14 @@ import models.stats.StatModificationList;
 public class Summoner extends Occupation {
 
     @Override
-    public SkillList initSkills(Entity entity) {
+    public SkillList initSkills() {
 
-        return null;
+        return new SkillList();
 
     }
 
     @Override
-    public StatModificationList initStats(Entity entiy) {
+    public StatModificationList initStats() {
 
         StatModificationList modifications = new StatModificationList(
                 /*new StatModification(Stats.Type.STRENGTH, 10, StatModification.NumberType.POINT),
