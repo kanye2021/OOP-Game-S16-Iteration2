@@ -1,7 +1,9 @@
 package models.occupation;
 
-import models.entities.Entity;
 import models.skills.*;
+import models.skills.CommonSkills.BargainSkill;
+import models.skills.CommonSkills.BindWoundsSkill;
+import models.skills.CommonSkills.ObservationSkill;
 import models.stats.StatModificationList;
 
 /**
@@ -10,9 +12,9 @@ import models.stats.StatModificationList;
 public abstract class Occupation {
 
     private static final SkillList defaultSkills = new SkillList(
-        new Bargain(),
-        new BindWounds(),
-        new Observation()
+        new BargainSkill(),
+        new BindWoundsSkill(),
+        new ObservationSkill()
     );
 
     protected abstract StatModificationList initStats();
@@ -28,17 +30,8 @@ public abstract class Occupation {
 
         SkillList skills = new SkillList();
 
-        for (Skill skill : defaultSkills.getSkills()) {
-
-            skills.add(skill);
-
-        }
-
-        for (Skill skill : initSkills().getSkills()) {
-
-            skills.add(skill);
-
-        }
+        skills.addAll(defaultSkills);
+        skills.addAll(initSkills());
 
         return skills;
 

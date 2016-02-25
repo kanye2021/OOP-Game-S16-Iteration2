@@ -21,7 +21,7 @@ public class MithrilHelmet extends EquippableItem {
         sprite = new Sprite("path");
         monetaryValue = 120;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.StatType.ARMOR_MODIFIER, 40)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, 40)
         );
 
     }

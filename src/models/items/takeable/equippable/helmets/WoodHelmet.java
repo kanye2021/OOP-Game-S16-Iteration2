@@ -21,7 +21,7 @@ public class WoodHelmet extends EquippableItem {
         sprite = new Sprite("../res/items/takeable/armor/head/WoodHelm.png");
         monetaryValue = 10;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.StatType.ARMOR_MODIFIER, 10)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, 10)
         );
 
     }

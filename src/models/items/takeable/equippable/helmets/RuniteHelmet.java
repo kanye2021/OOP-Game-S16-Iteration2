@@ -21,7 +21,7 @@ public class RuniteHelmet extends EquippableItem {
         sprite = new Sprite("path");
         monetaryValue = 300;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.StatType.ARMOR_MODIFIER, 80)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, 80)
         );
 
     }

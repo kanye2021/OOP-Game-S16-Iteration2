@@ -5,11 +5,11 @@ package models.stats;
  */
 public class StatModification {
 
-    private Stats.StatType statToModify;
+    private Stats.Type statToModify;
     private int modifyAmount;
 
 
-    public StatModification(Stats.StatType statType, int modifyAmount) {
+    public StatModification(Stats.Type statType, int modifyAmount) {
         this.statToModify = statType;
         this.modifyAmount = modifyAmount;
     }

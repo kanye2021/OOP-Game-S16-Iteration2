@@ -21,7 +21,7 @@ public class GoldHelmet extends EquippableItem {
         sprite = new Sprite("../res/items/takeable/armor/head/gold_knight.png");
         monetaryValue = 500;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.StatType.ARMOR_MODIFIER, 15)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, 15)
         );
 
     }

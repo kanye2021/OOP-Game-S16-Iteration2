@@ -21,7 +21,7 @@ public class IronHelmet extends EquippableItem {
         sprite = new Sprite("../res/items/takeable/armor/head/IronHelm.png");
         monetaryValue = 20;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.StatType.ARMOR_MODIFIER, 25)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, 25)
         );
 
     }

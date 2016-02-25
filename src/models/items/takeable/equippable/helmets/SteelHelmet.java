@@ -21,7 +21,7 @@ public class SteelHelmet extends EquippableItem {
         sprite = new Sprite("../res/items/takeable/armor/head/knight_helm.png");
         monetaryValue = 40;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.StatType.ARMOR_MODIFIER, 35)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, 35)
         );
 
     }
