@@ -16,7 +16,7 @@ public abstract class Item {
         STEEL_HELMET(1002) {public Item createInstance() {return new SteelHelmet();}},
         MITHRIL_HELMET(1003) {public Item createInstance() {return new MithrilHelmet();}},
         GOLD_HELMET(1004) {public Item createInstance() {return new GoldHelmet();}},
-        RUNITE_HELMET(1005) {public Item createInstance() {return new RuniteHelmet();}};
+        RUNITE_HELMET(1005) {public Item createInstance() {return new RuniteHelmet();}},
 
         /*WOOD_CHESTPLATE(1100) {public Item createInstance() {return new WoodChestplate();}},
         IRON_CHESTPLATE(1101) {public Item createInstance() {return new IronChestplate();}},
@@ -52,6 +52,10 @@ public abstract class Item {
         MITHRIL_SHIELD(1503) {public Item createInstance() {return new MithrilShield();}},
         GOLD_SHIELD(1504) {public Item createInstance() {return new GoldShield();}},
         RUNITE_SHIELD(1505) {public Item createInstance() {return new RuniteShield();}};*/
+
+        GRAVE(2000),
+        OCTOPUS(2001),
+        STATUE(2002);
 
         private int ID;
 

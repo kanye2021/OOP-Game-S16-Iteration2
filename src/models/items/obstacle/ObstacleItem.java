@@ -8,7 +8,7 @@ import models.items.Item;
  */
 public class ObstacleItem extends Item {
 
-    public boolean onTouch(Entity entity) {
+    public final boolean onTouch(Entity entity) {
 
         return false;
 
