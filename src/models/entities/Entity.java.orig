@@ -68,11 +68,23 @@ public abstract class Entity {
     public final Point getLocation() {
         return location;
     }
+<<<<<<< 067f59b13d55ca509c1ccf0428631f934092ffb8
     public Stats getStats(){return stats;}
     public SkillList getSkills(){return skills;}
+    public final void move(Point location, NavigationMediator.Direction direction){
+        this.location = location;
+        updateOrientation(direction);
+    }
+
+    // Update orientation
+    public final void updateOrientation(NavigationMediator.Direction orientation){
+        this.orientation = orientation;
+=======
+
     public final void move(Map.Direction direction){
         this.location = map.moveEntity(this, direction);
         this.orientation = direction;
+>>>>>>> Completed most of the map, tile, directionaly movement, entity controllers, creating a new game-state, GameViewController, and some other stuff. Still need to create the GameView
     }
 
     // Wrapper functions for Stats

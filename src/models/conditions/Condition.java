@@ -5,8 +5,6 @@
 
 package models.conditions;
 
-import models.Map;
-
 /**
  * All Condition objects will have a condition Enum
  * extended onto each

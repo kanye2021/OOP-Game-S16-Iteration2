@@ -14,4 +14,9 @@ public class InteractiveItem extends Item {
 
     }
 
+
+    @Override
+    public String getType(){
+        return "interactive";
+    }
 }

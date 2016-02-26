@@ -1,7 +1,5 @@
 package models.conditions;
 
-import models.Map;
-
 /**
  * Created by aseber
  * on 2/9/16.

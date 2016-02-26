@@ -23,4 +23,9 @@ public abstract class TakeableItem extends Item {
 
     public abstract void onUse(Entity entity); // Method for what should be done once the item is in the inventory and used
 
+
+    @Override
+    public String getType(){
+        return "take-able";
+    }
 }

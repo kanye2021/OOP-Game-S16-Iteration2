@@ -26,7 +26,7 @@ public abstract class ViewController {
         initKeyPressMapping();
     }
 
-    public final void handleKeyPress(KeyEvent e) {
+    public void handleKeyPress(KeyEvent e) {
         System.out.println("Pressed: " + getKeyIntMapping(e));
 
         keyPressMapping.inputKey(getKeyIntMapping(e));
