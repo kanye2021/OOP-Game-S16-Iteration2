@@ -44,7 +44,15 @@ public abstract class ViewController {
             }
         };
 
+        Task altF4Task = new Task() {
+            @Override
+            public void run() {
+                System.exit(0);
+            }
+        };
+
         addKeyPressMapping(escapeTask, KeyEvent.VK_ESCAPE);
+        addKeyPressMapping(altF4Task, KeyEvent.VK_F4, KeyEvent.ALT_MASK);
 
     }
 
