@@ -1,6 +1,5 @@
 package models.occupation;
 
-import models.entities.Entity;
 import models.skills.SkillList;
 import models.skills.SmasherSkills.*;
 import models.stats.StatModification;

@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 public abstract class ActiveSkill extends Skill  {
 
     public abstract void onActivate(Entity entity);
+
     public abstract KeyEvent[] initActivatorKeys();
 
 }
