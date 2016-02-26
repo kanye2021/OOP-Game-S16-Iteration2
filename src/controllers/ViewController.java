@@ -56,6 +56,7 @@ public abstract class ViewController {
 
     public final void onWindowResize(Component component){
         view.onWindowResize(component);
+        stateManager.refreshState();
     }
 
     private final int getKeyIntMapping(KeyEvent e) {
