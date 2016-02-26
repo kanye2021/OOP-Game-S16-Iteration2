@@ -1,7 +1,9 @@
 package models.entities;
 
 import models.*;
-import models.entityControllers.EntityController;
+import controllers.entityControllers.EntityController;
+import models.map.Map;
+import models.map.Terrain;
 import models.occupation.Occupation;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
@@ -12,6 +14,7 @@ import views.sprites.DirectionalSprite;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -20,7 +23,7 @@ import java.util.HashMap;
 public abstract class Entity {
 
     protected Point location;
-    protected NavigationMediator.Direction orientation;
+    protected Map.Direction orientation;
     protected Stats stats;
     protected SkillList skills;
     protected Inventory inventory;
@@ -28,6 +31,7 @@ public abstract class Entity {
     protected Occupation occupation;
     protected EntityController controller;
     protected Map map;
+    protected ArrayList<Terrain> passableTerrain;
 
     // Plans for sprite: Entity will have a getImage() method to return the image
     // to render on the AreaViewport. It will call sprite.getCurrentImage(orientation)
@@ -36,13 +40,14 @@ public abstract class Entity {
 
     public Entity(Point location, Map map) {
         this.location = location;
-        this.orientation = NavigationMediator.Direction.NORTH;
+        this.orientation = Map.Direction.NORTH;
         this.stats = new Stats();
         this.occupation = initOccupation();
         this.skills = occupation.getSkills();
         this.inventory = new Inventory(30);
         this.equipment = new Equipment();
         this.controller = initController();
+        passableTerrain = new ArrayList<>();
         //occupation.initStats(this.stats); // This will setup the stats and skills particular to this occupation.
         //occupation.initSkills(this.skills);
 
@@ -55,20 +60,17 @@ public abstract class Entity {
         occupation.getStats().applyStats(stats);
 
     }
-
+    public boolean canTraverseTerrain(Terrain terrain){
+        return passableTerrain.contains(terrain);
+    }
     // Location getter/setter
     public final Point getLocation() {
         return location;
     }
 
-    public final void move(Point location, NavigationMediator.Direction direction){
-        this.location = location;
-        updateOrientation(direction);
-    }
-
-    // Update orientation
-    public final void updateOrientation(NavigationMediator.Direction orientation){
-        this.orientation = orientation;
+    public final void move(Map.Direction direction){
+        this.location = map.moveEntity(this, direction);
+        this.orientation = direction;
     }
 
     // Wrapper functions for Stats
@@ -141,13 +143,12 @@ public abstract class Entity {
 
     protected abstract StatModificationList initInitialStats();
     protected abstract Occupation initOccupation();
-    protected abstract HashMap<NavigationMediator.Direction, String> initSprites();
+    protected abstract HashMap<Map.Direction, String> initSprites();
     protected abstract EntityController initController();
 
     public final ImageIcon getImage(){
 
         return sprite.getImage(orientation);
-
     }
 
 }

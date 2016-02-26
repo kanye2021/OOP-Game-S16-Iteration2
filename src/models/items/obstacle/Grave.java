@@ -12,7 +12,7 @@ public class Grave extends ObstacleItem {
 
         ID = Item.ItemDictionary.GRAVE;
         sprite = new Sprite("grave.png");
-
     }
+
 
 }

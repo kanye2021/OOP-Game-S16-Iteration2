@@ -1,7 +1,7 @@
 package models.entities;
 
-import models.entityControllers.EntityController;
-import models.Map;
+import controllers.entityControllers.EntityController;
+import models.map.Map;
 import models.stats.StatModificationList;
 
 import java.awt.*;

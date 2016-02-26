@@ -14,4 +14,10 @@ public class ObstacleItem extends Item {
 
     }
 
+
+    @Override
+    public String getType(){
+        return "obstacle";
+    }
+
 }

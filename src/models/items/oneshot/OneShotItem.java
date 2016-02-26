@@ -14,4 +14,10 @@ public class OneShotItem extends Item {
 
     }
 
+
+    @Override
+    public String getType(){
+        return "one-shot";
+    }
+
 }
