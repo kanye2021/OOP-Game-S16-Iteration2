@@ -2,7 +2,9 @@ package models.items.takeable.equippable.helmets;
 
 import models.Equipment;
 import models.items.takeable.equippable.EquippableItem;
+import models.stats.StatModification;
 import models.stats.StatModificationList;
+import models.stats.Stats;
 import views.sprites.Sprite;
 
 /**
@@ -16,9 +18,10 @@ public class IronHelmet extends EquippableItem {
         name = "Wood Helmet";
         description = "A helmet made of wood";
         component = Equipment.Component.HELMET;
-        sprite = new Sprite("path");
+        sprite = new Sprite("../res/items/takeable/armor/head/IronHelm.png");
+        monetaryValue = 20;
         onEquipModifications = new StatModificationList(
-//                new StatModification()
+                new StatModification(Stats.Type.ARMOR_MODIFIER, 25)
         );
 
     }

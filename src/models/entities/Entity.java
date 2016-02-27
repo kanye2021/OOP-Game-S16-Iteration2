@@ -1,6 +1,7 @@
 package models.entities;
 
 import models.*;
+import models.entityControllers.EntityController;
 import models.occupation.Occupation;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
@@ -37,10 +38,10 @@ public abstract class Entity {
         this.location = location;
         this.orientation = NavigationMediator.Direction.NORTH;
         this.stats = new Stats();
-        this.skills = new SkillList();
-        this.inventory = new Inventory();
-        this.equipment = new Equipment();
         this.occupation = initOccupation();
+        this.skills = occupation.getSkills();
+        this.inventory = new Inventory(30);
+        this.equipment = new Equipment();
         this.controller = initController();
         //occupation.initStats(this.stats); // This will setup the stats and skills particular to this occupation.
         //occupation.initSkills(this.skills);
@@ -50,8 +51,8 @@ public abstract class Entity {
         this.map = map;
 
         initInitialStats().applyStats(stats);
-        occupation.initStats(this);
-        occupation.initSkills(this);
+        skills.addAll(occupation.getSkills());
+        occupation.getStats().applyStats(stats);
 
     }
 

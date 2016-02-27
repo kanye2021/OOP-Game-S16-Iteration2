@@ -12,6 +12,7 @@ public abstract class TakeableItem extends Item {
     public String name;
     public String description;
     public StatModificationList onPickUpModifications;
+    public int monetaryValue;
 
     public boolean onTouch(Entity entity) {
 

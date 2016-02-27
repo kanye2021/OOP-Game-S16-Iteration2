@@ -9,7 +9,7 @@ import java.util.TimerTask;
  */
 public class Stats {
 
-    public enum StatType {
+    public enum Type {
         LIVES,
         STRENGTH,
         AGILITY,
