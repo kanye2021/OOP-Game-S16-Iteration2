@@ -22,5 +22,6 @@ public class SteelChestplate extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 45)
         );
+        requiredLv = 10;
     }
 }

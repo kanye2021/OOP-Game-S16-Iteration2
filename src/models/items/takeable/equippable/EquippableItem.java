@@ -13,6 +13,7 @@ public class EquippableItem extends TakeableItem {
     protected Equipment.Component component;
     public StatModificationList onEquipModifications;
 
+    protected int requiredLv;
     public boolean onTouch(Entity entity) {
 
         return false;

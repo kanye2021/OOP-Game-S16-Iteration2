@@ -21,5 +21,6 @@ public class GoldGreaves extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 15)
         );
+        requiredLv = 20;
     }
 }

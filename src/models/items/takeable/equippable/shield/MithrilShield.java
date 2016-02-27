@@ -21,5 +21,6 @@ public class MithrilShield extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 50)
         );
+        requiredLv = 30;
     }
 }

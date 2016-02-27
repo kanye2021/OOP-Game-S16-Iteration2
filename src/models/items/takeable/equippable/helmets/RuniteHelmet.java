@@ -23,7 +23,7 @@ public class RuniteHelmet extends EquippableItem {
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 80)
         );
-
+        requiredLv = 40;
     }
 
 }

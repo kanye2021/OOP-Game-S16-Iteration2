@@ -21,5 +21,6 @@ public class IronGreaves extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 10)
         );
+        requiredLv = 5;
     }
 }

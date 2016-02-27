@@ -23,7 +23,7 @@ public class SteelHelmet extends EquippableItem {
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 35)
         );
-
+        requiredLv = 10;
     }
 
 }

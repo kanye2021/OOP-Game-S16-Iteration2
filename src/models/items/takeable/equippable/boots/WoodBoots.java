@@ -22,5 +22,6 @@ public class WoodBoots extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 5)
         );
+        requiredLv = 1;
     }
 }

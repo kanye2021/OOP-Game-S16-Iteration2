@@ -22,5 +22,6 @@ public class MithrilChestplate extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 60)
         );
+        requiredLv = 30;
     }
 }

@@ -22,5 +22,6 @@ public class WoodChestplate extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 15)
         );
+        requiredLv = 1;
     }
 }

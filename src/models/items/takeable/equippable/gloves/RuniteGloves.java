@@ -21,5 +21,6 @@ public class RuniteGloves extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 40)
         );
+        requiredLv = 40;
     }
 }

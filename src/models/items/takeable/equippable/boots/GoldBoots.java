@@ -21,5 +21,6 @@ public class GoldBoots extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 20)
         );
+        requiredLv = 20;
     }
 }
