@@ -2,8 +2,10 @@ package utilities;
 
 import controllers.GameViewController;
 import controllers.entityControllers.AvatarController;
+import controllers.entityControllers.PetController;
 import models.entities.Avatar;
 import models.entities.NPC;
+import models.entities.Pet;
 import models.map.Map;
 import views.View;
 
@@ -50,6 +52,12 @@ public class GameState extends State {
     public void setAvatar(Avatar avatar){
 
         this.avatar = avatar;
+    }
+
+    // TODO: Method may not belong here, just for developing/testing.
+    public void setAvatarsPet(Pet pet, PetController petController) {
+        this.avatar.setPet(pet);
+        this.avatar.addObserver(petController);
     }
 
     public void setNpcList(ArrayList<NPC> npcList){

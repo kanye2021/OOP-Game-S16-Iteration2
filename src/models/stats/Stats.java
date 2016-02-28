@@ -49,6 +49,7 @@ public class Stats {
     private int weaponModifier;
     private int armorModifier;
 
+
     private TimerTask currentTask;
     private String lastTaskType;
 
@@ -194,5 +195,23 @@ public class Stats {
     public int getLevel() {
         return this.level;
     }
+
+    public int getMaxHealth() { return maxHealth; }
+
+    public int getMaxMana() { return maxMana; }
+
+    public int getOffensiveRating() { return offensiveRating; }
+
+    public int getDefensiveRating() { return defensiveRating; }
+
+    public int getArmorRating() { return armorRating; }
+
+    public int getExpReqLvUp() { return expReqLvUp; }
+
+    public int getLastLvlExpReq() { return lastLvlExpReq; }
+
+    public TimerTask getCurrentTask() { return currentTask; }
+
+    public String getLastTaskType() { return lastTaskType; }
 
 }

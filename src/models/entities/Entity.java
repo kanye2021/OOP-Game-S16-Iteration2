@@ -35,6 +35,8 @@ public abstract class Entity extends Observable implements ActionListener{
     protected Occupation occupation;
     protected EntityController controller;
     protected Map map;
+    // All entities should be able to have a pet.
+    protected Pet pet;
     protected ArrayList<String> passableTerrain;
     protected boolean canMove;
     private javax.swing.Timer movementTimer;
@@ -190,6 +192,15 @@ public abstract class Entity extends Observable implements ActionListener{
     public final Image getImage(){
 
         return sprite.getImage(orientation);
+    }
+
+    // TODO: Pet methods may not belong here? just getting stuff 2 work.
+    // They could belong here tho.
+    public final Pet getPet() {
+        return this.pet;
+    }
+    public final void setPet(Pet pet) {
+        this.pet = pet;
     }
 
 }
