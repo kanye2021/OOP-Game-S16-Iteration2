@@ -7,7 +7,7 @@ import models.stats.StatModificationList;
 /**
  * Created by aseber on 2/22/16.
  */
-public class Sneak extends Occupation {
+public class Sneak implements Occupation {
 
     @Override
     public SkillList initSkills(Entity entity) {

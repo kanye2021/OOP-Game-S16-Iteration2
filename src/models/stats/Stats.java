@@ -94,7 +94,9 @@ public class Stats {
     public void modifyLives(int delta) {
         this.lives += delta;
     }
+    public void modifyStrength(int delta){
 
+    }
 
 
 

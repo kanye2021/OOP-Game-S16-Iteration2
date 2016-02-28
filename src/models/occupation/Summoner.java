@@ -7,7 +7,7 @@ import models.stats.StatModificationList;
 /**
  * Created by aseber on 2/22/16.
  */
-public class Summoner extends Occupation {
+public class Summoner implements Occupation {
 
     @Override
     public SkillList initSkills(Entity entity) {

@@ -7,7 +7,7 @@ import models.stats.StatModificationList;
 /**
  * Created by aseber on 2/22/16.
  */
-public class Smasher extends Occupation {
+public class Smasher implements Occupation {
 
     @Override
     public SkillList initSkills(Entity entity) {

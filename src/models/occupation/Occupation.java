@@ -7,9 +7,9 @@ import models.stats.StatModificationList;
 /**
  * Created by aseber on 2/22/16.
  */
-public abstract class Occupation {
+public interface Occupation {
 
-    public abstract StatModificationList initStats(Entity entiy);
-    public abstract SkillList initSkills(Entity entity);
+    StatModificationList initStats(Entity entiy);
+    SkillList initSkills(Entity entity);
 
 }
