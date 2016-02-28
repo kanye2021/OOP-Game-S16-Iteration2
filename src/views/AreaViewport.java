@@ -58,12 +58,15 @@ public class AreaViewport extends View {
     // This determines of the image desired to be drawn is within the visible portion of the area viewport.
     private boolean isInRangeOfViewport(Point p){
         // Check if the x coordinate is in range
-        if(p.getX() + hexWidth < 0 || p.getX() - hexWidth > viewportWidth){
+        if(p.getX() + hexWidth/2 < 0 || p.getX() - hexWidth/2 > viewportWidth){
             return false;
         }
-        if(p.getY() + hexHeight < 0 || p.getY() - hexHeight > viewportHeight){
-            return false;
-        }
+        // TODO: This is kinda bad (we are no longer checking vertical bounds of the viewport). Because of the way things
+        // are being rendered, stopping when the Y value is out of bounds would result in the sides being cut off if the viewport
+        // is wider than it is tall.
+//        if(p.getY() + hexHeight/2 < 0 || p.getY() - hexHeight/2 > viewportHeight){
+//            return false;
+//        }
         return true;
     }
 
@@ -73,6 +76,7 @@ public class AreaViewport extends View {
         if(map.getTileAt(logicalPoint) == null || !isInRangeOfViewport(pixelPoint)){
             return;
         }
+
 
         // Call recursive functions to traverse y values. This will traverse every value of y now, keeping x constant.
         renderRecursiveY(new Point(logicalPoint), new Point(pixelPoint), 1, g);
@@ -110,8 +114,8 @@ public class AreaViewport extends View {
         Image terrainImage = terrain.getImage();
 
         int terrainX = (int)(pixelPoint.getX() - hexWidth/2);
-        int terrainY = (int)(pixelPoint.getY() - hexHeight/2);
-        g.drawImage(terrainImage, terrainX, terrainY, getDisplay());
+        int terrainY = (int)(pixelPoint.getY()) - hexHeight/2;
+        g.drawImage(terrainImage, terrainX, terrainY, hexWidth, hexHeight, getDisplay());
 
 
         // TODO: Implement items and areaEffects / Decals
@@ -132,11 +136,14 @@ public class AreaViewport extends View {
             Image entityImage = entity.getImage();
 //            entityImage = entityImage.getScaledInstance(hexSize, hexSize, 0); // TODO SEE WHAT THE LAST PARAMETER IS WHEN YOU HAVE WIFI
 
-            int entityX = (int)(pixelPoint.getX() - entityImage.getWidth(null) / 2);
-            int entityY = (int)(pixelPoint.getY() - entityImage.getHeight(null) / 2);
-            g.drawImage(entityImage, entityX, entityY, getDisplay());
-        }
+            // Resize the entity image
+            int scaledWidth = hexWidth * 3/4;
+            int scaledHeight = hexHeight * 3/4;
 
+            int entityX = (int)(pixelPoint.getX() - scaledWidth / 2);
+            int entityY = (int)(pixelPoint.getY() - scaledHeight / 2);
+            g.drawImage(entityImage, entityX, entityY, scaledWidth, scaledHeight, getDisplay());
+        }
 
         // Return the clip to normal
         g.setClip(oldClip);
@@ -176,19 +183,21 @@ public class AreaViewport extends View {
 
     }
 
-    // I had to overload this method because for soson, getScreenWidth() and height would not give the correct values.
+    // I had to overload this method because for some reason, getScreenWidth() and height would not give the correct values.
     // This was really wierd and I have no idea why.
     public void scaleView(int screenWidth, int screenHeight){
         viewportHeight = screenHeight * 4/5;
         viewportWidth = screenWidth;
         hexSize = (int) (viewportWidth * .02);
-        // Adjust the hex size so that there is a minimum size
+
+        // Adjust the hex size so that it stays within a reasonable range.
         hexSize = hexSize < 20 ? 20 : hexSize;
+        hexSize = hexSize > 25 ? 25 : hexSize;
 
         hexWidth = hexSize * 2;
         hexHeight = (int) (Math.sqrt(3)/2 * hexWidth);
         horizDistanceBtwnTiles = hexSize * 3 /2;
         vertDistanceBtwnTiles = (int) (hexSize * Math.sqrt(3));
-
+        System.out.println("Width: " + viewportWidth + " Height: " + viewportHeight);
     }
 }

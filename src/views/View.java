@@ -21,7 +21,6 @@ public abstract class View {
     public abstract void render(Graphics g);
 
     public void onWindowResize(Component component) {
-        System.out.println("View: ON WINDOW RESIZE: " + component.getWidth());
         screenWidth = component.getWidth();
         screenHeight = component.getHeight();
         scaleView();
@@ -35,7 +34,6 @@ public abstract class View {
 
     // Accessors
     public final int getScreenWidth(){
-        System.out.println("View: GET WIDTH " + this.screenWidth);
         return this.screenWidth;
     }
 
