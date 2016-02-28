@@ -5,6 +5,7 @@ import models.entityControllers.EntityController;
 import models.occupation.Occupation;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
+import models.skills.Skill;
 import models.skills.SkillList;
 import models.stats.StatModificationList;
 import models.stats.Stats;
@@ -60,7 +61,8 @@ public abstract class Entity {
     public final Point getLocation() {
         return location;
     }
-
+    public Stats getStats(){return stats;}
+    public SkillList getSkills(){return skills;}
     public final void move(Point location, NavigationMediator.Direction direction){
         this.location = location;
         updateOrientation(direction);

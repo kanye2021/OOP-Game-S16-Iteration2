@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 public class BindWoundsSkill extends ActiveSkill {
 
     private Stats stats;
-
+    private final int cost = -5;//This is the mana cost it takes to activate this skill
     @Override
     protected SkillDictionary initID() {
 
@@ -23,16 +23,14 @@ public class BindWoundsSkill extends ActiveSkill {
 
     @Override
     public void onActivate(Entity entity) {
-    //This is used to heal.  Level,
-//Look at skill class may need skill lv there
-        //ask austie
+    //This is used to heal.
 
-        //check if I have the skill level
+        Stats stats = entity.getStats();//gets the instance of the stats
 
-        //how does it modify the stat?
-        //int level = getLevel();//from the abstract class obtained level
-        //entity.
-
+        stats.modifyMana(cost);
+        //need an if statement here conditions Austin Saber
+        //int healAmount;
+       // stats.modifyHealth(healAmount);
 
     }
 
