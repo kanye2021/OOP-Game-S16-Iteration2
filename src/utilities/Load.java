@@ -1,9 +1,12 @@
 package utilities;
 
-import models.Entity;
-import models.StatModification;
-import models.StatModificationList;
-import models.Stats;
+import models.entities.Entity;
+import models.Inventory;
+import models.entities.Avatar;
+import models.stats.StatModification;
+import models.stats.StatModificationList;
+import models.stats.Stats;
+import models.items.Item;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -44,11 +47,13 @@ public class Load {
 //TODO:Create stuff for entity
 //Remainder that the items are being generated then added to the inventory. Same with the stats (being created then added)
     public Entity loadAvatar(){
+        //Entity newEntity = new Entity();
         try {
             Element avatar = getSingleElement("avatar");
             Point p = getLocationOf(avatar);
             String orientation = avatar.getAttribute("orientation");
             String occupation = avatar.getAttribute("occupation");
+            //Entity avatar = new Avatar(occupation);
 
             Element inventory = getSingleElement("inventory");
             loadInventory(inventory);
@@ -57,19 +62,20 @@ public class Load {
         }catch (Exception e){
             e.printStackTrace();
         }
+        return null;
     }
     public Inventory loadInventory(Element e){ //Is suppose to return inventory
         //int sizeOfInv = getIntValueFromAttr(e,"size"); //Unnecessary for right now
         NodeList items = e.getElementsByTagName("item");
-        Inventory inv = new Inventory();
+        Inventory inv = new Inventory(10);
         for (int i = 0; i < items.getLength(); i++) {
             Element item = (Element) items.item(i);
             int id = getIntValueFromAttr(item, "id");
             int count = getIntValueFromAttr(item, "count");
             int pos = getIntValueFromAttr(item, "pos");
-            Item newItem = new Item(id);
+            //Item newItem = new Item(id);
             //Adds the item based on the position it was in the inventory
-            inv.addItem(newItem, count, pos);
+            //inv.addItem(newItem, count, pos);
         }
         return inv;
     }
@@ -81,8 +87,9 @@ public class Load {
             String statName = statAttr.getNodeName(); //TODO:Instead of string I would have to make an id
             int statID = 0;
             int statValue = Integer.parseInt(statAttr.getNodeValue());
-            StatModification newStats = new StatModification(Stats.StatType.values()[statID], statValue);
-            listOfStats.add(newStats);
+            //Adding the statModification to the list
+            //StatModification newStats = new StatModification(Stats.StatType.values()[statID], statValue);
+            //listOfStats.add(newStats);
         }
         return listOfStats;
     }

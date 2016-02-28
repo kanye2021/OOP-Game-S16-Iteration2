@@ -1,4 +1,4 @@
-package models;
+package models.entityControllers;
 
 /**
  * Created by aseber on 2/22/16.
