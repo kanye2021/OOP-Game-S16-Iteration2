@@ -28,6 +28,9 @@ public class StartMenuViewController extends ViewController {
             public void run() {
                 ((StartMenuView)view).previousOption();
             }
+
+            @Override
+            public void stop() {}
         };
 
         nextOption = new Task() {
@@ -35,6 +38,9 @@ public class StartMenuViewController extends ViewController {
             public void run() {
                 ((StartMenuView)view).nextOption();
             }
+
+            @Override
+            public void stop() {}
         };
 
         selectOption = new Task() {
@@ -60,6 +66,9 @@ public class StartMenuViewController extends ViewController {
 
                 }
             }
+
+            @Override
+            public void stop() {}
         };
 
         addKeyPressMapping(previousOption, KeyEvent.VK_UP);

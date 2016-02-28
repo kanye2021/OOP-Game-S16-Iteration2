@@ -1,16 +1,11 @@
 package controllers.entityControllers;
 
-import controllers.entityControllers.EntityController;
 import models.entities.Avatar;
 import models.map.Map;
 import utilities.InputMapping;
-import utilities.StateManager;
 import utilities.Task;
-import views.View;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Observable;
 
 /**
  * Created by Bradley on 2/26/2016.
@@ -29,41 +24,70 @@ public class AvatarController extends EntityController {
     public void handleKeyPress(KeyEvent e) {
 
         keyPressMapping.inputKey(getKeyIntMapping(e));
-        notifyObservers();
+    }
+
+    public void handleKeyRelease(KeyEvent e){
+
+        keyPressMapping.keyReleased(getKeyIntMapping(e));
     }
 
     protected void initKeyPressMapping(){
         Task moveNorth = new Task() {
             @Override
             public void run() { avatar.move(Map.Direction.NORTH);}
+
+            @Override
+            public void stop() { avatar.stopMoving(); }
         };
         Task moveNorthWest = new Task() {
             @Override
             public void run() { avatar.move(Map.Direction.NORTH_WEST);}
+
+            @Override
+            public void stop() { avatar.stopMoving(); }
         };
         Task moveSouthWest = new Task() {
             @Override
             public void run() { avatar.move(Map.Direction.SOUTH_WEST);}
+
+            @Override
+            public void stop() { avatar.stopMoving(); }
         };
         Task moveSouth = new Task() {
             @Override
             public void run() { avatar.move(Map.Direction.SOUTH);}
+
+            @Override
+            public void stop() { avatar.stopMoving(); }
         };
         Task moveSouthEast = new Task() {
             @Override
             public void run() { avatar.move(Map.Direction.SOUTH_EAST);}
+
+            @Override
+            public void stop() { avatar.stopMoving(); }
         };
         Task moveNorthEast = new Task() {
             @Override
             public void run() { avatar.move(Map.Direction.NORTH_EAST);}
+
+            @Override
+            public void stop() { avatar.stopMoving(); }
         };
 
-        addKeyPressMapping(moveNorth, KeyEvent.VK_NUMPAD8);
-        addKeyPressMapping(moveNorthWest, KeyEvent.VK_NUMPAD7);
-        addKeyPressMapping(moveSouthWest, KeyEvent.VK_NUMPAD1);
-        addKeyPressMapping(moveSouth, KeyEvent.VK_NUMPAD2);
-        addKeyPressMapping(moveSouthEast, KeyEvent.VK_NUMPAD3);
-        addKeyPressMapping(moveNorthEast, KeyEvent.VK_NUMPAD9);
+//        addKeyPressMapping(moveNorth, KeyEvent.VK_NUMPAD8);
+//        addKeyPressMapping(moveNorthWest, KeyEvent.VK_NUMPAD7);
+//        addKeyPressMapping(moveSouthWest, KeyEvent.VK_NUMPAD1);
+//        addKeyPressMapping(moveSouth, KeyEvent.VK_NUMPAD2);
+//        addKeyPressMapping(moveSouthEast, KeyEvent.VK_NUMPAD3);
+//        addKeyPressMapping(moveNorthEast, KeyEvent.VK_NUMPAD9);
+
+        addKeyPressMapping(moveNorth, KeyEvent.VK_W);
+        addKeyPressMapping(moveNorthWest, KeyEvent.VK_Q);
+        addKeyPressMapping(moveSouthWest, KeyEvent.VK_Z);
+        addKeyPressMapping(moveSouth, KeyEvent.VK_S);
+        addKeyPressMapping(moveSouthEast, KeyEvent.VK_C);
+        addKeyPressMapping(moveNorthEast, KeyEvent.VK_E);
     }
 
 

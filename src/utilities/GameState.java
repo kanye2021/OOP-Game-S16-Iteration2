@@ -1,16 +1,13 @@
 package utilities;
 
 import controllers.GameViewController;
-import controllers.ViewController;
 import controllers.entityControllers.AvatarController;
-import models.map.Map;
 import models.entities.Avatar;
 import models.entities.NPC;
+import models.map.Map;
 import views.View;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by Bradley on 2/18/16.
@@ -37,14 +34,13 @@ public class GameState extends State {
         gameLoader.createNewGame(this, occupation);
 
         // Init the entity controllers
-        initControllers(viewController);
-    }
+        viewController.addAvatarController(new AvatarController(avatar));
 
-    private void initControllers(GameViewController viewController){
-        AvatarController avatarController = new AvatarController(this.avatar);
-        viewController.addEntityController(avatarController);
+        // Add the view controllers to the observable things!
+        avatar.addObserver(viewController);
 
-        // TODO: Init other entity controllers.
+        // Int the viewports
+        viewController.initViewports(map, avatar);
     }
 
     public void setMap(Map map){

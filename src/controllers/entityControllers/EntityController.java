@@ -1,12 +1,9 @@
 package controllers.entityControllers;
 
-import java.awt.event.KeyEvent;
-import java.util.Observable;
-
 /**
  * Created by aseber on 2/22/16.
  */
-public abstract class EntityController extends Observable {
-
-    public abstract void handleKeyPress(KeyEvent e);
+public abstract class EntityController {
+    // TODO: Implement any common functionality found for entity controllers.
+    // I Removed KeyPress because NPC controllers DO NOT need to handle keyresses.
 }

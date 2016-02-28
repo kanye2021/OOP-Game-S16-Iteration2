@@ -8,7 +8,6 @@ import views.LoadGameView;
 import views.TestView;
 import views.View;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -42,6 +41,9 @@ public class LoadGameViewController extends ViewController {
                     ((LoadGameView) view).updateOption(myOption);
                 }
             }
+
+            @Override
+            public void stop() {}
         };
 
         nextOption = new Task() {
@@ -52,6 +54,8 @@ public class LoadGameViewController extends ViewController {
                     ((LoadGameView) view).updateOption(myOption);
                 }
             }
+            @Override
+            public void stop() {}
         };
 
         selectOption = new Task() {
@@ -59,6 +63,9 @@ public class LoadGameViewController extends ViewController {
             public void run() {
                 loadGame();
             }
+
+            @Override
+            public void stop() {}
         };
 
         addKeyPressMapping(previousOption, KeyEvent.VK_UP);

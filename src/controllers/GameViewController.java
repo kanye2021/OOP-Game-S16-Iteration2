@@ -1,11 +1,11 @@
 package controllers;
 
-import controllers.entityControllers.EntityController;
-import utilities.GameState;
-import utilities.State;
+import controllers.entityControllers.AvatarController;
+import controllers.entityControllers.NPCController;
+import models.entities.Avatar;
+import models.map.Map;
 import utilities.StateManager;
-import utilities.Task;
-import views.AvatarCreationView;
+import views.GameView;
 import views.View;
 
 import java.awt.event.KeyEvent;
@@ -18,28 +18,43 @@ import java.util.Observer;
  */
 public class GameViewController extends ViewController implements Observer{
 
-    private ArrayList<EntityController> entityControllers;
-    private AreaViewPort areaViewPort;
-    private StatusViewport statusViewport;
+    private ArrayList<NPCController> npcControllers;
+    private AvatarController avatarController;
 
     public GameViewController(View view, StateManager stateManager){
         super(view, stateManager);
-        entityControllers = new ArrayList<>();
+        npcControllers = new ArrayList<>();
     }
 
-    public void addEntityController(EntityController controller){
-        controller.addObserver(this);
-        entityControllers.add(controller);
+    public void addAvatarController(AvatarController controller){
+        avatarController = controller;
+    }
+
+    public void initViewports(Map map, Avatar avatar){
+        ((GameView)view).initAreaViewport(map, avatar);
+        ((GameView)view).initStatusViewport(avatar.getStats());
     }
 
     @Override
     public final void handleKeyPress(KeyEvent e) {
         super.handleKeyPress(e);
 
-        for(int i=0; i<entityControllers.size(); i++){
-            entityControllers.get(i).handleKeyPress(e);
+        // Give the keypress to the avatar controller as well
+        if(avatarController!=null){
+            avatarController.handleKeyPress(e);
         }
     }
+
+    @Override
+    public final void handleKeyRelease(KeyEvent e){
+        super.handleKeyRelease(e);
+
+        if(avatarController!=null){
+            avatarController.handleKeyRelease(e);
+        }
+    }
+
+
 
 
     @Override
@@ -49,6 +64,7 @@ public class GameViewController extends ViewController implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
+        System.out.println("Update called in Gameview Controller");
         stateManager.refreshState();
     }
 }
