@@ -1,10 +1,9 @@
 package models.map;
 
-import models.entities.Avatar;
 import models.entities.Entity;
 
 import java.awt.*;
-import java.util.*;
+import java.util.HashMap;
 
 /**
  * Created by aseber on 2/22/16.
@@ -86,9 +85,15 @@ public class Map {
         boolean entityMoved = desiredTile.insertEntity(entity);
 
         if(entityMoved){
+            Tile oldLocation = tiles.get(currentLocation);
+            oldLocation.removeEntity();
             return desiredLocation;
         }else{
             return currentLocation;
         }
+    }
+
+    public Tile getTileAt(Point p){
+        return tiles.get(p);
     }
 }

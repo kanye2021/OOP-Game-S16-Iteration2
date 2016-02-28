@@ -1,26 +1,25 @@
 package models.entities;
 
-import models.*;
 import controllers.entityControllers.EntityController;
+import models.Equipment;
+import models.Inventory;
+import models.items.takeable.TakeableItem;
+import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
 import models.map.Terrain;
 import models.occupation.Occupation;
-import models.items.takeable.TakeableItem;
-import models.items.takeable.equippable.EquippableItem;
 import models.skills.SkillList;
 import models.stats.StatModificationList;
 import models.stats.Stats;
 import views.sprites.DirectionalSprite;
 
-import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Created by Bradley on 2/18/16.
  */
-public abstract class Entity {
+public abstract class Entity extends Observable {
 
     protected Point location;
     protected Map.Direction orientation;
@@ -31,12 +30,16 @@ public abstract class Entity {
     protected Occupation occupation;
     protected EntityController controller;
     protected Map map;
-    protected ArrayList<Terrain> passableTerrain;
+    protected ArrayList<String> passableTerrain;
+    protected boolean canMove;
+    private Timer movementTimer;
+    private TimerTask currentMovement;
 
     // Plans for sprite: Entity will have a getImage() method to return the image
     // to render on the AreaViewport. It will call sprite.getCurrentImage(orientation)
     // which will return the appropriate image.
     protected DirectionalSprite sprite;
+    protected DirectionalSprite cansprite;
 
     public Entity(Point location, Map map) {
         this.location = location;
@@ -52,8 +55,9 @@ public abstract class Entity {
         //occupation.initSkills(this.skills);
 
         this.sprite = new DirectionalSprite(initSprites());
-
         this.map = map;
+        movementTimer = new Timer();
+
 
         initInitialStats().applyStats(stats);
         skills.addAll(occupation.getSkills());
@@ -61,7 +65,7 @@ public abstract class Entity {
 
     }
     public boolean canTraverseTerrain(Terrain terrain){
-        return passableTerrain.contains(terrain);
+        return passableTerrain.contains(terrain.getType());
     }
     // Location getter/setter
     public final Point getLocation() {
@@ -69,8 +73,38 @@ public abstract class Entity {
     }
 
     public final void move(Map.Direction direction){
-        this.location = map.moveEntity(this, direction);
-        this.orientation = direction;
+        if(currentMovement != null){
+            System.out.println("CANCELING MOVEMENT");
+            currentMovement.cancel();
+        }
+
+        // Set a time to determine when moevment will be alowed.
+        int delay = 300 - (stats.getMovement() / 5);
+        // If the delay is less than 0, the avatar defaults to the fastest movement of 5ms.
+        delay = delay > 10 ? delay : 10;
+
+        currentMovement = new TimerTask(){
+            @Override
+            public void run() {
+                location = map.moveEntity(Entity.this, direction);
+                orientation = direction;
+                setChanged();
+                notifyObservers();
+                System.out.println("MOVING: " + direction);
+            }
+        };
+
+        movementTimer.schedule(currentMovement, 0, delay);
+
+//        movementTimer.scheduleAtFixedRate(currentMovement, 0, 300);
+    }
+
+    public final void stopMoving(){
+        if(currentMovement!=null){
+            currentMovement.cancel();
+            setChanged();
+            notifyObservers();
+        }
     }
 
     // Wrapper functions for Stats
@@ -146,9 +180,13 @@ public abstract class Entity {
     protected abstract HashMap<Map.Direction, String> initSprites();
     protected abstract EntityController initController();
 
-    public final ImageIcon getImage(){
+    public final Image getImage(){
 
         return sprite.getImage(orientation);
+    }
+
+    public Stats getStats(){
+        return stats;
     }
 
 }

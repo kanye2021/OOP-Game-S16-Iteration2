@@ -18,14 +18,15 @@ public class InputManager extends ComponentAdapter implements KeyEventDispatcher
     }
 
     // Overrides function of KeyEventDispatcher.
+
     @Override
     public boolean dispatchKeyEvent(KeyEvent e) {
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             activeController.handleKeyPress(e);
             return true;
         } else if (e.getID() == KeyEvent.KEY_RELEASED) {
-            //activeController.handleKeyRelease(e);
-            //return true;
+            activeController.handleKeyRelease(e);
+            return true;
         }
         return false;
     }

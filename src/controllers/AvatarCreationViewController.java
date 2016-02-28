@@ -29,6 +29,9 @@ public class AvatarCreationViewController extends ViewController {
             public void run() {
                 ((AvatarCreationView) view).previousOption();
             }
+
+            @Override
+            public void stop() {}
         };
 
         nextOption = new Task() {
@@ -36,6 +39,9 @@ public class AvatarCreationViewController extends ViewController {
             public void run() {
                 ((AvatarCreationView) view).nextOption();
             }
+
+            @Override
+            public void stop() {}
         };
 
         selectOption = new Task() {
@@ -65,6 +71,8 @@ public class AvatarCreationViewController extends ViewController {
                         break;
                 }
             }
+            @Override
+            public void stop() {}
         };
 
         addKeyPressMapping(previousOption, KeyEvent.VK_UP);

@@ -1,14 +1,11 @@
 package utilities;
 
 import models.entities.*;
+import models.items.Item;
 import models.map.Decal;
 import models.map.Map;
 import models.map.Terrain;
 import models.map.Tile;
-import models.items.Item;
-import models.items.interactive.InteractiveItem;
-import models.items.oneshot.OneShotItem;
-import models.items.takeable.TakeableItem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -30,7 +27,7 @@ import java.util.HashMap;
 public class GameLoader {
 
     private final String DEFAULT_MAP = IOUtilities.getFileSystemDependentPath("./src/res/maps/default_map.xml");
-    private final Point DEFAULT_START_LOCATION = new Point(0,0);
+    private final Point DEFAULT_START_LOCATION = new Point(0,-1);
 
     public void createNewGame(GameState game, String occupation){
 
@@ -104,7 +101,7 @@ public class GameLoader {
                 String terrainType = terrainElement.getAttribute("type");
                 terrain = new Terrain(terrainType);
 
-                // Get the areaEffect if there is one
+//                // Get the areaEffect if there is one
 //                NodeList areaEffectNodes = tileElement.getElementsByTagName("area-effect");
 //                if (areaEffectNodes.getLength() > 0) {
 //                    Element areaEffectElement = (Element) areaEffectNodes.item(0);

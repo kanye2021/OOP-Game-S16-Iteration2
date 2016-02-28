@@ -33,6 +33,11 @@ public abstract class ViewController {
         stateManager.refreshState();
     }
 
+    public void handleKeyRelease(KeyEvent e){
+        keyPressMapping.keyReleased(getKeyIntMapping(e));
+        stateManager.refreshState();
+    }
+
     protected abstract void initKeyPressMapping();
 
     private final void initDefaultEscapeMapping() {
@@ -42,6 +47,9 @@ public abstract class ViewController {
             public void run() {
                 stateManager.goToPreviousState();
             }
+
+            @Override
+            public void stop() {}
         };
 
         addKeyPressMapping(escapeTask, KeyEvent.VK_ESCAPE);

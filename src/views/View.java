@@ -9,6 +9,7 @@ public abstract class View {
 
     private int screenWidth;
     private int screenHeight;
+    private Display display;
 
     public View(int width, int height){
 
@@ -20,20 +21,30 @@ public abstract class View {
     public abstract void render(Graphics g);
 
     public void onWindowResize(Component component) {
+        System.out.println("ON WINDOW RESIZE: " + component.getWidth());
         screenWidth = component.getWidth();
         screenHeight = component.getHeight();
         scaleView();
     }
 
+    public void setDisplay(Display display){
+        this.display = display;
+    }
+
     public abstract void scaleView();
 
     // Accessors
-    public int getScreenWidth(){
-        return screenWidth;
+    public final int getScreenWidth(){
+        System.out.println("GET WIDTH " + this.screenWidth);
+        return this.screenWidth;
     }
 
-    public int getScreenHeight(){
-        return screenHeight;
+    public final int getScreenHeight(){
+        return this.screenHeight;
+    }
+
+    public Display getDisplay(){
+        return display;
     }
 
 }

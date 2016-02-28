@@ -4,6 +4,8 @@ import models.entities.Entity;
 import models.items.takeable.equippable.helmets.*;
 import views.sprites.Sprite;
 
+import java.awt.*;
+
 /**
  * Created by aseber on 2/21/16.
  */
@@ -104,6 +106,12 @@ public abstract class Item {
 
     }
 
+    public Image getImage(){
+        return sprite.getImage();
+    }
+
     public abstract String getType();
+
+
 
 }
