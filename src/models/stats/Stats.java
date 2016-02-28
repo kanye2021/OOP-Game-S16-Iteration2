@@ -132,7 +132,6 @@ public class Stats {
         }
 
     }
-
     public void modifyMana(int delta) {
         this.mana = MathUtilities.putInRange(0, this.mana + delta, Integer.MAX_VALUE);
     }

@@ -70,10 +70,12 @@ public class GameState extends State {
 //
 //
 //    // Getters and Setters
+
 //    public SmasherAvatar getAvatar(){
 //        return avatar;
 //    }
 //    public void setAvatar(SmasherAvatar avatar){
+
 //        this.avatar = avatar;
 //    }
 //    public Map getMap() {
@@ -95,3 +97,4 @@ public class GameState extends State {
 //        gameSaver.saveGame(this);
 //    }
 }
+
