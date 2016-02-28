@@ -8,7 +8,6 @@ import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
 import models.map.Terrain;
 import models.occupation.Occupation;
-import models.skills.Skill;
 import models.skills.SkillList;
 import models.stats.StatModificationList;
 import models.stats.Stats;
@@ -186,9 +185,4 @@ public abstract class Entity extends Observable {
 
         return sprite.getImage(orientation);
     }
-
-    public Stats getStats(){
-        return stats;
-    }
-
 }

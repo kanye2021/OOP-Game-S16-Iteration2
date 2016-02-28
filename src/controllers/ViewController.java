@@ -57,6 +57,9 @@ public abstract class ViewController {
             public void run() {
                 System.exit(0);
             }
+
+            @Override
+            public void stop(){}
         };
 
         addKeyPressMapping(escapeTask, KeyEvent.VK_ESCAPE);
