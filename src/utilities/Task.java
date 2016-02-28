@@ -1,8 +1,8 @@
 package utilities;
 
-public abstract class Task {
+public interface Task {
 
-    public abstract void run();
+    void run();
 
     public abstract void stop();
 

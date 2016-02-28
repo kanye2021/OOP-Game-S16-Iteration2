@@ -1,6 +1,9 @@
 package models;
 
-import models.items.takeable.TakeableItem;
+import models.items.takeable.equippable.EquippableItem;
+import utilities.EquippableItemTask;
+
+import java.util.EnumMap;
 
 /**
  * Created by aseber on 2/21/16.
@@ -21,79 +24,93 @@ public class Equipment {
     }
 
     //Equipped Items
-    private TakeableItem helmet;
-    private TakeableItem chestplate;
-    private TakeableItem greaves;
-    private TakeableItem boots;
-    private TakeableItem gloves;
-    private TakeableItem shield;
-    private TakeableItem oneHandedWeapon;
-    private TakeableItem twoHandedWeapon;
+    private EquippableItem helmet;
+    private EquippableItem chestplate;
+    private EquippableItem greaves;
+    private EquippableItem boots;
+    private EquippableItem gloves;
+    private EquippableItem shield;
+    private EquippableItem oneHandedWeapon;
+    private EquippableItem twoHandedWeapon;
+    private EnumMap<Component, EquippableItemTask> componentMap = new EnumMap<Component, EquippableItemTask>(Component.class);
 
+    // do getters and setters through this enummap stuff. only need to do
+    // getEquipment().getComponent(Component component) and it maps dynamically
+    // to each internal call.
 
-    //Setters for eequipment
-    public void setHelmet(TakeableItem helmet) {
+    public Equipment() {
+
+        componentMap.put(Component.HELMET, new EquippableItemTask() {
+            public EquippableItem run() {
+                return getHelmet();
+            }
+        });
+
+    }
+
+    //Setters for equipment
+    public void setHelmet(EquippableItem helmet) {
         this.helmet = helmet;
     }
 
-    public void setChestplate(TakeableItem chestplate) {
+    public void setChestplate(EquippableItem chestplate) {
         this.chestplate = chestplate;
     }
 
-    public void setGreaves(TakeableItem greaves) {
+    public void setGreaves(EquippableItem greaves) {
         this.greaves = greaves;
     }
 
-    public void setBoots(TakeableItem boots) {
+    public void setBoots(EquippableItem boots) {
         this.boots = boots;
     }
 
-    public void setGloves(TakeableItem gloves) {
+    public void setGloves(EquippableItem gloves) {
         this.gloves = gloves;
     }
 
-    public void setShield(TakeableItem shield) {
+    public void setShield(EquippableItem shield) {
         this.shield = shield;
     }
 
-    public void setOneHandedWeapon(TakeableItem oneHandedWeapon) {
+    public void setOneHandedWeapon(EquippableItem oneHandedWeapon) {
         this.oneHandedWeapon = oneHandedWeapon;
     }
 
-    public void setTwoHandedWeapon(TakeableItem twoHandedWeapon) {
+    public void setTwoHandedWeapon(EquippableItem twoHandedWeapon) {
         this.twoHandedWeapon = twoHandedWeapon;
     }
 
     //Getters for equipment
-    public TakeableItem getHelmet() {
+    public EquippableItem getHelmet() {
         return helmet;
     }
 
-    public TakeableItem getChestplate() {
+    public EquippableItem getChestplate() {
         return chestplate;
     }
 
-    public TakeableItem getGreaves() {
+    public EquippableItem getGreaves() {
         return greaves;
     }
 
-    public TakeableItem getBoots() {
+    public EquippableItem getBoots() {
         return boots;
     }
 
-    public TakeableItem getGloves() {
+    public EquippableItem getGloves() {
         return gloves;
     }
 
-    public TakeableItem getShield() {
+    public EquippableItem getShield() {
         return shield;
     }
 
-    public TakeableItem getOneHandedWeapon() {
+    public EquippableItem getOneHandedWeapon() {
         return oneHandedWeapon;
     }
 
-    public TakeableItem getTwoHandedWeapon() {
+    public EquippableItem getTwoHandedWeapon() {
         return twoHandedWeapon;
     }
 }
