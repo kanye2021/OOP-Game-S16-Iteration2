@@ -185,4 +185,5 @@ public abstract class Entity extends Observable {
 
         return sprite.getImage(orientation);
     }
+
 }
