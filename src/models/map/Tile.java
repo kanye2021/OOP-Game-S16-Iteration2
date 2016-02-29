@@ -14,6 +14,7 @@ public class Tile {
     private Decal decal;
     private Item item;
     private Entity entity;
+    private boolean seen;
 
 //    public Tile(Terrain terrain, AreaEffect areaEffect, Decal decal, Item item, Entity entity) {
 //        this.terrain = terrain;
@@ -113,4 +114,7 @@ public class Tile {
     public void addItem(Item item) {
         this.item = item;
     }
+
+    public void setSeen(){ seen = true; }
+    public boolean getSeen(){ return seen; }
 }

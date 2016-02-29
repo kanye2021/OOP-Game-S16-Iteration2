@@ -7,6 +7,8 @@ import models.map.Terrain;
 import models.map.Tile;
 
 import java.awt.*;
+import java.util.HashMap;
+
 
 /**
  * Created by Bradley on 2/27/16.
@@ -26,6 +28,9 @@ public class AreaViewport extends View {
     private int hexHeight; // derived ^^
     private int horizDistanceBtwnTiles; // This is derived from hexSize
     private int vertDistanceBtwnTiles; // This is derived from hexSize
+
+    //Some other food
+    public HashMap<Point, Tile> seenTiles = new HashMap<>(500);
 
 
     public AreaViewport(int width, int height, Map map, Avatar avatar){
@@ -50,8 +55,12 @@ public class AreaViewport extends View {
 
         // The map is rendered recursively starting from the center point. We then recurse through every value of x,
         // and for each value of x, we make sure to visit every value of y.
-        renderRecursiveX(new Point(logicalPoint), new Point(pixelPoint), 1, g);
-        renderRecursiveX(new Point(logicalPoint), new Point(pixelPoint), -1, g);
+        renderRecursiveX(logicalPoint, new Point(logicalPoint), new Point(pixelPoint), 1, g);
+        renderRecursiveX(logicalPoint, new Point(logicalPoint), new Point(pixelPoint), -1, g);
+
+        //Render the previously seen tiles in a similar manner
+        renderRecursiveSeenTilesX(new Point(logicalPoint), new Point(pixelPoint), 1, g);
+        renderRecursiveSeenTilesX(new Point(logicalPoint), new Point(pixelPoint), -1, g);
     }
 
 
@@ -71,26 +80,29 @@ public class AreaViewport extends View {
     }
 
     // This will traverse the map keeping y fixed, and moving in the direction of x specified by sign.
-    private void renderRecursiveX(Point logicalPoint, Point pixelPoint, int sign, Graphics g){
+    private void renderRecursiveX(Point avatarPoint, Point logicalPoint, Point pixelPoint, int sign, Graphics g){
+        Point basePoint = avatarPoint;
+
         // Make sure that the point exists and that it is in range of the map
-        if(map.getTileAt(logicalPoint) == null || !isInRangeOfViewport(pixelPoint)){
-            return;
-        }
+        if (map.getTileAt(logicalPoint) == null || !isInRangeOfViewport(pixelPoint)) {
+                return;
+            }
 
 
-        // Call recursive functions to traverse y values. This will traverse every value of y now, keeping x constant.
-        renderRecursiveY(new Point(logicalPoint), new Point(pixelPoint), 1, g);
-        renderRecursiveY(new Point(logicalPoint), new Point(pixelPoint), -1, g);
+            // Call recursive functions to traverse y values. This will traverse every value of y now, keeping x constant.
+            renderRecursiveY(basePoint, new Point(logicalPoint), new Point(pixelPoint), 1, g);
+            renderRecursiveY(basePoint, new Point(logicalPoint), new Point(pixelPoint), -1, g);
 
-        logicalPoint.translate(sign, 0);
-        pixelPoint.translate(sign * horizDistanceBtwnTiles, sign * vertDistanceBtwnTiles / 2);
+            logicalPoint.translate(sign, 0);
+            pixelPoint.translate(sign * horizDistanceBtwnTiles, sign * vertDistanceBtwnTiles / 2);
 
-        renderRecursiveX(logicalPoint, pixelPoint, sign, g);
+            renderRecursiveX(basePoint, logicalPoint, pixelPoint, sign, g);
     }
 
     // This is the function that will be called for every tile that is to be displayed. It is the result of recursively
     // Traversing throgh all the values of x, and for each value of x, traversing through all values of y.
-    private void renderRecursiveY(Point logicalPoint, Point pixelPoint, int sign, Graphics g ){
+    private void renderRecursiveY(Point avatarPoint, Point logicalPoint, Point pixelPoint, int sign, Graphics g ){
+        Point basePoint = avatarPoint;
 
         Tile tile = map.getTileAt(logicalPoint);
         if(tile == null || !isInRangeOfViewport(pixelPoint)){
@@ -117,31 +129,122 @@ public class AreaViewport extends View {
         int terrainY = (int)(pixelPoint.getY()) - hexHeight/2;
         g.drawImage(terrainImage, terrainX, terrainY, hexWidth, hexHeight, getDisplay());
 
+        //Render whatever is on the tiles in the view of the avatar
+        if(basePoint.distance(logicalPoint) <= 7) {
+            //Put in the memory of the tile in seenTile
+            seenTiles.put(new Point(logicalPoint), new Tile(tile.getTerrain(), tile.getDecal(), tile.getItem(), tile.getEntity()));
+
+            // TODO: Implement items and areaEffects / Decals
+            //        // Draw the items
+            //        Item item = tile.getItem();
+            //        if(item!=null){
+            //            Image itemImage = item.getImage();
+            //            itemImage = itemImage.getScaledInstance(hexSize, hexSize, 0); // TODO SEE WHAT THE LAST PARAMETER IS WHEN YOU HAVE WIFI
+            //
+            //            int itemX = (int)(pixelPoint.getX() - itemImage.getWidth(null) /2);
+            //            int itemY = (int)(pixelPoint.getY() - itemImage.getHeight(null) /2);
+            //            g.drawImage(itemImage, itemX, itemY, getDisplay());
+            //        }
+
+
+            // Display entities on the map
+            Entity entity = tile.getEntity();
+            if (entity != null) {
+                Image entityImage = entity.getImage();
+                //            entityImage = entityImage.getScaledInstance(hexSize, hexSize, 0); // TODO SEE WHAT THE LAST PARAMETER IS WHEN YOU HAVE WIFI
+
+                // Resize the entity image
+                int scaledWidth = hexWidth * 3 / 4;
+                int scaledHeight = hexHeight * 3 / 4;
+
+                int entityX = (int) (pixelPoint.getX() - scaledWidth / 2);
+                int entityY = (int) (pixelPoint.getY() - scaledHeight / 2);
+                g.drawImage(entityImage, entityX, entityY, scaledWidth, scaledHeight, getDisplay());
+            }
+        }
+
+        // Return the clip to normal
+        g.setClip(oldClip);
+
+        // Calculate the next logical, and pixel point to draw.
+        logicalPoint.translate(0, sign);
+        pixelPoint.translate(0, sign * vertDistanceBtwnTiles);
+
+        // Recurse!
+        renderRecursiveY(basePoint, logicalPoint, pixelPoint, sign, g);
+    }
+
+
+    public void renderRecursiveSeenTilesX(Point logicalPoint, Point pixelPoint, int sign, Graphics g){
+        // Make sure that the point exists and that it is in range of the map
+        if (map.getTileAt(logicalPoint) == null || !isInRangeOfViewport(pixelPoint)) {
+            return;
+        }
+
+        // Call recursive functions to traverse y values. This will traverse every value of y now, keeping x constant.
+        renderRecursiveSeenTilesY(new Point(logicalPoint), new Point(pixelPoint), 1, g);
+        renderRecursiveSeenTilesY(new Point(logicalPoint), new Point(pixelPoint), -1, g);
+
+        //Change X
+        logicalPoint.translate(sign, 0);
+        pixelPoint.translate(sign * horizDistanceBtwnTiles, sign * vertDistanceBtwnTiles / 2);
+
+        renderRecursiveSeenTilesX(logicalPoint, pixelPoint, sign, g);
+    }
+
+    public void renderRecursiveSeenTilesY(Point logicalPoint, Point pixelPoint, int sign, Graphics g){
+        Tile tile = seenTiles.get(logicalPoint);
+        if(tile == null || !isInRangeOfViewport(pixelPoint)){
+            return;
+        }
+
+        // Do the actual Drawing here!
+        Polygon tilePolygon = getHexTile(pixelPoint);
+        g.setColor(Color.BLACK);
+        g.drawPolygon(tilePolygon); // This part kinda helps the tiles come together. Due to the math involved in rendering
+        // The hex tiles, there are a few points where we have to cast to an int and lose precision.
+
+        // Get the old clip (Should be the entire window).
+        Shape oldClip = g.getClip();
+
+        // Set the clip to just the hex tile
+        g.setClip(tilePolygon);
+
+        // Draw the terrain
+        Terrain terrain = tile.getTerrain();
+        Image terrainImage = terrain.getImage();
+
+        int terrainX = (int)(pixelPoint.getX() - hexWidth/2);
+        int terrainY = (int)(pixelPoint.getY()) - hexHeight/2;
+        g.drawImage(terrainImage, terrainX, terrainY, hexWidth, hexHeight, getDisplay());
+
+        //Render whatever is on the tiles in the view of the avatar
 
         // TODO: Implement items and areaEffects / Decals
-//        // Draw the items
-//        Item item = tile.getItem();
-//        if(item!=null){
-//            Image itemImage = item.getImage();
-//            itemImage = itemImage.getScaledInstance(hexSize, hexSize, 0); // TODO SEE WHAT THE LAST PARAMETER IS WHEN YOU HAVE WIFI
-//
-//            int itemX = (int)(pixelPoint.getX() - itemImage.getWidth(null) /2);
-//            int itemY = (int)(pixelPoint.getY() - itemImage.getHeight(null) /2);
-//            g.drawImage(itemImage, itemX, itemY, getDisplay());
-//        }
+        //        // Draw the items
+        //        Item item = tile.getItem();
+        //        if(item!=null){
+        //            Image itemImage = item.getImage();
+        //            itemImage = itemImage.getScaledInstance(hexSize, hexSize, 0); // TODO SEE WHAT THE LAST PARAMETER IS WHEN YOU HAVE WIFI
+        //
+        //            int itemX = (int)(pixelPoint.getX() - itemImage.getWidth(null) /2);
+        //            int itemY = (int)(pixelPoint.getY() - itemImage.getHeight(null) /2);
+        //            g.drawImage(itemImage, itemX, itemY, getDisplay());
+        //        }
+
 
         // Display entities on the map
         Entity entity = tile.getEntity();
-        if(entity != null){
+        if (entity != null) {
             Image entityImage = entity.getImage();
-//            entityImage = entityImage.getScaledInstance(hexSize, hexSize, 0); // TODO SEE WHAT THE LAST PARAMETER IS WHEN YOU HAVE WIFI
+            //            entityImage = entityImage.getScaledInstance(hexSize, hexSize, 0); // TODO SEE WHAT THE LAST PARAMETER IS WHEN YOU HAVE WIFI
 
             // Resize the entity image
-            int scaledWidth = hexWidth * 3/4;
-            int scaledHeight = hexHeight * 3/4;
+            int scaledWidth = hexWidth * 3 / 4;
+            int scaledHeight = hexHeight * 3 / 4;
 
-            int entityX = (int)(pixelPoint.getX() - scaledWidth / 2);
-            int entityY = (int)(pixelPoint.getY() - scaledHeight / 2);
+            int entityX = (int) (pixelPoint.getX() - scaledWidth / 2);
+            int entityY = (int) (pixelPoint.getY() - scaledHeight / 2);
             g.drawImage(entityImage, entityX, entityY, scaledWidth, scaledHeight, getDisplay());
         }
 
@@ -153,8 +256,9 @@ public class AreaViewport extends View {
         pixelPoint.translate(0, sign * vertDistanceBtwnTiles);
 
         // Recurse!
-        renderRecursiveY(logicalPoint, pixelPoint, sign, g);
+        renderRecursiveSeenTilesY(logicalPoint, pixelPoint, sign, g);
     }
+
 
     public Polygon getHexTile(Point center){
 
