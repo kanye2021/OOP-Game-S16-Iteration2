@@ -1,9 +1,13 @@
 package models.entities;
 
-import models.*;
-import models.occupation.Occupation;
+import controllers.entityControllers.EntityController;
+import models.Equipment;
+import models.Inventory;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
+import models.map.Map;
+import models.map.Terrain;
+import models.occupation.Occupation;
 import models.skills.SkillList;
 import models.stats.StatModificationList;
 import models.stats.Stats;
@@ -11,61 +15,105 @@ import views.sprites.DirectionalSprite;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Observable;
 
 /**
  * Created by Bradley on 2/18/16.
  */
-public abstract class Entity {
+public abstract class Entity extends Observable implements ActionListener{
 
     protected Point location;
-    protected NavigationMediator.Direction orientation;
+    protected Map.Direction orientation;
     protected Stats stats;
     protected SkillList skills;
     protected Inventory inventory;
     protected Equipment equipment;
     protected Occupation occupation;
+    protected EntityController controller;
     protected Map map;
+    // All entities should be able to have a pet.
+    protected Pet pet;
+    protected ArrayList<String> passableTerrain;
+    protected boolean canMove;
+    private javax.swing.Timer movementTimer;
+    private int movementTimerDelay;
+    private Map.Direction currentMovement;
+//    private TimerTask currentMovement;
 
     // Plans for sprite: Entity will have a getImage() method to return the image
     // to render on the AreaViewport. It will call sprite.getCurrentImage(orientation)
     // which will return the appropriate image.
     protected DirectionalSprite sprite;
+    protected DirectionalSprite cansprite;
 
     public Entity(Point location, Map map) {
         this.location = location;
-        this.orientation = NavigationMediator.Direction.NORTH;
+        this.orientation = Map.Direction.NORTH;
         this.stats = new Stats();
-        this.skills = new SkillList();
-        this.inventory = new Inventory();
-        this.equipment = new Equipment();
         this.occupation = initOccupation();
+        this.skills = occupation.getSkills();
+        this.inventory = new Inventory(30);
+        this.equipment = new Equipment();
+        this.controller = initController();
+        passableTerrain = new ArrayList<>();
         //occupation.initStats(this.stats); // This will setup the stats and skills particular to this occupation.
         //occupation.initSkills(this.skills);
 
         this.sprite = new DirectionalSprite(initSprites());
-
         this.map = map;
 
         initInitialStats().applyStats(stats);
-        occupation.initStats(this);
-        occupation.initSkills(this);
+        skills.addAll(occupation.getSkills());
+        occupation.getStats().applyStats(stats);
 
+        // Setup the movement timer.
+        movementTimer = new Timer(300, this);
+        updateMovementTimerDelay();
+        currentMovement = null;
     }
 
+    private void updateMovementTimerDelay(){
+        movementTimerDelay = 300 - (stats.getMovement() / 5);
+        if(movementTimerDelay < 50){
+            movementTimerDelay = 50;
+        }
+        movementTimer.setDelay(movementTimerDelay);
+    }
+    public boolean canTraverseTerrain(Terrain terrain){
+        return passableTerrain.contains(terrain.getType());
+    }
     // Location getter/setter
     public final Point getLocation() {
         return location;
     }
+    public Stats getStats(){return stats;}
+    public SkillList getSkills(){return skills;}
 
-    public final void move(Point location, NavigationMediator.Direction direction){
-        this.location = location;
-        updateOrientation(direction);
+
+    public final void move(Map.Direction direction){
+        updateMovementTimerDelay();
+        orientation = direction;
+        currentMovement = direction;
+
+        // Call action performed so there is no lag when you press a button and start the timer.
+        actionPerformed(null);
+        movementTimer.start();
     }
 
-    // Update orientation
-    public final void updateOrientation(NavigationMediator.Direction orientation){
-        this.orientation = orientation;
+    public final void stopMoving(){
+        movementTimer.stop();
+        currentMovement = null;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e){
+        location = map.moveEntity(Entity.this, currentMovement);
+        setChanged();
+        notifyObservers();
     }
 
     // Wrapper functions for Stats
@@ -138,13 +186,21 @@ public abstract class Entity {
 
     protected abstract StatModificationList initInitialStats();
     protected abstract Occupation initOccupation();
-    protected abstract HashMap<NavigationMediator.Direction, String> initSprites();
+    protected abstract HashMap<Map.Direction, String> initSprites();
     protected abstract EntityController initController();
 
-    public final ImageIcon getImage(){
+    public final Image getImage(){
 
         return sprite.getImage(orientation);
+    }
 
+    // TODO: Pet methods may not belong here? just getting stuff 2 work.
+    // They could belong here tho.
+    public final Pet getPet() {
+        return this.pet;
+    }
+    public final void setPet(Pet pet) {
+        this.pet = pet;
     }
 
 }

@@ -1,14 +1,11 @@
 package controllers;
 
 import utilities.IOUtilities;
-import utilities.State;
 import utilities.StateManager;
 import utilities.Task;
 import views.LoadGameView;
-import views.TestView;
 import views.View;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -42,6 +39,9 @@ public class LoadGameViewController extends ViewController {
                     ((LoadGameView) view).updateOption(myOption);
                 }
             }
+
+            @Override
+            public void stop() {}
         };
 
         nextOption = new Task() {
@@ -52,6 +52,8 @@ public class LoadGameViewController extends ViewController {
                     ((LoadGameView) view).updateOption(myOption);
                 }
             }
+            @Override
+            public void stop() {}
         };
 
         selectOption = new Task() {
@@ -59,6 +61,9 @@ public class LoadGameViewController extends ViewController {
             public void run() {
                 loadGame();
             }
+
+            @Override
+            public void stop() {}
         };
 
         addKeyPressMapping(previousOption, KeyEvent.VK_UP);
@@ -102,10 +107,7 @@ public class LoadGameViewController extends ViewController {
     public void loadGame(){ // Loads the game based on the current option
         System.out.println("Load game!");
         //TODO: Remove this stuff and add game view
-        TestView testView = new TestView(view.getScreenWidth(), view.getScreenHeight());
-        TestViewController testController = new TestViewController(testView, stateManager);
-        State nextState = new State(testController, testView);
-        stateManager.setActiveState(nextState);
+
     }
 
 }

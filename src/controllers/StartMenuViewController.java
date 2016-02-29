@@ -28,6 +28,9 @@ public class StartMenuViewController extends ViewController {
             public void run() {
                 ((StartMenuView)view).previousOption();
             }
+
+            @Override
+            public void stop() {}
         };
 
         nextOption = new Task() {
@@ -35,6 +38,9 @@ public class StartMenuViewController extends ViewController {
             public void run() {
                 ((StartMenuView)view).nextOption();
             }
+
+            @Override
+            public void stop() {}
         };
 
         selectOption = new Task() {
@@ -44,13 +50,13 @@ public class StartMenuViewController extends ViewController {
 
                 switch (((StartMenuView)view).getSelected()) {
                     case CREATE_GAME:
-                        AvatarCreationView avatarCreationView = new AvatarCreationView(view.getScreenWidth(), view.getScreenHeight());
+                        AvatarCreationView avatarCreationView = new AvatarCreationView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         AvatarCreationViewController avatarCreationViewController = new AvatarCreationViewController(avatarCreationView, stateManager);
                         nextState = new State(avatarCreationViewController, avatarCreationView);
                         stateManager.setActiveState(nextState);
                         break;
                     case LOAD_GAME:
-                        LoadGameView loadGameView = new LoadGameView(view.getScreenWidth(), view.getScreenHeight());
+                        LoadGameView loadGameView = new LoadGameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         LoadGameViewController loadGameViewController = new LoadGameViewController(loadGameView, stateManager);
                         nextState = new State(loadGameViewController, loadGameView);
                         stateManager.setActiveState(nextState);
@@ -60,6 +66,9 @@ public class StartMenuViewController extends ViewController {
 
                 }
             }
+
+            @Override
+            public void stop() {}
         };
 
         addKeyPressMapping(previousOption, KeyEvent.VK_UP);
@@ -67,5 +76,5 @@ public class StartMenuViewController extends ViewController {
         addKeyPressMapping(selectOption, KeyEvent.VK_ENTER);
 
     }
-
 }
+

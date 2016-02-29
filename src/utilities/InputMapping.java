@@ -12,11 +12,19 @@ public class InputMapping extends HashMap<Integer, Task> {
         @Override
         public void run() {}
 
+        @Override
+        public void stop() {}
+
     };
 
     public void inputKey(Integer integer) {
         Task task = super.getOrDefault(integer, emptyTask);
         task.run();
+    }
+
+    public void keyReleased(Integer integer) {
+        Task task = super.getOrDefault(integer, emptyTask);
+        task.stop();
     }
 
 }

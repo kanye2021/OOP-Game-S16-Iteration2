@@ -1,9 +1,8 @@
 package views.sprites;
 
-import models.NavigationMediator;
+import models.map.Map;
 import utilities.IOUtilities;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
@@ -12,23 +11,25 @@ import java.util.HashMap;
  */
 public class DirectionalSprite {
 
-    HashMap<NavigationMediator.Direction, ImageIcon> images;
+    HashMap<Map.Direction, Image> images;
 
-    public DirectionalSprite(HashMap<NavigationMediator.Direction, String> imagePaths) {
+    public DirectionalSprite(HashMap<Map.Direction, String> imagePaths) {
 
-        ImageIcon image;
+        images = new HashMap<>();
 
-        for (NavigationMediator.Direction direction : imagePaths.keySet()) {
+        Image image;
+
+        for (Map.Direction direction : imagePaths.keySet()) {
 
             String imagePath = IOUtilities.getFileSystemDependentPath(imagePaths.get(direction));
-            image = IOUtilities.getImageIcon(imagePath);
+            image = IOUtilities.getImageIcon(imagePath).getImage();
             images.put(direction, image);
 
         }
 
     }
 
-    public ImageIcon getImage(NavigationMediator.Direction direction) {
+    public Image getImage(Map.Direction direction) {
 
         return images.get(direction);
 

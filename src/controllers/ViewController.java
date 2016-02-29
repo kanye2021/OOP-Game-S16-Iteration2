@@ -26,10 +26,15 @@ public abstract class ViewController {
         initKeyPressMapping();
     }
 
-    public final void handleKeyPress(KeyEvent e) {
+    public void handleKeyPress(KeyEvent e) {
         System.out.println("Pressed: " + getKeyIntMapping(e));
 
         keyPressMapping.inputKey(getKeyIntMapping(e));
+        stateManager.refreshState();
+    }
+
+    public void handleKeyRelease(KeyEvent e){
+        keyPressMapping.keyReleased(getKeyIntMapping(e));
         stateManager.refreshState();
     }
 
@@ -42,9 +47,23 @@ public abstract class ViewController {
             public void run() {
                 stateManager.goToPreviousState();
             }
+
+            @Override
+            public void stop() {}
+        };
+
+        Task altF4Task = new Task() {
+            @Override
+            public void run() {
+                System.exit(0);
+            }
+
+            @Override
+            public void stop(){}
         };
 
         addKeyPressMapping(escapeTask, KeyEvent.VK_ESCAPE);
+        addKeyPressMapping(altF4Task, KeyEvent.VK_F4, KeyEvent.ALT_MASK);
 
     }
 
@@ -56,6 +75,7 @@ public abstract class ViewController {
 
     public final void onWindowResize(Component component){
         view.onWindowResize(component);
+        stateManager.refreshState();
     }
 
     private final int getKeyIntMapping(KeyEvent e) {

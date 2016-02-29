@@ -2,22 +2,22 @@ package views.sprites;
 
 import utilities.IOUtilities;
 
-import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by aseber on 2/22/16.
  */
 public class Sprite {
 
-    ImageIcon image;
+    Image image;
 
     public Sprite(String imagePath) {
-
-        image = IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath(imagePath));
+        System.out.println("SPRITE IMAGE PATH" + imagePath);
+        image = IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath(imagePath)).getImage();
 
     }
 
-    public ImageIcon getImage() {
+    public Image getImage() {
 
         return image;
 
