@@ -8,12 +8,13 @@ import models.map.Tile;
 
 import java.awt.*;
 import java.util.HashMap;
-
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by Bradley on 2/27/16.
  */
-public class AreaViewport extends View {
+public class AreaViewport extends View implements Observer {
 
     // The meat!!!
     private Map map;
@@ -33,11 +34,12 @@ public class AreaViewport extends View {
     public HashMap<Point, Tile> seenTiles = new HashMap<>();
 
 
-    public AreaViewport(int width, int height, Map map, Avatar avatar){
-        super(width, height);
+    public AreaViewport(int width, int height, Display display, Map map, Avatar avatar){
+        super(width, height, display);
 
         this.map = map;
         this.avatar = avatar;
+        avatar.addObserver(this);
         scaleView(width, height);
     }
 
@@ -98,6 +100,7 @@ public class AreaViewport extends View {
 
             logicalPoint.translate(sign, 0);
             pixelPoint.translate(sign * horizDistanceBtwnTiles, sign * vertDistanceBtwnTiles / 2);
+
 
             renderRecursiveX(basePoint, logicalPoint, pixelPoint, sign, g);
     }
@@ -306,16 +309,16 @@ public class AreaViewport extends View {
     public void scaleView(int screenWidth, int screenHeight){
         viewportHeight = screenHeight * 4/5;
         viewportWidth = screenWidth;
-        hexSize = (int) (viewportWidth * .02);
-
-        // Adjust the hex size so that it stays within a reasonable range.
-        hexSize = hexSize < 20 ? 20 : hexSize;
-        hexSize = hexSize > 25 ? 25 : hexSize;
-
+        hexSize = 23;
         hexWidth = hexSize * 2;
-        hexHeight = (int) (Math.sqrt(3)/2 * hexWidth);
+        hexHeight = Math.round((float)(Math.sqrt(3) /2 * hexWidth));
         horizDistanceBtwnTiles = hexSize * 3 /2;
-        vertDistanceBtwnTiles = (int) (hexSize * Math.sqrt(3));
-        System.out.println("Width: " + viewportWidth + " Height: " + viewportHeight);
+        vertDistanceBtwnTiles = Math.round((float)(hexSize * Math.sqrt(3)));
+    }
+
+
+    @Override
+    public void update(Observable o, Object arg) {
+        getDisplay().repaint();
     }
 }

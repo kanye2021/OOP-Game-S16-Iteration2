@@ -11,10 +11,11 @@ public abstract class View {
     private int screenHeight;
     private Display display;
 
-    public View(int width, int height){
+    public View(int width, int height, Display display){
 
         this.screenWidth = width;
         this.screenHeight = height;
+        this.display = display;
         scaleView();
     }
 
@@ -24,10 +25,6 @@ public abstract class View {
         screenWidth = component.getWidth();
         screenHeight = component.getHeight();
         scaleView();
-    }
-
-    public void setDisplay(Display display){
-        this.display = display;
     }
 
     public abstract void scaleView();

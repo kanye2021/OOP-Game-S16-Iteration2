@@ -5,6 +5,8 @@ import models.stats.Stats;
 /**
  * Created by ben on 2/28/16.
  */
+
+//TODO: Polish/Test the condition checker
 public class StatsCondition{
     private Entity entity;
     private Condition.Comparison comparison;

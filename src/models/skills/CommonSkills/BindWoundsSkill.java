@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 /**
  * Created by aseber on 2/24/16.
  */
+//TODO: Tie in skill level with skill class.  Polish/Test the condition is called correctly
 public class BindWoundsSkill extends ActiveSkill {
     private StatsCondition statsCondition;
     private Stats stats;

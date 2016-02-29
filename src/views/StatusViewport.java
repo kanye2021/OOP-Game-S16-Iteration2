@@ -14,8 +14,8 @@ public class StatusViewport extends View {
     private int viewportHeight;
     private int screenHeight;
 
-    public StatusViewport(int width, int height, Stats stats) {
-        super(width, height);
+    public StatusViewport(int width, int height, Display display, Stats stats) {
+        super(width, height ,display);
         this.stats = stats;
 
         scaleView(width, height);

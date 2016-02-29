@@ -1,6 +1,5 @@
 package views;
 
-import controllers.StartMenuViewController;
 import utilities.IOUtilities;
 
 import java.awt.*;
@@ -43,8 +42,8 @@ public class StartMenuView extends View {
     // Data properties
     private MenuOptions selected;
 
-    public StartMenuView(int width, int height){
-        super(width, height);
+    public StartMenuView(int width, int height, Display display){
+        super(width, height, display);
         selected = MenuOptions.CREATE_GAME;
     }
 
