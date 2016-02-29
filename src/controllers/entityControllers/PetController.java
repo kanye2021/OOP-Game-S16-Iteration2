@@ -79,7 +79,6 @@ public class PetController extends NPCController implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("@@@AVATAR WAS MOVED. FROM PETCONTROLLER ");
         Entity followee = (Entity)o;
         Point newFolloweeLocation = followee.getLocation();
         Double deltaX = this.pet.getLocation().getX() - newFolloweeLocation.getX();
@@ -87,7 +86,7 @@ public class PetController extends NPCController implements Observer {
         System.out.println("@@@DELTAX: " + deltaX);
         System.out.println("@@@DELTAY: " + deltaY);
         // Follow the avatar
-//        updatePetsLocation(deltaX, deltaY);
+        updatePetsLocation(deltaX, deltaY);
 
     }
 
@@ -95,37 +94,66 @@ public class PetController extends NPCController implements Observer {
         if (deltaY == 2.0 && deltaX == 0.0) {
             moveNorth.run();
             moveNorth.stop();
-            System.out.println("Pet did attempt to move");
+       }
+        else if (deltaY == 0.0 && deltaX == -1.0) {
+            moveSouth.run();
+            moveSouth.stop();
         }
-        else if (deltaY == 2.0 && deltaX == 2.0) {
-            moveNorthWest.run();
-            moveNorthWest.stop();
-            System.out.println("Pet did attempt to move");
-
+        else if (deltaY == 2.0 && deltaX == -1.0) {
+            moveNorthEast.run();
+            moveNorthEast.stop();
+        }
+        else if (deltaY == 1.0 && deltaX == -1.0) {
+            moveNorth.run();
+            moveNorth.stop();
+        }
+        else if (deltaY == -2.0 && deltaX == 1.0) {
+            moveSouthWest.run();
+            moveSouthWest.stop();
+        }
+        else if (deltaX == 2.0 && deltaY == -1.0) {
+            moveNorthEast.run();
+            moveNorthEast.stop();
+        }
+        else if (deltaY == 2.0 && deltaX == -2.0) {
+            moveNorthEast.run();
+            moveNorthEast.stop();
+        }
+        else if (deltaY == -1.0 && deltaX == -1.0) {
+            moveSouth.run();
+            moveSouth.stop();
+        }
+        else if (deltaY == 1.0 && deltaX == -2.0) {
+            moveSouthEast.run();
+            moveSouthEast.stop();
+        }
+        else if (deltaY == 1.0 && deltaX == 1.0) {
+            moveNorth.run();
+            moveNorth.stop();
+        }
+        else if (deltaY == 0.0 && deltaX == 1.0) {
+            moveNorth.run();
+            moveNorth.stop();
         }
         else if (deltaY == -2.0 && deltaX == 0.0) {
             moveSouth.run();
             moveSouth.stop();
-            System.out.println("Pet did attempt to move");
-
         }
-        else if (deltaY == -2.0 && deltaX == -2.0) {
+        else if (deltaY == -2.0 && deltaX == 2.0) {
             moveSouthWest.run();
             moveSouthWest.stop();
-            System.out.println("Pet did attempt to move");
-
         }
-        else if (deltaY == 0.0 && deltaX == -2.0) {
+        else if (deltaY == -1.0 && deltaX == 1.0) {
             moveNorthWest.run();
             moveNorthWest.stop();
-            System.out.println("Pet did attempt to move");
-
+        }
+        else if (deltaY == 0.0 && deltaX == -2.0) {
+            moveSouthEast.run();
+            moveSouthEast.stop();
         }
         else if (deltaY == 0.0 && deltaX == 2.0) {
-            moveNorthEast.run();
-            moveNorthEast.stop();
-            System.out.println("Pet did attempt to move");
-
+            moveNorthWest.run();
+            moveNorthWest.stop();
         }
         else {
             System.out.println("PEt did not attempt to move");
