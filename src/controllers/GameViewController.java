@@ -3,6 +3,7 @@ package controllers;
 import controllers.entityControllers.AvatarController;
 import controllers.entityControllers.NPCController;
 import models.entities.Avatar;
+import models.entities.npc.NPC;
 import models.map.Map;
 import utilities.StateManager;
 import views.GameView;
@@ -30,9 +31,12 @@ public class GameViewController extends ViewController implements Observer{
         avatarController = controller;
     }
 
-    public void initViewports(Map map, Avatar avatar){
+    public void initViewports(Map map, Avatar avatar, ArrayList<NPC> npcList){
         ((GameView)view).initAreaViewport(map, avatar);
         ((GameView)view).initStatusViewport(avatar.getStats());
+
+        //Temporarily get the first NPC
+        ((GameView)view).initNPCActionView(npcList.get(0));
     }
 
     @Override

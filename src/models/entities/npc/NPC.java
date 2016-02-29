@@ -1,22 +1,29 @@
-package models.entities;
+package models.entities.npc;
 
 import controllers.entityControllers.EntityController;
+import controllers.entityControllers.NPCController;
+import models.entities.Entity;
 import models.map.Map;
 import models.stats.StatModificationList;
+import views.NPCActionView;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by aseber on 2/22/16.
  */
-public abstract class Avatar extends Entity {
+public abstract class NPC extends Entity {
+    private ArrayList<Action> actionList;
 
-    public Avatar(Point location, Map map) {
-
+    public NPC(Point location, Map map) {
         super(location, map);
 
     }
 
+    protected final void doAction(){
+
+    }
     @Override
     protected final StatModificationList initInitialStats() {
 
@@ -32,15 +39,19 @@ public abstract class Avatar extends Entity {
         return initialStats;
 
     }
-
     @Override
     protected final EntityController initController() {
 
-        return null; // Keyboard controller!
+        return new NPCController(this); // AIController!
 
     }
+//Starts the interaction between entities (For now it is also showcasing the view list
     public void startInteraction(){
-        System.out.println("No interaction because I am an avatar");
-        return;
+        System.out.println("Starts interaction with npc");
+        ((NPCController)controller).start();
+
     }
+
+
+
 }

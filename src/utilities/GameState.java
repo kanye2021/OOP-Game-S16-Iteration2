@@ -1,9 +1,11 @@
 package utilities;
 
 import controllers.GameViewController;
+import controllers.NPCInteractionController;
 import controllers.entityControllers.AvatarController;
+import controllers.entityControllers.NPCController;
 import models.entities.Avatar;
-import models.entities.NPC;
+import models.entities.npc.NPC;
 import models.map.Map;
 import views.View;
 
@@ -30,7 +32,7 @@ public class GameState extends State {
 //        gameSaver = new GameSaver();
 
         // When not given a file, ladGame will create the game state from defaults.
-        // If this is succesfull, the game loader will init the map, avatar, and npc list.
+        // If this is successful, the game loader will init the map, avatar, and npc list.
         gameLoader.createNewGame(this, occupation);
 
         // Init the entity controllers
@@ -39,8 +41,12 @@ public class GameState extends State {
         // Add the view controllers to the observable things!
         avatar.addObserver(viewController);
 
+        //Adding NPC observers to view controller
+        for (NPC n : npcList){
+            n.addObserver(viewController);
+        }
         // Int the viewports
-        viewController.initViewports(map, avatar);
+        viewController.initViewports(map, avatar, npcList);
     }
 
     public void setMap(Map map){

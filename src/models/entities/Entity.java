@@ -43,7 +43,7 @@ public abstract class Entity extends Observable {
 
     public Entity(Point location, Map map) {
         this.location = location;
-        this.orientation = Map.Direction.NORTH;
+        this.orientation = Map.Direction.SOUTH;
         this.stats = new Stats();
         this.occupation = initOccupation();
         this.skills = occupation.getSkills();
@@ -90,7 +90,7 @@ public abstract class Entity extends Observable {
                 location = map.moveEntity(Entity.this, direction);
                 orientation = direction;
                 setChanged();
-                notifyObservers();
+                notifyObservers(); //To clairfy the observers are the controllers (Game view controller)
                 System.out.println("MOVING: " + direction);
             }
         };
@@ -180,9 +180,10 @@ public abstract class Entity extends Observable {
     protected abstract Occupation initOccupation();
     protected abstract HashMap<Map.Direction, String> initSprites();
     protected abstract EntityController initController();
-
+    public abstract void startInteraction();
     public final Image getImage(){
 
         return sprite.getImage(orientation);
     }
+
 }
