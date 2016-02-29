@@ -30,7 +30,7 @@ public class AreaViewport extends View {
     private int vertDistanceBtwnTiles; // This is derived from hexSize
 
     //Some other food
-    public HashMap<Point, Tile> seenTiles = new HashMap<>(500);
+    public HashMap<Point, Tile> seenTiles = new HashMap<>();
 
 
     public AreaViewport(int width, int height, Map map, Avatar avatar){
@@ -53,14 +53,17 @@ public class AreaViewport extends View {
         Point logicalPoint = avatar.getLocation();
         Point pixelPoint = new Point(viewportWidth/2, viewportHeight/2);
 
+        //Create a Graphics2D object
+        Graphics2D g2d = (Graphics2D) g.create();
+
         // The map is rendered recursively starting from the center point. We then recurse through every value of x,
         // and for each value of x, we make sure to visit every value of y.
-        renderRecursiveX(logicalPoint, new Point(logicalPoint), new Point(pixelPoint), 1, g);
-        renderRecursiveX(logicalPoint, new Point(logicalPoint), new Point(pixelPoint), -1, g);
+        renderRecursiveX(logicalPoint, new Point(logicalPoint), new Point(pixelPoint), 1, g2d);
+        renderRecursiveX(logicalPoint, new Point(logicalPoint), new Point(pixelPoint), -1, g2d);
 
         //Render the previously seen tiles in a similar manner
-        renderRecursiveSeenTilesX(new Point(logicalPoint), new Point(pixelPoint), 1, g);
-        renderRecursiveSeenTilesX(new Point(logicalPoint), new Point(pixelPoint), -1, g);
+        renderRecursiveSeenTilesX(new Point(logicalPoint), new Point(pixelPoint), 1, g2d);
+        renderRecursiveSeenTilesX(new Point(logicalPoint), new Point(pixelPoint), -1, g2d);
     }
 
 
@@ -80,7 +83,7 @@ public class AreaViewport extends View {
     }
 
     // This will traverse the map keeping y fixed, and moving in the direction of x specified by sign.
-    private void renderRecursiveX(Point avatarPoint, Point logicalPoint, Point pixelPoint, int sign, Graphics g){
+    private void renderRecursiveX(Point avatarPoint, Point logicalPoint, Point pixelPoint, int sign, Graphics2D g){
         Point basePoint = avatarPoint;
 
         // Make sure that the point exists and that it is in range of the map
@@ -101,13 +104,17 @@ public class AreaViewport extends View {
 
     // This is the function that will be called for every tile that is to be displayed. It is the result of recursively
     // Traversing throgh all the values of x, and for each value of x, traversing through all values of y.
-    private void renderRecursiveY(Point avatarPoint, Point logicalPoint, Point pixelPoint, int sign, Graphics g ){
+    private void renderRecursiveY(Point avatarPoint, Point logicalPoint, Point pixelPoint, int sign, Graphics2D g ){
         Point basePoint = avatarPoint;
 
         Tile tile = map.getTileAt(logicalPoint);
         if(tile == null || !isInRangeOfViewport(pixelPoint)){
             return;
         }
+
+
+        float alpha = 0.3f;
+        AlphaComposite acomp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
 
         // Do the actual Drawing here!
         Polygon tilePolygon = getHexTile(pixelPoint);
@@ -127,10 +134,11 @@ public class AreaViewport extends View {
 
         int terrainX = (int)(pixelPoint.getX() - hexWidth/2);
         int terrainY = (int)(pixelPoint.getY()) - hexHeight/2;
+        g.setComposite(acomp);
         g.drawImage(terrainImage, terrainX, terrainY, hexWidth, hexHeight, getDisplay());
 
         //Render whatever is on the tiles in the view of the avatar
-        if(basePoint.distance(logicalPoint) <= 7) {
+        if(basePoint.distance(logicalPoint) <= 4) {
             //Put in the memory of the tile in seenTile
             seenTiles.put(new Point(logicalPoint), new Tile(tile.getTerrain(), tile.getDecal(), tile.getItem(), tile.getEntity()));
 
@@ -159,6 +167,7 @@ public class AreaViewport extends View {
 
                 int entityX = (int) (pixelPoint.getX() - scaledWidth / 2);
                 int entityY = (int) (pixelPoint.getY() - scaledHeight / 2);
+
                 g.drawImage(entityImage, entityX, entityY, scaledWidth, scaledHeight, getDisplay());
             }
         }
@@ -175,7 +184,7 @@ public class AreaViewport extends View {
     }
 
 
-    public void renderRecursiveSeenTilesX(Point logicalPoint, Point pixelPoint, int sign, Graphics g){
+    public void renderRecursiveSeenTilesX(Point logicalPoint, Point pixelPoint, int sign, Graphics2D g){
         // Make sure that the point exists and that it is in range of the map
         if (map.getTileAt(logicalPoint) == null || !isInRangeOfViewport(pixelPoint)) {
             return;
@@ -192,11 +201,14 @@ public class AreaViewport extends View {
         renderRecursiveSeenTilesX(logicalPoint, pixelPoint, sign, g);
     }
 
-    public void renderRecursiveSeenTilesY(Point logicalPoint, Point pixelPoint, int sign, Graphics g){
+    public void renderRecursiveSeenTilesY(Point logicalPoint, Point pixelPoint, int sign, Graphics2D g){
         Tile tile = seenTiles.get(logicalPoint);
         if(tile == null || !isInRangeOfViewport(pixelPoint)){
             return;
         }
+
+        float alpha = 0.3f;
+        AlphaComposite acomp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
 
         // Do the actual Drawing here!
         Polygon tilePolygon = getHexTile(pixelPoint);
@@ -216,6 +228,7 @@ public class AreaViewport extends View {
 
         int terrainX = (int)(pixelPoint.getX() - hexWidth/2);
         int terrainY = (int)(pixelPoint.getY()) - hexHeight/2;
+        g.setComposite(acomp);
         g.drawImage(terrainImage, terrainX, terrainY, hexWidth, hexHeight, getDisplay());
 
         //Render whatever is on the tiles in the view of the avatar
@@ -245,6 +258,7 @@ public class AreaViewport extends View {
 
             int entityX = (int) (pixelPoint.getX() - scaledWidth / 2);
             int entityY = (int) (pixelPoint.getY() - scaledHeight / 2);
+            g.setComposite(acomp);
             g.drawImage(entityImage, entityX, entityY, scaledWidth, scaledHeight, getDisplay());
         }
 
