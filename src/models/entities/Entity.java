@@ -13,13 +13,18 @@ import models.stats.StatModificationList;
 import models.stats.Stats;
 import views.sprites.DirectionalSprite;
 
+import javax.swing.*;
 import java.awt.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Observable;
 
 /**
  * Created by Bradley on 2/18/16.
  */
-public abstract class Entity extends Observable {
+public abstract class Entity extends Observable implements ActionListener{
 
     protected Point location;
     protected Map.Direction orientation;
@@ -30,10 +35,14 @@ public abstract class Entity extends Observable {
     protected Occupation occupation;
     protected EntityController controller;
     protected Map map;
+    // All entities should be able to have a pet.
+    protected Pet pet;
     protected ArrayList<String> passableTerrain;
     protected boolean canMove;
-    private Timer movementTimer;
-    private TimerTask currentMovement;
+    private javax.swing.Timer movementTimer;
+    private int movementTimerDelay;
+    private Map.Direction currentMovement;
+//    private TimerTask currentMovement;
 
     // Plans for sprite: Entity will have a getImage() method to return the image
     // to render on the AreaViewport. It will call sprite.getCurrentImage(orientation)
@@ -56,13 +65,23 @@ public abstract class Entity extends Observable {
 
         this.sprite = new DirectionalSprite(initSprites());
         this.map = map;
-        movementTimer = new Timer();
-
 
         initInitialStats().applyStats(stats);
         skills.addAll(occupation.getSkills());
         occupation.getStats().applyStats(stats);
 
+        // Setup the movement timer.
+        movementTimer = new Timer(300, this);
+        updateMovementTimerDelay();
+        currentMovement = null;
+    }
+
+    private void updateMovementTimerDelay(){
+        movementTimerDelay = 300 - (stats.getMovement() / 5);
+        if(movementTimerDelay < 50){
+            movementTimerDelay = 50;
+        }
+        movementTimer.setDelay(movementTimerDelay);
     }
     public boolean canTraverseTerrain(Terrain terrain){
         return passableTerrain.contains(terrain.getType());
@@ -73,39 +92,28 @@ public abstract class Entity extends Observable {
     }
     public Stats getStats(){return stats;}
     public SkillList getSkills(){return skills;}
+
+
     public final void move(Map.Direction direction){
-        if(currentMovement != null){
-            System.out.println("CANCELING MOVEMENT");
-            currentMovement.cancel();
-        }
+        updateMovementTimerDelay();
+        orientation = direction;
+        currentMovement = direction;
 
-        // Set a time to determine when moevment will be alowed.
-        int delay = 300 - (stats.getMovement() / 5);
-        // If the delay is less than 0, the avatar defaults to the fastest movement of 5ms.
-        delay = delay > 10 ? delay : 10;
-
-        currentMovement = new TimerTask(){
-            @Override
-            public void run() {
-                location = map.moveEntity(Entity.this, direction);
-                orientation = direction;
-                setChanged();
-                notifyObservers();
-                System.out.println("MOVING: " + direction);
-            }
-        };
-
-        movementTimer.schedule(currentMovement, 0, delay);
-
-//        movementTimer.scheduleAtFixedRate(currentMovement, 0, 300);
+        // Call action performed so there is no lag when you press a button and start the timer.
+        actionPerformed(null);
+        movementTimer.start();
     }
 
     public final void stopMoving(){
-        if(currentMovement!=null){
-            currentMovement.cancel();
-            setChanged();
-            notifyObservers();
-        }
+        movementTimer.stop();
+        currentMovement = null;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e){
+        location = map.moveEntity(Entity.this, currentMovement);
+        setChanged();
+        notifyObservers();
     }
 
     // Wrapper functions for Stats
@@ -184,6 +192,15 @@ public abstract class Entity extends Observable {
     public final Image getImage(){
 
         return sprite.getImage(orientation);
+    }
+
+    // TODO: Pet methods may not belong here? just getting stuff 2 work.
+    // They could belong here tho.
+    public final Pet getPet() {
+        return this.pet;
+    }
+    public final void setPet(Pet pet) {
+        this.pet = pet;
     }
 
 }
