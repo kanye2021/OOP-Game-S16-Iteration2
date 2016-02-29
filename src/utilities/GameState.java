@@ -36,10 +36,7 @@ public class GameState extends State {
         gameLoader.createNewGame(this, occupation);
 
         // Init the entity controllers
-        viewController.addAvatarController(new AvatarController(avatar));
-
-        // Add the view controllers to the observable things!
-        avatar.addObserver(viewController);
+        viewController.setAvatarController(new AvatarController(avatar));
 
         // Int the viewports
         viewController.initViewports(map, avatar);

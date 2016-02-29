@@ -41,7 +41,7 @@ public class RunGame extends JFrame {
         StateManager stateManager = new StateManager(display, inputManager);
 
         // Setup the first state (Start Menu).
-        StartMenuView startMenuView = new StartMenuView(INITIAL_WIDTH, INITIAL_HEIGHT);
+        StartMenuView startMenuView = new StartMenuView(INITIAL_WIDTH, INITIAL_HEIGHT, display);
         StartMenuViewController startMenuViewController = new StartMenuViewController(startMenuView, stateManager);
         State startState = new State(startMenuViewController, startMenuView);
 

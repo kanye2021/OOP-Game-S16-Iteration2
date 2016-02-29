@@ -50,13 +50,13 @@ public class StartMenuViewController extends ViewController {
 
                 switch (((StartMenuView)view).getSelected()) {
                     case CREATE_GAME:
-                        AvatarCreationView avatarCreationView = new AvatarCreationView(view.getScreenWidth(), view.getScreenHeight());
+                        AvatarCreationView avatarCreationView = new AvatarCreationView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         AvatarCreationViewController avatarCreationViewController = new AvatarCreationViewController(avatarCreationView, stateManager);
                         nextState = new State(avatarCreationViewController, avatarCreationView);
                         stateManager.setActiveState(nextState);
                         break;
                     case LOAD_GAME:
-                        LoadGameView loadGameView = new LoadGameView(view.getScreenWidth(), view.getScreenHeight());
+                        LoadGameView loadGameView = new LoadGameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         LoadGameViewController loadGameViewController = new LoadGameViewController(loadGameView, stateManager);
                         nextState = new State(loadGameViewController, loadGameView);
                         stateManager.setActiveState(nextState);

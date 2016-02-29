@@ -10,13 +10,11 @@ import views.View;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by sergiopuleri on 2/18/16.
  */
-public class GameViewController extends ViewController implements Observer{
+public class GameViewController extends ViewController{
 
     private ArrayList<NPCController> npcControllers;
     private AvatarController avatarController;
@@ -26,7 +24,7 @@ public class GameViewController extends ViewController implements Observer{
         npcControllers = new ArrayList<>();
     }
 
-    public void addAvatarController(AvatarController controller){
+    public void setAvatarController(AvatarController controller){
         avatarController = controller;
     }
 
@@ -54,17 +52,8 @@ public class GameViewController extends ViewController implements Observer{
         }
     }
 
-
-
-
     @Override
     protected void initKeyPressMapping() {
 
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        System.out.println("Update called in Gameview Controller");
-        stateManager.refreshState();
     }
 }

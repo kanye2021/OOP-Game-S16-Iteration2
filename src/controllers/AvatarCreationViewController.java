@@ -52,19 +52,19 @@ public class AvatarCreationViewController extends ViewController {
                 GameViewController gameViewController;
                 switch (((AvatarCreationView)view).getSelected()) {
                     case SMASHER:
-                        gameView = new GameView(view.getScreenWidth(), view.getScreenHeight());
+                        gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         gameViewController = new GameViewController(gameView, stateManager);
                         nextState = new GameState(gameViewController, gameView, "smasher");
                         stateManager.setActiveState(nextState);
                         break;
                     case SUMMONER:
-                        gameView = new GameView(view.getScreenWidth(), view.getScreenHeight());
+                        gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         gameViewController = new GameViewController(gameView, stateManager);
                         nextState = new GameState(gameViewController, gameView, "summoner");
                         stateManager.setActiveState(nextState);
                         break;
                     case SNEAK:
-                        gameView = new GameView(view.getScreenWidth(), view.getScreenHeight());
+                        gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(),view.getDisplay());
                         gameViewController = new GameViewController(gameView, stateManager);
                         nextState = new GameState(gameViewController, gameView, "sneak");
                         stateManager.setActiveState(nextState);

@@ -14,17 +14,17 @@ public class GameView extends View {
     private AreaViewport areaViewport;
     private StatusViewport statusViewport;
 
-    public GameView(int width, int height){
-        super(width, height);
+    public GameView(int width, int height, Display display){
+        super(width, height, display);
 
     }
 
     public void initAreaViewport(Map map, Avatar avatar){
-        this.areaViewport = new AreaViewport(getScreenWidth(), getScreenHeight(), map, avatar);
+        this.areaViewport = new AreaViewport(getScreenWidth(), getScreenHeight(), getDisplay(), map, avatar);
     }
 
     public void initStatusViewport(Stats stats){
-        this.statusViewport = new StatusViewport(getScreenWidth(), getScreenHeight(), stats);
+        this.statusViewport = new StatusViewport(getScreenWidth(), getScreenHeight(), getDisplay(), stats);
     }
 
     @Override

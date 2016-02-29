@@ -23,7 +23,6 @@ public class Display extends JPanel {
 
     public void setActiveView(View view){
         activeView = view;
-        activeView.setDisplay(this);
         activeView.onWindowResize(this);
     }
 
