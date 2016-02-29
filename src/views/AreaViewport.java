@@ -36,7 +36,7 @@ public class AreaViewport extends View implements Observer {
         this.map = map;
         this.avatar = avatar;
         avatar.addObserver(this);
-        scaleView(width, height);
+        scaleView();
     }
 
     @Override
@@ -176,28 +176,15 @@ public class AreaViewport extends View implements Observer {
 
     @Override
     public void scaleView() {
-//        viewportHeight = getScreenHeight() * 4/5;
-//        viewportWidth = getScreenWidth();
-//        hexSize = (int) (viewportWidth * .02);
-//        hexWidth = hexSize * 2;
-//        hexHeight = (int) (Math.sqrt(3)/2 * hexWidth);
-//        horizDistanceBtwnTiles = hexSize * 3 /2;
-//        vertDistanceBtwnTiles = (int) (hexSize * Math.sqrt(3));
-
-    }
-
-    // I had to overload this method because for some reason, getScreenWidth() and height would not give the correct values.
-    // This was really wierd and I have no idea why.
-    public void scaleView(int screenWidth, int screenHeight){
-        viewportHeight = screenHeight * 4/5;
-        viewportWidth = screenWidth;
+        System.out.println(getScreenWidth() + " X " + getScreenHeight());
+        viewportHeight = getScreenHeight() * 4/5;
+        viewportWidth = getScreenWidth();
         hexSize = 23;
         hexWidth = hexSize * 2;
         hexHeight = Math.round((float)(Math.sqrt(3) /2 * hexWidth));
         horizDistanceBtwnTiles = hexSize * 3 /2;
         vertDistanceBtwnTiles = Math.round((float)(hexSize * Math.sqrt(3)));
     }
-
 
     @Override
     public void update(Observable o, Object arg) {

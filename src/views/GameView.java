@@ -36,10 +36,14 @@ public class GameView extends View {
     }
 
     @Override
+    public void onWindowResize(Component component) {
+        super.onWindowResize(component);
+        areaViewport.onWindowResize(component);
+        statusViewport.onWindowResize(component);
+    }
+
+    @Override
     public void scaleView() {
-        if(areaViewport!=null && statusViewport!= null){
-            areaViewport.scaleView(getScreenWidth(), getScreenHeight());
-            statusViewport.scaleView(getScreenWidth(), getScreenHeight());
-        }
+
     }
 }
