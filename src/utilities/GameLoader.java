@@ -1,5 +1,6 @@
 package utilities;
 
+import controllers.entityControllers.PetController;
 import models.entities.*;
 import models.items.Item;
 import models.map.Decal;
@@ -27,7 +28,7 @@ import java.util.HashMap;
 public class GameLoader {
 
     private final String DEFAULT_MAP = IOUtilities.getFileSystemDependentPath("./src/res/maps/default_map.xml");
-    private final Point DEFAULT_START_LOCATION = new Point(0,-1);
+    private final Point DEFAULT_START_LOCATION = new Point(0,-2);
 
     public void createNewGame(GameState game, String occupation){
 
@@ -58,6 +59,13 @@ public class GameLoader {
 
         // TODO: Inilialize the npcs.
         game.setNpcList(null);
+
+        // TODO: Delete later. Just for testing and debugging pets.
+        // init the pet one tile right the avatar (DEFAULT_START_LOCATION)
+        Pet pet = new Pet(new Point(0, -1), newMap);
+        PetController petController = new PetController(pet);
+        newMap.insertEntity(pet);
+        game.setAvatarsPet(pet, petController);
     }
 
     private Map loadMap(String filepath){
