@@ -83,8 +83,8 @@ public class PetController extends NPCController implements Observer {
         Point newFolloweeLocation = followee.getLocation();
         Double deltaX = this.pet.getLocation().getX() - newFolloweeLocation.getX();
         Double deltaY = this.pet.getLocation().getY() - newFolloweeLocation.getY();
-        System.out.println("@@@DELTAX: " + deltaX);
-        System.out.println("@@@DELTAY: " + deltaY);
+        //System.out.println("@@@DELTAX: " + deltaX);
+        //System.out.println("@@@DELTAY: " + deltaY);
         // Follow the avatar
         updatePetsLocation(deltaX, deltaY);
 
@@ -156,7 +156,7 @@ public class PetController extends NPCController implements Observer {
             moveNorthWest.stop();
         }
         else {
-            System.out.println("PEt did not attempt to move");
+            //System.out.println("PEt did not attempt to move");
         }
     }
 

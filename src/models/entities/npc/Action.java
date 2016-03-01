@@ -22,10 +22,10 @@ public abstract class Action {
 
     //Actions occur between two people
     private NPC npc;
-    private Avatar avatar;
-    public Action(NPC npc, Avatar avatar){
+
+    public Action(NPC npc){
         this.npc = npc;
-        this.avatar = avatar;
     }
     protected abstract void activate();
+    public abstract String getName();
 }

@@ -2,7 +2,9 @@ package controllers.entityControllers;
 
 import models.entities.Avatar;
 import models.map.Map;
+import models.skills.SneakSkills.TileDetection;
 import utilities.InputMapping;
+import utilities.StateManager;
 import utilities.Task;
 import views.GameView;
 import views.View;
@@ -15,10 +17,10 @@ import java.awt.event.KeyEvent;
 public class AvatarController extends EntityController {
     private InputMapping keyPressMapping;
     private Avatar avatar;
-    private View gameView;
-    public AvatarController(Avatar avatar, View view){
+    private GameView gameView;
+    public AvatarController(Avatar avatar, GameView gameView){
+        this.gameView = gameView;
         this.avatar = avatar;
-        this.gameView = view;
         keyPressMapping = new InputMapping();
 
         initKeyPressMapping();
@@ -37,7 +39,9 @@ public class AvatarController extends EntityController {
     protected void initKeyPressMapping(){
         Task moveNorth = new Task() {
             @Override
-            public void run() { avatar.move(Map.Direction.NORTH);}
+            public void run() {
+                moveAndDetect(Map.Direction.NORTH);
+            }
 
             @Override
             public void stop() { avatar.stopMoving(); }
@@ -92,8 +96,23 @@ public class AvatarController extends EntityController {
         addKeyPressMapping(moveSouthEast, KeyEvent.VK_C);
         addKeyPressMapping(moveNorthEast, KeyEvent.VK_E);
     }
+    //Method is called whenever entity moves. Basically checks what is in the tile through
+    //Tile detection and then whether an NPC is detected, it'll paint the interaction
+    public void moveAndDetect(Map.Direction direction){
+        TileDetection td;
+        td = avatar.move(direction);
 
+        if (td.npcDetected()){
+            System.out.println("Action is true");
+            gameView.initNPCActionView(td.getNpc());
+            gameView.renderNPCAction(true);
 
+            avatar.startInteraction();
+        }else {
+            System.out.println("Action is false");
+            gameView.renderNPCAction(false);
+        }
+    }
     protected final void addKeyPressMapping(Task task, int... key) {
 
         keyPressMapping.put(getKeyIntMapping(key), task);
@@ -129,8 +148,4 @@ public class AvatarController extends EntityController {
 
     }
 
-    public void startNPCInteraction(){
-       // gameView.startAction();
-
-    }
 }

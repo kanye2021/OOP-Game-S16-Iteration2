@@ -5,6 +5,7 @@ import controllers.entityControllers.NPCController;
 import models.entities.Entity;
 import models.map.Map;
 import models.stats.StatModificationList;
+import views.GameView;
 import views.NPCActionView;
 
 import java.awt.*;
@@ -14,16 +15,13 @@ import java.util.ArrayList;
  * Created by aseber on 2/22/16.
  */
 public abstract class NPC extends Entity {
-    private ArrayList<Action> actionList;
-    private NPCController npcController;
+    protected ArrayList<Action> actionList;
+
     public NPC(Point location, Map map) {
         super(location, map);
-
+        actionList = new ArrayList<>();
     }
 
-    protected final void doAction(){
-
-    }
     @Override
     protected final StatModificationList initInitialStats() {
 
@@ -48,8 +46,11 @@ public abstract class NPC extends Entity {
 //Starts the interaction between entities (For now it is also showcasing the view list
     public void startInteraction(){
         System.out.println("Starts interaction with npc");
-
     }
+    public ArrayList<Action> getActionList(){
+        return actionList;
+    }
+
 
 
 

@@ -25,6 +25,8 @@ public class Villager extends NPC{
     }
     //---------NPC Stuff------------
     public void initActions(){
+        actionList.add(new Talk(this, "Blah blah"));
+        actionList.add (new Attack(this));
 
     }
     ///------------Entity Stuff--------------
@@ -33,7 +35,7 @@ public class Villager extends NPC{
         return new Smasher();
     }
     protected HashMap<Map.Direction, String> initSprites(){
-        String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/entity-smasher-");
+        String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/entity-shopkeeper-");
 
         HashMap<Map.Direction, String> imagePaths = new HashMap<>();
         imagePaths.put(Map.Direction.NORTH, imageBasePath + "N.png");

@@ -19,11 +19,12 @@ public class GameView extends View implements Observer{
     private StatusViewport statusViewport;
     //Container of views that will turn on or off
     private NPCActionView npcActionView;
-    //private boolean showEntityInteraction;
+
+    private boolean hasNPCAction;
 
     public GameView(int width, int height, Display display){
         super(width, height, display);
-
+        hasNPCAction = false;
     }
 
     public void initAreaViewport(Map map, Avatar avatar){
@@ -45,10 +46,10 @@ public class GameView extends View implements Observer{
             statusViewport.render(g);
         }
 
-//        //TEST TO CHECK FOR VIEWS
-//        if (npcActionView != null){
-//            npcActionView.render(g);
-//        }
+        //TEST TO CHECK FOR VIEWS
+        if (hasNPCAction){
+            npcActionView.render(g);
+        }
     }
 
     @Override
@@ -65,5 +66,12 @@ public class GameView extends View implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
+    }
+    public void renderNPCAction(boolean shouldRender){
+        if (shouldRender) {
+            hasNPCAction = true;
+        }else {
+            hasNPCAction = false;
+        }
     }
 }

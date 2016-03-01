@@ -40,11 +40,11 @@ public class GameState extends State {
         gameLoader.createNewGame(this, occupation);
 
         // Init the entity controllers
-        viewController.setAvatarController(new AvatarController(avatar,view));
+        viewController.setAvatarController(new AvatarController(avatar, (GameView)view));
 
         for (NPC npc : npcList){
             //n.addObserver((GameView)view);
-            viewController.setNpcControllers(new NPCController(npc,view));
+            viewController.setNpcControllers(npc);
         }
         // Int the viewports
         viewController.initViewports(map, avatar, npcList);

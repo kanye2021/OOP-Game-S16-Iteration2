@@ -7,8 +7,8 @@ import models.entities.Avatar;
  */
 public class Talk extends Action{
     private String dialogue;
-    public Talk(NPC npc, Avatar avatar, String text){
-        super(npc,avatar);
+    public Talk(NPC npc, String text){
+        super(npc);
         dialogue = text;
     }
     public void activate(){
@@ -16,5 +16,9 @@ public class Talk extends Action{
     }
     public void startTalk(){
 
+    }
+    @Override
+    public String getName() {
+        return "Talk";
     }
 }

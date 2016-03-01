@@ -17,19 +17,19 @@ import java.util.ArrayList;
  */
 public class GameViewController extends ViewController{
 
-    private ArrayList<NPCController> npcControllers;
+    private ArrayList<NPC> npcList;
     private AvatarController avatarController;
 
     public GameViewController(View view, StateManager stateManager){
         super(view, stateManager);
-        npcControllers = new ArrayList<>();
+        npcList = new ArrayList<>();
     }
 
     public void setAvatarController(AvatarController controller){
         avatarController = controller;
     }
-    public void setNpcControllers(NPCController npcControllers){
-
+    public void setNpcControllers(NPC npc){
+        npcList.add(npc);
     }
     public void initViewports(Map map, Avatar avatar, ArrayList<NPC> npcList){
         ((GameView)view).initAreaViewport(map, avatar);
@@ -62,4 +62,5 @@ public class GameViewController extends ViewController{
     protected void initKeyPressMapping() {
 
     }
+
 }

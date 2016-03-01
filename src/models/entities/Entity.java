@@ -9,6 +9,7 @@ import models.map.Map;
 import models.map.Terrain;
 import models.occupation.Occupation;
 import models.skills.SkillList;
+import models.skills.SneakSkills.TileDetection;
 import models.stats.StatModificationList;
 import models.stats.Stats;
 import views.sprites.DirectionalSprite;
@@ -93,14 +94,18 @@ public abstract class Entity extends Observable implements ActionListener{
     public Stats getStats(){return stats;}
     public SkillList getSkills(){return skills;}
 
-    public final void move(Map.Direction direction){
+    public final TileDetection move(Map.Direction direction){
         updateMovementTimerDelay();
         orientation = direction;
         currentMovement = direction;
 
+        TileDetection td = map.moveEntity(Entity.this, currentMovement);
+        location = td.getLocation();
         // Call action performed so there is no lag when you press a button and start the timer.
         actionPerformed(null);
         movementTimer.start();
+
+        return td;
     }
 
     public final void stopMoving(){
@@ -110,7 +115,6 @@ public abstract class Entity extends Observable implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e){
-        location = map.moveEntity(Entity.this, currentMovement);
         setChanged();
         notifyObservers();
     }
