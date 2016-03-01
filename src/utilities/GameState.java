@@ -7,6 +7,7 @@ import models.entities.Avatar;
 import models.entities.NPC;
 import models.entities.Pet;
 import models.map.Map;
+import views.GameView;
 import views.View;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class GameState extends State {
         gameLoader.createNewGame(this, occupation);
 
         // Init the entity controllers
-        viewController.setAvatarController(new AvatarController(avatar));
+        viewController.setAvatarController(new AvatarController(avatar, viewController));
 
         // Int the viewports
         viewController.initViewports(map, avatar);
