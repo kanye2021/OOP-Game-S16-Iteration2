@@ -58,13 +58,15 @@ public abstract class Item {
         STEEL_SHIELD(1502) {public Item createInstance() {return new SteelShield();}},
         MITHRIL_SHIELD(1503) {public Item createInstance() {return new MithrilShield();}},
         GOLD_SHIELD(1504) {public Item createInstance() {return new GoldShield();}},
-        RUNITE_SHIELD(1505) {public Item createInstance() {return new RuniteShield();}},
+        RUNITE_SHIELD(1505) {public Item createInstance() {return new RuniteShield();}};
 
-        GRAVE(2000),
-        OCTOPUS(2001),
-        STATUE(2002);
+//        GRAVE(2000),
+//        OCTOPUS(2001),
+//        STATUE(2002);
 
         private int ID;
+
+        public abstract Item createInstance();
 
         ItemDictionary(int ID) {
 
