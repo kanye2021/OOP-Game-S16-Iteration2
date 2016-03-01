@@ -48,7 +48,8 @@ public class Tile {
             // TODO: Implment entity/ entity interaction.
             System.out.println("In tile");
             //entity.notifyObservers();
-            //this.entity.startInteraction();
+            //the NPC will contain all of the interactions
+            this.entity.startInteraction();
             return false;
         }
 

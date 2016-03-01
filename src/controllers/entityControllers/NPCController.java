@@ -4,6 +4,7 @@ import models.entities.npc.Action;
 import models.entities.npc.NPC;
 import utilities.InputMapping;
 import views.NPCActionView;
+import views.View;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class NPCController extends EntityController {
     private ArrayList<Action> actionList;
 
     public NPCController(){} //Default constructor
-    public NPCController(NPC npc){
+    public NPCController(NPC npc, View gameView){
         this.npc = npc;
     }
 

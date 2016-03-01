@@ -69,7 +69,7 @@ public class GameLoader {
 
         // TODO: Inilialize the npcs. (needs to be done by xml)
         //TODO: Current a tmp npc
-        Point tmp = new Point(0,-3);
+        Point tmp = new Point(-10,-3);
         Villager newVillager = new Villager(tmp, newMap);
         newMap.insertEntity(newVillager);
         ArrayList<NPC> tmpList = new ArrayList<>();

@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public abstract class NPC extends Entity {
     private ArrayList<Action> actionList;
-
+    private NPCController npcController;
     public NPC(Point location, Map map) {
         super(location, map);
 
@@ -42,13 +42,12 @@ public abstract class NPC extends Entity {
     @Override
     protected final EntityController initController() {
 
-        return new NPCController(this); // AIController!
+        return null; // AIController!
 
     }
 //Starts the interaction between entities (For now it is also showcasing the view list
     public void startInteraction(){
         System.out.println("Starts interaction with npc");
-        ((NPCController)controller).start();
 
     }
 

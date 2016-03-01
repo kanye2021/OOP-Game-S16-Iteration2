@@ -4,6 +4,8 @@ import models.entities.Avatar;
 import models.map.Map;
 import utilities.InputMapping;
 import utilities.Task;
+import views.GameView;
+import views.View;
 
 import java.awt.event.KeyEvent;
 
@@ -13,9 +15,10 @@ import java.awt.event.KeyEvent;
 public class AvatarController extends EntityController {
     private InputMapping keyPressMapping;
     private Avatar avatar;
-
-    public AvatarController(Avatar avatar){
+    private View gameView;
+    public AvatarController(Avatar avatar, View view){
         this.avatar = avatar;
+        this.gameView = view;
         keyPressMapping = new InputMapping();
 
         initKeyPressMapping();
@@ -123,6 +126,11 @@ public class AvatarController extends EntityController {
         }
 
         return number;
+
+    }
+
+    public void startNPCInteraction(){
+       // gameView.startAction();
 
     }
 }

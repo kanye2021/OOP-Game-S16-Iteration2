@@ -28,7 +28,9 @@ public class GameViewController extends ViewController{
     public void setAvatarController(AvatarController controller){
         avatarController = controller;
     }
+    public void setNpcControllers(NPCController npcControllers){
 
+    }
     public void initViewports(Map map, Avatar avatar, ArrayList<NPC> npcList){
         ((GameView)view).initAreaViewport(map, avatar);
         ((GameView)view).initStatusViewport(avatar.getStats());

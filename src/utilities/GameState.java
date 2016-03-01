@@ -2,6 +2,7 @@ package utilities;
 
 import controllers.GameViewController;
 import controllers.entityControllers.AvatarController;
+import controllers.entityControllers.NPCController;
 import controllers.entityControllers.PetController;
 import models.entities.Avatar;
 import models.entities.Pet;
@@ -9,6 +10,7 @@ import models.entities.Pet;
 import models.entities.npc.NPC;
 
 import models.map.Map;
+import views.GameView;
 import views.View;
 
 import java.util.ArrayList;
@@ -38,11 +40,11 @@ public class GameState extends State {
         gameLoader.createNewGame(this, occupation);
 
         // Init the entity controllers
-        viewController.setAvatarController(new AvatarController(avatar));
+        viewController.setAvatarController(new AvatarController(avatar,view));
 
-        //Adding NPC observers to view controller
-        for (NPC n : npcList){
-          //  n.addObserver(viewController);
+        for (NPC npc : npcList){
+            //n.addObserver((GameView)view);
+            viewController.setNpcControllers(new NPCController(npc,view));
         }
         // Int the viewports
         viewController.initViewports(map, avatar, npcList);
