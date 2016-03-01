@@ -23,64 +23,62 @@ public class StatsCondition{
         this.requiredAmount = requiredAmt;
     }
     //getStatType is used to find the stats of a certain entity so we can compare it in checkCondition
-    public void getStatType(){
+    private void getStatType(){
 
-    //First things first find it!
-    if(statType.equals("LIVES")){
+        //First things first find it!
+        if(statType.equals("LIVES")){
 
-        entityAmt = stats.getLives();
+            entityAmt = stats.getLives();
 
-    }else if(statType.equals("STRENGTH")){
+        }else if(statType.equals("STRENGTH")){
 
-        entityAmt = stats.getStrength();
+            entityAmt = stats.getStrength();
 
-    }else if(statType.equals("AGILITY")){
+        }else if(statType.equals("AGILITY")){
 
-        entityAmt = stats.getAgility();
+            entityAmt = stats.getAgility();
 
-    }else if(statType.equals("INTELLECT")){
+        }else if(statType.equals("INTELLECT")){
 
-        entityAmt = stats.getIntellect();
+            entityAmt = stats.getIntellect();
 
-    }else if(statType.equals("HARDINESS")){
+        }else if(statType.equals("HARDINESS")){
 
-        entityAmt = stats.getHardiness();
+            entityAmt = stats.getHardiness();
 
-    }else if(statType.equals("EXPERIENCE")){
+        }else if(statType.equals("EXPERIENCE")){
 
-        entityAmt = stats.getExperience();
+            entityAmt = stats.getExperience();
 
-    }else if(statType.equals("MOVEMENT")){
+        }else if(statType.equals("MOVEMENT")){
 
-        entityAmt = stats.getMovement();
+            entityAmt = stats.getMovement();
 
-    }else if(statType.equals("HEALTH")){
+        }else if(statType.equals("HEALTH")){
 
-        entityAmt = stats.getHealth();
+            entityAmt = stats.getHealth();
 
-    }else if(statType.equals("MANA")){
+        }else if(statType.equals("MANA")){
 
-        entityAmt = stats.getMana();
+            entityAmt = stats.getMana();
 
-    }else if(statType.equals("WEAPON_MODIFIER")){
+        }else if(statType.equals("WEAPON_MODIFIER")){
 
-        entityAmt = stats.getWeaponModifier();
+            entityAmt = stats.getWeaponModifier();
 
-    }else if(statType.equals("ARMOR_MODIFIER")){
+        }else if(statType.equals("ARMOR_MODIFIER")){
 
-        entityAmt = stats.getArmorModifier();
+            entityAmt = stats.getArmorModifier();
 
-    }else{
+        }else{
 
-        System.out.println("WTF how did you get here?");
-    }
-
-
+            System.out.println("WTF how did you get here?");
+        }
 
     }
 
     public boolean checkCondition(){
         getStatType();
-        return (comparison.isValid(entityAmt,requiredAmount));
+        return (comparison.isValid(entityAmt, requiredAmount));
     }
 }
