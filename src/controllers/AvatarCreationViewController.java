@@ -1,5 +1,6 @@
 package controllers;
 
+import utilities.GameState;
 import utilities.State;
 import utilities.StateManager;
 import utilities.Task;
@@ -28,6 +29,9 @@ public class AvatarCreationViewController extends ViewController {
             public void run() {
                 ((AvatarCreationView) view).previousOption();
             }
+
+            @Override
+            public void stop() {}
         };
 
         nextOption = new Task() {
@@ -35,29 +39,40 @@ public class AvatarCreationViewController extends ViewController {
             public void run() {
                 ((AvatarCreationView) view).nextOption();
             }
+
+            @Override
+            public void stop() {}
         };
 
         selectOption = new Task() {
             @Override
             public void run() {
                 State nextState;
+                GameView gameView;
+                GameViewController gameViewController;
                 switch (((AvatarCreationView)view).getSelected()) {
                     case SMASHER:
-                        TestView testView = new TestView(view.getScreenWidth(), view.getScreenHeight());
-                        TestViewController testController = new TestViewController(testView, stateManager);
-                        nextState = new State(testController, testView);
+                        gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
+                        gameViewController = new GameViewController(gameView, stateManager);
+                        nextState = new GameState(gameViewController, gameView, "smasher");
                         stateManager.setActiveState(nextState);
                         break;
                     case SUMMONER:
-                        LoadGameView loadGameView = new LoadGameView(view.getScreenWidth(), view.getScreenHeight());
-                        LoadGameViewController loadGameViewController = new LoadGameViewController(loadGameView, stateManager);
-                        nextState = new State(loadGameViewController, loadGameView);
+                        gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
+                        gameViewController = new GameViewController(gameView, stateManager);
+                        nextState = new GameState(gameViewController, gameView, "summoner");
                         stateManager.setActiveState(nextState);
                         break;
                     case SNEAK:
-                        System.exit(0);
+                        gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(),view.getDisplay());
+                        gameViewController = new GameViewController(gameView, stateManager);
+                        nextState = new GameState(gameViewController, gameView, "sneak");
+                        stateManager.setActiveState(nextState);
+                        break;
                 }
             }
+            @Override
+            public void stop() {}
         };
 
         addKeyPressMapping(previousOption, KeyEvent.VK_UP);

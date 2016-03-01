@@ -22,8 +22,8 @@ public class LoadGameView extends View {
     ArrayList<File> listOfSaveFiles;
     int selectedOption;
 
-    public LoadGameView (int width, int height){
-        super(width, height);
+    public LoadGameView (int width, int height, Display display){
+        super(width, height, display);
         selectedOption = 0;
     }
     public void render(Graphics g){

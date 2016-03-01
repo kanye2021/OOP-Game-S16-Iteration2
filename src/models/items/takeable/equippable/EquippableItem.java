@@ -1,5 +1,6 @@
 package models.items.takeable.equippable;
 
+import models.conditions.ConditionList;
 import models.entities.Entity;
 import models.Equipment;
 import models.items.takeable.TakeableItem;
@@ -11,8 +12,10 @@ import models.stats.StatModificationList;
 public class EquippableItem extends TakeableItem {
 
     protected Equipment.Component component;
-    public StatModificationList onEquipModifications;
+    public StatModificationList onEquipModifications = new StatModificationList();
+    public ConditionList equipConditions = new ConditionList();
 
+    protected int requiredLv;
     public boolean onTouch(Entity entity) {
 
         return false;
@@ -21,7 +24,12 @@ public class EquippableItem extends TakeableItem {
 
     public final void onUse(Entity entity) { // Equivalent to equipping.
 
-        entity.applyStatMod(onEquipModifications);
+        if (equipConditions.checkCondition()) {
+
+            entity.applyStatMod(onEquipModifications);
+            // add item to inventory
+
+        }
 
     }
 

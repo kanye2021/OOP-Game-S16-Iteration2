@@ -9,11 +9,13 @@ public abstract class View {
 
     private int screenWidth;
     private int screenHeight;
+    private Display display;
 
-    public View(int width, int height){
+    public View(int width, int height, Display display){
 
         this.screenWidth = width;
         this.screenHeight = height;
+        this.display = display;
         scaleView();
     }
 
@@ -28,12 +30,16 @@ public abstract class View {
     public abstract void scaleView();
 
     // Accessors
-    public int getScreenWidth(){
-        return screenWidth;
+    public final int getScreenWidth(){
+        return this.screenWidth;
     }
 
-    public int getScreenHeight(){
-        return screenHeight;
+    public final int getScreenHeight(){
+        return this.screenHeight;
+    }
+
+    public Display getDisplay(){
+        return display;
     }
 
 }

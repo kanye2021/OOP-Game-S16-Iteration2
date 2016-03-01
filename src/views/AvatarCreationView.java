@@ -1,6 +1,5 @@
 package views;
 
-import controllers.AvatarCreationViewController;
 import utilities.IOUtilities;
 
 import javax.swing.*;
@@ -50,8 +49,8 @@ public class AvatarCreationView extends View {
     // Data Options
     private OccupationOptions selected;
 
-    public AvatarCreationView(int width, int height){
-        super(width, height);
+    public AvatarCreationView(int width, int height, Display display){
+        super(width, height, display);
         selected = OccupationOptions.SMASHER;
         arrowFilePath = "./src/res/arrow.png";
         arrowFilePath = IOUtilities.getFileSystemDependentPath(arrowFilePath);
