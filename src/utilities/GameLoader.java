@@ -2,6 +2,8 @@ package utilities;
 
 import controllers.entityControllers.PetController;
 import models.entities.*;
+import models.entities.npc.NPC;
+import models.entities.npc.Villager;
 import models.items.Item;
 import models.map.Decal;
 import models.map.Map;
@@ -16,6 +18,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -57,15 +60,22 @@ public class GameLoader {
         // Add the avatar to the map.
         newMap.insertEntity(newAvatar);
 
-        // TODO: Inilialize the npcs.
-        game.setNpcList(null);
-
         // TODO: Delete later. Just for testing and debugging pets.
         // init the pet one tile right the avatar (DEFAULT_START_LOCATION)
         Pet pet = new Pet(new Point(0, -1), newMap);
         PetController petController = new PetController(pet);
         newMap.insertEntity(pet);
         game.setAvatarsPet(pet, petController);
+
+        // TODO: Inilialize the npcs. (needs to be done by xml)
+        //TODO: Current a tmp npc
+        Point tmp = new Point(0,-3);
+        Villager newVillager = new Villager(tmp, newMap);
+        newMap.insertEntity(newVillager);
+        ArrayList<NPC> tmpList = new ArrayList<>();
+        tmpList.add(newVillager);
+        game.setNpcList(tmpList);
+
     }
 
     private Map loadMap(String filepath){
@@ -165,12 +175,15 @@ public class GameLoader {
 
                 // TODO: Implement adding entities to the map from xml.
                 // Get any entities that are on the tile.
-//                NodeList entityNodes = tileElement.getElementsByTagName("entity");
-//                if (entityNodes.getLength() > 0) {
-//                    Element entityElement = (Element) entityNodes.item(0);
-//                    //TODO: Load whatever attributes are necessary
-////                    entity = new Entity();
-//                }
+                NodeList entityNodes = tileElement.getElementsByTagName("entity");
+                if (entityNodes.getLength() > 0) {
+                    Element entityElement = (Element) entityNodes.item(0);
+                    //TODO: Load whatever attributes are necessary
+                    //entity = new Entity();
+                    Point p = new Point();
+                    p.setLocation(x,y);
+                    //entity = new Villager();
+                }
 
 //                tiles.get(new Point(x, y)) = new Tile(terrain, areaEffect, decal, item, entity);
                 tiles.put(new Point(x, y),  new Tile(terrain, decal, item, entity));

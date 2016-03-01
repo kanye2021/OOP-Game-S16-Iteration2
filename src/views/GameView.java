@@ -1,6 +1,8 @@
 package views;
 
 import models.entities.Avatar;
+import models.entities.Entity;
+import models.entities.npc.NPC;
 import models.map.Map;
 import models.stats.Stats;
 
@@ -13,6 +15,9 @@ public class GameView extends View {
 
     private AreaViewport areaViewport;
     private StatusViewport statusViewport;
+    //Container of views that will turn on or off
+    private NPCActionView npcActionView;
+    //private boolean showEntityInteraction;
 
     public GameView(int width, int height, Display display){
         super(width, height, display);
@@ -26,6 +31,10 @@ public class GameView extends View {
     public void initStatusViewport(Stats stats){
         this.statusViewport = new StatusViewport(getScreenWidth(), getScreenHeight(), getDisplay(), stats);
     }
+    public void initNPCActionView(NPC npc){
+        this.npcActionView = new NPCActionView(getScreenWidth(), getScreenHeight(), getDisplay(), npc);
+        //showEntityInteraction = false;
+    }
 
     @Override
     public void render(Graphics g) {
@@ -33,6 +42,11 @@ public class GameView extends View {
             areaViewport.render(g);
             statusViewport.render(g);
         }
+
+//        //TEST TO CHECK FOR VIEWS
+//        if (npcActionView != null){
+//            npcActionView.render(g);
+//        }
     }
 
     @Override
@@ -46,4 +60,5 @@ public class GameView extends View {
     public void scaleView() {
 
     }
+
 }

@@ -52,7 +52,7 @@ public abstract class Entity extends Observable implements ActionListener{
 
     public Entity(Point location, Map map) {
         this.location = location;
-        this.orientation = Map.Direction.NORTH;
+        this.orientation = Map.Direction.SOUTH;
         this.stats = new Stats();
         this.occupation = initOccupation();
         this.skills = occupation.getSkills();
@@ -92,7 +92,6 @@ public abstract class Entity extends Observable implements ActionListener{
     }
     public Stats getStats(){return stats;}
     public SkillList getSkills(){return skills;}
-
 
     public final void move(Map.Direction direction){
         updateMovementTimerDelay();
@@ -188,12 +187,11 @@ public abstract class Entity extends Observable implements ActionListener{
     protected abstract Occupation initOccupation();
     protected abstract HashMap<Map.Direction, String> initSprites();
     protected abstract EntityController initController();
-
+    public abstract void startInteraction();
     public final Image getImage(){
 
         return sprite.getImage(orientation);
     }
-
     // TODO: Pet methods may not belong here? just getting stuff 2 work.
     // They could belong here tho.
     public final Pet getPet() {

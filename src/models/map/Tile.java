@@ -1,6 +1,7 @@
 package models.map;
 
 import models.entities.Entity;
+import models.entities.npc.NPC;
 import models.items.Item;
 
 /**
@@ -45,6 +46,9 @@ public class Tile {
         // Check if there is another entity on this tile.
         if(this.entity != null){
             // TODO: Implment entity/ entity interaction.
+            System.out.println("In tile");
+            //entity.notifyObservers();
+            //this.entity.startInteraction();
             return false;
         }
 
