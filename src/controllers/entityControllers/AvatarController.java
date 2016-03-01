@@ -5,6 +5,7 @@ import models.map.Map;
 import utilities.InputMapping;
 import utilities.Task;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
@@ -88,6 +89,14 @@ public class AvatarController extends EntityController {
         addKeyPressMapping(moveSouth, KeyEvent.VK_S);
         addKeyPressMapping(moveSouthEast, KeyEvent.VK_C);
         addKeyPressMapping(moveNorthEast, KeyEvent.VK_E);
+
+        addKeyPressMapping(moveNorthWest, KeyEvent.VK_NUMPAD7);
+        addKeyPressMapping(moveNorth, KeyEvent.VK_NUMPAD8);
+        addKeyPressMapping(moveNorthEast, KeyEvent.VK_NUMPAD9);
+        addKeyPressMapping(moveSouthEast, KeyEvent.VK_NUMPAD3);
+        addKeyPressMapping(moveSouth, KeyEvent.VK_NUMPAD2);
+        addKeyPressMapping(moveSouthWest, KeyEvent.VK_NUMPAD1);
+
     }
 
 
