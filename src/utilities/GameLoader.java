@@ -3,9 +3,6 @@ package utilities;
 import controllers.entityControllers.PetController;
 import models.entities.*;
 import models.items.Item;
-import models.items.interactive.InteractiveItem;
-import models.items.oneshot.OneShotItem;
-import models.items.takeable.TakeableItem;
 import models.map.Decal;
 import models.map.Map;
 import models.map.Terrain;
@@ -69,6 +66,10 @@ public class GameLoader {
         PetController petController = new PetController(pet);
         newMap.insertEntity(pet);
         game.setAvatarsPet(pet, petController);
+
+        // To Denzel: how to create an item ->
+        // From: Sergio
+        Item item = Item.ItemDictionary.GOLD_BOOTS.createInstance();
     }
 
     private Map loadMap(String filepath){

@@ -1,6 +1,7 @@
 package models.items;
 
 import models.entities.Entity;
+import models.items.takeable.equippable.EquippableItem;
 import models.items.takeable.equippable.chestplate.*;
 import models.items.takeable.equippable.helmets.*;
 import models.items.takeable.equippable.greaves.*;
@@ -61,13 +62,16 @@ public abstract class Item {
         GOLD_SHIELD(1504) {public Item createInstance() {return new GoldShield();}},
         RUNITE_SHIELD(1505) {public Item createInstance() {return new RuniteShield();}},
 
-        GRAVE(2000),
-        OCTOPUS(2001),
-        STATUE(2002);
+        // Return random default equippable item 4 now
+        GRAVE(2000) {public Item createInstance() {return new EquippableItem();}},
+        OCTOPUS(2001) {public Item createInstance() {return new EquippableItem();}},
+        STATUE(2002) {public Item createInstance() {return new EquippableItem();}};
 
 
 
         private int ID;
+
+        public abstract Item createInstance();
 
         ItemDictionary(int ID) {
 
