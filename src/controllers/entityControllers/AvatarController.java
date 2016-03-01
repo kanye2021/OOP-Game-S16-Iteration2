@@ -1,9 +1,14 @@
 package controllers.entityControllers;
 
+import controllers.GameViewController;
+import controllers.TestViewController;
 import models.entities.Avatar;
 import models.map.Map;
 import utilities.InputMapping;
+import utilities.SubState;
 import utilities.Task;
+import views.GameView;
+import views.ToastView;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -14,9 +19,12 @@ import java.awt.event.KeyEvent;
 public class AvatarController extends EntityController {
     private InputMapping keyPressMapping;
     private Avatar avatar;
+    // Required to manage SubStates. i.e: Inventory, EquippedItems, Entity Interactions.
+    private GameViewController gameViewController;
 
-    public AvatarController(Avatar avatar){
+    public AvatarController(Avatar avatar, GameViewController gameViewController){
         this.avatar = avatar;
+        this.gameViewController = gameViewController;
         keyPressMapping = new InputMapping();
 
         initKeyPressMapping();
@@ -75,6 +83,44 @@ public class AvatarController extends EntityController {
             @Override
             public void stop() { avatar.stopMoving(); }
         };
+        Task openToastTestView = new Task() {
+            @Override
+            public void run() {
+                GameView gameView = (GameView)gameViewController.getView();
+                ToastView toast = new ToastView(gameView.getScreenWidth(), gameView.getScreenWidth(), gameView.getDisplay(), "Press 'I' to dismiss this toast");
+                // For a "Toast Message" the Game View controller will still be handling input, so pass in null.
+                SubState toastSubState = new SubState(null, toast);
+                // Pass a new inputMapping to the current VC, to handle our interaction within this new SubState:
+                // In this cass the current VC is the GameVC, which passes input to the AvatarVC, so i'm adding this
+                // input mapping to the Avatar Controller.
+                // These input mappings for the new SubState dont need to be created here, if the new substate is the inventory
+                // for example. the inventory VC would handle the new input appings
+                Task openToast = this;
+                AvatarController.this.addKeyPressMapping(new Task() {
+                    @Override
+                    public void run() {
+                        toastSubState.dismiss();
+                        // Re-map the "I" key to open the toast view again
+                        AvatarController.this.addKeyPressMapping(openToast, KeyEvent.VK_I);
+                    }
+                    @Override
+                    public void stop() {}
+                }, KeyEvent.VK_I);
+                // Add the substate
+                gameViewController.addSubState(toastSubState);
+            }
+            @Override
+            public void stop() {}
+        };
+        Task clearSubStates= new Task() {
+            @Override
+            public void run() {
+                GameView gameView = (GameView) gameViewController.getView();
+                gameView.clearSubStates();
+            }
+            @Override
+            public void stop() {}
+        };
 
 //        addKeyPressMapping(moveNorth, KeyEvent.VK_NUMPAD8);
 //        addKeyPressMapping(moveNorthWest, KeyEvent.VK_NUMPAD7);
@@ -97,6 +143,8 @@ public class AvatarController extends EntityController {
         addKeyPressMapping(moveSouth, KeyEvent.VK_NUMPAD2);
         addKeyPressMapping(moveSouthWest, KeyEvent.VK_NUMPAD1);
 
+        // TODO: Testing opening a random overlay toast view
+        addKeyPressMapping(openToastTestView, KeyEvent.VK_I);
     }
 
 
