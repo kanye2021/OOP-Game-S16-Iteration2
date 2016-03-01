@@ -5,6 +5,7 @@ import controllers.entityControllers.NPCController;
 import models.entities.Avatar;
 import models.map.Map;
 import utilities.StateManager;
+import utilities.SubState;
 import views.GameView;
 import views.View;
 
@@ -33,12 +34,22 @@ public class GameViewController extends ViewController{
         ((GameView)view).initStatusViewport(avatar.getStats());
     }
 
+    public void addSubState(SubState s) {
+        ((GameView)view).addSubState(s);
+    }
+    public void insertSubState(SubState s, int index) {
+        ((GameView)view).insertSubState(s, index);
+    }
+
     @Override
     public final void handleKeyPress(KeyEvent e) {
         super.handleKeyPress(e);
 
-        // Give the keypress to the avatar controller as well
-        if(avatarController!=null){
+        //try to pass input to GameView's substate:
+        boolean hasSubstateThatWantsToTakeInput = ((GameView)view).passInputToSubstate(e);
+
+        // If no substate(s) (Result of false) ->Give the keypress to the avatar controller
+        if(!hasSubstateThatWantsToTakeInput && avatarController!=null){
             avatarController.handleKeyPress(e);
         }
     }
