@@ -55,6 +55,10 @@ public class Stats {
     private TimerTask currentTask;
     private String lastTaskType;
 
+    public Stats(){
+        this.level = 1;
+    }
+
     // Call this whenever a primary stat is changed. This holds the derived stats that won't be changed
     // by anything other than primary stats.
     private void updateDerivedStats(){
@@ -124,7 +128,7 @@ public class Stats {
     }
 
     public void modifyHealth(int delta) {
-        this.health = MathUtilities.putInRange(0, this.health + delta, Integer.MAX_VALUE);
+        this.health = MathUtilities.putInRange(0, this.health + delta, this.maxHealth);
 
         if (this.health == 0) {
 
@@ -137,7 +141,7 @@ public class Stats {
     }
 
     public void modifyMana(int delta) {
-        this.mana = MathUtilities.putInRange(0, this.mana + delta, Integer.MAX_VALUE);
+        this.mana = MathUtilities.putInRange(0, this.mana + delta, this.maxMana);
     }
 
     public void modifyWeaponModifier(int delta) {

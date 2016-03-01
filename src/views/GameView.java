@@ -85,4 +85,8 @@ public class GameView extends View {
     public void clearSubStates() {
         substates.clear();
     }
+
+    public void toggleDetailedStats(){
+        statusViewport.toggleDetails();
+    }
 }
