@@ -148,7 +148,7 @@ public class GameLoader {
                     String itemType = itemElement.getAttribute("type");
                     int id = Integer.parseInt(itemElement.getAttribute("id"));
 
-
+//                    item = Item.ItemDictionary;
                     //if statements for the different types of items
 
                     //if take-able
