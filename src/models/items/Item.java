@@ -7,6 +7,8 @@ import models.items.takeable.equippable.greaves.*;
 import models.items.takeable.equippable.boots.*;
 import models.items.takeable.equippable.gloves.*;
 import models.items.takeable.equippable.shield.*;
+import models.mount.Boat;
+import models.mount.Horse;
 import views.sprites.Sprite;
 
 import java.awt.*;
@@ -62,7 +64,11 @@ public abstract class Item {
 
         GRAVE(2000),
         OCTOPUS(2001),
-        STATUE(2002);
+        STATUE(2002),
+
+        //Mounts
+        HORSE(3000){public Item createInstance(){return new Horse();}},
+        BOAT(3001){public Item createInstance(){return new Boat();}};
 
         private int ID;
 

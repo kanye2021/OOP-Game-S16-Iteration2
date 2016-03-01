@@ -18,6 +18,7 @@ public class Equipment {
         BOOTS,
         GLOVES,
         SHIELD,
+        MOUNT,
         ONE_HANDED_WEAPON,
         TWO_HANDED_WEAPON;
 
