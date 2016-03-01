@@ -4,12 +4,16 @@ import controllers.ViewController;
 import views.Display;
 import views.View;
 
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
 /**
  * Created by Bradley on 2/17/16.
  */
 public class State {
-    private ViewController viewController;
-    private View view;
+    protected ViewController viewController;
+    protected View view;
+    protected ArrayList<SubState> substates;
 
     public State(ViewController viewController, View view){
         this.viewController = viewController;
@@ -23,4 +27,5 @@ public class State {
         // Update the display.
         display.repaint();
     }
+
 }
