@@ -26,47 +26,47 @@ public class StatsCondition{
     public void getStatType(){
 
     //First things first find it!
-    if(statType.equals("LIVES")){
+    if(statType==Stats.Type.LIVES){
 
         entityAmt = stats.getLives();
 
-    }else if(statType.equals("STRENGTH")){
+    }else if(statType==Stats.Type.STRENGTH){
 
         entityAmt = stats.getStrength();
 
-    }else if(statType.equals("AGILITY")){
+    }else if(statType==Stats.Type.AGILITY){
 
         entityAmt = stats.getAgility();
 
-    }else if(statType.equals("INTELLECT")){
+    }else if(statType==Stats.Type.INTELLECT){
 
         entityAmt = stats.getIntellect();
 
-    }else if(statType.equals("HARDINESS")){
+    }else if(statType==Stats.Type.HARDINESS){
 
         entityAmt = stats.getHardiness();
 
-    }else if(statType.equals("EXPERIENCE")){
+    }else if(statType==Stats.Type.EXPERIENCE){
 
         entityAmt = stats.getExperience();
 
-    }else if(statType.equals("MOVEMENT")){
+    }else if(statType==Stats.Type.MOVEMENT){
 
         entityAmt = stats.getMovement();
 
-    }else if(statType.equals("HEALTH")){
+    }else if(statType==Stats.Type.HEALTH){
 
         entityAmt = stats.getHealth();
 
-    }else if(statType.equals("MANA")){
+    }else if(statType==Stats.Type.MANA){
 
         entityAmt = stats.getMana();
 
-    }else if(statType.equals("WEAPON_MODIFIER")){
+    }else if(statType==Stats.Type.WEAPON_MODIFIER){
 
         entityAmt = stats.getWeaponModifier();
 
-    }else if(statType.equals("ARMOR_MODIFIER")){
+    }else if(statType==Stats.Type.ARMOR_MODIFIER){
 
         entityAmt = stats.getArmorModifier();
 

@@ -8,8 +8,15 @@ import java.awt.event.KeyEvent;
 /**
  * Created by aseber on 2/24/16.
  */
+//TODO:Figure out if level is connected to entity
 public class BargainSkill extends PassiveSkill {
+    private int bargainLv;
+    private final double constant = 2.0;//Constant used for discounts
+    private double percentDiscount;
 
+    public BargainSkill(){
+        bargainLv = 1;//Gets level from skill
+    }
     @Override
     protected SkillDictionary initID() {
 
@@ -19,9 +26,13 @@ public class BargainSkill extends PassiveSkill {
 
     @Override
     public void onUpdate(Entity entity) {
+        bargainLv = getLevel();//Gets the newly updated level
+        percentDiscount = (constant*(bargainLv-1))/100.0;
 
+    }
 
-
+    public double getPercentDiscount() {//used for when you access the shop.
+        return percentDiscount;
     }
 
 }
