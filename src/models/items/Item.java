@@ -1,12 +1,15 @@
 package models.items;
 
 import models.entities.Entity;
+import models.items.takeable.equippable.EquippableItem;
 import models.items.takeable.equippable.chestplate.*;
 import models.items.takeable.equippable.helmets.*;
 import models.items.takeable.equippable.greaves.*;
 import models.items.takeable.equippable.boots.*;
 import models.items.takeable.equippable.gloves.*;
 import models.items.takeable.equippable.shield.*;
+import models.mount.Boat;
+import models.mount.Horse;
 import views.sprites.Sprite;
 
 import java.awt.*;
@@ -58,11 +61,16 @@ public abstract class Item {
         STEEL_SHIELD(1502) {public Item createInstance() {return new SteelShield();}},
         MITHRIL_SHIELD(1503) {public Item createInstance() {return new MithrilShield();}},
         GOLD_SHIELD(1504) {public Item createInstance() {return new GoldShield();}},
-        RUNITE_SHIELD(1505) {public Item createInstance() {return new RuniteShield();}};
+        RUNITE_SHIELD(1505) {public Item createInstance() {return new RuniteShield();}},
 
-//        GRAVE(2000),
-//        OCTOPUS(2001),
-//        STATUE(2002);
+        // Return random default equippable item 4 now
+        GRAVE(2000) {public Item createInstance() {return new EquippableItem();}},
+        OCTOPUS(2001) {public Item createInstance() {return new EquippableItem();}},
+        STATUE(2002) {public Item createInstance() {return new EquippableItem();}},
+
+        //Mounts
+        HORSE(3000){public Item createInstance(){return new Horse();}},
+        BOAT(3001){public Item createInstance(){return new Boat();}};
 
         private int ID;
 

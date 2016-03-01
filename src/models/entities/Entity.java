@@ -7,6 +7,7 @@ import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
 import models.map.Terrain;
+import models.mount.Mount;
 import models.occupation.Occupation;
 import models.skills.SkillList;
 import models.stats.StatModificationList;
@@ -42,6 +43,8 @@ public abstract class Entity extends Observable implements ActionListener{
     private javax.swing.Timer movementTimer;
     private int movementTimerDelay;
     private Map.Direction currentMovement;
+
+
 //    private TimerTask currentMovement;
 
     // Plans for sprite: Entity will have a getImage() method to return the image
@@ -202,5 +205,7 @@ public abstract class Entity extends Observable implements ActionListener{
     public final void setPet(Pet pet) {
         this.pet = pet;
     }
+
+    public final void setPassableTerrain(String terrain){this.passableTerrain.add(terrain);}
 
 }
