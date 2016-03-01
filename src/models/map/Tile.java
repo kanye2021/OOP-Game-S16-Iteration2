@@ -31,6 +31,14 @@ public class Tile {
         this.entity = entity;
     }
 
+    // Creates a new tile with the same instance vars as the old tile
+    public Tile(Tile tile){
+        this.terrain = tile.getTerrain();
+        this.decal = tile.getDecal();
+        this.item = tile.getItem();
+        this.entity = tile.getEntity();
+    }
+
     // For now if there is already an entity on the tile. adding an entity will replace that
     // entity with this one. This may or may not be the desired affect so care should be taken
     // in the logic that consumes this function (and it has been).

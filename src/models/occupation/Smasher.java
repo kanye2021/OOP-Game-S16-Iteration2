@@ -27,7 +27,8 @@ public class Smasher extends Occupation {
 
         StatModificationList modifications = new StatModificationList(
                 new StatModification(Stats.Type.STRENGTH, 10),
-                new StatModification(Stats.Type.HARDINESS, 5)
+                new StatModification(Stats.Type.HARDINESS, 5),
+                new StatModification(Stats.Type.RADIUS_OF_VISIBILITY, 4)
         );
 
         return modifications;

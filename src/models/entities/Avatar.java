@@ -11,10 +11,12 @@ import java.awt.*;
  */
 public abstract class Avatar extends Entity {
 
+    private int radiusOfVisiblility;
+
     public Avatar(Point location, Map map) {
 
         super(location, map);
-
+        this.radiusOfVisiblility = 4;
     }
 
     @Override
