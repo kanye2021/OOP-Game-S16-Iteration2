@@ -18,10 +18,6 @@ public class Terrain {
         return type;
     }
 
-    public String getPathToFile(){
-        return type + ".png";
-    }
-
     public Image getImage(){
         String filePath = IOUtilities.getFileSystemDependentPath("./src/res/terrain/" + type + ".png");
         return IOUtilities.getImageIcon(filePath).getImage();

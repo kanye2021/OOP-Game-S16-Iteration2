@@ -66,6 +66,11 @@ public class AreaViewport extends View implements Observer {
         //Render the previously seen tiles in a similar manner
         renderRecursiveSeenTilesX(new Point(logicalPoint), new Point(logicalPoint), new Point(pixelPoint), 1, g2d);
         renderRecursiveSeenTilesX(new Point(logicalPoint), new Point(logicalPoint), new Point(pixelPoint), -1, g2d);
+
+        g.setColor(Color.RED);
+        g.drawArc(getScreenWidth() / 2 - 60, getScreenHeight() / 2 - 60 - 80, 120, 120, 0, 360);
+        g.setColor(Color.BLACK);
+
     }
 
 
