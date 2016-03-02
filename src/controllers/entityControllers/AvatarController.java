@@ -29,7 +29,7 @@ public class AvatarController extends EntityController {
         this.avatar = avatar;
         this.gameViewController = gameViewController;
         keyPressMapping = new InputMapping();
-
+        this.gameView = (GameView)gameViewController.getView();
         initKeyPressMapping();
     }
 
@@ -55,35 +55,35 @@ public class AvatarController extends EntityController {
         };
         Task moveNorthWest = new Task() {
             @Override
-            public void run() { avatar.move(Map.Direction.NORTH_WEST);}
+            public void run() { moveAndDetect(Map.Direction.NORTH_WEST);}
 
             @Override
             public void stop() { avatar.stopMoving(); }
         };
         Task moveSouthWest = new Task() {
             @Override
-            public void run() { avatar.move(Map.Direction.SOUTH_WEST);}
+            public void run() { moveAndDetect(Map.Direction.SOUTH_WEST);}
 
             @Override
             public void stop() { avatar.stopMoving(); }
         };
         Task moveSouth = new Task() {
             @Override
-            public void run() { avatar.move(Map.Direction.SOUTH);}
+            public void run() { moveAndDetect(Map.Direction.SOUTH);}
 
             @Override
             public void stop() { avatar.stopMoving(); }
         };
         Task moveSouthEast = new Task() {
             @Override
-            public void run() { avatar.move(Map.Direction.SOUTH_EAST);}
+            public void run() { moveAndDetect(Map.Direction.SOUTH_EAST);}
 
             @Override
             public void stop() { avatar.stopMoving(); }
         };
         Task moveNorthEast = new Task() {
             @Override
-            public void run() { avatar.move(Map.Direction.NORTH_EAST);}
+            public void run() { moveAndDetect(Map.Direction.NORTH_EAST);}
 
             @Override
             public void stop() { avatar.stopMoving(); }
