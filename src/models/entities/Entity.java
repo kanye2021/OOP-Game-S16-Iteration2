@@ -152,20 +152,26 @@ public abstract class Entity extends Observable implements ActionListener{
         return inventory;
     }
 
-    public final void addItemToInventory(TakeableItem item){
-        //inventory.addItem(item);
+    public final boolean addItemToInventory(TakeableItem item){
+        boolean successfullyAdded = inventory.addItem(item);
+        if (!successfullyAdded) {
+            System.out.println("Cant pick up item. Inventory is Full. Please drop an item");
+            //TODO: Make this a toast message^ with a timer.
+            return false;
+        } else return true;
     }
 
     public final void equipItem(EquippableItem item){
-        //inventory.removeItem(item);
-        //equippedItems.addItem(item);
+        inventory.removeItem(item);
+        // TODO: implement equipped items
+//        equippedItems.addItem(item);
 
-        //applyStatMod(item.getStatModification());
+        applyStatMod(item.getOnEquipModifications());
     }
 
     public final void dropItem(TakeableItem item){
-        //inventory.removeItem(item);
-        //map.addItem(location, item);
+        inventory.removeItem(item);
+        map.insertItemAtPoint(item, location);
     }
 
     // Wrapper functions for equpped items interaction

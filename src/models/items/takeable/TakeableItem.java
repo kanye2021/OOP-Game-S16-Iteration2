@@ -9,10 +9,10 @@ import models.stats.StatModificationList;
  */
 public abstract class TakeableItem extends Item {
 
-    public String name;
-    public String description;
-    public StatModificationList onPickUpModifications;
-    public int monetaryValue;
+    protected String name;
+    protected String description;
+    protected StatModificationList onPickUpModifications;
+    protected int monetaryValue;
 
     public boolean onTouch(Entity entity) {
 
@@ -27,5 +27,25 @@ public abstract class TakeableItem extends Item {
     @Override
     public String getType(){
         return "take-able";
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public StatModificationList getOnPickUpModifications() {
+        return onPickUpModifications;
+    }
+
+    public int getMonetaryValue() {
+        return monetaryValue;
+    }
+
+    public boolean isEquipable() {
+        return false;
     }
 }
