@@ -16,6 +16,7 @@ public class Tile {
     private Decal decal;
     private Item item;
     private Entity entity;
+    private boolean seen;
 
 //    public Tile(Terrain terrain, AreaEffect areaEffect, Decal decal, Item item, Entity entity) {
 //        this.terrain = terrain;
@@ -120,6 +121,7 @@ public class Tile {
         this.item = item;
     }
 
+<<<<<<< HEAD
     //Checks if the entity is actually a NPC
     public boolean hasNPC(){
         if (entity != null){ //assume all entities are npcs now
@@ -128,4 +130,8 @@ public class Tile {
             return false;
         }
     }
+=======
+    public void setSeen(){ seen = true; }
+    public boolean getSeen(){ return seen; }
+>>>>>>> 701dfeb4ee5743fd379ae06c2f3658da7aeef295
 }

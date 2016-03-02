@@ -19,7 +19,6 @@ public class BaneSkill extends PassiveSkill {
     public void onUpdate(Entity entity) {
 
 
-
     }
 
 }

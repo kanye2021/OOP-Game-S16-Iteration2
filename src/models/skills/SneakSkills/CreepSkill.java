@@ -12,9 +12,7 @@ public class CreepSkill extends ActiveSkill {
 
     @Override
     protected SkillDictionary initID() {
-
         return SkillDictionary.CREEP;
-
     }
 
     @Override

@@ -1,14 +1,24 @@
 package controllers.entityControllers;
 
+import controllers.GameViewController;
+import controllers.TestViewController;
 import models.entities.Avatar;
 import models.map.Map;
 import models.skills.SneakSkills.TileDetection;
 import utilities.InputMapping;
+<<<<<<< HEAD
 import utilities.StateManager;
 import utilities.Task;
 import views.GameView;
 import views.View;
+=======
+import utilities.SubState;
+import utilities.Task;
+import views.GameView;
+import views.ToastView;
+>>>>>>> 701dfeb4ee5743fd379ae06c2f3658da7aeef295
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
@@ -17,10 +27,18 @@ import java.awt.event.KeyEvent;
 public class AvatarController extends EntityController {
     private InputMapping keyPressMapping;
     private Avatar avatar;
+<<<<<<< HEAD
     private GameView gameView;
     public AvatarController(Avatar avatar, GameView gameView){
         this.gameView = gameView;
+=======
+    // Required to manage SubStates. i.e: Inventory, EquippedItems, Entity Interactions.
+    private GameViewController gameViewController;
+
+    public AvatarController(Avatar avatar, GameViewController gameViewController){
+>>>>>>> 701dfeb4ee5743fd379ae06c2f3658da7aeef295
         this.avatar = avatar;
+        this.gameViewController = gameViewController;
         keyPressMapping = new InputMapping();
 
         initKeyPressMapping();
@@ -81,6 +99,44 @@ public class AvatarController extends EntityController {
             @Override
             public void stop() { avatar.stopMoving(); }
         };
+        Task openToastTestView = new Task() {
+            @Override
+            public void run() {
+                GameView gameView = (GameView)gameViewController.getView();
+                ToastView toast = new ToastView(gameView.getScreenWidth(), gameView.getScreenWidth(), gameView.getDisplay(), "Press 'I' to dismiss this toast");
+                // For a "Toast Message" the Game View controller will still be handling input, so pass in null.
+                SubState toastSubState = new SubState(null, toast);
+                // Pass a new inputMapping to the current VC, to handle our interaction within this new SubState:
+                // In this cass the current VC is the GameVC, which passes input to the AvatarVC, so i'm adding this
+                // input mapping to the Avatar Controller.
+                // These input mappings for the new SubState dont need to be created here, if the new substate is the inventory
+                // for example. the inventory VC would handle the new input appings
+                Task openToast = this;
+                AvatarController.this.addKeyPressMapping(new Task() {
+                    @Override
+                    public void run() {
+                        toastSubState.dismiss();
+                        // Re-map the "I" key to open the toast view again
+                        AvatarController.this.addKeyPressMapping(openToast, KeyEvent.VK_I);
+                    }
+                    @Override
+                    public void stop() {}
+                }, KeyEvent.VK_I);
+                // Add the substate
+                gameViewController.addSubState(toastSubState);
+            }
+            @Override
+            public void stop() {}
+        };
+        Task clearSubStates= new Task() {
+            @Override
+            public void run() {
+                GameView gameView = (GameView) gameViewController.getView();
+                gameView.clearSubStates();
+            }
+            @Override
+            public void stop() {}
+        };
 
 //        addKeyPressMapping(moveNorth, KeyEvent.VK_NUMPAD8);
 //        addKeyPressMapping(moveNorthWest, KeyEvent.VK_NUMPAD7);
@@ -95,6 +151,16 @@ public class AvatarController extends EntityController {
         addKeyPressMapping(moveSouth, KeyEvent.VK_S);
         addKeyPressMapping(moveSouthEast, KeyEvent.VK_C);
         addKeyPressMapping(moveNorthEast, KeyEvent.VK_E);
+
+        addKeyPressMapping(moveNorthWest, KeyEvent.VK_NUMPAD7);
+        addKeyPressMapping(moveNorth, KeyEvent.VK_NUMPAD8);
+        addKeyPressMapping(moveNorthEast, KeyEvent.VK_NUMPAD9);
+        addKeyPressMapping(moveSouthEast, KeyEvent.VK_NUMPAD3);
+        addKeyPressMapping(moveSouth, KeyEvent.VK_NUMPAD2);
+        addKeyPressMapping(moveSouthWest, KeyEvent.VK_NUMPAD1);
+
+        // TODO: Testing opening a random overlay toast view
+        addKeyPressMapping(openToastTestView, KeyEvent.VK_I);
     }
     //Method is called whenever entity moves. Basically checks what is in the tile through
     //Tile detection and then whether an NPC is detected, it'll paint the interaction

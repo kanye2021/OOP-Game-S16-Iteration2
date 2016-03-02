@@ -148,18 +148,18 @@ public class GameLoader {
                     decal = new Decal(Decal.Types.values()[id]);
                 }
 
-//                // Get the item if there is one
-//                NodeList itemNodes = tileElement.getElementsByTagName("item");
-//                if (itemNodes.getLength() > 0) {
-//                    Element itemElement = (Element) itemNodes.item(0);
-//                    String itemType = itemElement.getAttribute("type");
-//                    int id = Integer.parseInt(itemElement.getAttribute("id"));
-//
-//                    //if statements for the different types of items
-//
-//                    //if take-able
-//                    if (itemType.equals(Item.Type.TAKE_ABLE.toString())) {
-//                        item = new TakeableItem(TakeableItem.Items.values()[id]);
+                // Get the item if there is one
+                NodeList itemNodes = tileElement.getElementsByTagName("item");
+                if (itemNodes.getLength() > 0) {
+                    Element itemElement = (Element) itemNodes.item(0);
+                    String itemType = itemElement.getAttribute("type");
+                    int id = Integer.parseInt(itemElement.getAttribute("id"));
+
+//                    item = Item.ItemDictionary;
+                    //if statements for the different types of items
+
+                    //if take-able
+
 //                    } else if (itemType.equals(Item.Type.ONE_SHOT.toString())) {
 //                        item = new OneShotItem(OneShotItem.Effects.values()[id]);
 //                    } else if (itemType.equals((Item.Type.INTERACTIVE.toString()))) {
@@ -169,8 +169,8 @@ public class GameLoader {
 //                    } else {
 //                        System.out.println("What the fuck");
 //                    }
-//
-//                }
+
+                }
 
 
                 // TODO: Implement adding entities to the map from xml.
