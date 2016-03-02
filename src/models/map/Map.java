@@ -1,7 +1,8 @@
 package models.map;
 
 import models.entities.Entity;
-
+import models.skills.SneakSkills.TileDetection;
+import models.entities.npc.NPC;
 import java.awt.*;
 import java.util.HashMap;
 
@@ -70,16 +71,20 @@ public class Map {
 
     // This function will attempt to move an entity in the direction it wants to move. Will return the location where
     // the entity should be (may be its existing location if the move was not successful).
-    public Point moveEntity(Entity entity, Direction direction){
+    public TileDetection moveEntity(Entity entity, Direction direction){
         // Determine the location of the tile the entity wants to move to.
         Point currentLocation = entity.getLocation();
         Point desiredLocation = direction.neighbor(currentLocation);
 
         // Get the tile at that location. Exit if it is not on the map.
         Tile desiredTile = tiles.get(desiredLocation);
-        if(desiredTile == null)
-            return currentLocation;
-
+        if(desiredTile == null) {
+            //return currentLocation;
+            return new TileDetection(null, currentLocation);
+        }
+        if (desiredTile.hasNPC()){
+            return new TileDetection((NPC)desiredTile.getEntity(), currentLocation);
+        }
         // Tell the tile that the entity wants to move to it. If it is successful, the tile will return true and carry
         // out any actions that result from the move. If not, it will return false.
         boolean entityMoved = desiredTile.insertEntity(entity);
@@ -87,9 +92,10 @@ public class Map {
         if(entityMoved){
             Tile oldLocation = tiles.get(currentLocation);
             oldLocation.removeEntity();
-            return desiredLocation;
+            return new TileDetection(null, desiredLocation);
         }else{
-            return currentLocation;
+           // return currentLocation;
+            return new TileDetection(null,currentLocation);
         }
     }
 
