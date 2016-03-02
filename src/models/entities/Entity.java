@@ -9,6 +9,7 @@ import models.map.Map;
 import models.map.Terrain;
 import models.occupation.Occupation;
 import models.skills.SkillList;
+import models.skills.SneakSkills.TileDetection;
 import models.stats.StatModificationList;
 import models.stats.Stats;
 import views.sprites.DirectionalSprite;
@@ -52,7 +53,7 @@ public abstract class Entity extends Observable implements ActionListener{
 
     public Entity(Point location, Map map) {
         this.location = location;
-        this.orientation = Map.Direction.NORTH;
+        this.orientation = Map.Direction.SOUTH;
         this.stats = new Stats();
         this.occupation = initOccupation();
         this.skills = occupation.getSkills();
@@ -93,15 +94,18 @@ public abstract class Entity extends Observable implements ActionListener{
     public Stats getStats(){return stats;}
     public SkillList getSkills(){return skills;}
 
-
-    public final void move(Map.Direction direction){
+    public final TileDetection move(Map.Direction direction){
         updateMovementTimerDelay();
         orientation = direction;
         currentMovement = direction;
 
+        TileDetection td = map.moveEntity(Entity.this, currentMovement);
+        location = td.getLocation();
         // Call action performed so there is no lag when you press a button and start the timer.
         actionPerformed(null);
         movementTimer.start();
+
+        return td;
     }
 
     public final void stopMoving(){
@@ -111,7 +115,6 @@ public abstract class Entity extends Observable implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e){
-        location = map.moveEntity(Entity.this, currentMovement);
         setChanged();
         notifyObservers();
     }
@@ -149,20 +152,26 @@ public abstract class Entity extends Observable implements ActionListener{
         return inventory;
     }
 
-    public final void addItemToInventory(TakeableItem item){
-        //inventory.addItem(item);
+    public final boolean addItemToInventory(TakeableItem item){
+        boolean successfullyAdded = inventory.addItem(item);
+        if (!successfullyAdded) {
+            System.out.println("Cant pick up item. Inventory is Full. Please drop an item");
+            //TODO: Make this a toast message^ with a timer.
+            return false;
+        } else return true;
     }
 
     public final void equipItem(EquippableItem item){
-        //inventory.removeItem(item);
-        //equippedItems.addItem(item);
+        inventory.removeItem(item);
+        // TODO: implement equipped items
+//        equippedItems.addItem(item);
 
-        //applyStatMod(item.getStatModification());
+        applyStatMod(item.getOnEquipModifications());
     }
 
     public final void dropItem(TakeableItem item){
-        //inventory.removeItem(item);
-        //map.addItem(location, item);
+        inventory.removeItem(item);
+        map.insertItemAtPoint(item, location);
     }
 
     // Wrapper functions for equpped items interaction
@@ -192,12 +201,11 @@ public abstract class Entity extends Observable implements ActionListener{
     protected abstract Occupation initOccupation();
     protected abstract HashMap<Map.Direction, String> initSprites();
     protected abstract EntityController initController();
-
+    public abstract void startInteraction();
     public final Image getImage(){
 
         return sprite.getImage(orientation);
     }
-
     // TODO: Pet methods may not belong here? just getting stuff 2 work.
     // They could belong here tho.
     public final Pet getPet() {

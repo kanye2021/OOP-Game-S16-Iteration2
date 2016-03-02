@@ -1,5 +1,7 @@
 package models.entities;
 
+import controllers.GameViewController;
+import controllers.entityControllers.AvatarController;
 import controllers.entityControllers.EntityController;
 import models.map.Map;
 import models.stats.StatModificationList;
@@ -10,11 +12,9 @@ import java.awt.*;
  * Created by aseber on 2/22/16.
  */
 public abstract class Avatar extends Entity {
-
     private int radiusOfVisiblility;
 
     public Avatar(Point location, Map map) {
-
         super(location, map);
         this.radiusOfVisiblility = 4;
     }
@@ -41,5 +41,9 @@ public abstract class Avatar extends Entity {
         return null; // Keyboard controller!
 
     }
-
+    @Override
+    public void startInteraction(){
+        System.out.println("No interaction because I am an avatar");
+        return;
+    }
 }

@@ -2,6 +2,7 @@ package models;
 
 import models.items.takeable.TakeableItem;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -19,16 +20,24 @@ public class Inventory {
             amount = 0;
         }
 
-        //Constructor give an item
+        //Constructor give only an item
         public ItemNode(TakeableItem item){
             this.item = item;
             this.amount = 1;
+        }
+
+        //Constructor give only item + amount
+        public ItemNode(TakeableItem item, int amount){
+            this.item = item;
+            this.amount = amount;
         }
 
         //Getters for item node
         public TakeableItem getItem() {
             return item;
         }
+
+        public Image getImage() { return item.getImage(); }
 
         public int getAmount() {
             return amount;
@@ -62,15 +71,6 @@ public class Inventory {
 
     public int getMaxCapacity(){
         return maxCapacity;
-    }
-
-    //Setters, doubt we'll use 'em much
-    public void setItemNodeArrayList(ArrayList<ItemNode> itemNodeArrayList){
-        this.itemNodeArrayList = itemNodeArrayList;
-    }
-
-    public void setMaxCapacity(int maxCapacity){
-        this.maxCapacity = maxCapacity;
     }
 
     //Returns item node at index
@@ -108,6 +108,38 @@ public class Inventory {
         }
         return index;
     }
+
+    // Setters / Modifiers
+    public void setItemNodeArrayList(ArrayList<ItemNode> itemNodeArrayList){
+        this.itemNodeArrayList = itemNodeArrayList;
+    }
+    public boolean addItem(TakeableItem item) {
+        // If at capacity, return false and dont add item
+        if (itemNodeArrayList.size() == maxCapacity) {
+            return false;
+        } else {
+            itemNodeArrayList.add(new ItemNode(item));
+            return true;
+        }
+    }
+
+    public boolean removeItem(TakeableItem item) {
+        // Search the array list for the matching item
+        for (ItemNode node: itemNodeArrayList ) {
+            // References shud be the same so this equality shud work.
+            // If not gotta override .equals()
+            if (node.getItem() == item) {
+                itemNodeArrayList.remove(node);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void setMaxCapacity(int maxCapacity){
+        this.maxCapacity = maxCapacity;
+    }
+
 
 
 

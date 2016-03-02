@@ -2,6 +2,7 @@ package views;
 
 import models.entities.Avatar;
 import models.entities.Entity;
+import models.items.Item;
 import models.map.Map;
 import models.map.Terrain;
 import models.map.Tile;
@@ -68,9 +69,6 @@ public class AreaViewport extends View implements Observer {
         // Get the radius of visibliity.
         int radiusOfVisibility = avatar.getRadiusOfVisiblility();
 
-        // Store the initial logical point as the avatar's location. This will be necessary for FOW stuff
-        Point avatarLocation = new Point(logicalPoint);
-
         // This hashmap will keep track of what we have already renderred in our traversal.
         HashMap<Point, Boolean> hasBeenRendered = new HashMap<>();
 
@@ -87,33 +85,30 @@ public class AreaViewport extends View implements Observer {
             // Pop the current tile off the queue.
             TileNode currentTileNode = tileQueue.poll(); // poll is analogous to pop (or dequeue).
 
-            // Get all the adjacent nodes.
-            ArrayList<TileNode> adjacentTiles = getAdjacentTiles(currentTileNode);
+            // Check to see if the tile has already been renderred.
+            if((hasBeenRendered.get(currentTileNode.logicalPoint) == null) || !hasBeenRendered.get(currentTileNode.logicalPoint) && isInRangeOfViewport(currentTileNode.pixelPoint)) {
+                hasBeenRendered.put(currentTileNode.logicalPoint, true); // Mark the tile as having been renderred.
 
-            // Loop through all the adjacent nodes.
-            // Check to see if this tile has already been hit and if it is in range of the viewport.
-            for (TileNode tileNode: adjacentTiles ){
-                if((hasBeenRendered.get(tileNode.logicalPoint) == null) || !hasBeenRendered.get(tileNode.logicalPoint) && isInRangeOfViewport(tileNode.pixelPoint)){
-                    hasBeenRendered.put(tileNode.logicalPoint, true);
+                // Render the current Tile
+                if(currentTileNode.distanceFromAvatar < radiusOfVisibility){
 
+                    // Mark this tile as having been seen.
+                    seenTiles.put(new Point(currentTileNode.logicalPoint), new Tile(currentTileNode.tile));
+
+                    // Set the opacity based on the distance from the avatar.
+                    float opacity = 1.0f - (float) (currentTileNode.distanceFromAvatar * 0.15);
+                    opacity = opacity < MIN_OPACITY ? MIN_OPACITY : opacity;
+
+                    renderTile(currentTileNode, g, opacity); // Render the tile.
+                }
+                else if(seenTiles.get(currentTileNode.logicalPoint) != null){
+                    currentTileNode.tile = seenTiles.get(currentTileNode.logicalPoint); // Switch out the actual tile with the seen tile.
+                    renderTile(currentTileNode, g, SEEN_OPACITY);
+                }
+
+                // Push all the adjacent nodes onto the queue
+                for(TileNode tileNode: getAdjacentTiles(currentTileNode)){
                     tileNode.distanceFromAvatar = currentTileNode.distanceFromAvatar + 1;
-                    if(tileNode.distanceFromAvatar < radiusOfVisibility){
-
-                        // Mark this tile as having been seen.
-                        seenTiles.put(new Point(tileNode.logicalPoint), new Tile(tileNode.tile));
-
-                        // Set the opacity based on the distance from the avatar.
-                        float opacity = 1.0f - (float) (tileNode.distanceFromAvatar * 0.15);
-                        opacity = opacity >= MIN_OPACITY ? opacity : MIN_OPACITY;
-
-                        renderTile(tileNode, g, opacity); // Render the tile.
-                    }
-                    else if(seenTiles.get(tileNode.logicalPoint) != null){
-                        tileNode.tile = seenTiles.get(tileNode.logicalPoint); // Siwtch the tile with the seen tile.
-                        renderTile(tileNode, g, SEEN_OPACITY);
-                    }
-
-                    // Push this tile node onto the queue.
                     tileQueue.offer(tileNode);
                 }
             }
@@ -149,15 +144,19 @@ public class AreaViewport extends View implements Observer {
 
         // TODO: Implement items and areaEffects / Decals
 //        // Draw the items
-//        Item item = tile.getItem();
-//        if(item!=null){
-//            Image itemImage = item.getImage();
+        Item item = tileNode.tile.getItem();
+        if(item!=null){
+            Image itemImage = item.getImage();
 //            itemImage = itemImage.getScaledInstance(hexSize, hexSize, 0); // TODO SEE WHAT THE LAST PARAMETER IS WHEN YOU HAVE WIFI
-//
-//            int itemX = (int)(pixelPoint.getX() - itemImage.getWidth(null) /2);
-//            int itemY = (int)(pixelPoint.getY() - itemImage.getHeight(null) /2);
-//            g.drawImage(itemImage, itemX, itemY, getDisplay());
-//        }
+
+            // Resize the entity image
+            int scaledWidth = hexWidth * 1;
+            int scaledHeight = hexHeight * 1;
+
+            int itemX = (int)(tileNode.pixelPoint.getX() - itemImage.getWidth(null) /2);
+            int itemY = (int)(tileNode.pixelPoint.getY() - itemImage.getHeight(null) /2);
+            g.drawImage(itemImage, itemX, itemY, scaledWidth, scaledHeight,  getDisplay());
+        }
 
         // Display entities on the map
         Entity entity = tileNode.tile.getEntity();
@@ -289,8 +288,7 @@ public class AreaViewport extends View implements Observer {
 
     @Override
     public void scaleView() {
-        System.out.println(getScreenWidth() + " X " + getScreenHeight());
-        viewportHeight = getScreenHeight() * 4/5;
+        viewportHeight = getScreenHeight();
         viewportWidth = getScreenWidth();
         hexSize = 23;
         hexWidth = hexSize * 2;

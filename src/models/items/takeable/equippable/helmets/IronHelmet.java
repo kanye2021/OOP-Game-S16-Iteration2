@@ -16,9 +16,9 @@ public class IronHelmet extends EquippableItem {
 
         ID = ItemDictionary.IRON_HELMET;
         name = "Wood Helmet";
-        description = "A helmet made of wood";
+        description = "A helmet made of iron";
         component = Equipment.Component.HELMET;
-        sprite = new Sprite("../res/items/takeable/armor/head/IronHelm.png");
+        sprite = new Sprite("./src/res/items/takeable/armor/head/IronHelm.png");
         monetaryValue = 20;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 25)
