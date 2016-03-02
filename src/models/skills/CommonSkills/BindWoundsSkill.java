@@ -1,11 +1,8 @@
 package models.skills.CommonSkills;
 
-import models.conditions.Condition;
 import models.conditions.ConditionList;
-import models.conditions.StatsCondition;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
-import models.stats.StatModification;
 import models.stats.Stats;
 
 import java.awt.event.KeyEvent;
@@ -29,7 +26,7 @@ public class BindWoundsSkill extends ActiveSkill {
     public BindWoundsSkill() {
 
         conditionsToActivate = new ConditionList(
-//            new StatsCondition(Avatar, 3, Stats.Type.LIVES, Condition.Comparison.EXACTLY);
+//            new StatCondition(Avatar, 3, Stats.Type.LIVES, Condition.Comparison.EXACTLY);
         );
 
     }
@@ -42,8 +39,8 @@ public class BindWoundsSkill extends ActiveSkill {
 
             int healAmt = constant * getLevel();
             Stats stats = entity.getStats();//gets the instance of the stats
-            stats.modifyMana(cost);
-            stats.modifyHealth(healAmt);
+            stats.modifyStat(Stats.Type.MANA, cost);
+            stats.modifyStat(Stats.Type.HEALTH, healAmt);
 
         }
 

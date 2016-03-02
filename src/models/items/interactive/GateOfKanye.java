@@ -11,7 +11,7 @@ public class GateOfKanye extends InteractiveItem {
     protected ConditionList initConditions() {
 
         ConditionList conditions = new ConditionList(
-                new
+//                new
         );
 
         return conditions;

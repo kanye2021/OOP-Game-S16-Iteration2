@@ -2,6 +2,7 @@ package models.stats;
 
 import utilities.MathUtilities;
 
+import java.util.EnumMap;
 import java.util.TimerTask;
 
 /**
@@ -10,6 +11,7 @@ import java.util.TimerTask;
 public class Stats {
 
     public enum Type {
+        LEVEL,
         LIVES,
         STRENGTH,
         AGILITY,
@@ -18,7 +20,9 @@ public class Stats {
         EXPERIENCE,
         MOVEMENT,
         HEALTH,
+        MAX_HEALTH,
         MANA,
+        MAX_MANA,
         WEAPON_MODIFIER,
         ARMOR_MODIFIER
     }
@@ -49,9 +53,62 @@ public class Stats {
     private int weaponModifier;
     private int armorModifier;
 
-
     private TimerTask currentTask;
     private String lastTaskType;
+
+    private EnumMap<Type, StatsGetTask> statGetMap = new EnumMap<>(Type.class);
+    private EnumMap<Type, StatsSetTask> statSetMap = new EnumMap<>(Type.class);
+
+    public Stats() {
+
+        statGetMap.put(Type.LEVEL, () -> getLevel());
+        statGetMap.put(Type.LIVES, () -> getLives());
+        statGetMap.put(Type.STRENGTH, () -> getStrength());
+        statGetMap.put(Type.AGILITY, () -> getAgility());
+        statGetMap.put(Type.INTELLECT, () -> getIntellect());
+        statGetMap.put(Type.HARDINESS, () -> getHardiness());
+        statGetMap.put(Type.EXPERIENCE, () -> getExperience());
+        statGetMap.put(Type.MOVEMENT, () -> getMovement());
+        statGetMap.put(Type.HEALTH, () -> getHealth());
+        statGetMap.put(Type.MAX_HEALTH, () -> getMaxHealth());
+        statGetMap.put(Type.MANA, () -> getMana());
+        statGetMap.put(Type.MAX_MANA, () -> getMaxMana());
+        statGetMap.put(Type.WEAPON_MODIFIER, () -> getWeaponModifier());
+        statGetMap.put(Type.ARMOR_MODIFIER, () -> getArmorModifier());
+
+        statSetMap.put(Type.LIVES, (delta) -> modifyLives(delta));
+        statSetMap.put(Type.STRENGTH, (delta) -> modifyStrength(delta));
+        statSetMap.put(Type.AGILITY, (delta) -> modifyAgility(delta));
+        statSetMap.put(Type.INTELLECT, (delta) -> modifyIntellect(delta));
+        statSetMap.put(Type.HARDINESS, (delta) -> modifyHardiness(delta));
+        statSetMap.put(Type.EXPERIENCE, (delta) -> modifyExperience(delta));
+        statSetMap.put(Type.MOVEMENT, (delta) -> modifyMovement(delta));
+        statSetMap.put(Type.HEALTH, (delta) -> modifyHealth(delta));
+        statSetMap.put(Type.MANA, (delta) -> modifyMana(delta));
+        statSetMap.put(Type.WEAPON_MODIFIER, (delta) -> modifyWeaponModifier(delta));
+        statSetMap.put(Type.ARMOR_MODIFIER, (delta) -> modifyArmorModifier(delta));
+
+    }
+
+    public void applyStatMod(StatModificationList statMod){
+        statMod.applyStats(this);
+    }
+
+    public void removeStatMod(StatModificationList statMod){
+        statMod.removeStats(this);
+    }
+
+    public int getStat(Type type) {
+
+        return statGetMap.get(type).get();
+
+    }
+
+    public void modifyStat(Type type, int delta) {
+
+        statSetMap.get(type).set(delta);
+
+    }
 
     // Call this whenever a primary stat is changed. This holds the derived stats that won't be changed
     // by anything other than primary stats.
@@ -64,15 +121,7 @@ public class Stats {
         expReqLvUp = 100 + 10 * (int) Math.pow(level, 2.0);
     }
 
-    public void applyStatMod(StatModificationList statMod){
-        statMod.applyStats(this);
-    }
-
-    public void removeStatMod(StatModificationList statMod){
-        statMod.removeStats(this);
-    }
-
-    public void modifyLives(int delta) {
+    private void modifyLives(int delta) {
         this.lives = MathUtilities.putInRange(0, this.lives + delta, Integer.MAX_VALUE);
 
         if (this.lives == 0) {
@@ -83,27 +132,27 @@ public class Stats {
 
     }
 
-    public void modifyStrength(int delta) {
+    private void modifyStrength(int delta) {
         this.strength = MathUtilities.putInRange(0, this.strength + delta, Integer.MAX_VALUE);
         updateDerivedStats();
     }
 
-    public void modifyAgility(int delta) {
+    private void modifyAgility(int delta) {
         this.agility = MathUtilities.putInRange(0, this.agility + delta, Integer.MAX_VALUE);
         updateDerivedStats();
     }
 
-    public void modifyIntellect(int delta) {
+    private void modifyIntellect(int delta) {
         this.intellect = MathUtilities.putInRange(0, this.intellect + delta, Integer.MAX_VALUE);
         updateDerivedStats();
     }
 
-    public void modifyHardiness(int delta) {
+    private void modifyHardiness(int delta) {
         this.hardiness = MathUtilities.putInRange(0, this.hardiness + delta, Integer.MAX_VALUE);
         updateDerivedStats();
     }
 
-    public void modifyExperience(int delta) {
+    private void modifyExperience(int delta) {
         this.experience = MathUtilities.putInRange(0, this.experience + delta, Integer.MAX_VALUE);
 
         if (this.experience >= this.expReqLvUp) {
@@ -116,12 +165,12 @@ public class Stats {
         updateDerivedStats();
     }
 
-    public void modifyMovement(int delta) {
+    private void modifyMovement(int delta) {
         this.movement = MathUtilities.putInRange(0, this.movement + delta, Integer.MAX_VALUE);
         updateDerivedStats();
     }
 
-    public void modifyHealth(int delta) {
+    private void modifyHealth(int delta) {
         this.health = MathUtilities.putInRange(0, this.health + delta, Integer.MAX_VALUE);
 
         if (this.health == 0) {
@@ -134,84 +183,96 @@ public class Stats {
 
     }
 
-    public void modifyMana(int delta) {
+    private void modifyMana(int delta) {
         this.mana = MathUtilities.putInRange(0, this.mana + delta, Integer.MAX_VALUE);
     }
 
-    public void modifyWeaponModifier(int delta) {
+    private void modifyWeaponModifier(int delta) {
         this.weaponModifier = MathUtilities.putInRange(0, this.weaponModifier + delta, Integer.MAX_VALUE);
         updateDerivedStats();
     }
 
-    public void modifyArmorModifier(int delta) {
+    private void modifyArmorModifier(int delta) {
         this.armorModifier = MathUtilities.putInRange(0, this.armorModifier + delta, Integer.MAX_VALUE);
         updateDerivedStats();
     }
 
-    public int getLives() {
+    private int getLives() {
         return this.lives;
     }
 
-    public int getStrength() {
+    private int getStrength() {
         return this.strength;
     }
 
-    public int getAgility() {
+    private int getAgility() {
         return this.agility;
     }
 
-    public int getIntellect() {
+    private int getIntellect() {
         return this.intellect;
     }
 
-    public int getHardiness() {
+    private int getHardiness() {
         return this.hardiness;
     }
 
-    public int getExperience() {
+    private int getExperience() {
         return this.experience;
     }
 
-    public int getMovement() {
+    private int getMovement() {
         return this.movement;
     }
 
-    public int getHealth() {
+    private int getHealth() {
         return this.health;
     }
 
-    public int getMana() {
+    private int getMana() {
         return this.mana;
     }
 
-    public int getWeaponModifier() {
+    private int getWeaponModifier() {
         return this.weaponModifier;
     }
 
-    public int getArmorModifier() {
+    private int getArmorModifier() {
         return this.armorModifier;
     }
 
-    public int getLevel() {
+    private int getLevel() {
         return this.level;
     }
 
-    public int getMaxHealth() { return maxHealth; }
+    private int getMaxHealth() { return maxHealth; }
 
-    public int getMaxMana() { return maxMana; }
+    private int getMaxMana() { return maxMana; }
 
-    public int getOffensiveRating() { return offensiveRating; }
+    private int getOffensiveRating() { return offensiveRating; }
 
-    public int getDefensiveRating() { return defensiveRating; }
+    private int getDefensiveRating() { return defensiveRating; }
 
-    public int getArmorRating() { return armorRating; }
+    private int getArmorRating() { return armorRating; }
 
-    public int getExpReqLvUp() { return expReqLvUp; }
+    private int getExpReqLvUp() { return expReqLvUp; }
 
-    public int getLastLvlExpReq() { return lastLvlExpReq; }
+    private int getLastLvlExpReq() { return lastLvlExpReq; }
 
-    public TimerTask getCurrentTask() { return currentTask; }
+    private TimerTask getCurrentTask() { return currentTask; }
 
-    public String getLastTaskType() { return lastTaskType; }
+    private String getLastTaskType() { return lastTaskType; }
+
+    private interface StatsGetTask {
+
+        int get();
+
+    }
+
+    private interface StatsSetTask {
+
+        void set(int delta);
+
+    }
 
 }
