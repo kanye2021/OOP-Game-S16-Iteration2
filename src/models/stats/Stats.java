@@ -20,7 +20,8 @@ public class Stats {
         HEALTH,
         MANA,
         WEAPON_MODIFIER,
-        ARMOR_MODIFIER
+        ARMOR_MODIFIER,
+        RADIUS_OF_VISIBILITY
     }
 
 
@@ -48,10 +49,15 @@ public class Stats {
     private int lastLvlExpReq;
     private int weaponModifier;
     private int armorModifier;
+    private int radiusOfVisiblility;
 
 
     private TimerTask currentTask;
     private String lastTaskType;
+
+    public Stats(){
+        this.level = 1;
+    }
 
     // Call this whenever a primary stat is changed. This holds the derived stats that won't be changed
     // by anything other than primary stats.
@@ -122,7 +128,7 @@ public class Stats {
     }
 
     public void modifyHealth(int delta) {
-        this.health = MathUtilities.putInRange(0, this.health + delta, Integer.MAX_VALUE);
+        this.health = MathUtilities.putInRange(0, this.health + delta, this.maxHealth);
 
         if (this.health == 0) {
 
@@ -133,9 +139,8 @@ public class Stats {
         }
 
     }
-
     public void modifyMana(int delta) {
-        this.mana = MathUtilities.putInRange(0, this.mana + delta, Integer.MAX_VALUE);
+        this.mana = MathUtilities.putInRange(0, this.mana + delta, this.maxMana);
     }
 
     public void modifyWeaponModifier(int delta) {
@@ -147,6 +152,11 @@ public class Stats {
         this.armorModifier = MathUtilities.putInRange(0, this.armorModifier + delta, Integer.MAX_VALUE);
         updateDerivedStats();
     }
+
+    public void modifyRadiusOfVisibility(int delta){
+        this.radiusOfVisiblility = MathUtilities.putInRange(0, this.radiusOfVisiblility + delta, Integer.MAX_VALUE);
+    }
+
 
     public int getLives() {
         return this.lives;
@@ -213,5 +223,7 @@ public class Stats {
     public TimerTask getCurrentTask() { return currentTask; }
 
     public String getLastTaskType() { return lastTaskType; }
+
+    public int getRadiusOfVisiblility() { return radiusOfVisiblility; }
 
 }

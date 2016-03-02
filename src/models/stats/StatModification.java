@@ -50,6 +50,9 @@ public class StatModification {
             case ARMOR_MODIFIER:
                 stats.modifyArmorModifier(modifyAmount);
                 break;
+            case RADIUS_OF_VISIBILITY:
+                stats.modifyRadiusOfVisibility(modifyAmount);
+                break;
         }
 
     }
@@ -89,6 +92,9 @@ public class StatModification {
                 break;
             case ARMOR_MODIFIER:
                 stats.modifyArmorModifier(-modifyAmount);
+                break;
+            case RADIUS_OF_VISIBILITY:
+                stats.modifyRadiusOfVisibility(-modifyAmount);
                 break;
         }
 

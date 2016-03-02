@@ -1,8 +1,10 @@
 package models.occupation;
 
-import models.entities.Entity;
 import models.skills.SkillList;
-import models.skills.SummonerSkills.*;
+import models.skills.SummonerSkills.BaneSkill;
+import models.skills.SummonerSkills.BoonSkill;
+import models.skills.SummonerSkills.EnchantmentSkill;
+import models.skills.SummonerSkills.StaffSkill;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
 import models.stats.Stats;
@@ -30,7 +32,8 @@ public class Summoner extends Occupation {
         StatModificationList modifications = new StatModificationList(
                 new StatModification(Stats.Type.AGILITY, -5),
                 new StatModification(Stats.Type.INTELLECT, 10),
-                new StatModification(Stats.Type.HARDINESS, 5)
+                new StatModification(Stats.Type.HARDINESS, 5),
+                new StatModification(Stats.Type.RADIUS_OF_VISIBILITY, 4)
         );
 
         return modifications;

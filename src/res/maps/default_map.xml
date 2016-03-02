@@ -2331,6 +2331,7 @@
     </tile>
     <tile x="-10" y="-2">
         <terrain type="grass"/>
+        <item id="1001" type="takeable"/>
     </tile>
     <tile x="-10" y="-1">
         <terrain type="grass"/>
@@ -3835,6 +3836,7 @@
     </tile>
     <tile x="0" y="-3">
         <terrain type="grass"/>
+        <entity type="npc"/>
     </tile>
     <tile x="0" y="-2">
         <terrain type="grass"/>

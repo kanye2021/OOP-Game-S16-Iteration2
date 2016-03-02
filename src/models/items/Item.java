@@ -1,6 +1,9 @@
 package models.items;
 
 import models.entities.Entity;
+import models.items.obstacle.Grave;
+import models.items.obstacle.Octopus;
+import models.items.obstacle.Statue;
 import models.items.takeable.equippable.chestplate.*;
 import models.items.takeable.equippable.helmets.*;
 import models.items.takeable.equippable.greaves.*;
@@ -60,16 +63,29 @@ public abstract class Item {
         GOLD_SHIELD(1504) {public Item createInstance() {return new GoldShield();}},
         RUNITE_SHIELD(1505) {public Item createInstance() {return new RuniteShield();}},
 
-        GRAVE(2000),
-        OCTOPUS(2001),
-        STATUE(2002);
+        GRAVE(2000) {public Item createInstance() {return new Grave();}},
+        OCTOPUS(2001) {public Item createInstance() {return new Octopus();}},
+        STATUE(2002) {public Item createInstance() {return new Statue();}};
 
         private int ID;
+        public abstract Item createInstance();
 
         ItemDictionary(int ID) {
 
             this.ID = ID;
 
+        }
+
+        // Not sure if this is the best way to get an instance of an item from an id
+        // Will be used when putting items on the map and loading + instantiating them.
+        public static Item itemFromID(int id) {
+            for (ItemDictionary entry: values()) {
+                if (entry.getID() == id) {
+                    return entry.createInstance();
+                }
+            }
+            // Item with provided id not found..
+            return null;
         }
 
         public int getID() {
@@ -92,9 +108,11 @@ public abstract class Item {
     }
 
     public final Sprite getSprite() {
-
         return sprite;
+    }
 
+    public final void setSprite(Sprite sprite) {
+        this.sprite = sprite;
     }
 
     public final boolean equals(Object o) {
