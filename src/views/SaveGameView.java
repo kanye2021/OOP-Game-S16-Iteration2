@@ -9,27 +9,69 @@ import java.awt.geom.Rectangle2D;
  * Created by dyeung on 2/18/16.
  */
 public class SaveGameView extends View {
+    public enum MenuOptions {
+        SAVE_GAME_EXIT("Save Game and Exit"),
+        SAVE_GAME("Save Game"),
+        EXIT("Return back to Game");
+
+        private String optionLabel;
+
+        MenuOptions(String s) {
+            this.optionLabel = s;
+        }
+
+        public String toString() {
+            return optionLabel;
+        }
+    }
+
     //Scalable variables
     private int buttonWidth;
     private int buttonHeight;
     private int heightOffset;
     private Font buttonFont;
 
+    private MenuOptions selected;
+
     // Data properties
-    SaveGameViewController.SaveOptions selected;
-    public SaveGameView(int width, int height){
-        super(width, height);
+    public SaveGameView(int width, int height, Display display){
+        super(width, height, display);
+        selected = MenuOptions.SAVE_GAME_EXIT;
     }
-    public void render(Graphics g){
-        renderTitle(g);
-        renderButtons(g);
+    public MenuOptions getSelected() {
+        return selected;
     }
+
+    public void previousOption() {
+        if (this.selected.ordinal() == 0) {
+            selected =  MenuOptions.values()[MenuOptions.values().length - 1];
+        } else {
+            selected = MenuOptions.values()[selected.ordinal() - 1];
+        }
+    }
+    public void nextOption() {
+        if (this.selected.ordinal() == MenuOptions.values().length - 1) {
+            selected = MenuOptions.values()[0];
+        } else {
+            selected = MenuOptions.values()[selected.ordinal() + 1];
+        }
+    }
+
     public void scaleView(){ //Reminder that this is called by view initially
         buttonWidth = getScreenWidth() / 6;
         buttonHeight = getScreenHeight() / 25;
         heightOffset = getScreenHeight()/6;
         buttonFont = new Font("Helvetica", Font.BOLD, getScreenWidth()/85);
     }
+
+    /// ----------Render Stuff --------
+
+    public void render(Graphics g){
+        renderTitle(g);
+        renderButtons(g);
+    }
+
+
     public void renderTitle(Graphics g){
 
     }
@@ -37,7 +79,7 @@ public class SaveGameView extends View {
         FontMetrics fm = g.getFontMetrics(buttonFont);
         g.setFont(buttonFont);
         int fraction = 1;
-        for (SaveGameViewController.SaveOptions option : SaveGameViewController.SaveOptions.values()) {
+        for (MenuOptions option : MenuOptions.values()) {
 
             //Box Stuff
             Rectangle2D rectangle = fm.getStringBounds(option.toString(), g);
@@ -75,7 +117,7 @@ public class SaveGameView extends View {
        // Toolkit.getDefaultToolkit().sync(); //Not sure if this is necessary
         //java docs said "This method ensures that the display is up-to-date. It is useful for animation."
     }
-    public void setSelected(SaveGameViewController.SaveOptions so){
+    public void setSelected(MenuOptions so){
         selected = so;
     }
 }

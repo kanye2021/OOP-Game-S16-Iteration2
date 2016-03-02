@@ -3,6 +3,7 @@ package controllers;
 import controllers.entityControllers.AvatarController;
 import controllers.entityControllers.NPCController;
 import models.entities.Avatar;
+import models.entities.npc.NPC;
 import models.map.Map;
 import utilities.StateManager;
 import utilities.SubState;
@@ -17,21 +18,26 @@ import java.util.ArrayList;
  */
 public class GameViewController extends ViewController{
 
-    private ArrayList<NPCController> npcControllers;
+    private ArrayList<NPC> npcList;
     private AvatarController avatarController;
 
     public GameViewController(View view, StateManager stateManager){
         super(view, stateManager);
-        npcControllers = new ArrayList<>();
+        npcList = new ArrayList<>();
     }
 
     public void setAvatarController(AvatarController controller){
         avatarController = controller;
     }
-
-    public void initViewports(Map map, Avatar avatar){
+    public void setNpcControllers(NPC npc){
+        npcList.add(npc);
+    }
+    public void initViewports(Map map, Avatar avatar, ArrayList<NPC> npcList){
         ((GameView)view).initAreaViewport(map, avatar);
         ((GameView)view).initStatusViewport(avatar.getStats());
+
+        //Temporarily get the first NPC
+        ((GameView)view).initNPCActionView(npcList.get(0));
     }
 
     public void addSubState(SubState s) {
@@ -67,4 +73,5 @@ public class GameViewController extends ViewController{
     protected void initKeyPressMapping() {
 
     }
+
 }

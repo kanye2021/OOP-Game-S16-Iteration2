@@ -1,6 +1,7 @@
 package controllers;
 
 import utilities.IOUtilities;
+import utilities.Load;
 import utilities.State;
 import utilities.StateManager;
 import utilities.Task;
@@ -108,11 +109,15 @@ public class LoadGameViewController extends ViewController {
 
     public void loadGame(){ // Loads the game based on the current option
         System.out.println("Load game!");
+        Load game = new Load("test.xml");
+        game.loadGame();
+
         //TODO: Remove this stuff and add game view
-        SaveGameView saveGameView = new SaveGameView(view.getScreenWidth(), view.getScreenHeight());
+        SaveGameView saveGameView = new SaveGameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
         SaveGameViewController sGv = new SaveGameViewController(saveGameView, stateManager);
         State nextState = new State(sGv, saveGameView);
         stateManager.setActiveState(nextState);
+
     }
 
 

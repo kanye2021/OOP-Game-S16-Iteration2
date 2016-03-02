@@ -4,6 +4,7 @@ import controllers.GameViewController;
 import controllers.TestViewController;
 import models.entities.Avatar;
 import models.map.Map;
+import models.skills.SneakSkills.TileDetection;
 import utilities.InputMapping;
 import utilities.SubState;
 import utilities.Task;
@@ -21,8 +22,10 @@ public class AvatarController extends EntityController {
     private Avatar avatar;
     // Required to manage SubStates. i.e: Inventory, EquippedItems, Entity Interactions.
     private GameViewController gameViewController;
+    private GameView gameView;
 
     public AvatarController(Avatar avatar, GameViewController gameViewController){
+        //TODO: Add gameview
         this.avatar = avatar;
         this.gameViewController = gameViewController;
         keyPressMapping = new InputMapping();
@@ -43,7 +46,9 @@ public class AvatarController extends EntityController {
     protected void initKeyPressMapping(){
         Task moveNorth = new Task() {
             @Override
-            public void run() { avatar.move(Map.Direction.NORTH);}
+            public void run() {
+                moveAndDetect(Map.Direction.NORTH);
+            }
 
             @Override
             public void stop() { avatar.stopMoving(); }
@@ -122,13 +127,6 @@ public class AvatarController extends EntityController {
             public void stop() {}
         };
 
-//        addKeyPressMapping(moveNorth, KeyEvent.VK_NUMPAD8);
-//        addKeyPressMapping(moveNorthWest, KeyEvent.VK_NUMPAD7);
-//        addKeyPressMapping(moveSouthWest, KeyEvent.VK_NUMPAD1);
-//        addKeyPressMapping(moveSouth, KeyEvent.VK_NUMPAD2);
-//        addKeyPressMapping(moveSouthEast, KeyEvent.VK_NUMPAD3);
-//        addKeyPressMapping(moveNorthEast, KeyEvent.VK_NUMPAD9);
-
         addKeyPressMapping(moveNorth, KeyEvent.VK_W);
         addKeyPressMapping(moveNorthWest, KeyEvent.VK_Q);
         addKeyPressMapping(moveSouthWest, KeyEvent.VK_Z);
@@ -146,8 +144,23 @@ public class AvatarController extends EntityController {
         // TODO: Testing opening a random overlay toast view
         addKeyPressMapping(openToastTestView, KeyEvent.VK_I);
     }
+    //Method is called whenever entity moves. Basically checks what is in the tile through
+    //Tile detection and then whether an NPC is detected, it'll paint the interaction
+    public void moveAndDetect(Map.Direction direction){
+        TileDetection td;
+        td = avatar.move(direction);
 
+        if (td.npcDetected()){
+            System.out.println("Action is true");
+            gameView.initNPCActionView(td.getNpc());
+            gameView.renderNPCAction(true);
 
+            avatar.startInteraction();
+        }else {
+            System.out.println("Action is false");
+            gameView.renderNPCAction(false);
+        }
+    }
     protected final void addKeyPressMapping(Task task, int... key) {
 
         keyPressMapping.put(getKeyIntMapping(key), task);
@@ -182,4 +195,5 @@ public class AvatarController extends EntityController {
         return number;
 
     }
+
 }

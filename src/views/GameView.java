@@ -1,6 +1,8 @@
 package views;
 
 import models.entities.Avatar;
+import models.entities.Entity;
+import models.entities.npc.NPC;
 import models.map.Map;
 import models.stats.Stats;
 import utilities.SubState;
@@ -8,20 +10,25 @@ import utilities.SubState;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by Bradley on 2/26/2016.
  */
-public class GameView extends View {
+public class GameView extends View implements Observer{
 
     private AreaViewport areaViewport;
     private StatusViewport statusViewport;
     private ArrayList<SubState> substates;
+    //Container of views that will turn on or off
+    private NPCActionView npcActionView;
 
+    private boolean hasNPCAction;
     public GameView(int width, int height, Display display){
         super(width, height, display);
         this.substates = new ArrayList<SubState>();
-
+        hasNPCAction = false;
     }
 
     public void initAreaViewport(Map map, Avatar avatar){
@@ -31,6 +38,10 @@ public class GameView extends View {
     public void initStatusViewport(Stats stats){
         this.statusViewport = new StatusViewport(getScreenWidth(), getScreenHeight(), getDisplay(), stats);
     }
+    public void initNPCActionView(NPC npc){
+        this.npcActionView = new NPCActionView(getScreenWidth(), getScreenHeight(), getDisplay(), npc);
+        //showEntityInteraction = false;
+    }
 
     @Override
     public void render(Graphics g) {
@@ -38,9 +49,15 @@ public class GameView extends View {
             areaViewport.render(g);
             statusViewport.render(g);
         }
+
         // Render all subviews on top of the AreaViewPort.
         for (SubState subview : this.substates) {
             subview.render(g);
+        }
+
+        //TEST TO CHECK FOR VIEWS
+        if (hasNPCAction){
+            npcActionView.render(g);
         }
     }
 
@@ -84,5 +101,16 @@ public class GameView extends View {
     }
     public void clearSubStates() {
         substates.clear();
+    }
+    @Override
+    public void update(Observable o, Object arg) {
+    }
+
+    public void renderNPCAction(boolean shouldRender){
+        if (shouldRender) {
+            hasNPCAction = true;
+        }else {
+            hasNPCAction = false;
+        }
     }
 }

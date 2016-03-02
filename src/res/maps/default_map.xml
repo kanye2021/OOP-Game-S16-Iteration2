@@ -3835,6 +3835,7 @@
     </tile>
     <tile x="0" y="-3">
         <terrain type="grass"/>
+        <entity type="npc"/>
     </tile>
     <tile x="0" y="-2">
         <terrain type="grass"/>

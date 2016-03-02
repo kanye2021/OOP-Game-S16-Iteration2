@@ -1,6 +1,8 @@
 package models.map;
 
+import javafx.util.Pair;
 import models.entities.Entity;
+import models.entities.npc.NPC;
 import models.items.Item;
 
 /**
@@ -54,6 +56,10 @@ public class Tile {
         // Check if there is another entity on this tile.
         if(this.entity != null){
             // TODO: Implment entity/ entity interaction.
+            System.out.println("In tile");
+            //entity.notifyObservers();
+            //the NPC will contain all of the interactions
+            this.entity.startInteraction();
             return false;
         }
 
@@ -125,4 +131,12 @@ public class Tile {
 
     public void setSeen(){ seen = true; }
     public boolean getSeen(){ return seen; }
+    //Checks if the entity is actually a NPC
+    public boolean hasNPC(){
+        if (entity != null){ //assume all entities are npcs now
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
