@@ -10,6 +10,28 @@ import java.util.EnumMap;
  */
 public class Equipment {
 
+    // Need to define a set of locations to put equipment,
+    // and a set of component types that map to multiple Locations.
+    // Get stuff by locations, and when you add an item it defines what location it takes and sets that.
+    // This way a two handed weapon takes both right and left arm, but a one handed weapon only takes your
+    // right arm.
+
+    // Then set a dynamic mapping to each location so I can easily access it without passing in equipment.
+    // Then do the same to stats,
+
+    // Then fix conditions finally!
+
+    // Then make interactive items finally!
+
+    public enum Location {
+
+        HEAD,
+        CHEST,
+        ARMS,
+        LEGS
+
+    }
+
     public enum Component {
 
         HELMET,
@@ -41,6 +63,36 @@ public class Equipment {
     public Equipment() {
 
         componentMap.put(Component.HELMET, new EquippableItemTask() {
+            public EquippableItem run() {
+                return getHelmet();
+            }
+        });
+
+        componentMap.put(Component.BOOTS, new EquippableItemTask() {
+            public EquippableItem run() {
+                return getHelmet();
+            }
+        });
+
+        componentMap.put(Component.CHESTPLATE, new EquippableItemTask() {
+            public EquippableItem run() {
+                return getHelmet();
+            }
+        });
+
+        componentMap.put(Component.GLOVES, new EquippableItemTask() {
+            public EquippableItem run() {
+                return getHelmet();
+            }
+        });
+
+        componentMap.put(Component.GREAVES, new EquippableItemTask() {
+            public EquippableItem run() {
+                return getHelmet();
+            }
+        });
+
+        componentMap.put(Component.ONE_HANDED_WEAPON, new EquippableItemTask() {
             public EquippableItem run() {
                 return getHelmet();
             }
