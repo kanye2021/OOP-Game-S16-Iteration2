@@ -9,6 +9,9 @@ import models.map.Map;
 import models.occupation.Smasher;
 import models.skills.CommonSkills.BindWoundsSkill;
 import models.skills.Skill;
+import models.skills.SneakSkills.CreepSkill;
+import models.skills.SneakSkills.DetectRemoveTrapSkill;
+import models.skills.SneakSkills.PickPocketSkill;
 import models.skills.SneakSkills.TileDetection;
 import models.skills.SummonerSkills.EnchantmentSkill;
 import utilities.InputMapping;
@@ -114,11 +117,9 @@ public class AvatarController extends EntityController {
             }
         };
 
+
         //Task for the first specific skill
         Task firstSkill = new Task(){
-
-
-
             @Override
             public void run() {
                 //if smasher, get first skill
@@ -133,9 +134,44 @@ public class AvatarController extends EntityController {
                     enchantmentSkill.onActivate(avatar);
 
                 }else if(avatar.getOccupation().contains("Sneak")){
+                    //first skill should be enchantment here
+                    Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.CREEP);
+                    System.out.println(firstSkill);
+                    CreepSkill creepSkill = (CreepSkill) firstSkill;
+                    creepSkill.onActivate(avatar);
+                }else{
+                    System.out.println("What are you");
+                }
+
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
+        //Task for the first specific skill
+        Task secondSkill = new Task(){
+            @Override
+            public void run() {
+                //if smasher, get first skill
+                if(avatar.getOccupation().contains("Smasher")){
+                    //Technically the Smasher class has no actives
+
+                }else if(avatar.getOccupation().contains("Summoner")){
+                    //first skill should be enchantment here
+                    Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.STAFF);
+                    System.out.println(secondSkill);
+                    EnchantmentSkill staffSkill = (EnchantmentSkill) secondSkill;
+                    staffSkill.onActivate(avatar);
+
+                }else if(avatar.getOccupation().contains("Sneak")){
                     //first skill should be something..
-//                    Skill firstSkill = avatar.getSkills().get(1);
-//                    BindWoundsSkill bindWoundsSkill = (BindWoundsSkill) firstSkill;
+                    Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
+                    System.out.println(secondSkill);
+                    DetectRemoveTrapSkill detectSkill = (DetectRemoveTrapSkill) secondSkill;
+                    detectSkill.onActivate(avatar);
 
                 }else{
                     System.out.println("What are you");
@@ -148,6 +184,39 @@ public class AvatarController extends EntityController {
 
             }
         };
+
+        //Task for the first specific skill
+        Task thirdSkill = new Task(){
+            @Override
+            public void run() {
+                //if smasher, get first skill
+                if(avatar.getOccupation().contains("Smasher")){
+                    //Technically the Smasher class has no actives
+
+                }else if(avatar.getOccupation().contains("Summoner")){
+                    //first skill should be enchantment here
+
+
+                }else if(avatar.getOccupation().contains("Sneak")){
+                    //first skill should be something..
+                    //first skill should be something..
+                    Skill thirdSkill = avatar.getSpecificSkill(Skill.SkillDictionary.PICK_POCKET);
+                    System.out.println(thirdSkill);
+                    PickPocketSkill pickPocketSkill = (PickPocketSkill) secondSkill;
+                    pickPocketSkill.onActivate(avatar);
+
+                }else{
+                    System.out.println("What are you");
+                }
+
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
 
 
 
