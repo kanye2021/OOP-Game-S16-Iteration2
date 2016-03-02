@@ -14,10 +14,9 @@ import java.awt.event.KeyEvent;
  */
 //TODO: Tie in skill level with skill class.  Polish/Test the condition is called correctly
 public class BindWoundsSkill extends ActiveSkill {
-    private StatsCondition statsCondition;
-    private Stats stats;
+    //private Stats stats;
     private final int constant = 5;
-    private final int cost = -5;//This is the mana cost it takes to activate this skill
+    private final int cost = 5;//This is the mana cost it takes to activate this skill
     private int skillLv;
     @Override
     protected SkillDictionary initID() {
@@ -27,17 +26,20 @@ public class BindWoundsSkill extends ActiveSkill {
     }
     public BindWoundsSkill(){
         //I feel like I need to put something in here idk what currently
-        skillLv = getLevel();
+        //skillLv = getLevel();
     }
     @Override
     public void onActivate(Entity entity) {
     //This is used to heal.
-
-        int healAmt = constant * skillLv;
-        Stats stats = entity.getStats();//gets the instance of the stats
-        statsCondition.checkCondition();//somehow checks condition.  Need austie to look at
-        stats.modifyMana(cost);
-        stats.modifyHealth(healAmt);
+        int mana = entity.getStats().getMana();
+        if(statsCondition.checkConditionAtLeast(mana,cost)) {
+            skillLv = getLevel();
+            int healAmt = constant * skillLv;
+            Stats stats = entity.getStats();//gets the instance of the stats
+            //statsCondition.checkCondition();//somehow checks condition.  Need austie to look at
+            stats.modifyMana(cost);
+            stats.modifyHealth(healAmt);
+        }
     }
 
     @Override
