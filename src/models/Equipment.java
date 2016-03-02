@@ -103,6 +103,20 @@ public class Equipment {
 
     }
 
+    public EquippableItem[] getEquipmentLocation(Component component) {
+
+        HashSet<EquippableItem> items = new HashSet<>();
+
+        for (Location location : component.affectedLocations) {
+
+            items.add(getEquipmentLocation(location));
+
+        }
+
+        return (EquippableItem[]) items.toArray();
+
+    }
+
     public void removeEquipmentFromLocation(Location location) {
 
         locationMap.get(location).get().removeSlotContents();
