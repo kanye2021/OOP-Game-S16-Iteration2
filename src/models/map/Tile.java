@@ -75,7 +75,11 @@ public class Tile {
 
         // Active item on the tile
         if(this.item != null){
-            this.item.onTouch(entity);
+            boolean pickedUp = this.item.onTouch(entity);
+            // Remove it from this tile if it was sucessfully picked up
+            if (pickedUp) {
+                this.item = null;
+            }
         }
 
         // Add the entity to this location

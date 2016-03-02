@@ -12,37 +12,43 @@ import models.stats.StatModificationList;
 public class EquippableItem extends TakeableItem {
 
     protected Equipment.Component component;
-    public StatModificationList onEquipModifications = new StatModificationList();
-    public ConditionList equipConditions = new ConditionList();
+    protected StatModificationList onEquipModifications = new StatModificationList();
+    protected ConditionList equipConditions = new ConditionList();
 
     protected int requiredLv;
+
+    @Override
     public boolean onTouch(Entity entity) {
-
-        return false;
-
+        // This super call will add to inventory
+        // Via takeableitem's implementation
+        return super.onTouch(entity);
     }
 
-    public final void onUse(Entity entity) { // Equivalent to equipping.
-
+    // Equivalent to equipping.
+    public final void onUse(Entity entity) {
         if (equipConditions.checkCondition()) {
-
             entity.applyStatMod(onEquipModifications);
             // add item to inventory
 
         }
 
     }
-
-    public final void onUnequip(Entity entity) { // function for unequipping.
-
+    // function for unequipping.
+    public final void onUnequip(Entity entity) {
         entity.removeStatMod(onEquipModifications);
-
     }
 
-    public final Equipment.Component getComponent() {
+    public final Equipment.Component getComponent() { return component; }
+    public final StatModificationList getOnEquipModifications() { return onEquipModifications; }
+    public final ConditionList getEquipConditions(){ return equipConditions; }
 
-        return component;
-
+    @Override
+    public String getType(){
+        return "equippable";
     }
 
+    @Override
+    public boolean isEquipable() {
+        return true;
+    }
 }

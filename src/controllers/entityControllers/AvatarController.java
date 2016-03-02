@@ -1,6 +1,7 @@
 package controllers.entityControllers;
 
 import controllers.GameViewController;
+import controllers.InventoryViewController;
 import controllers.NPCInteractionController;
 import controllers.TestViewController;
 import models.entities.Avatar;
@@ -19,6 +20,7 @@ import utilities.InputMapping;
 import utilities.SubState;
 import utilities.Task;
 import views.GameView;
+import views.InventoryView;
 import views.NPCActionView;
 import views.ToastView;
 
@@ -100,6 +102,7 @@ public class AvatarController extends EntityController {
             public void stop() { avatar.stopMoving(); }
         };
 
+
         //task for bindWoundSkill
         Task bindWoundSkill = new Task(){
 
@@ -153,30 +156,54 @@ public class AvatarController extends EntityController {
         };
 
         //Task for the first specific skill
-        Task secondSkill = new Task(){
+        Task secondSkill = new Task() {
             @Override
             public void run() {
                 //if smasher, get first skill
-                if(avatar.getOccupation().contains("Smasher")){
+                if (avatar.getOccupation().contains("Smasher")) {
                     //Technically the Smasher class has no actives
 
-                }else if(avatar.getOccupation().contains("Summoner")){
+                } else if (avatar.getOccupation().contains("Summoner")) {
                     //first skill should be enchantment here
                     Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.STAFF);
                     System.out.println(secondSkill);
                     StaffSkill staffSkill = (StaffSkill) secondSkill;
                     staffSkill.onActivate(avatar);
 
-                }else if(avatar.getOccupation().contains("Sneak")){
+                } else if (avatar.getOccupation().contains("Sneak")) {
                     //first skill should be something..
                     Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
                     System.out.println(secondSkill);
                     DetectRemoveTrapSkill detectSkill = (DetectRemoveTrapSkill) secondSkill;
                     detectSkill.onActivate(avatar);
 
-                }else{
+                } else {
                     System.out.println("What are you");
                 }
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
+            Task openInventory = new Task() {
+            @Override
+            public void run() {
+                InventoryView inventoryView = new InventoryView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay());
+                InventoryViewController inventoryViewController = new InventoryViewController(inventoryView, gameViewController.getStateManager(), avatar);
+                SubState inventorySubState = new SubState(inventoryViewController, inventoryView);
+                // Add closing task.
+                inventoryViewController.setCloseInventory(new Task() {
+                    @Override
+                    public void run() { inventorySubState.dismiss(); }
+
+                    @Override
+                    public void stop() { }
+                });
+                // Add the substate
+                gameViewController.addSubState(inventorySubState);
 
             }
 
@@ -185,6 +212,7 @@ public class AvatarController extends EntityController {
 
             }
         };
+
 
         //Task for the first specific skill
         Task thirdSkill = new Task(){
@@ -221,11 +249,11 @@ public class AvatarController extends EntityController {
 
 
 
+
         Task openToastTestView = new Task() {
             @Override
             public void run() {
-                GameView gameView = (GameView)gameViewController.getView();
-                ToastView toast = new ToastView(gameView.getScreenWidth(), gameView.getScreenWidth(), gameView.getDisplay(), "Press 'I' to dismiss this toast");
+                ToastView toast = new ToastView(gameView.getScreenWidth(), gameView.getScreenWidth(), gameView.getDisplay(), "Press 'L' to dismiss this toast");
                 // For a "Toast Message" the Game View controller will still be handling input, so pass in null.
                 SubState toastSubState = new SubState(null, toast);
                 // Pass a new inputMapping to the current VC, to handle our interaction within this new SubState:
@@ -239,7 +267,7 @@ public class AvatarController extends EntityController {
                     public void run() {
                         toastSubState.dismiss();
                         // Re-map the "I" key to open the toast view again
-                        AvatarController.this.addKeyPressMapping(openToast, KeyEvent.VK_I);
+                        AvatarController.this.addKeyPressMapping(openToast, KeyEvent.VK_L);
                     }
                     @Override
                     public void stop() {}
@@ -253,7 +281,6 @@ public class AvatarController extends EntityController {
         Task clearSubStates= new Task() {
             @Override
             public void run() {
-                GameView gameView = (GameView) gameViewController.getView();
                 gameView.clearSubStates();
             }
             @Override
@@ -282,7 +309,10 @@ public class AvatarController extends EntityController {
         addKeyPressMapping(moveSouthWest, KeyEvent.VK_NUMPAD1);
 
         // TODO: Testing opening a random overlay toast view
-        addKeyPressMapping(openToastTestView, KeyEvent.VK_I);
+        addKeyPressMapping(openToastTestView, KeyEvent.VK_L);
+
+        // Open Inventory
+        addKeyPressMapping(openInventory, KeyEvent.VK_I);
     }
     //Method is called whenever entity moves. Basically checks what is in the tile through
     //Tile detection and then whether an NPC is detected, it'll paint the interaction
