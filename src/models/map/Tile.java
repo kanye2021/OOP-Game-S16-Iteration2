@@ -1,6 +1,6 @@
 package models.map;
 
-import javafx.util.Pair;
+//import javafx.util.Pair;
 import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.items.Item;
