@@ -22,6 +22,7 @@ public class NPCInteractionController extends ViewController {
     private Task selectOption;
     private NPC npc;
     private ArrayList<Action> actionList;
+
     public NPCInteractionController(View view, StateManager stateManager, NPC npc) {
         super(view, stateManager);
         myOption = 0;
@@ -38,6 +39,7 @@ public class NPCInteractionController extends ViewController {
                 if (myOption > 0) {
                     myOption--;
                     ((NPCActionView) view).updateSelectedOption(myOption);
+
                 }
             }
 
@@ -50,7 +52,9 @@ public class NPCInteractionController extends ViewController {
             public void run() {
                 if (myOption < actionList.size() - 1){
                     myOption++;
+
                     ((NPCActionView) view).updateSelectedOption(myOption);
+
                 }
             }
             @Override

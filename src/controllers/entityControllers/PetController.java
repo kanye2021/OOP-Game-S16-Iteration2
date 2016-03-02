@@ -90,12 +90,8 @@ public class PetController extends NPCController implements Observer {
         Entity followee = (Entity) o;
 
         Point newFolloweeLocation = followee.getLocation();
-        Double deltaX = this.pet.getLocation().getX() - newFolloweeLocation.getX();
-        Double deltaY = this.pet.getLocation().getY() - newFolloweeLocation.getY();
-        //System.out.println("@@@DELTAX: " + deltaX);
-        //System.out.println("@@@DELTAY: " + deltaY);
-        // Follow the avatar
 
+        // Follow the avatar
         double petOwnerDistance = pet.getLocation().distance(newFolloweeLocation);
         double minimumDistance = Double.MAX_VALUE;
         Task minimumTask = null;
@@ -121,7 +117,6 @@ public class PetController extends NPCController implements Observer {
             }
 
             // And apply it.
-
             if (minimumTask != null) {
 
                 minimumTask.run();
@@ -130,75 +125,6 @@ public class PetController extends NPCController implements Observer {
             }
         }
     }
-    private void updatePetsLocation(double deltaX, double deltaY) {
-        if (deltaY == 2.0 && deltaX == 0.0) {
-            moveNorth.run();
-            moveNorth.stop();
-       }
-        else if (deltaY == 0.0 && deltaX == -1.0) {
-            moveSouth.run();
-            moveSouth.stop();
-        }
-        else if (deltaY == 2.0 && deltaX == -1.0) {
-            moveNorthEast.run();
-            moveNorthEast.stop();
-        }
-        else if (deltaY == 1.0 && deltaX == -1.0) {
-            moveNorth.run();
-            moveNorth.stop();
-        }
-        else if (deltaY == -2.0 && deltaX == 1.0) {
-            moveSouthWest.run();
-            moveSouthWest.stop();
-        }
-        else if (deltaX == 2.0 && deltaY == -1.0) {
-            moveNorthEast.run();
-            moveNorthEast.stop();
-        }
-        else if (deltaY == 2.0 && deltaX == -2.0) {
-            moveNorthEast.run();
-            moveNorthEast.stop();
-        }
-        else if (deltaY == -1.0 && deltaX == -1.0) {
-            moveSouth.run();
-            moveSouth.stop();
-        }
-        else if (deltaY == 1.0 && deltaX == -2.0) {
-            moveSouthEast.run();
-            moveSouthEast.stop();
-        }
-        else if (deltaY == 1.0 && deltaX == 1.0) {
-            moveNorth.run();
-            moveNorth.stop();
-        }
-        else if (deltaY == 0.0 && deltaX == 1.0) {
-            moveNorth.run();
-            moveNorth.stop();
-        }
-        else if (deltaY == -2.0 && deltaX == 0.0) {
-            moveSouth.run();
-            moveSouth.stop();
-        }
-        else if (deltaY == -2.0 && deltaX == 2.0) {
-            moveSouthWest.run();
-            moveSouthWest.stop();
-        }
-        else if (deltaY == -1.0 && deltaX == 1.0) {
-            moveNorthWest.run();
-            moveNorthWest.stop();
-        }
-        else if (deltaY == 0.0 && deltaX == -2.0) {
-            moveSouthEast.run();
-            moveSouthEast.stop();
-        }
-        else if (deltaY == 0.0 && deltaX == 2.0) {
-            moveNorthWest.run();
-            moveNorthWest.stop();
-        }
-        else {
-            //System.out.println("PEt did not attempt to move");
-        }
 
-    }
 
 }

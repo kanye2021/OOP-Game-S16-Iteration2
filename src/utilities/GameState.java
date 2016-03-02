@@ -2,11 +2,13 @@ package utilities;
 
 import controllers.GameViewController;
 import controllers.entityControllers.AvatarController;
+import controllers.entityControllers.MountController;
 import controllers.entityControllers.NPCController;
 import controllers.entityControllers.PetController;
 import models.entities.Avatar;
 import models.entities.Pet;
 
+import models.entities.npc.Horse;
 import models.entities.npc.NPC;
 
 import models.map.Map;
@@ -67,49 +69,15 @@ public class GameState extends State {
         this.avatar.addObserver(petController);
     }
 
+    //TODO: I don't think it should be here
+    public void setMount(Horse horse, MountController mountController){
+        this.avatar.setMount(horse);
+        this.avatar.addObserver(mountController);
+    }
+
     public void setNpcList(ArrayList<NPC> npcList){
         this.npcList = npcList;
     }
 
-//    // Load a existing game.
-//    public GameState(ViewController viewController, View view, File gameFile){
-//
-//        super(viewController, view);
-//
-//        gameLoader = new GameLoader();
-//        gameSaver = new GameSaver();
-//
-//        // When given a file, loadGame will create the game state from the given file.
-//        gameLoader.loadGame(gameFile, this);
-//    }
-//
-//
-//    // Getters and Setters
-
-//    public SmasherAvatar getAvatar(){
-//        return avatar;
-//    }
-//    public void setAvatar(SmasherAvatar avatar){
-
-//        this.avatar = avatar;
-//    }
-//    public Map getMap() {
-//        return map;
-//    }
-//    public void setMap(Map map) {
-//        this.map = map;
-//    }
-//    public ArrayList<NPC> getNpcList() {
-//        return npcList;
-//    }
-//
-//    public void setNpcList(ArrayList<NPC> npcList) {
-//        this.npcList = npcList;
-//    }
-//
-//    // Save the current game state
-//    public void saveState(){
-//        gameSaver.saveGame(this);
-//    }
 }
 

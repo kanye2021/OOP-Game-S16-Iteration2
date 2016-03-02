@@ -27,13 +27,14 @@ public class Villager extends NPC{
     public void initActions(){
         actionList.add(new Talk(this, "Blah blah"));
         actionList.add (new Attack(this));
-
     }
+
     ///------------Entity Stuff--------------
     //TODO: For now smashers are villagers
     protected Occupation initOccupation(){
         return new Smasher();
     }
+
     protected HashMap<Map.Direction, String> initSprites(){
         String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/entity-shopkeeper-");
 

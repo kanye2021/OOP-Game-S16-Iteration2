@@ -3,6 +3,7 @@ package models.entities;
 import controllers.entityControllers.EntityController;
 import models.Equipment;
 import models.Inventory;
+import models.entities.npc.Mount;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
@@ -36,8 +37,13 @@ public abstract class Entity extends Observable implements ActionListener{
     protected Occupation occupation;
     protected EntityController controller;
     protected Map map;
+
     // All entities should be able to have a pet.
     protected Pet pet;
+
+    //Entity may have mount
+    protected Mount mount;
+
     protected ArrayList<String> passableTerrain;
     protected boolean canMove;
     private javax.swing.Timer movementTimer;
@@ -208,5 +214,6 @@ public abstract class Entity extends Observable implements ActionListener{
     public final void setPet(Pet pet) {
         this.pet = pet;
     }
+    public final void setMount(Mount mount){this.mount = mount;}
 
 }

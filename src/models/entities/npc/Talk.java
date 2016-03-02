@@ -16,6 +16,7 @@ public class Talk extends Action{
     }
     public void startTalk(){
         System.out.println(dialogue);
+
     }
     @Override
     public String getName() {
