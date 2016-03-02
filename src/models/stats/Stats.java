@@ -24,7 +24,13 @@ public class Stats {
         MANA,
         MAX_MANA,
         WEAPON_MODIFIER,
-        ARMOR_MODIFIER
+        ARMOR_MODIFIER,
+        RADIUS_OF_VISIBILITY,
+        EXP_TO_LEVEL,
+        LAST_EXP_TO_LEVEL,
+        OFFSENSIVE_RATING,
+        DEFENSIVE_RATING,
+        ARMOR_RATING
     }
 
 
@@ -52,6 +58,7 @@ public class Stats {
     private int lastLvlExpReq;
     private int weaponModifier;
     private int armorModifier;
+    private int radiusOfVisiblility;
 
     private TimerTask currentTask;
     private String lastTaskType;
@@ -75,6 +82,12 @@ public class Stats {
         statGetMap.put(Type.MAX_MANA, () -> getMaxMana());
         statGetMap.put(Type.WEAPON_MODIFIER, () -> getWeaponModifier());
         statGetMap.put(Type.ARMOR_MODIFIER, () -> getArmorModifier());
+        statGetMap.put(Type.RADIUS_OF_VISIBILITY, () -> getRadiusOfVisiblility());
+        statGetMap.put(Type.EXP_TO_LEVEL, () -> getExpReqLvUp());
+        statGetMap.put(Type.LAST_EXP_TO_LEVEL, () -> getLastLvlExpReq());
+        statGetMap.put(Type.OFFSENSIVE_RATING, () -> getOffensiveRating());
+        statGetMap.put(Type.DEFENSIVE_RATING, () -> getDefensiveRating());
+        statGetMap.put(Type.ARMOR_RATING, () -> getArmorRating());
 
         statSetMap.put(Type.LIVES, (delta) -> modifyLives(delta));
         statSetMap.put(Type.STRENGTH, (delta) -> modifyStrength(delta));
@@ -87,6 +100,7 @@ public class Stats {
         statSetMap.put(Type.MANA, (delta) -> modifyMana(delta));
         statSetMap.put(Type.WEAPON_MODIFIER, (delta) -> modifyWeaponModifier(delta));
         statSetMap.put(Type.ARMOR_MODIFIER, (delta) -> modifyArmorModifier(delta));
+        statSetMap.put(Type.RADIUS_OF_VISIBILITY, (delta) -> modifyRadiusOfVisibility(delta));
 
     }
 
@@ -171,7 +185,7 @@ public class Stats {
     }
 
     private void modifyHealth(int delta) {
-        this.health = MathUtilities.putInRange(0, this.health + delta, Integer.MAX_VALUE);
+        this.health = MathUtilities.putInRange(0, this.health + delta, this.maxHealth);
 
         if (this.health == 0) {
 
@@ -184,7 +198,7 @@ public class Stats {
     }
 
     private void modifyMana(int delta) {
-        this.mana = MathUtilities.putInRange(0, this.mana + delta, Integer.MAX_VALUE);
+        this.mana = MathUtilities.putInRange(0, this.mana + delta, this.maxMana);
     }
 
     private void modifyWeaponModifier(int delta) {
@@ -196,6 +210,11 @@ public class Stats {
         this.armorModifier = MathUtilities.putInRange(0, this.armorModifier + delta, Integer.MAX_VALUE);
         updateDerivedStats();
     }
+
+    private void modifyRadiusOfVisibility(int delta){
+        this.radiusOfVisiblility = MathUtilities.putInRange(0, this.radiusOfVisiblility + delta, Integer.MAX_VALUE);
+    }
+
 
     private int getLives() {
         return this.lives;
@@ -274,5 +293,7 @@ public class Stats {
         void set(int delta);
 
     }
+
+    private int getRadiusOfVisiblility() { return radiusOfVisiblility; }
 
 }

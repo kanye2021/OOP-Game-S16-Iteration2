@@ -17,7 +17,7 @@ public class BindWoundsSkill extends ActiveSkill {
     private final int cost = -5;//This is the mana cost it takes to activate this skill
 
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return SkillDictionary.BIND_WOUNDS;
 
@@ -37,10 +37,14 @@ public class BindWoundsSkill extends ActiveSkill {
 
         if (conditionsToActivate.checkCondition()) {
 
-            int healAmt = constant * getLevel();
-            Stats stats = entity.getStats();//gets the instance of the stats
-            stats.modifyStat(Stats.Type.MANA, cost);
-            stats.modifyStat(Stats.Type.HEALTH, healAmt);
+            if (stats.getStat(Stats.Type.MANA) >= cost) {
+
+                int healAmt = constant * getLevel();
+                Stats stats = entity.getStats();//gets the instance of the stats
+                stats.modifyStat(Stats.Type.MANA, cost);
+                stats.modifyStat(Stats.Type.HEALTH, healAmt);
+
+            }
 
         }
 

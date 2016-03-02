@@ -24,12 +24,18 @@ public class Sneak extends Occupation {
     }
 
     @Override
+    public String getOccupation() {
+        return "Sneak";
+    }
+
+    @Override
     public StatModificationList initStats() {
 
         StatModificationList modifications = new StatModificationList(
                 new StatModification(Stats.Type.STRENGTH, 5),
                 new StatModification(Stats.Type.AGILITY, 10),
-                new StatModification(Stats.Type.HARDINESS, -5)
+                new StatModification(Stats.Type.HARDINESS, -5),
+                new StatModification(Stats.Type.RADIUS_OF_VISIBILITY, 4)
         );
 
         return modifications;

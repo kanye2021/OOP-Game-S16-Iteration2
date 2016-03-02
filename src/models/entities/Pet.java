@@ -2,6 +2,7 @@ package models.entities;
 
 
 import controllers.entityControllers.EntityController;
+import models.entities.npc.NPC;
 import models.map.Map;
 import models.occupation.Occupation;
 import models.occupation.Sneak;
@@ -32,19 +33,10 @@ public class Pet extends NPC {
         return new Sneak();
     }
 
-    @Override
-    protected StatModificationList initInitialStats() {
-        // Pets have no stats ??
-        StatModificationList initialStats = new StatModificationList(
-            /*new StatModification(Stats.Type.LIVES, 3, StatModification.NumberType.POINT),
-            new StatModification(Stats.Type.LEVEL, 1, StatModification.NumberType.POINT),
-            new StatModification(Stats.Type.AGILITY, 10, StatModification.NumberType.POINT),
-            new StatModification(Stats.Type.STRENGTH, 10, StatModification.NumberType.POINT),
-            new StatModification(Stats.Type.INTELLECT, 10, StatModification.NumberType.POINT),
-            new StatModification(Stats.Type.HARDINESS, 10, StatModification.NumberType.POINT)*/
-        );
 
-        return initialStats;
+    @Override
+    public void startInteraction(NPC npc) {
+        
     }
 
     @Override

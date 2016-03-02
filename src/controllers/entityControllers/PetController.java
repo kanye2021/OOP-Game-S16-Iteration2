@@ -87,11 +87,12 @@ public class PetController extends NPCController implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        Entity followee = (Entity)o;
-        Point followeeLocation = followee.getLocation();
-        // Follow the avatar
+        Entity followee = (Entity) o;
 
-        double petOwnerDistance = pet.getLocation().distance(followeeLocation);
+        Point newFolloweeLocation = followee.getLocation();
+
+        // Follow the avatar
+        double petOwnerDistance = pet.getLocation().distance(newFolloweeLocation);
         double minimumDistance = Double.MAX_VALUE;
         Task minimumTask = null;
 
@@ -101,11 +102,11 @@ public class PetController extends NPCController implements Observer {
             for (java.util.Map.Entry<Task, Point> entry : taskMovementVector.entrySet()) {
 
                 Point newPetLocation = new Point(
-                    pet.getLocation().x + entry.getValue().x,
-                    pet.getLocation().y + entry.getValue().y
+                        pet.getLocation().x + entry.getValue().x,
+                        pet.getLocation().y + entry.getValue().y
                 );
 
-                double newPetDistance = newPetLocation.distance(followeeLocation);
+                double newPetDistance = newPetLocation.distance(newFolloweeLocation);
                 if (newPetDistance < minimumDistance) {
 
                     minimumDistance = newPetDistance;
@@ -116,16 +117,14 @@ public class PetController extends NPCController implements Observer {
             }
 
             // And apply it.
-
             if (minimumTask != null) {
 
                 minimumTask.run();
                 minimumTask.stop();
 
             }
-
         }
-
     }
+
 
 }

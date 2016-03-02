@@ -10,7 +10,7 @@ import models.skills.Skill;
 public class BoonSkill extends PassiveSkill {
 
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return Skill.SkillDictionary.BOON;
 

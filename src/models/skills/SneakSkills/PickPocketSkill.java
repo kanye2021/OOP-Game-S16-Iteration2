@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 public class PickPocketSkill extends ActiveSkill {
 
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return SkillDictionary.PICK_POCKET;
 
@@ -20,7 +20,7 @@ public class PickPocketSkill extends ActiveSkill {
     @Override
     public void onActivate(Entity entity) {
 
-
+        System.out.println("I am pick pocket skill");
 
     }
 

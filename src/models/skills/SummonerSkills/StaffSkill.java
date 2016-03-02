@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 public class StaffSkill extends ActiveSkill {
 
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return SkillDictionary.STAFF;
 
@@ -19,9 +19,7 @@ public class StaffSkill extends ActiveSkill {
 
     @Override
     public void onActivate(Entity entity) {
-
-
-
+        System.out.println("I am staff skill");
     }
 
     @Override
