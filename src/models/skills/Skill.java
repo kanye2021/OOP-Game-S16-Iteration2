@@ -42,13 +42,18 @@ public abstract class Skill {
 
     }
 
+
     public int getLevel() {
 
         return this.level;
 
     }
 
-    protected abstract SkillDictionary initID();
+
+    public abstract SkillDictionary initID();
+
+    //check to see if the skill is active or not
+    public abstract boolean isActive();
 
     @Override
     public boolean equals(Object o) {

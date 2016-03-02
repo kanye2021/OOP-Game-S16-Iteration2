@@ -16,23 +16,27 @@ import java.awt.event.KeyEvent;
 public class BindWoundsSkill extends ActiveSkill {
     //private Stats stats;
     private final int constant = 5;
-    private final int cost = 5;//This is the mana cost it takes to activate this skill
+    private final int cost = -1;//This is the mana cost it takes to activate this skill
     private int skillLv;
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return SkillDictionary.BIND_WOUNDS;
 
     }
     public BindWoundsSkill(){
+        System.out.println("BindWoundSkills");
         //I feel like I need to put something in here idk what currently
         //skillLv = getLevel();
+    }
+    public void test(){
+        System.out.println("Why");
     }
     @Override
     public void onActivate(Entity entity) {
     //This is used to heal.
         int mana = entity.getStats().getMana();
-        if(statsCondition.checkConditionAtLeast(mana,cost)) {
+        if(mana >= cost) {
             skillLv = getLevel();
             int healAmt = constant * skillLv;
             Stats stats = entity.getStats();//gets the instance of the stats

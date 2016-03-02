@@ -19,7 +19,7 @@ public class TwoHandedWeaponSkill extends PassiveSkill {
         twoHandedWeaponLv = 1;
     }
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return Skill.SkillDictionary.TWO_HANDED_WEAPON;
 

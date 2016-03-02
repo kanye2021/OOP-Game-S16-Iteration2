@@ -16,4 +16,9 @@ public abstract class PassiveSkill extends Skill {
     public abstract void onUpdate(Entity entity);
 
 
+    //Passive skills return false for activeSkill check
+    @Override
+    public boolean isActive() {
+        return false;
+    }
 }

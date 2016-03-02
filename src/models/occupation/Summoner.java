@@ -27,6 +27,11 @@ public class Summoner extends Occupation {
     }
 
     @Override
+    public String getOccupation() {
+        return "Summoner";
+    }
+
+    @Override
     public StatModificationList initStats() {
 
         StatModificationList modifications = new StatModificationList(

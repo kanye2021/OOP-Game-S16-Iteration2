@@ -17,6 +17,7 @@ public abstract class Occupation {
         new ObservationSkill()
     );
 
+    public abstract String getOccupation();
     protected abstract StatModificationList initStats();
     protected abstract SkillList initSkills();
 
@@ -30,6 +31,7 @@ public abstract class Occupation {
 
         SkillList skills = new SkillList();
 
+        skills.clear();
         skills.addAll(defaultSkills);
         skills.addAll(initSkills());
 

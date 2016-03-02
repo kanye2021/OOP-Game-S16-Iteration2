@@ -23,6 +23,7 @@ public class NPCController extends EntityController {
        // this.gameView = view;
         this.npc = npc;
     }
+
     //When you start the interaction, it'll tell views to render a view
     public void start(){
         //TODO: Implement actual actions for NPC

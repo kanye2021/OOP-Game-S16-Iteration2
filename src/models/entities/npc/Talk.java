@@ -14,9 +14,12 @@ public class Talk extends Action{
     public void activate(){
         startTalk();
     }
+
     public void startTalk(){
         System.out.println(dialogue);
+
     }
+
     @Override
     public String getName() {
         return "Talk";

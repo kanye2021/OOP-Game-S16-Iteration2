@@ -1,47 +1,55 @@
-package models.entities;
+package models.entities.npc;
 
-
-import controllers.entityControllers.EntityController;
-import models.entities.npc.NPC;
+import controllers.entityControllers.MountController;
 import models.map.Map;
 import models.occupation.Occupation;
 import models.occupation.Sneak;
-import models.skills.SkillList;
-import models.stats.StatModificationList;
 import utilities.IOUtilities;
 
 import java.awt.*;
 import java.util.HashMap;
 
 /**
- * Created by sergiopuleri on 2/27/16.
+ * Created by denzel on 3/1/16.
  */
-public class Pet extends NPC {
+public class Horse extends Mount {
 
-    public Pet(Point location, Map map) {
-        super(location, map);
-        passableTerrain.add("grass");
+    //movement and terrain
+    private int movement;
+    private String terrain;
+
+
+    public Horse(Point location,Map map){
+        super(location,map);
+        setTerrain("grass");
+        setMovement(30);
     }
-
-    // Controller will be a "PetController" which implements Observer and observes the Avatar's location
-    // Whenever Avatar moves Pet will follow, etc
 
     @Override
-    protected Occupation initOccupation() {
-        // Pets have no occupation?
-        // Pets can be SNeaks i guess for now.
-        return new Sneak();
+    public void setTerrain(String terrain) {
+        this.terrain = terrain;
     }
 
+    @Override
+    public void setMovement(int movement) {
+        this.movement = movement;
+    }
 
     @Override
     public void startInteraction(NPC npc) {
-        
+
+    }
+
+    //Horse has no occuptation
+    @Override
+    protected Occupation initOccupation() {
+        return new Sneak();
     }
 
     @Override
     protected HashMap<Map.Direction, String> initSprites() {
-        String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/pet-samples/raichu/");
+        System.out.println("YOOOOOO");
+        String imageBasePath = IOUtilities.getFileSystemDependentPath("src/res/entitys/pet-samples/raichu/");
 
 
         HashMap<Map.Direction, String> imagePaths = new HashMap<>();
@@ -54,4 +62,6 @@ public class Pet extends NPC {
         imagePaths.put(Map.Direction.NORTH_WEST, imageBasePath + "NW.png");
         return imagePaths;
     }
+
+
 }

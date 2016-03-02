@@ -5,8 +5,17 @@ import controllers.InventoryViewController;
 import controllers.NPCInteractionController;
 import controllers.TestViewController;
 import models.entities.Avatar;
+import models.entities.npc.NPC;
 import models.map.Map;
+import models.occupation.Smasher;
+import models.skills.CommonSkills.BindWoundsSkill;
+import models.skills.Skill;
+import models.skills.SneakSkills.CreepSkill;
+import models.skills.SneakSkills.DetectRemoveTrapSkill;
+import models.skills.SneakSkills.PickPocketSkill;
 import models.skills.SneakSkills.TileDetection;
+import models.skills.SummonerSkills.EnchantmentSkill;
+import models.skills.SummonerSkills.StaffSkill;
 import utilities.InputMapping;
 import utilities.SubState;
 import utilities.Task;
@@ -92,7 +101,94 @@ public class AvatarController extends EntityController {
             @Override
             public void stop() { avatar.stopMoving(); }
         };
-        Task openInventory = new Task() {
+
+
+        //task for bindWoundSkill
+        Task bindWoundSkill = new Task(){
+
+            Skill firstSkill = avatar.getSkills().get(1);
+            BindWoundsSkill bindWoundsSkill = (BindWoundsSkill) firstSkill;
+
+
+            @Override
+            public void run() {
+                bindWoundsSkill.onActivate(avatar);
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
+
+        //Task for the first specific skill
+        Task firstSkill = new Task(){
+            @Override
+            public void run() {
+                //if smasher, get first skill
+                if(avatar.getOccupation().contains("Smasher")){
+                    //Technically the Smasher class has no actives
+
+                }else if(avatar.getOccupation().contains("Summoner")){
+                    //first skill should be enchantment here
+                    Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.ENCHANTMENT);
+                    System.out.println(firstSkill);
+                    EnchantmentSkill enchantmentSkill = (EnchantmentSkill) firstSkill;
+                    enchantmentSkill.onActivate(avatar);
+
+                }else if(avatar.getOccupation().contains("Sneak")){
+                    //first skill should be enchantment here
+                    Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.CREEP);
+                    System.out.println(firstSkill);
+                    CreepSkill creepSkill = (CreepSkill) firstSkill;
+                    creepSkill.onActivate(avatar);
+                }else{
+                    System.out.println("What are you");
+                }
+
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
+        //Task for the first specific skill
+        Task secondSkill = new Task() {
+            @Override
+            public void run() {
+                //if smasher, get first skill
+                if (avatar.getOccupation().contains("Smasher")) {
+                    //Technically the Smasher class has no actives
+
+                } else if (avatar.getOccupation().contains("Summoner")) {
+                    //first skill should be enchantment here
+                    Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.STAFF);
+                    System.out.println(secondSkill);
+                    StaffSkill staffSkill = (StaffSkill) secondSkill;
+                    staffSkill.onActivate(avatar);
+
+                } else if (avatar.getOccupation().contains("Sneak")) {
+                    //first skill should be something..
+                    Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
+                    System.out.println(secondSkill);
+                    DetectRemoveTrapSkill detectSkill = (DetectRemoveTrapSkill) secondSkill;
+                    detectSkill.onActivate(avatar);
+
+                } else {
+                    System.out.println("What are you");
+                }
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
+            Task openInventory = new Task() {
             @Override
             public void run() {
                 InventoryView inventoryView = new InventoryView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay());
@@ -108,6 +204,7 @@ public class AvatarController extends EntityController {
                 });
                 // Add the substate
                 gameViewController.addSubState(inventorySubState);
+
             }
 
             @Override
@@ -115,6 +212,44 @@ public class AvatarController extends EntityController {
 
             }
         };
+
+
+        //Task for the first specific skill
+        Task thirdSkill = new Task(){
+            @Override
+            public void run() {
+                //if smasher, get first skill
+                if(avatar.getOccupation().contains("Smasher")){
+                    //Technically the Smasher class has no actives
+
+                }else if(avatar.getOccupation().contains("Summoner")){
+                    //first skill should be enchantment here
+
+
+                }else if(avatar.getOccupation().contains("Sneak")){
+                    //first skill should be something..
+                    //first skill should be something..
+                    Skill thirdSkill = avatar.getSpecificSkill(Skill.SkillDictionary.PICK_POCKET);
+                    System.out.println(thirdSkill);
+                    PickPocketSkill pickPocketSkill = (PickPocketSkill) secondSkill;
+                    pickPocketSkill.onActivate(avatar);
+
+                }else{
+                    System.out.println("What are you");
+                }
+
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
+
+
+
+
         Task openToastTestView = new Task() {
             @Override
             public void run() {
@@ -159,6 +294,13 @@ public class AvatarController extends EntityController {
         addKeyPressMapping(moveSouthEast, KeyEvent.VK_C);
         addKeyPressMapping(moveNorthEast, KeyEvent.VK_E);
 
+        //skills keymapping for avatars
+        addKeyPressMapping(bindWoundSkill,KeyEvent.VK_1);
+        addKeyPressMapping(firstSkill,KeyEvent.VK_2);
+        addKeyPressMapping(secondSkill,KeyEvent.VK_3);
+        addKeyPressMapping(thirdSkill,KeyEvent.VK_4);
+//        addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
+
         addKeyPressMapping(moveNorthWest, KeyEvent.VK_NUMPAD7);
         addKeyPressMapping(moveNorth, KeyEvent.VK_NUMPAD8);
         addKeyPressMapping(moveNorthEast, KeyEvent.VK_NUMPAD9);
@@ -177,19 +319,21 @@ public class AvatarController extends EntityController {
     public void moveAndDetect(Map.Direction direction){
         TileDetection td;
         td = avatar.move(direction);
+        NPC npc = td.getNpc();
 
         if (td.npcDetected()){
-//            System.out.println("Action is true");
+            System.out.println("Action is true");
 
             //Changes the AvatarController in gameview controller to NPCInteractionController
             NPCActionView npcView = new NPCActionView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay(), td.getNpc());
-            NPCInteractionController npcIC = new NPCInteractionController(npcView, gameViewController.getStateManager(), td.getNpc());
+            NPCInteractionController npcIC = new NPCInteractionController(npcView, gameViewController.getStateManager(), npc);
             gameViewController.setSubController(npcIC);
             gameView.initNPCActionView(npcView);
             gameView.renderNPCAction(true);
-            avatar.startInteraction();
+            System.out.println(td.getNpc());
+            avatar.startInteraction(npc);
         }else {
-           // System.out.println("Action is false");
+//            System.out.println("Action is false");
             gameView.renderNPCAction(false);
             gameViewController.setSubController(null);
         }

@@ -18,10 +18,8 @@ public class BargainSkill extends PassiveSkill {
         bargainLv = 1;//Gets level from skill
     }
     @Override
-    protected SkillDictionary initID() {
-
+    public SkillDictionary initID() {
         return SkillDictionary.BARGAIN;
-
     }
 
     @Override

@@ -23,7 +23,7 @@ public class OneHandedWeaponSkill extends PassiveSkill {
     }
 
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return SkillDictionary.ONE_HANDED_WEAPON;
 
