@@ -4,6 +4,7 @@ import controllers.entityControllers.EntityController;
 import models.Equipment;
 import models.Inventory;
 import models.entities.npc.Mount;
+import models.entities.npc.NPC;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
@@ -201,7 +202,7 @@ public abstract class Entity extends Observable implements ActionListener{
     protected abstract Occupation initOccupation();
     protected abstract HashMap<Map.Direction, String> initSprites();
     protected abstract EntityController initController();
-    public abstract void startInteraction();
+    public abstract void startInteraction(NPC npc);
     public final Image getImage(){
 
         return sprite.getImage(orientation);

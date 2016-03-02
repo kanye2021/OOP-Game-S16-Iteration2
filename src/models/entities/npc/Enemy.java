@@ -14,6 +14,11 @@ import java.util.HashMap;
  * Created by dyeung on 2/28/16.
  */
 public class Enemy extends NPC{
+    @Override
+    public void startInteraction(NPC npc) {
+        super.startInteraction();
+    }
+
     public Enemy(Point location, Map map){
         super(location,map);
 

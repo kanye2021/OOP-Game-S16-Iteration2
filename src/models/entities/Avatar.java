@@ -3,6 +3,7 @@ package models.entities;
 import controllers.GameViewController;
 import controllers.entityControllers.AvatarController;
 import controllers.entityControllers.EntityController;
+import models.entities.npc.NPC;
 import models.map.Map;
 import models.stats.StatModificationList;
 
@@ -42,8 +43,9 @@ public abstract class Avatar extends Entity {
 
     }
     @Override
-    public void startInteraction(){
-        System.out.println("No interaction because I am an avatar");
+    public void startInteraction(NPC npc){
+
+
         return;
     }
 }

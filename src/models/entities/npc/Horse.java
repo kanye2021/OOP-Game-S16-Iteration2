@@ -35,6 +35,11 @@ public class Horse extends Mount {
         this.movement = movement;
     }
 
+    @Override
+    public void startInteraction(NPC npc) {
+
+    }
+
     //Horse has no occuptation
     @Override
     protected Occupation initOccupation() {

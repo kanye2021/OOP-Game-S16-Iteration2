@@ -64,8 +64,9 @@ public class NPCInteractionController extends ViewController {
         selectOption = new Task() {
             @Override
             public void run() {
-//                Action a = view.getActionAt(myOption);
-//                npc.startInteraction(a);
+
+                System.out.println("in action");
+                actionList.get(myOption).activate();
             }
 
             @Override

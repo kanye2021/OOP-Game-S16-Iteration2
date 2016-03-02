@@ -35,6 +35,11 @@ public class Villager extends NPC{
         return new Smasher();
     }
 
+    @Override
+    public void startInteraction(NPC npc) {
+        super.startInteraction();
+    }
+
     protected HashMap<Map.Direction, String> initSprites(){
         String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/entity-shopkeeper-");
 

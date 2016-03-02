@@ -59,7 +59,7 @@ public class Tile {
             System.out.println("In tile");
             //entity.notifyObservers();
             //the NPC will contain all of the interactions
-            this.entity.startInteraction();
+//            this.entity.startInteraction();
             return false;
         }
 

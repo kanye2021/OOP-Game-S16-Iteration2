@@ -4,6 +4,7 @@ import controllers.GameViewController;
 import controllers.NPCInteractionController;
 import controllers.TestViewController;
 import models.entities.Avatar;
+import models.entities.npc.NPC;
 import models.map.Map;
 import models.skills.SneakSkills.TileDetection;
 import utilities.InputMapping;
@@ -151,19 +152,21 @@ public class AvatarController extends EntityController {
     public void moveAndDetect(Map.Direction direction){
         TileDetection td;
         td = avatar.move(direction);
+        NPC npc = td.getNpc();
 
         if (td.npcDetected()){
-//            System.out.println("Action is true");
+            System.out.println("Action is true");
 
             //Changes the AvatarController in gameview controller to NPCInteractionController
             NPCActionView npcView = new NPCActionView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay(), td.getNpc());
-            NPCInteractionController npcIC = new NPCInteractionController(npcView, gameViewController.getStateManager(), td.getNpc());
+            NPCInteractionController npcIC = new NPCInteractionController(npcView, gameViewController.getStateManager(), npc);
             gameViewController.setSubController(npcIC);
             gameView.initNPCActionView(npcView);
             gameView.renderNPCAction(true);
-            avatar.startInteraction();
+            System.out.println(td.getNpc());
+            avatar.startInteraction(npc);
         }else {
-           // System.out.println("Action is false");
+//            System.out.println("Action is false");
             gameView.renderNPCAction(false);
             gameViewController.setSubController(null);
         }
