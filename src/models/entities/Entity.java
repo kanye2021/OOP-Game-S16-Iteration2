@@ -137,6 +137,10 @@ public abstract class Entity extends Observable implements ActionListener{
 
     }
 
+    public int getRadiusOfVisiblility(){
+        return stats.getRadiusOfVisiblility();
+    }
+
     // Wrappers for skills
     // TODO: Implement skill stuff.
 

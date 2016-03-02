@@ -20,7 +20,8 @@ public class Stats {
         HEALTH,
         MANA,
         WEAPON_MODIFIER,
-        ARMOR_MODIFIER
+        ARMOR_MODIFIER,
+        RADIUS_OF_VISIBILITY
     }
 
 
@@ -48,6 +49,7 @@ public class Stats {
     private int lastLvlExpReq;
     private int weaponModifier;
     private int armorModifier;
+    private int radiusOfVisiblility;
 
 
     private TimerTask currentTask;
@@ -148,6 +150,11 @@ public class Stats {
         updateDerivedStats();
     }
 
+    public void modifyRadiusOfVisibility(int delta){
+        this.radiusOfVisiblility = MathUtilities.putInRange(0, this.radiusOfVisiblility + delta, Integer.MAX_VALUE);
+    }
+
+
     public int getLives() {
         return this.lives;
     }
@@ -213,5 +220,7 @@ public class Stats {
     public TimerTask getCurrentTask() { return currentTask; }
 
     public String getLastTaskType() { return lastTaskType; }
+
+    public int getRadiusOfVisiblility() { return radiusOfVisiblility; }
 
 }
