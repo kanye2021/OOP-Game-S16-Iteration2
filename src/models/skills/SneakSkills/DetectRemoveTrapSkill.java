@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 public class DetectRemoveTrapSkill extends ActiveSkill {
 
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return SkillDictionary.DETECT_REMOVE_TRAP;
 

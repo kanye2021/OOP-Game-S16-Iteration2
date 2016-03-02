@@ -35,9 +35,11 @@ public class Villager extends NPC{
         return new Smasher();
     }
 
+
+    //TODO: Refactor this because NPC's shouldn't start interaction I believe.
     @Override
     public void startInteraction(NPC npc) {
-        super.startInteraction();
+
     }
 
     protected HashMap<Map.Direction, String> initSprites(){

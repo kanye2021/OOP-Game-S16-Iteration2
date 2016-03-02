@@ -17,7 +17,7 @@ public class BrawlingSkill extends PassiveSkill {
         brawlLv = 1;
     }
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return SkillDictionary.BRAWLING;
 

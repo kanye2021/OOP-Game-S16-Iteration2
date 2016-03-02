@@ -36,6 +36,8 @@ public abstract class Avatar extends Entity {
 
     }
 
+    //overiding function for skills mapping
+
     @Override
     protected final EntityController initController() {
 

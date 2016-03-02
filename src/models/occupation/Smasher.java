@@ -23,6 +23,11 @@ public class Smasher extends Occupation {
     }
 
     @Override
+    public String getOccupation() {
+        return "Smasher";
+    }
+
+    @Override
     public StatModificationList initStats() {
 
         StatModificationList modifications = new StatModificationList(

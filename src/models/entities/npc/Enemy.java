@@ -34,10 +34,17 @@ public class Enemy extends NPC{
             protected SkillList initSkills() {
                 return null;
             }
+
+            @Override
+            public String getOccupation() {
+                return "";
+            }
         };
         return occupation;
     }
     //TODO: Needs to be separated entity controllers that do different things
+
+
 
     protected HashMap<Map.Direction, String> initSprites(){
         String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/entity-smasher-");

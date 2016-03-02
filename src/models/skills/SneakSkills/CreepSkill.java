@@ -16,7 +16,7 @@ public class CreepSkill extends ActiveSkill {
     private final int cost = 10;
     private final double constant = 0.5;//reduces speed by half
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return SkillDictionary.CREEP;
 
@@ -52,6 +52,7 @@ public class CreepSkill extends ActiveSkill {
 
     @Override
     public KeyEvent[] initActivatorKeys() {
+
 
         return null;
 

@@ -6,7 +6,11 @@ import controllers.TestViewController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.map.Map;
+import models.occupation.Smasher;
+import models.skills.CommonSkills.BindWoundsSkill;
+import models.skills.Skill;
 import models.skills.SneakSkills.TileDetection;
+import models.skills.SummonerSkills.EnchantmentSkill;
 import utilities.InputMapping;
 import utilities.SubState;
 import utilities.Task;
@@ -91,6 +95,62 @@ public class AvatarController extends EntityController {
             @Override
             public void stop() { avatar.stopMoving(); }
         };
+
+        //task for bindWoundSkill
+        Task bindWoundSkill = new Task(){
+
+            Skill firstSkill = avatar.getSkills().get(1);
+            BindWoundsSkill bindWoundsSkill = (BindWoundsSkill) firstSkill;
+
+
+            @Override
+            public void run() {
+                bindWoundsSkill.onActivate(avatar);
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
+        //Task for the first specific skill
+        Task firstSkill = new Task(){
+
+
+
+            @Override
+            public void run() {
+                //if smasher, get first skill
+                if(avatar.getOccupation().contains("Smasher")){
+                    //Technically the Smasher class has no actives
+
+                }else if(avatar.getOccupation().contains("Summoner")){
+                    //first skill should be enchantment here
+                    Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.ENCHANTMENT);
+                    System.out.println(firstSkill);
+                    EnchantmentSkill enchantmentSkill = (EnchantmentSkill) firstSkill;
+                    enchantmentSkill.onActivate(avatar);
+
+                }else if(avatar.getOccupation().contains("Sneak")){
+                    //first skill should be something..
+//                    Skill firstSkill = avatar.getSkills().get(1);
+//                    BindWoundsSkill bindWoundsSkill = (BindWoundsSkill) firstSkill;
+
+                }else{
+                    System.out.println("What are you");
+                }
+
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
+
+
         Task openToastTestView = new Task() {
             @Override
             public void run() {
@@ -136,6 +196,13 @@ public class AvatarController extends EntityController {
         addKeyPressMapping(moveSouth, KeyEvent.VK_S);
         addKeyPressMapping(moveSouthEast, KeyEvent.VK_C);
         addKeyPressMapping(moveNorthEast, KeyEvent.VK_E);
+
+        //skills keymapping for avatars
+        addKeyPressMapping(bindWoundSkill,KeyEvent.VK_1);
+        addKeyPressMapping(firstSkill,KeyEvent.VK_2);
+//        addKeyPressMapping(secondSkill,KeyEvent.VK_3);
+//        addKeyPressMapping(thirdSkill,KeyEvent.VK_4);
+//        addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
 
         addKeyPressMapping(moveNorthWest, KeyEvent.VK_NUMPAD7);
         addKeyPressMapping(moveNorth, KeyEvent.VK_NUMPAD8);

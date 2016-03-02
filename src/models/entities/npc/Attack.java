@@ -16,10 +16,15 @@ public class Attack extends Action {
     @Override
     public void activate(){
         //be able to attack the npc
+        doDamage();
+    }
+
+    public void doDamage(){
         Stats npcStats = npc.getStats();
         npcStats.modifyHealth(-1);
         System.out.println("NPC Current HP: " + npcStats.getHealth());
     }
+
 
     @Override
     public String getName() {

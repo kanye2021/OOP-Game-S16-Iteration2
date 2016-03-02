@@ -9,7 +9,7 @@ import models.skills.PassiveSkill;
 public class RangedAttackSkill extends PassiveSkill {
 
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return SkillDictionary.RANGED_ATTACK;
 
