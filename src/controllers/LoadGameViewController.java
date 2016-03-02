@@ -1,9 +1,11 @@
 package controllers;
 
 import utilities.IOUtilities;
+import utilities.State;
 import utilities.StateManager;
 import utilities.Task;
 import views.LoadGameView;
+import views.SaveGameView;
 import views.View;
 
 import java.awt.event.KeyEvent;
@@ -107,7 +109,11 @@ public class LoadGameViewController extends ViewController {
     public void loadGame(){ // Loads the game based on the current option
         System.out.println("Load game!");
         //TODO: Remove this stuff and add game view
-
+        SaveGameView saveGameView = new SaveGameView(view.getScreenWidth(), view.getScreenHeight());
+        SaveGameViewController sGv = new SaveGameViewController(saveGameView, stateManager);
+        State nextState = new State(sGv, saveGameView);
+        stateManager.setActiveState(nextState);
     }
+
 
 }
