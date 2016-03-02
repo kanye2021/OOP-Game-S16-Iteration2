@@ -35,8 +35,6 @@ public abstract class ViewController {
     }
 
     public void handleKeyPress(KeyEvent e) {
-        System.out.println("Pressed: " + getKeyIntMapping(e));
-
         keyPressMapping.inputKey(getKeyIntMapping(e));
         stateManager.refreshState();
     }

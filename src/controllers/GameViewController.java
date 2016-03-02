@@ -6,6 +6,7 @@ import models.entities.Avatar;
 import models.map.Map;
 import utilities.StateManager;
 import utilities.SubState;
+import utilities.Task;
 import views.GameView;
 import views.View;
 
@@ -65,6 +66,16 @@ public class GameViewController extends ViewController{
 
     @Override
     protected void initKeyPressMapping() {
+        addKeyPressMapping(new Task() {
+            @Override
+            public void run() {
+                ((GameView)view).toggleDetailedStats();
+            }
 
+            @Override
+            public void stop() {
+
+            }
+        }, KeyEvent.VK_P);
     }
 }
