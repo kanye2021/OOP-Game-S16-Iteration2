@@ -1,7 +1,6 @@
 package models.mount;
 
 import models.entities.Entity;
-import models.entities.NPC;
 import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
 import models.map.Terrain;

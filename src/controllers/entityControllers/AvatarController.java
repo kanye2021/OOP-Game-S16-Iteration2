@@ -6,17 +6,15 @@ import models.entities.Avatar;
 import models.map.Map;
 import models.skills.SneakSkills.TileDetection;
 import utilities.InputMapping;
-<<<<<<< HEAD
 import utilities.StateManager;
 import utilities.Task;
 import views.GameView;
 import views.View;
-=======
 import utilities.SubState;
 import utilities.Task;
 import views.GameView;
 import views.ToastView;
->>>>>>> 701dfeb4ee5743fd379ae06c2f3658da7aeef295
+
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -27,16 +25,13 @@ import java.awt.event.KeyEvent;
 public class AvatarController extends EntityController {
     private InputMapping keyPressMapping;
     private Avatar avatar;
-<<<<<<< HEAD
     private GameView gameView;
-    public AvatarController(Avatar avatar, GameView gameView){
-        this.gameView = gameView;
-=======
+
+
     // Required to manage SubStates. i.e: Inventory, EquippedItems, Entity Interactions.
     private GameViewController gameViewController;
 
     public AvatarController(Avatar avatar, GameViewController gameViewController){
->>>>>>> 701dfeb4ee5743fd379ae06c2f3658da7aeef295
         this.avatar = avatar;
         this.gameViewController = gameViewController;
         keyPressMapping = new InputMapping();
