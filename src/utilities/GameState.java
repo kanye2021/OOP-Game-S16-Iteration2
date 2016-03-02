@@ -2,10 +2,13 @@ package utilities;
 
 import controllers.GameViewController;
 import controllers.entityControllers.AvatarController;
+import controllers.entityControllers.NPCController;
 import controllers.entityControllers.PetController;
 import models.entities.Avatar;
-import models.entities.NPC;
 import models.entities.Pet;
+
+import models.entities.npc.NPC;
+
 import models.map.Map;
 import views.GameView;
 import views.View;
@@ -33,14 +36,20 @@ public class GameState extends State {
 //        gameSaver = new GameSaver();
 
         // When not given a file, ladGame will create the game state from defaults.
-        // If this is succesfull, the game loader will init the map, avatar, and npc list.
+        // If this is successful, the game loader will init the map, avatar, and npc list.
         gameLoader.createNewGame(this, occupation);
 
         // Init the entity controllers
         viewController.setAvatarController(new AvatarController(avatar, viewController));
 
+        //viewController.setAvatarController(new AvatarController(avatar, (GameView)view));
+
+        for (NPC npc : npcList){
+            //n.addObserver((GameView)view);
+            viewController.setNpcControllers(npc);
+        }
         // Int the viewports
-        viewController.initViewports(map, avatar);
+        viewController.initViewports(map, avatar, npcList);
     }
 
     public void setMap(Map map){
@@ -76,10 +85,12 @@ public class GameState extends State {
 //
 //
 //    // Getters and Setters
+
 //    public SmasherAvatar getAvatar(){
 //        return avatar;
 //    }
 //    public void setAvatar(SmasherAvatar avatar){
+
 //        this.avatar = avatar;
 //    }
 //    public Map getMap() {
@@ -101,3 +112,4 @@ public class GameState extends State {
 //        gameSaver.saveGame(this);
 //    }
 }
+

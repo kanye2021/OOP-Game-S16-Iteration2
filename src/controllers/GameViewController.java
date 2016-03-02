@@ -3,6 +3,7 @@ package controllers;
 import controllers.entityControllers.AvatarController;
 import controllers.entityControllers.NPCController;
 import models.entities.Avatar;
+import models.entities.npc.NPC;
 import models.map.Map;
 import utilities.StateManager;
 import utilities.SubState;
@@ -18,19 +19,22 @@ import java.util.ArrayList;
  */
 public class GameViewController extends ViewController{
 
-    private ArrayList<NPCController> npcControllers;
+    private ArrayList<NPC> npcList;
     private AvatarController avatarController;
-
+    private ViewController activeSubController;
     public GameViewController(View view, StateManager stateManager){
         super(view, stateManager);
-        npcControllers = new ArrayList<>();
+        npcList = new ArrayList<>();
+        activeSubController = null;
     }
 
     public void setAvatarController(AvatarController controller){
         avatarController = controller;
     }
-
-    public void initViewports(Map map, Avatar avatar){
+    public void setNpcControllers(NPC npc){
+        npcList.add(npc);
+    }
+    public void initViewports(Map map, Avatar avatar, ArrayList<NPC> npcList){
         ((GameView)view).initAreaViewport(map, avatar);
         ((GameView)view).initStatusViewport(avatar.getStats());
     }
@@ -41,7 +45,9 @@ public class GameViewController extends ViewController{
     public void insertSubState(SubState s, int index) {
         ((GameView)view).insertSubState(s, index);
     }
-
+    public void setSubController(ViewController vc){
+        activeSubController = vc;
+    }
     @Override
     public final void handleKeyPress(KeyEvent e) {
         super.handleKeyPress(e);
@@ -52,6 +58,9 @@ public class GameViewController extends ViewController{
         // If no substate(s) (Result of false) ->Give the keypress to the avatar controller
         if(!hasSubstateThatWantsToTakeInput && avatarController!=null){
             avatarController.handleKeyPress(e);
+        }
+        if (activeSubController != null){
+            activeSubController.handleKeyPress(e);
         }
     }
 
@@ -78,4 +87,5 @@ public class GameViewController extends ViewController{
             }
         }, KeyEvent.VK_P);
     }
+
 }

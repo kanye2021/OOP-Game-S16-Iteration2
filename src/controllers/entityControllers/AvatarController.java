@@ -1,13 +1,16 @@
 package controllers.entityControllers;
 
 import controllers.GameViewController;
+import controllers.NPCInteractionController;
 import controllers.TestViewController;
 import models.entities.Avatar;
 import models.map.Map;
+import models.skills.SneakSkills.TileDetection;
 import utilities.InputMapping;
 import utilities.SubState;
 import utilities.Task;
 import views.GameView;
+import views.NPCActionView;
 import views.ToastView;
 
 import java.awt.*;
@@ -21,12 +24,14 @@ public class AvatarController extends EntityController {
     private Avatar avatar;
     // Required to manage SubStates. i.e: Inventory, EquippedItems, Entity Interactions.
     private GameViewController gameViewController;
+    private GameView gameView;
 
     public AvatarController(Avatar avatar, GameViewController gameViewController){
+        //TODO: Add gameview
         this.avatar = avatar;
         this.gameViewController = gameViewController;
         keyPressMapping = new InputMapping();
-
+        this.gameView = (GameView)gameViewController.getView();
         initKeyPressMapping();
     }
 
@@ -43,42 +48,44 @@ public class AvatarController extends EntityController {
     protected void initKeyPressMapping(){
         Task moveNorth = new Task() {
             @Override
-            public void run() { avatar.move(Map.Direction.NORTH);}
+            public void run() {
+                moveAndDetect(Map.Direction.NORTH);
+            }
 
             @Override
             public void stop() { avatar.stopMoving(); }
         };
         Task moveNorthWest = new Task() {
             @Override
-            public void run() { avatar.move(Map.Direction.NORTH_WEST);}
+            public void run() { moveAndDetect(Map.Direction.NORTH_WEST);}
 
             @Override
             public void stop() { avatar.stopMoving(); }
         };
         Task moveSouthWest = new Task() {
             @Override
-            public void run() { avatar.move(Map.Direction.SOUTH_WEST);}
+            public void run() { moveAndDetect(Map.Direction.SOUTH_WEST);}
 
             @Override
             public void stop() { avatar.stopMoving(); }
         };
         Task moveSouth = new Task() {
             @Override
-            public void run() { avatar.move(Map.Direction.SOUTH);}
+            public void run() { moveAndDetect(Map.Direction.SOUTH);}
 
             @Override
             public void stop() { avatar.stopMoving(); }
         };
         Task moveSouthEast = new Task() {
             @Override
-            public void run() { avatar.move(Map.Direction.SOUTH_EAST);}
+            public void run() { moveAndDetect(Map.Direction.SOUTH_EAST);}
 
             @Override
             public void stop() { avatar.stopMoving(); }
         };
         Task moveNorthEast = new Task() {
             @Override
-            public void run() { avatar.move(Map.Direction.NORTH_EAST);}
+            public void run() { moveAndDetect(Map.Direction.NORTH_EAST);}
 
             @Override
             public void stop() { avatar.stopMoving(); }
@@ -122,13 +129,6 @@ public class AvatarController extends EntityController {
             public void stop() {}
         };
 
-//        addKeyPressMapping(moveNorth, KeyEvent.VK_NUMPAD8);
-//        addKeyPressMapping(moveNorthWest, KeyEvent.VK_NUMPAD7);
-//        addKeyPressMapping(moveSouthWest, KeyEvent.VK_NUMPAD1);
-//        addKeyPressMapping(moveSouth, KeyEvent.VK_NUMPAD2);
-//        addKeyPressMapping(moveSouthEast, KeyEvent.VK_NUMPAD3);
-//        addKeyPressMapping(moveNorthEast, KeyEvent.VK_NUMPAD9);
-
         addKeyPressMapping(moveNorth, KeyEvent.VK_W);
         addKeyPressMapping(moveNorthWest, KeyEvent.VK_Q);
         addKeyPressMapping(moveSouthWest, KeyEvent.VK_Z);
@@ -146,7 +146,28 @@ public class AvatarController extends EntityController {
         // TODO: Testing opening a random overlay toast view
         addKeyPressMapping(openToastTestView, KeyEvent.VK_I);
     }
+    //Method is called whenever entity moves. Basically checks what is in the tile through
+    //Tile detection and then whether an NPC is detected, it'll paint the interaction
+    public void moveAndDetect(Map.Direction direction){
+        TileDetection td;
+        td = avatar.move(direction);
 
+        if (td.npcDetected()){
+//            System.out.println("Action is true");
+
+            //Changes the AvatarController in gameview controller to NPCInteractionController
+            NPCActionView npcView = new NPCActionView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay(), td.getNpc());
+            NPCInteractionController npcIC = new NPCInteractionController(npcView, gameViewController.getStateManager(), td.getNpc());
+            gameViewController.setSubController(npcIC);
+            gameView.initNPCActionView(npcView);
+            gameView.renderNPCAction(true);
+            avatar.startInteraction();
+        }else {
+           // System.out.println("Action is false");
+            gameView.renderNPCAction(false);
+            gameViewController.setSubController(null);
+        }
+    }
 
     protected final void addKeyPressMapping(Task task, int... key) {
 
@@ -182,4 +203,5 @@ public class AvatarController extends EntityController {
         return number;
 
     }
+
 }
