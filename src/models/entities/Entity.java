@@ -112,7 +112,6 @@ public abstract class Entity extends Observable implements ActionListener{
         for(int i =0; i < this.getSkills().size(); i++){
 
             if(skill.equals(this.getSkills().get(i).initID())){
-                System.out.println("I am true");
                 found = this.getSkills().get(i);
             }
         }

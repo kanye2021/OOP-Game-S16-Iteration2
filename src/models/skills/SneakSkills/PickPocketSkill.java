@@ -20,7 +20,7 @@ public class PickPocketSkill extends ActiveSkill {
     @Override
     public void onActivate(Entity entity) {
 
-
+        System.out.println("I am pick pocket skill");
 
     }
 

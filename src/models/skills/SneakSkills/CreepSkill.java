@@ -26,7 +26,7 @@ public class CreepSkill extends ActiveSkill {
     public void onActivate(Entity entity) {
     //need to use alphacomposite on entity here
         int mana = entity.getStats().getMana();
-        if(statsCondition.checkConditionAtLeast(mana,cost)){
+        if(mana > cost){
             Stats stats = entity.getStats();
             //int originalSpeed = stats.getMovement();
             //double entityFinalSpeed = stats.getMovement() * constant;

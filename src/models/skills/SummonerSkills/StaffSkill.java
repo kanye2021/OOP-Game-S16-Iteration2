@@ -19,9 +19,7 @@ public class StaffSkill extends ActiveSkill {
 
     @Override
     public void onActivate(Entity entity) {
-
-
-
+        System.out.println("I am staff skill");
     }
 
     @Override

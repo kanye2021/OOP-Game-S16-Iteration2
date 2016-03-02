@@ -14,6 +14,7 @@ import models.skills.SneakSkills.DetectRemoveTrapSkill;
 import models.skills.SneakSkills.PickPocketSkill;
 import models.skills.SneakSkills.TileDetection;
 import models.skills.SummonerSkills.EnchantmentSkill;
+import models.skills.SummonerSkills.StaffSkill;
 import utilities.InputMapping;
 import utilities.SubState;
 import utilities.Task;
@@ -163,7 +164,7 @@ public class AvatarController extends EntityController {
                     //first skill should be enchantment here
                     Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.STAFF);
                     System.out.println(secondSkill);
-                    EnchantmentSkill staffSkill = (EnchantmentSkill) secondSkill;
+                    StaffSkill staffSkill = (StaffSkill) secondSkill;
                     staffSkill.onActivate(avatar);
 
                 }else if(avatar.getOccupation().contains("Sneak")){
@@ -269,8 +270,8 @@ public class AvatarController extends EntityController {
         //skills keymapping for avatars
         addKeyPressMapping(bindWoundSkill,KeyEvent.VK_1);
         addKeyPressMapping(firstSkill,KeyEvent.VK_2);
-//        addKeyPressMapping(secondSkill,KeyEvent.VK_3);
-//        addKeyPressMapping(thirdSkill,KeyEvent.VK_4);
+        addKeyPressMapping(secondSkill,KeyEvent.VK_3);
+        addKeyPressMapping(thirdSkill,KeyEvent.VK_4);
 //        addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
 
         addKeyPressMapping(moveNorthWest, KeyEvent.VK_NUMPAD7);

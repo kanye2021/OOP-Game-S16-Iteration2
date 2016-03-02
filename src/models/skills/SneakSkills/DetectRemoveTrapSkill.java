@@ -21,6 +21,7 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
     public void onActivate(Entity entity) {
 
         // This needs to take a Item!
+        System.out.println("I am detect and remove trap skill");
 
     }
 
