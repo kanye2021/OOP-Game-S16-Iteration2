@@ -14,11 +14,11 @@ public abstract class TakeableItem extends Item {
     protected StatModificationList onPickUpModifications;
     protected int monetaryValue;
 
+    @Override
     public boolean onTouch(Entity entity) {
-
+        boolean added = entity.addItemToInventory(this);
         entity.applyStatMod(onPickUpModifications);
-        return false;
-
+        return added;
     }
 
     public abstract void onUse(Entity entity); // Method for what should be done once the item is in the inventory and used

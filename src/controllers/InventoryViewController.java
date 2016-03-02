@@ -96,17 +96,6 @@ public class InventoryViewController extends ViewController {
             @Override
             public void stop() {}
         };
-//        closeInventory = new Task() {
-//            @Override
-//            public void run() {
-//
-//            }
-//
-//            @Override
-//            public void stop() {
-//
-//            }
-//        }
 
 
         addKeyPressMapping(previousItem, KeyEvent.VK_UP);

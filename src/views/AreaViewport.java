@@ -2,6 +2,7 @@ package views;
 
 import models.entities.Avatar;
 import models.entities.Entity;
+import models.items.Item;
 import models.map.Map;
 import models.map.Terrain;
 import models.map.Tile;
@@ -143,15 +144,19 @@ public class AreaViewport extends View implements Observer {
 
         // TODO: Implement items and areaEffects / Decals
 //        // Draw the items
-//        Item item = tile.getItem();
-//        if(item!=null){
-//            Image itemImage = item.getImage();
+        Item item = tileNode.tile.getItem();
+        if(item!=null){
+            Image itemImage = item.getImage();
 //            itemImage = itemImage.getScaledInstance(hexSize, hexSize, 0); // TODO SEE WHAT THE LAST PARAMETER IS WHEN YOU HAVE WIFI
-//
-//            int itemX = (int)(pixelPoint.getX() - itemImage.getWidth(null) /2);
-//            int itemY = (int)(pixelPoint.getY() - itemImage.getHeight(null) /2);
-//            g.drawImage(itemImage, itemX, itemY, getDisplay());
-//        }
+
+            // Resize the entity image
+            int scaledWidth = hexWidth * 1;
+            int scaledHeight = hexHeight * 1;
+
+            int itemX = (int)(tileNode.pixelPoint.getX() - itemImage.getWidth(null) /2);
+            int itemY = (int)(tileNode.pixelPoint.getY() - itemImage.getHeight(null) /2);
+            g.drawImage(itemImage, itemX, itemY, scaledWidth, scaledHeight,  getDisplay());
+        }
 
         // Display entities on the map
         Entity entity = tileNode.tile.getEntity();

@@ -16,10 +16,12 @@ public class EquippableItem extends TakeableItem {
     protected ConditionList equipConditions = new ConditionList();
 
     protected int requiredLv;
+
+    @Override
     public boolean onTouch(Entity entity) {
-
-        return false;
-
+        // This super call will add to inventory
+        // Via takeableitem's implementation
+        return super.onTouch(entity);
     }
 
     // Equivalent to equipping.
