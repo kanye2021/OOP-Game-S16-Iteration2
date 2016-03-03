@@ -18,9 +18,10 @@ public class GoldChestplate extends EquippableItem{
         name = "Gold Chestplate";
         description = "A chestplate made of gold";
         component = Equipment.Component.CHESTPLATE;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/chest/smasher-template-chestplate.png");
+        monetaryValue = GOLDCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 20)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, 75)
         );
         requiredLv = 20;
     }

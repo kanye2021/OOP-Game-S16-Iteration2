@@ -10,8 +10,13 @@ import java.awt.event.KeyEvent;
  */
 public class DetectRemoveTrapSkill extends ActiveSkill {
 
+    public DetectRemoveTrapSkill(){
+        cooldownTime = 3*SECONDS;
+        cooldown = false;
+    }
+
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return SkillDictionary.DETECT_REMOVE_TRAP;
 
@@ -19,8 +24,25 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
 
     @Override
     public void onActivate(Entity entity) {
-
+        if(cooldown){
+            System.out.println("Cooldown time is not over!");
+            return;
+        }
+        cooldown = true;
         // This needs to take a Item!
+        System.out.println("I am detect and remove trap skill");
+        //TODO:Do shit here!
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+
+
+                        cooldown = false;
+                    }
+                },
+                cooldownTime
+        );
 
     }
 

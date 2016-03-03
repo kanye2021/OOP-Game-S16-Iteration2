@@ -17,7 +17,8 @@ public class RuniteGreaves extends EquippableItem{
         name = "Runite Greaves";
         description = "Greaves made of runite";
         component = Equipment.Component.GREAVES;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/legs/smasher-runite-greaves.png");
+        monetaryValue = RUNITECOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 40)
         );

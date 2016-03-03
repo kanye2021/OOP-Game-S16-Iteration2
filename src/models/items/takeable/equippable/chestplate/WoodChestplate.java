@@ -18,7 +18,8 @@ public class WoodChestplate extends EquippableItem{
         name = "Wood Chestplate";
         description = "A chestplate made of wood";
         component = Equipment.Component.CHESTPLATE;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/chest/smasher-template-chestplate.png");
+        monetaryValue = WOODCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 15)
         );

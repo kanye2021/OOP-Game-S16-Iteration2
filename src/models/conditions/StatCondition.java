@@ -1,31 +1,38 @@
 package models.conditions;
+import models.entities.Entity;
+import models.stats.Stats;
 
 /**
- * Created by denzel on 2/6/16.
+ * Created by ben on 2/28/16.
  */
-public class StatCondition {//extends Condition {
-/*
 
-    //Properties of StatCondition
-    private Condition.Entities entity;
+//TODO: Polish/Test the condition checker
+public class StatCondition {
+    private Entity entity;
     private Condition.Comparison comparison;
-    private Stats.Type stat;
+    private Stats stats;
+    private Stats.Type statType;
+    private int entityAmt;//This is to hold if the entity has enough of the stat
+
     private int requiredAmount;
-
-    //Constructor
-    public StatCondition(Condition.Entities entity, Condition.Comparison comparison, int requiredAmount, Stats.Type stat) {
+    public StatCondition(Entity entity, int requiredAmt, Stats.Type statType, Condition.Comparison comparison){
         this.entity = entity;
+        this.stats = entity.getStats();
+        this.statType = statType;
         this.comparison = comparison;
-        this.stat = stat;
-        this.requiredAmount = requiredAmount;
+        this.requiredAmount = requiredAmt;
+    }
+    //getStatType is used to find the stats of a certain entity so we can compare it in checkCondition
+    private void getStatType(){
+
+        //First things first find it!
+
+        entityAmt = stats.getStat(statType);
+
     }
 
-    @Override
-    protected boolean checkCondition() {
-        int entityStat = stat.get(entity.getEntity());
-        int requiredStat = this.requiredAmount;
-
-        return (comparison.isValid(entityStat, requiredStat));
-
+    public boolean checkCondition(){
+        getStatType();
+        return (comparison.isValid(entityAmt, requiredAmount));
     }
-*/}
+}

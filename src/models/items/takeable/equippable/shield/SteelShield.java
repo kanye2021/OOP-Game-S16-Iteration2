@@ -17,7 +17,8 @@ public class SteelShield extends EquippableItem{
         name = "Steel Shield";
         description = "Shield made of steel";
         component = Equipment.Component.SHIELD;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/secondary/smasher-template-shield.png");
+        monetaryValue = STEELCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 30)
         );

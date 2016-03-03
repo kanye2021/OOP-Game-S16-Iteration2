@@ -33,6 +33,12 @@ public class Pet extends NPC {
         return new Sneak();
     }
 
+
+    @Override
+    public void startInteraction(NPC npc) {
+        
+    }
+
     @Override
     protected HashMap<Map.Direction, String> initSprites() {
         String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/pet-samples/raichu/");

@@ -18,10 +18,12 @@ public class WoodBoots extends EquippableItem{
         name = "Wood Boots";
         description = "Boots made of wood";
         component = Equipment.Component.BOOTS;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/boots/templateBoots.png");
+        monetaryValue=WOODCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 5)
         );
         requiredLv = 1;
+
     }
 }

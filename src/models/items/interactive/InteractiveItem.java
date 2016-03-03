@@ -1,19 +1,29 @@
 package models.items.interactive;
 
+import models.conditions.ConditionList;
 import models.entities.Entity;
 import models.items.Item;
 
 /**
  * Created by aseber on 2/21/16.
  */
-public class InteractiveItem extends Item {
+public abstract class InteractiveItem extends Item {
 
-    public boolean onTouch(Entity entity) {
+    private ConditionList onTouchConditions;
 
-        return false;
+    public InteractiveItem() {
+
+        onTouchConditions = initConditions();
 
     }
 
+    public boolean onTouch(Entity entity) {
+
+        return onTouchConditions.checkCondition();
+
+    }
+
+    protected abstract ConditionList initConditions();
 
     @Override
     public String getType(){

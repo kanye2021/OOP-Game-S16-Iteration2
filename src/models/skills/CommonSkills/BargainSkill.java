@@ -2,6 +2,7 @@ package models.skills.CommonSkills;
 
 import models.entities.Entity;
 import models.skills.PassiveSkill;
+import models.skills.SkillList;
 
 import java.awt.event.KeyEvent;
 
@@ -16,16 +17,17 @@ public class BargainSkill extends PassiveSkill {
 
     public BargainSkill(){
         bargainLv = 1;//Gets level from skill
+        percentDiscount = 0.0;
     }
     @Override
-    protected SkillDictionary initID() {
-
+    public SkillDictionary initID() {
         return SkillDictionary.BARGAIN;
-
     }
 
     @Override
     public void onUpdate(Entity entity) {
+        SkillList skillList = entity.getSkills();
+        //skillList.
         bargainLv = getLevel();//Gets the newly updated level
         percentDiscount = (constant*(bargainLv-1))/100.0;
 

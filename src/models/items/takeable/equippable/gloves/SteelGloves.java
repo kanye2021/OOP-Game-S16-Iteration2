@@ -17,7 +17,8 @@ public class SteelGloves extends EquippableItem{
         name = "Steel Gloves";
         description = "Gloves made of steel";
         component = Equipment.Component.GLOVES;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/gloves/templateGloves.png");
+        monetaryValue = STEELCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 15)
         );

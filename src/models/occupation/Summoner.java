@@ -27,13 +27,23 @@ public class Summoner extends Occupation {
     }
 
     @Override
+    public String getOccupation() {
+        return "Summoner";
+    }
+
+    @Override
     public StatModificationList initStats() {
 
         StatModificationList modifications = new StatModificationList(
-                new StatModification(Stats.Type.AGILITY, -5),
-                new StatModification(Stats.Type.INTELLECT, 10),
-                new StatModification(Stats.Type.HARDINESS, 5),
-                new StatModification(Stats.Type.RADIUS_OF_VISIBILITY, 4)
+                new StatModification(Stats.Type.LIVES, 3),
+                new StatModification(Stats.Type.STRENGTH,5),
+                new StatModification(Stats.Type.AGILITY, 10),
+                new StatModification(Stats.Type.INTELLECT, 20),
+                new StatModification(Stats.Type.MOVEMENT,5),
+                new StatModification(Stats.Type.HARDINESS, 10),
+                new StatModification(Stats.Type.RADIUS_OF_VISIBILITY, 4),
+                new StatModification(Stats.Type.HEALTH,Integer.MAX_VALUE),
+                new StatModification(Stats.Type.MANA,Integer.MAX_VALUE)
         );
 
         return modifications;

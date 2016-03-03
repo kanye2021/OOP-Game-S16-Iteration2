@@ -17,7 +17,9 @@ public class MithrilShield extends EquippableItem{
         name = "Mithril Shield";
         description = "Shield made of mithril";
         component = Equipment.Component.SHIELD;
-        sprite = new Sprite("pathname");
+        monetaryValue = 200;
+        sprite = new Sprite("./src/res/items/takeable/armor/secondary/smasher-template-shield.png");
+        monetaryValue=MITHRILCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 50)
         );

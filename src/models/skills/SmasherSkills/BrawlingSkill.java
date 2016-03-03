@@ -6,6 +6,7 @@ import models.skills.PassiveSkill;
 /**
  * Created by aseber on 2/24/16.
  */
+
 public class BrawlingSkill extends PassiveSkill {
     private int baseDamage;
     private int baseSpeed;
@@ -15,9 +16,11 @@ public class BrawlingSkill extends PassiveSkill {
         baseDamage=LOW;
         baseSpeed=HIGH;
         brawlLv = 1;
+        cooldown = false;
+        cooldownTime = LOWTIME;
     }
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return SkillDictionary.BRAWLING;
 

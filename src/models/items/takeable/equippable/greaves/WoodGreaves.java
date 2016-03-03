@@ -17,7 +17,8 @@ public class WoodGreaves extends EquippableItem{
         name = "Wood Greaves";
         description = "Greaves made of wood";
         component = Equipment.Component.GREAVES;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/legs/smasher-template-greaves.png");
+        monetaryValue = WOODCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 5)
         );

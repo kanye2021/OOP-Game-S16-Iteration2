@@ -1,8 +1,6 @@
 package views;
 
 import models.entities.Avatar;
-import models.entities.Entity;
-import models.entities.npc.NPC;
 import models.map.Map;
 import models.stats.Stats;
 import utilities.SubState;
@@ -115,5 +113,9 @@ public class GameView extends View implements Observer{
         }else {
             hasNPCAction = false;
         }
+    }
+
+    public void setAreaViewportOffset(Point offset){
+        this.areaViewport.setViewportOffset(offset);
     }
 }

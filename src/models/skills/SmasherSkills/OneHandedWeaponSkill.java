@@ -20,10 +20,12 @@ public class OneHandedWeaponSkill extends PassiveSkill {
         baseDamage=MID;
         baseSpeed=MID;
         oneHandedWeaponLv=1;
+        cooldownTime=MIDTIME;
+        cooldown=false;
     }
 
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return SkillDictionary.ONE_HANDED_WEAPON;
 

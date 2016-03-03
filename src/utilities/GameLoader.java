@@ -1,7 +1,9 @@
 package utilities;
 
+import controllers.entityControllers.MountController;
 import controllers.entityControllers.PetController;
 import models.entities.*;
+import models.entities.npc.Horse;
 import models.entities.npc.NPC;
 import models.entities.npc.Villager;
 import models.items.Item;
@@ -79,6 +81,13 @@ public class GameLoader {
         tmpList.add(newVillager);
         game.setNpcList(tmpList);
 
+
+        //TODO: Figure out the mount shit implementation
+        Horse horse = new Horse(new Point(-10,-4),newMap);
+        MountController mountController = new MountController(horse);
+        newMap.insertEntity(horse);
+        game.setMount(horse,mountController);
+        System.out.println("I'm in the game loader");
     }
 
     private Map loadMap(String filepath){
