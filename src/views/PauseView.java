@@ -96,7 +96,7 @@ public class PauseView extends View{
     private void renderBackground(Graphics g){
         Graphics2D g2d = (Graphics2D) g.create();
 
-        g2d.setColor(new Color(25, 25, 25));
+        g2d.setColor(Color.lightGray);
 
         //Opacity stuff
         float opacity = 0.7f;
@@ -118,7 +118,7 @@ public class PauseView extends View{
         int titleY = titleStartY + (int) titleRect.getHeight() + titleMargin;
 
         // Draw the title
-        g.setColor(Color.lightGray);
+        g.setColor(Color.RED);
         g.drawString(TITLE, titleX, titleY);
     }
 
