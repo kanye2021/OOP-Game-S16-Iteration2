@@ -11,7 +11,9 @@ public abstract class PassiveSkill extends Skill {
     protected final int LOW = 5;
     protected final int MID = 10;
     protected final int HIGH = 15;
-
+    protected final int LOWTIME = 500;//half a second
+    protected final int MIDTIME = 1000;//a second
+    protected final int HIGHTIME = 1500;//1.5 seconds
 
     public abstract void onUpdate(Entity entity);
 

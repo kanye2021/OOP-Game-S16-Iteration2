@@ -7,7 +7,10 @@ import models.skills.PassiveSkill;
  * Created by aseber on 2/25/16.
  */
 public class RangedAttackSkill extends PassiveSkill {
-
+    public RangedAttackSkill(){
+        cooldown = false;
+        cooldownTime=MIDTIME;
+    }
     @Override
     public SkillDictionary initID() {
 

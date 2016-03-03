@@ -17,6 +17,8 @@ public class TwoHandedWeaponSkill extends PassiveSkill {
         baseDamage=HIGH;
         baseSpeed=LOW;
         twoHandedWeaponLv = 1;
+        cooldownTime = HIGHTIME;
+        cooldown = false;
     }
     @Override
     public SkillDictionary initID() {

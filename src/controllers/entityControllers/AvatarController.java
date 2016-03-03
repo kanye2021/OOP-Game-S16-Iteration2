@@ -11,6 +11,7 @@ import models.skills.SneakSkills.CreepSkill;
 import models.skills.SneakSkills.DetectRemoveTrapSkill;
 import models.skills.SneakSkills.PickPocketSkill;
 import models.skills.SneakSkills.TileDetection;
+import models.skills.SummonerSkills.BoonSkill;
 import models.skills.SummonerSkills.EnchantmentSkill;
 import models.skills.SummonerSkills.StaffSkill;
 import utilities.InputMapping;
@@ -174,8 +175,10 @@ public class AvatarController extends EntityController {
 
                 }else if(avatar.getOccupation().contains("Summoner")){
                     //first skill should be enchantment here
-
-
+                    Skill thirdSkill= avatar.getSpecificSkill(Skill.SkillDictionary.BOON);
+                    System.out.println(thirdSkill);
+                    BoonSkill boonSkill = (BoonSkill) thirdSkill;
+                    boonSkill.onActivate(avatar);
                 }else if(avatar.getOccupation().contains("Sneak")){
                     //first skill should be something..
                     //first skill should be something..

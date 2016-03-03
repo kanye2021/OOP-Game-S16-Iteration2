@@ -10,7 +10,10 @@ import java.awt.event.KeyEvent;
  * Created by aseber on 2/24/16.
  */
 public class EnchantmentSkill extends ActiveSkill {
-
+    public EnchantmentSkill(){
+        cooldown = false;
+        cooldownTime = 4*SECONDS;
+    }
     @Override
     public SkillDictionary initID() {
 

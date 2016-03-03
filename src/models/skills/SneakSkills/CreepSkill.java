@@ -12,9 +12,13 @@ import java.awt.event.KeyEvent;
 public class CreepSkill extends ActiveSkill {
     private javax.swing.Timer debuffTimer;
     private int debuffTimerDelay;
-
+    private boolean isNotRunning;
     private final int cost = 10;
     private final double constant = 0.5;//reduces speed by half
+    public CreepSkill(){
+        cooldown = false;
+        cooldownTime = 5*SECONDS;
+    }
     @Override
     public SkillDictionary initID() {
 
@@ -24,6 +28,11 @@ public class CreepSkill extends ActiveSkill {
 
     @Override
     public void onActivate(Entity entity) {
+        if(cooldown){
+            System.out.println("Calm Down and Cool Down m8");
+            return;
+        }
+        cooldown=true;
     //need to use alphacomposite on entity here
         int mana = entity.getStats().getStat(Stats.Type.MANA);
         if(mana > cost){
@@ -33,18 +42,25 @@ public class CreepSkill extends ActiveSkill {
             //need a timer here
             int delta = 3;
             stats.modifyStat(Stats.Type.MOVEMENT, -delta);//decreases speed by a constant
-            //TODO:show that the avatar looks invisible
+            int init =stats.getStat(Stats.Type.MOVEMENT);
+                    //TODO:show that the avatar looks invisible
             //TODO:implement back attack to cause extra damaage
-            //This timer means after 5 seconds it will revert movement back to the old speed
+            //This timer means after 5 seconds it will revert movement back to the old speedS
+            System.out.println("Do you fail here?");
+            System.out.println(init);
             new java.util.Timer().schedule(
                     new java.util.TimerTask() {
                         @Override
                         public void run() {
                             stats.modifyStat(Stats.Type.MOVEMENT, delta);
                             //TODO:make avatar look visible again
+                            System.out.println("IT WORKED!");
+                            int fina = stats.getStat(Stats.Type.MOVEMENT);
+                            System.out.println(fina);
+                            cooldown=false;
                         }
                     },
-                    5000
+                    cooldownTime
             );
         }
 
