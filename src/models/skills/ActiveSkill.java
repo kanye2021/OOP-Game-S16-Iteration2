@@ -1,6 +1,6 @@
 package models.skills;
 
-import models.conditions.StatsCondition;
+import models.conditions.StatCondition;
 import models.entities.Entity;
 
 import java.awt.event.KeyEvent;
@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
  */
 public abstract class ActiveSkill extends Skill  {
 
-    protected StatsCondition statsCondition;//all active skills cost something
+    protected StatCondition statsCondition;//all active skills cost something
 
     public abstract void onActivate(Entity entity);
 

@@ -1,5 +1,6 @@
 package models.skills;
 
+import models.conditions.ConditionList;
 import utilities.MathUtilities;
 
 /**
@@ -27,6 +28,7 @@ public abstract class Skill {
     }
 
     private SkillDictionary ID;
+    protected ConditionList conditionsToActivate = new ConditionList();
     private int level;
 
     public Skill() {

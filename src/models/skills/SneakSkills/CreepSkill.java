@@ -25,14 +25,14 @@ public class CreepSkill extends ActiveSkill {
     @Override
     public void onActivate(Entity entity) {
     //need to use alphacomposite on entity here
-        int mana = entity.getStats().getMana();
+        int mana = entity.getStats().getStat(Stats.Type.MANA);
         if(mana > cost){
             Stats stats = entity.getStats();
             //int originalSpeed = stats.getMovement();
             //double entityFinalSpeed = stats.getMovement() * constant;
             //need a timer here
             int delta = 3;
-            stats.modifyMovement(-delta);//decreases speed by a constant
+            stats.modifyStat(Stats.Type.MOVEMENT, -delta);//decreases speed by a constant
             //TODO:show that the avatar looks invisible
             //TODO:implement back attack to cause extra damaage
             //This timer means after 5 seconds it will revert movement back to the old speed
@@ -40,7 +40,7 @@ public class CreepSkill extends ActiveSkill {
                     new java.util.TimerTask() {
                         @Override
                         public void run() {
-                            stats.modifyMovement(delta);
+                            stats.modifyStat(Stats.Type.MOVEMENT, delta);
                             //TODO:make avatar look visible again
                         }
                     },

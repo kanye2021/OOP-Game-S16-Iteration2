@@ -21,8 +21,8 @@ public class Attack extends Action {
 
     public void doDamage(){
         Stats npcStats = npc.getStats();
-        npcStats.modifyHealth(-1);
-        System.out.println("NPC Current HP: " + npcStats.getHealth());
+        npcStats.modifyStat(Stats.Type.HEALTH, -1);
+        System.out.println("NPC Current HP: " + npcStats.getStat(Stats.Type.HEALTH));
     }
 
 

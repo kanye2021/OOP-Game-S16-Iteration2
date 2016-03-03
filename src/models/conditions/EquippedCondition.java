@@ -23,11 +23,11 @@ public class EquippedCondition extends Condition {
 
     public boolean checkCondition() {
 
-        TakeableItem equippedItem = null;//item.getComponent().getCurrentEquippedItem(entity.getEntity());
+        EquippableItem equippedItems = entity.getEquipment().getEquipmentLocation(item.getComponent())[0];
 
-        if (equippedItem != null) {
+        if (equippedItems != null) {
 
-            return equippedItem.getID() == item.getID();
+            return equippedItems.getID() == item.getID();
 
         }
 

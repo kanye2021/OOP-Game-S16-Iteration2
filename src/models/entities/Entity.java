@@ -66,7 +66,7 @@ public abstract class Entity extends Observable implements ActionListener{
         this.occupation = initOccupation();
         this.skills = occupation.getSkills();
         this.inventory = new Inventory(30);
-        this.equipment = new Equipment();
+        this.equipment = new Equipment(this);
         this.controller = initController();
         passableTerrain = new ArrayList<>();
         //occupation.initStats(this.stats); // This will setup the stats and skills particular to this occupation.
@@ -86,7 +86,7 @@ public abstract class Entity extends Observable implements ActionListener{
     }
 
     private void updateMovementTimerDelay(){
-        movementTimerDelay = 300 - (stats.getMovement() / 5);
+        movementTimerDelay = 300 - (stats.getStat(Stats.Type.MOVEMENT) / 5);
         if(movementTimerDelay < 50){
             movementTimerDelay = 50;
         }
@@ -170,7 +170,7 @@ public abstract class Entity extends Observable implements ActionListener{
     }
 
     public int getRadiusOfVisiblility(){
-        return stats.getRadiusOfVisiblility();
+        return stats.getStat(Stats.Type.RADIUS_OF_VISIBILITY);
     }
 
     // Wrappers for skills

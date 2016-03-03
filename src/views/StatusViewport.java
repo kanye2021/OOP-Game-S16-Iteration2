@@ -64,7 +64,7 @@ public class StatusViewport extends View {
     }
 
     private void drawLevelAndLives(Graphics g){
-        String level = "Level: " + stats.getLevel();
+        String level = "Level: " + stats.getStat(Stats.Type.LEVEL);
 
         // Set the font
         g.setFont(FIXED_FONT_MED);
@@ -81,7 +81,7 @@ public class StatusViewport extends View {
         g.drawString(level, levelX, levelY);
 
         // Render the lives
-        int lives = stats.getLives();
+        int lives = stats.getStat(Stats.Type.LIVES);
 
         int livesX = levelX + (int) levelRect.getWidth() + 20;
         int livesY = levelY;
@@ -108,8 +108,8 @@ public class StatusViewport extends View {
 
         // Start with the healthbar
         // Get the necessary stats
-        int health = stats.getHealth();
-        int maxHealth = stats.getMaxHealth();
+        int health = stats.getStat(Stats.Type.HEALTH);
+        int maxHealth = stats.getStat(Stats.Type.MAX_HEALTH);
 
         // Set the font
         g.setFont(FIXED_FONT_MED);
@@ -155,8 +155,8 @@ public class StatusViewport extends View {
 
         // Draw the mana bar
         // Get the necessary stats
-        int mana = stats.getMana();
-        int maxMana = stats.getMaxMana();
+        int mana = stats.getStat(Stats.Type.MANA);
+        int maxMana = stats.getStat(Stats.Type.MAX_MANA);
 
         // Set the font
         g.setFont(FIXED_FONT_MED);
@@ -204,9 +204,9 @@ public class StatusViewport extends View {
 
         // Draw the exp bar
         // Get the necessary stats
-        int exp = stats.getExperience();
-        int expReqLvlUp = stats.getExpReqLvUp();
-        int lastLvlExpReq = stats.getLastLvlExpReq();
+        int exp = stats.getStat(Stats.Type.EXPERIENCE);
+        int expReqLvlUp = stats.getStat(Stats.Type.EXP_TO_LEVEL);
+        int lastLvlExpReq = stats.getStat(Stats.Type.LAST_EXP_TO_LEVEL);
 
         // Set the font
         g.setFont(FIXED_FONT_MED);
@@ -253,14 +253,14 @@ public class StatusViewport extends View {
 
     private void drawStatAttributes(Graphics2D g){
         // Get the ncessary stats
-        String strength = "Strength: " + stats.getStrength();
-        String agility = "Agility: " + stats.getAgility();
-        String intellect = "Intellect: " + stats.getIntellect();
-        String hardiness = "Hardiness: " + stats.getHardiness();
-        String offensiveRating = "Offense: " + stats.getOffensiveRating();
-        String defensiveRating = "Defense: " + stats.getDefensiveRating();
-        String armorRating = "Armor: " + stats.getArmorRating();
-        String movement = "Speed: " + stats.getMovement();
+        String strength = "Strength: " + stats.getStat(Stats.Type.STRENGTH);
+        String agility = "Agility: " + stats.getStat(Stats.Type.AGILITY);
+        String intellect = "Intellect: " + stats.getStat(Stats.Type.INTELLECT);
+        String hardiness = "Hardiness: " + stats.getStat(Stats.Type.HARDINESS);
+        String offensiveRating = "Offense: " + stats.getStat(Stats.Type.OFFSENSIVE_RATING);
+        String defensiveRating = "Defense: " + stats.getStat(Stats.Type.DEFENSIVE_RATING);
+        String armorRating = "Armor: " + stats.getStat(Stats.Type.ARMOR_RATING);
+        String movement = "Speed: " + stats.getStat(Stats.Type.MOVEMENT);
 
 
         // Set the font
