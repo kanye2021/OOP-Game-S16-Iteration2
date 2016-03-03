@@ -22,7 +22,6 @@ public class WoodSword extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.WEAPON_MODIFIER, 5)
         );
-        requiredLv = 1;
 
     }
 }

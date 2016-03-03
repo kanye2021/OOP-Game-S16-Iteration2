@@ -23,6 +23,5 @@ public class RuniteChestplate extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 100)
         );
-        requiredLv = 40;
     }
 }

@@ -1,7 +1,6 @@
 package models.items.takeable.equippable.greaves;
 
 import models.Equipment;
-import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
@@ -22,6 +21,5 @@ public class GoldGreaves extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 15)
         );
-        requiredLv = 20;
     }
 }

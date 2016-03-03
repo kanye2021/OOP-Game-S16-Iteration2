@@ -1,7 +1,6 @@
 package models.items.takeable.equippable.chestplate;
 
 import models.Equipment;
-import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
@@ -23,6 +22,5 @@ public class MithrilChestplate extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 60)
         );
-        requiredLv = 30;
     }
 }

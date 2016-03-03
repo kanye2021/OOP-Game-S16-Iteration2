@@ -22,6 +22,7 @@ public class WoodGloves extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 5)
         );
-        requiredLv = 1;
+
     }
+
 }

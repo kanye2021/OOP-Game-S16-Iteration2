@@ -15,8 +15,6 @@ public class EquippableItem extends TakeableItem {
     protected StatModificationList onEquipModifications = new StatModificationList();
     protected ConditionList equipConditions = new ConditionList();
 
-    protected int requiredLv;
-
     //TODO:Go back to the items classes and put the constants in oh boi
     protected final int WOODCOST = 10;
     protected final int IRONCOST = 50;
@@ -31,20 +29,14 @@ public class EquippableItem extends TakeableItem {
     protected final int GOLDATK = 60;
     protected final int RUNITEATK = 80;
 
-
-
-    @Override
-    public boolean onTouch(Entity entity) {
-        // This super call will add to inventory
-        // Via takeableitem's implementation
-        return super.onTouch(entity);
-    }
-
     // Equivalent to equipping.
     public final void onUse(Entity entity) {
-        if (equipConditions.checkCondition()) {
+        if (equipConditions.checkCondition(entity)) {
+            System.out.println("Condition passed!");
             entity.applyStatMod(onEquipModifications);
-            // add item to inventory
+            // remove item from inventory
+            entity.getInventory().removeItem(this);
+            entity.getEquipment().equipItem(this);
 
         }
 
@@ -55,11 +47,9 @@ public class EquippableItem extends TakeableItem {
     }
 
     public final Equipment.Component getComponent() { return component; }
-    public final StatModificationList getOnEquipModifications() { return onEquipModifications; }
-    public final ConditionList getEquipConditions(){ return equipConditions; }
 
     @Override
-    public String getType(){
+    public String getType() {
         return "equippable";
     }
 

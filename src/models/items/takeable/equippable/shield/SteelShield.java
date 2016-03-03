@@ -22,6 +22,5 @@ public class SteelShield extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 30)
         );
-        requiredLv = 10;
     }
 }

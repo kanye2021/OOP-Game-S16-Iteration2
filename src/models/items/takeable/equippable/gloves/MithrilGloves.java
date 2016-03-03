@@ -22,6 +22,5 @@ public class MithrilGloves extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 20)
         );
-        requiredLv = 30;
     }
 }

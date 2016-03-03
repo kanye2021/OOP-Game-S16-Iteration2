@@ -22,6 +22,5 @@ public class MithrilStaff extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.WEAPON_MODIFIER, MITHRILATK)
         );
-        requiredLv = 30;
     }
 }

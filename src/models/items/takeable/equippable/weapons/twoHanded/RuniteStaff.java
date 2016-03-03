@@ -22,6 +22,5 @@ public class RuniteStaff extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.WEAPON_MODIFIER, RUNITEATK)
         );
-        requiredLv = 40;
     }
 }

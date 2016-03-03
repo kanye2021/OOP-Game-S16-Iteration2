@@ -22,6 +22,5 @@ public class GoldShield extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 40)
         );
-        requiredLv = 20;
     }
 }

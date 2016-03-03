@@ -1,6 +1,9 @@
 package models.items.takeable.equippable.helmets;
 
 import models.Equipment;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
@@ -23,7 +26,10 @@ public class SteelHelmet extends EquippableItem {
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 35)
         );
-        requiredLv = 10;
+        equipConditions = new ConditionList(
+                new StatCondition(null, 10, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+        );
+
     }
 
 }

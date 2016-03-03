@@ -22,6 +22,5 @@ public class GoldBow extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.WEAPON_MODIFIER, GOLDATK)
         );
-        requiredLv = 30;
     }
 }

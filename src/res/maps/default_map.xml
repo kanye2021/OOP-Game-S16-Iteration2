@@ -4442,7 +4442,7 @@
     </tile>
     <tile x="4" y="-2">
         <terrain type="grass"/>
-        <item id="2" type="interactive"/>
+        <item id="2"/>
     </tile>
     <tile x="4" y="-1">
         <terrain type="mountain"/>

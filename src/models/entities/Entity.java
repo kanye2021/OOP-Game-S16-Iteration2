@@ -191,11 +191,10 @@ public abstract class Entity extends Observable implements ActionListener{
     }
 
     public final void equipItem(EquippableItem item){
-        inventory.removeItem(item);
         // TODO: implement equipped items
 //        equippedItems.addItem(item);
 
-        applyStatMod(item.getOnEquipModifications());
+        item.onUse(this);
     }
 
     public final void dropItem(TakeableItem item){

@@ -1,27 +1,31 @@
 package models.conditions;
 
 import models.entities.Entity;
-import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
 
 /**
  * Created by aseber
  * on 2/6/16.
  */
 public class EquippedCondition extends Condition {
+    // Param 0 = Entity
+    // Param 1 = EquippableItem
 
-    //Properties of InventoryCondition
-    private Entity entity;
-    private EquippableItem item;
-
-    public EquippedCondition(Entity entity, EquippableItem item) {
-
-        this.entity = entity;
-        this.item = item;
-
+    public EquippedCondition(Entity entity, EquippableItem item, Condition.Variable... runtimeArguments) {
+        super(runtimeArguments);
+        setParameter(0, entity);
+        setParameter(1, item);
     }
 
-    public boolean checkCondition() {
+    public boolean checkCondition(Object... args) {
+
+        getRuntimeParameters(args);
+
+        Entity entity = (Entity) getParameter(0);
+        EquippableItem item = (EquippableItem) getParameter(1);
 
         EquippableItem equippedItems = entity.getEquipment().getEquipmentLocation(item.getComponent())[0];
 

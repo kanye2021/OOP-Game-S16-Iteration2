@@ -123,14 +123,14 @@ public class Equipment {
 
     }
 
-    public void setEquipmentComponent(Component component, EquippableItem item) {
+    public void equipItem(EquippableItem item) {
 
         HashSet<EquippableItem> equipmentToRemove = new HashSet<>();
-        Set<Location> union = new HashSet<>(component.affectedLocations);
+        Set<Location> union = new HashSet<>(item.getComponent().affectedLocations);
         EquippableItem slotContents;
 
         // First find all affected locations
-        for (Location location : component.affectedLocations) {
+        for (Location location : item.getComponent().affectedLocations) {
 
             slotContents = locationMap.get(location).get().getSlotContents();
 
@@ -158,14 +158,11 @@ public class Equipment {
         }
 
         // Set all locations to the new item
-        for (Location location : component.affectedLocations) {
+        for (Location location : item.getComponent().affectedLocations) {
 
             locationMap.get(location).get().setSlotContents(item);
 
         }
-
-        // And finally apply the stat modification the item does
-        item.onUse(entity);
 
     }
 

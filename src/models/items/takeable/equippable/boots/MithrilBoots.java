@@ -1,7 +1,6 @@
 package models.items.takeable.equippable.boots;
 
 import models.Equipment;
-import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
@@ -22,6 +21,5 @@ public class MithrilBoots extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 30)
         );
-        requiredLv = 30;
     }
 }

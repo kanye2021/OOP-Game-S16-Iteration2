@@ -22,6 +22,5 @@ public class SteelSword extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.WEAPON_MODIFIER, 15)
         );
-        requiredLv = 10;
     }
 }

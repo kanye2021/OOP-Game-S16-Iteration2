@@ -5,6 +5,11 @@
 
 package models.conditions;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+
 /**
  * All Condition objects will have a condition Enum
  * extended onto each
@@ -39,8 +44,54 @@ public abstract class Condition {
         }
     }
 
+    public enum Variable {
+        PASS0,
+        PASS1,
+        PASS2,
+        PASS3,
+        PASS4,
+        PASS5,
+        PASS6,
+        PASS7,
+        PASS8
+    }
+
+    protected Condition(Variable... runtimeArguments) {
+
+        this.runtimeArguments = new ArrayList(Arrays.asList(runtimeArguments));
+
+    }
+
+    private ArrayList<Variable> runtimeArguments = new ArrayList<>();
+    private HashMap<Integer, Object> parameters = new HashMap<>();
+
+    protected final void getRuntimeParameters(Object... args) {
+
+        int currentPlace = 0;
+
+        for (Variable variable : runtimeArguments) {
+
+            parameters.put(variable.ordinal(), args[currentPlace]);
+            currentPlace++;
+
+        }
+
+    }
+
+    protected final void setParameter(int integer, Object object) {
+
+        parameters.put(integer, object);
+
+    }
+
+    protected final Object getParameter(int integer) {
+
+        return parameters.get(integer);
+
+    }
+
     //Check the conditions
-    public abstract boolean checkCondition();
+    public abstract boolean checkCondition(Object... args);
 
 }
 
