@@ -10,6 +10,9 @@ import models.items.takeable.equippable.greaves.*;
 import models.items.takeable.equippable.boots.*;
 import models.items.takeable.equippable.gloves.*;
 import models.items.takeable.equippable.shield.*;
+import models.items.takeable.equippable.weapons.oneHanded.*;
+import models.items.takeable.equippable.weapons.twoHanded.*;
+
 import views.sprites.Sprite;
 
 import java.awt.*;
@@ -63,9 +66,38 @@ public abstract class Item {
         GOLD_SHIELD(1504) {public Item createInstance() {return new GoldShield();}},
         RUNITE_SHIELD(1505) {public Item createInstance() {return new RuniteShield();}},
 
+        WOOD_SWORD(1600) {public Item createInstance() {return new WoodSword();}},
+        IRON_SWORD(1601) {public Item createInstance() {return new IronSword();}},
+        STEEL_SWORD(1602) {public Item createInstance() {return new SteelSword();}},
+        MITHRIL_SWORD(1603) {public Item createInstance() {return new MithrilSword();}},
+        GOLD_SWORD(1604) {public Item createInstance() {return new GoldSword();}},
+        RUNITE_SWORD(1605) {public Item createInstance() {return new RuniteSword();}},
+
+        WOOD_TWO_HAND_SWORD(1700) {public Item createInstance() {return new WoodTwoHandSword();}},
+        IRON_TWO_HAND_SWORD(1701) {public Item createInstance() {return new IronTwoHandSword();}},
+        STEEL_TWO_HAND_SWORD(1702) {public Item createInstance() {return new SteelTwoHandSword();}},
+        MITHRIL_TWO_HAND_SWORD(1703) {public Item createInstance() {return new MithrilTwoHandSword();}},
+        GOLD_TWO_HAND_SWORD(1704) {public Item createInstance() {return new GoldTwoHandSword();}},
+        RUNITE_TWO_HAND_SWORD(1705) {public Item createInstance() {return new RuniteTwoHandSword();}},
+
+        WOOD_BOW(1706) {public Item createInstance() {return new WoodBow();}},
+        IRON_BOW(1707) {public Item createInstance() {return new IronBow();}},
+        STEEL_BOW(1708) {public Item createInstance() {return new SteelBow();}},
+        MITHRIL_BOW(1709) {public Item createInstance() {return new MithrilBow();}},
+        GOLD_BOW(1710) {public Item createInstance() {return new GoldBow();}},
+        RUNITE_BOW(1711) {public Item createInstance() {return new RuniteBow();}},
+
+        WOOD_STAFF(1712) {public Item createInstance() {return new WoodBow();}},
+        IRON_STAFF(1713) {public Item createInstance() {return new IronBow();}},
+        STEEL_STAFF(1714) {public Item createInstance() {return new SteelBow();}},
+        MITHRIL_STAFF(1715) {public Item createInstance() {return new MithrilBow();}},
+        GOLD_STAFF(1716) {public Item createInstance() {return new GoldBow();}},
+        RUNITE_STAFF(1717) {public Item createInstance() {return new RuniteBow();}},
+
         GRAVE(2000) {public Item createInstance() {return new Grave();}},
         OCTOPUS(2001) {public Item createInstance() {return new Octopus();}},
         STATUE(2002) {public Item createInstance() {return new Statue();}};
+
 
         private int ID;
         public abstract Item createInstance();

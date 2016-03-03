@@ -3,11 +3,14 @@ package models.entities;
 import controllers.entityControllers.EntityController;
 import models.Equipment;
 import models.Inventory;
+import models.entities.npc.Mount;
+import models.entities.npc.NPC;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
 import models.map.Terrain;
 import models.occupation.Occupation;
+import models.skills.Skill;
 import models.skills.SkillList;
 import models.skills.SneakSkills.TileDetection;
 import models.stats.StatModificationList;
@@ -36,8 +39,13 @@ public abstract class Entity extends Observable implements ActionListener{
     protected Occupation occupation;
     protected EntityController controller;
     protected Map map;
+
     // All entities should be able to have a pet.
     protected Pet pet;
+
+    //Entity may have mount
+    protected Mount mount;
+
     protected ArrayList<String> passableTerrain;
     protected boolean canMove;
     private javax.swing.Timer movementTimer;
@@ -58,7 +66,7 @@ public abstract class Entity extends Observable implements ActionListener{
         this.occupation = initOccupation();
         this.skills = occupation.getSkills();
         this.inventory = new Inventory(30);
-        this.equipment = new Equipment();
+        this.equipment = new Equipment(this);
         this.controller = initController();
         passableTerrain = new ArrayList<>();
         //occupation.initStats(this.stats); // This will setup the stats and skills particular to this occupation.
@@ -78,7 +86,7 @@ public abstract class Entity extends Observable implements ActionListener{
     }
 
     private void updateMovementTimerDelay(){
-        movementTimerDelay = 300 - (stats.getMovement() / 5);
+        movementTimerDelay = 300 - (stats.getStat(Stats.Type.MOVEMENT) / 5);
         if(movementTimerDelay < 50){
             movementTimerDelay = 50;
         }
@@ -93,6 +101,27 @@ public abstract class Entity extends Observable implements ActionListener{
     }
     public Stats getStats(){return stats;}
     public SkillList getSkills(){return skills;}
+    public String getOccupation(){
+        return occupation.getOccupation();
+    }
+
+    //Returns specific skill by name
+    public Skill getSpecificSkill(Skill.SkillDictionary skill){
+        Skill found = null;
+        System.out.println(this.getSkills());
+        for(int i =0; i < this.getSkills().size(); i++){
+
+            if(skill.equals(this.getSkills().get(i).initID())){
+                found = this.getSkills().get(i);
+            }
+        }
+        if(found != null) {
+            return found;
+        }else{
+            System.out.println("hahahah couldn't find it bitch");
+            return null;
+        }
+    }
 
     public final TileDetection move(Map.Direction direction){
         updateMovementTimerDelay();
@@ -141,7 +170,7 @@ public abstract class Entity extends Observable implements ActionListener{
     }
 
     public int getRadiusOfVisiblility(){
-        return stats.getRadiusOfVisiblility();
+        return stats.getStat(Stats.Type.RADIUS_OF_VISIBILITY);
     }
 
     // Wrappers for skills
@@ -201,7 +230,7 @@ public abstract class Entity extends Observable implements ActionListener{
     protected abstract Occupation initOccupation();
     protected abstract HashMap<Map.Direction, String> initSprites();
     protected abstract EntityController initController();
-    public abstract void startInteraction();
+    public abstract void startInteraction(NPC npc);
     public final Image getImage(){
 
         return sprite.getImage(orientation);
@@ -214,5 +243,6 @@ public abstract class Entity extends Observable implements ActionListener{
     public final void setPet(Pet pet) {
         this.pet = pet;
     }
+    public final void setMount(Mount mount){this.mount = mount;}
 
 }

@@ -37,13 +37,13 @@ public abstract class NPC extends Entity {
         return initialStats;
 
     }
+
     @Override
     protected final EntityController initController() {
-
         return null; // AIController!
-
     }
-//Starts the interaction between entities (For now it is also showcasing the view list
+
+    //Starts the interaction between entities (For now it is also showcasing the view list
     public void startInteraction(){
         System.out.println("Starts interaction with npc");
     }

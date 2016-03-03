@@ -17,9 +17,10 @@ public class MithrilGloves extends EquippableItem{
         name = "Mithril Gloves";
         description = "Gloves made of mithril";
         component = Equipment.Component.GLOVES;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/gloves/templateGloves.png");
+        monetaryValue = MITHRILCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 25)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, 20)
         );
         requiredLv = 30;
     }

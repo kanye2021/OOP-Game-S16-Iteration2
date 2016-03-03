@@ -23,7 +23,7 @@ public class ObservationSkill extends PassiveSkill {
     }
 
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return SkillDictionary.OBSERVATION;
 

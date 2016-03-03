@@ -17,7 +17,8 @@ public class GoldBoots extends EquippableItem{
         name = "Gold Boots";
         description = "Boots made of gold";
         component = Equipment.Component.BOOTS;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/boots/templateBoots.png");
+        monetaryValue = GOLDCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 20)
         );

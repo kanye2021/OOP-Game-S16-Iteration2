@@ -18,7 +18,8 @@ public class SteelGreaves extends EquippableItem{
         name = "Steel Greaves";
         description = "Greaves made of steel";
         component = Equipment.Component.GREAVES;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/legs/smasher-template-greaves.png");
+        monetaryValue = STEELCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 15)
         );

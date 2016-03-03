@@ -1,10 +1,8 @@
 package models.skills.CommonSkills;
 
-import models.conditions.Condition;
-import models.conditions.StatsCondition;
+import models.conditions.ConditionList;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
-import models.stats.StatModification;
 import models.stats.Stats;
 
 import java.awt.event.KeyEvent;
@@ -14,37 +12,52 @@ import java.awt.event.KeyEvent;
  */
 //TODO: Tie in skill level with skill class.  Polish/Test the condition is called correctly
 public class BindWoundsSkill extends ActiveSkill {
-    //private Stats stats;
+    private Stats stats;
     private final int constant = 5;
-    private final int cost = 5;//This is the mana cost it takes to activate this skill
-    private int skillLv;
+    private final int cost = -5;//This is the mana cost it takes to activate this skill
+
     @Override
-    protected SkillDictionary initID() {
+    public SkillDictionary initID() {
 
         return SkillDictionary.BIND_WOUNDS;
 
     }
-    public BindWoundsSkill(){
-        //I feel like I need to put something in here idk what currently
-        //skillLv = getLevel();
+
+    public BindWoundsSkill() {
+
+        conditionsToActivate = new ConditionList(
+//            new StatCondition(Avatar, 3, Stats.Type.LIVES, Condition.Comparison.EXACTLY);
+        );
+
     }
+
     @Override
     public void onActivate(Entity entity) {
     //This is used to heal.
-        int mana = entity.getStats().getMana();
-        if(statsCondition.checkConditionAtLeast(mana,cost)) {
-            skillLv = getLevel();
-            int healAmt = constant * skillLv;
-            Stats stats = entity.getStats();//gets the instance of the stats
-            //statsCondition.checkCondition();//somehow checks condition.  Need austie to look at
-            stats.modifyMana(cost);
-            stats.modifyHealth(healAmt);
+        int mana = entity.getStats().getStat(Stats.Type.MANA);
+
+        if (conditionsToActivate.checkCondition()) {
+
+            if (mana >= cost) {
+
+                int healAmt = constant * getLevel();
+                Stats stats = entity.getStats();//gets the instance of the stats
+                stats.modifyStat(Stats.Type.MANA, cost);
+                stats.modifyStat(Stats.Type.HEALTH, healAmt);
+
+            }
+
+
+
         }
+
     }
 
     @Override
     public KeyEvent[] initActivatorKeys() {
 
+        // This initializes the key to activate this skill! It should not be null if we intend to actually
+        // use the skill
         return null;
 
     }

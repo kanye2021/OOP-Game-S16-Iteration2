@@ -17,7 +17,8 @@ public class WoodGloves extends EquippableItem{
         name = "Wood Gloves";
         description = "Gloves made of wood";
         component = Equipment.Component.GLOVES;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/gloves/templateGloves.png");
+        monetaryValue = WOODCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 5)
         );

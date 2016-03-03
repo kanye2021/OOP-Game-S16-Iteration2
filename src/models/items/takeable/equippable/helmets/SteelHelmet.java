@@ -18,8 +18,8 @@ public class SteelHelmet extends EquippableItem {
         name = "Steel Helmet";
         description = "A helmet made of steel";
         component = Equipment.Component.HELMET;
-        sprite = new Sprite("../res/items/takeable/armor/head/knight_helm.png");
-        monetaryValue = 40;
+        sprite = new Sprite("./src/res/items/takeable/armor/head/knight_helm.png");
+        monetaryValue = STEELCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 35)
         );

@@ -17,7 +17,8 @@ public class RuniteShield extends EquippableItem{
         name = "Runite Shield";
         description = "Shield made of runite";
         component = Equipment.Component.SHIELD;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/secondary/smasher-runite-shield.png");
+        monetaryValue = RUNITECOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 60)
         );

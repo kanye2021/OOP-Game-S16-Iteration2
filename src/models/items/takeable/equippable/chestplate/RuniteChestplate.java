@@ -18,7 +18,8 @@ public class RuniteChestplate extends EquippableItem{
         name = "Runite Chestplate";
         description = "A chestplate made of runite";
         component = Equipment.Component.CHESTPLATE;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/chest/smasher-runite-chestplate.png");
+        monetaryValue = RUNITECOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 100)
         );

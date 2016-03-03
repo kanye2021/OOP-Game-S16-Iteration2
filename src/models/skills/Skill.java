@@ -1,5 +1,6 @@
 package models.skills;
 
+import models.conditions.ConditionList;
 import utilities.MathUtilities;
 
 /**
@@ -27,8 +28,13 @@ public abstract class Skill {
     }
 
     private SkillDictionary ID;
+    protected ConditionList conditionsToActivate = new ConditionList();
     private int level;
 
+    protected boolean cooldown;
+
+    protected int cooldownTime;
+    protected final int SECONDS = 1000;
     public Skill() {
 
         this.level = 1;
@@ -42,13 +48,18 @@ public abstract class Skill {
 
     }
 
+
     public int getLevel() {
 
         return this.level;
 
     }
 
-    protected abstract SkillDictionary initID();
+
+    public abstract SkillDictionary initID();
+
+    //check to see if the skill is active or not
+    public abstract boolean isActive();
 
     @Override
     public boolean equals(Object o) {

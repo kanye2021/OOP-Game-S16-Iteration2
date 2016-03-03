@@ -17,7 +17,8 @@ public class RuniteGloves extends EquippableItem{
         name = "Runite Gloves";
         description = "Gloves made of runite";
         component = Equipment.Component.GLOVES;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/gloves/runiteGloves.png");
+        monetaryValue = RUNITECOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 40)
         );

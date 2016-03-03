@@ -17,9 +17,10 @@ public class MithrilBoots extends EquippableItem{
         name = "Mithril Boots";
         description = "Boots made of mithril";
         component = Equipment.Component.BOOTS;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/boots/templateBoots.png");
+        monetaryValue = MITHRILCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 25)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, 30)
         );
         requiredLv = 30;
     }

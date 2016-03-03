@@ -17,7 +17,8 @@ public class SteelBoots extends EquippableItem{
         name = "Steel Boots";
         description = "Boots made of steel";
         component = Equipment.Component.BOOTS;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/boots/templateBoots.png");
+        monetaryValue = STEELCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 15)
         );

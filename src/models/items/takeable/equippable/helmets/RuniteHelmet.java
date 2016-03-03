@@ -18,8 +18,8 @@ public class RuniteHelmet extends EquippableItem {
         name = "Runite Helmet";
         description = "A helmet made of runite";
         component = Equipment.Component.HELMET;
-        sprite = new Sprite("path");
-        monetaryValue = 300;
+        sprite = new Sprite("./src/res/items/takeable/armor/head/smasher-runite-helm.png");
+        monetaryValue = RUNITECOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 80)
         );

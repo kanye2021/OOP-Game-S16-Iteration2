@@ -18,7 +18,8 @@ public class SteelChestplate extends EquippableItem{
         name = "Steel Chestplate";
         description = "A chestplate made of steel";
         component = Equipment.Component.CHESTPLATE;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/chest/smasher-template-chestplate.png");
+        monetaryValue = STEELCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 45)
         );
