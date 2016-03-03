@@ -123,21 +123,31 @@ public class PauseView extends View{
     }
 
     private void renderButtons(Graphics g){
-        int start = g.getFontMetrics(titleFont).getHeight() + titleButtonMargin;
+        Graphics2D g2d = (Graphics2D) g.create();
 
-        g.setFont(generalFont);
-        FontMetrics fm = g.getFontMetrics(generalFont);
+
+        //Opacity stuff
+        float opacity = 0.0f;
+        AlphaComposite opaque =AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity);
+
+        //Original Composite
+        Composite reset = g2d.getComposite();
+
+        int start = g2d.getFontMetrics(titleFont).getHeight() + titleButtonMargin;
+
+        g2d.setFont(generalFont);
+        FontMetrics fm = g2d.getFontMetrics(generalFont);
 
         for (MenuOptions option : MenuOptions.values()) {
 
-            Rectangle2D rectangle = fm.getStringBounds(option.toString(), g);
+            Rectangle2D rectangle = fm.getStringBounds(option.toString(), g2d);
 
-            int boxX = getScreenWidth() / 2 - buttonWidth / 2 + 2;
+            int boxX = (int)(getScreenWidth() * .7- buttonWidth / 2);
             int boxY = buttonHeight * option.ordinal() + start;
             int boxDX = buttonWidth;
             int boxDY = buttonHeight;
 
-            int stringX = getScreenWidth() / 2 - (int) (rectangle.getWidth() / 2);
+            int stringX = (int)(getScreenWidth() *.52) - (int) (rectangle.getWidth() / 2);
             int stringY = option.ordinal() * buttonHeight + (int) (rectangle.getHeight() / 2) + fm.getAscent() + start;
 
             Color primaryColor;
@@ -145,7 +155,7 @@ public class PauseView extends View{
 
             if (option == selected) {
                 primaryColor = Color.WHITE;
-                secondaryColor = Color.BLACK;
+                secondaryColor = Color.RED;
 
             } else {
                 primaryColor = Color.BLACK;
@@ -153,20 +163,23 @@ public class PauseView extends View{
 
             }
 
-            g.setColor(primaryColor);
-            g.fillRect(boxX, boxY, boxDX, boxDY);
-            g.setColor(secondaryColor);
-            g.drawString(option.toString(), stringX, stringY);
+            g2d.setColor(primaryColor);
+            g2d.setComposite(opaque);
+            g2d.fillRect(boxX, boxY, boxDX, boxDY);
+            g2d.setColor(secondaryColor);
+            g2d.setComposite(reset);
+            g2d.drawString(option.toString(), stringX, stringY);
         }
     }
 
     @Override
     public void scaleView(){
         //PAUSE VIEW DIMENSIONS
-        pauseViewXStart = (int) (getScreenWidth() * 0.27);
-        pauseViewYStart = (int) (getScreenWidth() * 0.1);
-        pauseViewWidth = (int) (getScreenWidth() * 0.5);
-        pauseViewHeight = (int) (getScreenHeight() * 0.5);
+        pauseViewXStart = (int) (getScreenWidth() * 0.43
+        );
+        pauseViewYStart = (int) (getScreenHeight() * 0.15);
+        pauseViewWidth = (int) (getScreenWidth() * 0.18);
+        pauseViewHeight = (int) (getScreenHeight() * 0.3);
 
         //PAUSE TITLE
         titleStartX = (int) (getScreenWidth() * 0.32);
