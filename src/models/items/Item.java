@@ -178,7 +178,6 @@ public abstract class Item {
     }
 
     public Image getImage(){
-        System.out.println("Item: getImage() called");
         return sprite.getImage();
     }
 
