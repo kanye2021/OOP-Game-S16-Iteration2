@@ -34,12 +34,11 @@ public class BindWoundsSkill extends ActiveSkill {
     @Override
     public void onActivate(Entity entity) {
     //This is used to heal.
-
-
+        int mana = entity.getStats().getStat(Stats.Type.MANA);
 
         if (conditionsToActivate.checkCondition()) {
 
-            if (stats.getStat(Stats.Type.MANA) >= cost) {
+            if (mana >= cost) {
 
                 int healAmt = constant * getLevel();
                 Stats stats = entity.getStats();//gets the instance of the stats

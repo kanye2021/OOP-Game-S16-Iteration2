@@ -32,6 +32,8 @@ public abstract class Avatar extends Entity {
             new StatModification(Stats.Type.HARDINESS, 10, StatModification.NumberType.POINT)*/
         );
 
+
+
         return initialStats;
 
     }
