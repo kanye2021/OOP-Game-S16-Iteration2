@@ -1,30 +1,28 @@
 package controllers.entityControllers;
 
+import controllers.*;
 import controllers.GameViewController;
 import controllers.InventoryViewController;
-import controllers.NPCInteractionController;
-import controllers.TestViewController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.map.Map;
-import models.occupation.Smasher;
 import models.skills.CommonSkills.BindWoundsSkill;
 import models.skills.Skill;
 import models.skills.SneakSkills.CreepSkill;
 import models.skills.SneakSkills.DetectRemoveTrapSkill;
 import models.skills.SneakSkills.PickPocketSkill;
 import models.skills.SneakSkills.TileDetection;
+import models.skills.SummonerSkills.BoonSkill;
 import models.skills.SummonerSkills.EnchantmentSkill;
 import models.skills.SummonerSkills.StaffSkill;
 import utilities.InputMapping;
 import utilities.SubState;
 import utilities.Task;
+import views.*;
 import views.GameView;
 import views.InventoryView;
-import views.NPCActionView;
 import views.ToastView;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
@@ -57,51 +55,6 @@ public class AvatarController extends EntityController {
     }
 
     protected void initKeyPressMapping(){
-        Task moveNorth = new Task() {
-            @Override
-            public void run() {
-                moveAndDetect(Map.Direction.NORTH);
-            }
-
-            @Override
-            public void stop() { avatar.stopMoving(); }
-        };
-        Task moveNorthWest = new Task() {
-            @Override
-            public void run() { moveAndDetect(Map.Direction.NORTH_WEST);}
-
-            @Override
-            public void stop() { avatar.stopMoving(); }
-        };
-        Task moveSouthWest = new Task() {
-            @Override
-            public void run() { moveAndDetect(Map.Direction.SOUTH_WEST);}
-
-            @Override
-            public void stop() { avatar.stopMoving(); }
-        };
-        Task moveSouth = new Task() {
-            @Override
-            public void run() { moveAndDetect(Map.Direction.SOUTH);}
-
-            @Override
-            public void stop() { avatar.stopMoving(); }
-        };
-        Task moveSouthEast = new Task() {
-            @Override
-            public void run() { moveAndDetect(Map.Direction.SOUTH_EAST);}
-
-            @Override
-            public void stop() { avatar.stopMoving(); }
-        };
-        Task moveNorthEast = new Task() {
-            @Override
-            public void run() { moveAndDetect(Map.Direction.NORTH_EAST);}
-
-            @Override
-            public void stop() { avatar.stopMoving(); }
-        };
-
 
         //task for bindWoundSkill
         Task bindWoundSkill = new Task(){
@@ -224,8 +177,10 @@ public class AvatarController extends EntityController {
 
                 }else if(avatar.getOccupation().contains("Summoner")){
                     //first skill should be enchantment here
-
-
+                    Skill thirdSkill= avatar.getSpecificSkill(Skill.SkillDictionary.BOON);
+                    System.out.println(thirdSkill);
+                    BoonSkill boonSkill = (BoonSkill) thirdSkill;
+                    boonSkill.onActivate(avatar);
                 }else if(avatar.getOccupation().contains("Sneak")){
                     //first skill should be something..
                     //first skill should be something..
@@ -278,6 +233,30 @@ public class AvatarController extends EntityController {
             @Override
             public void stop() {}
         };
+
+        Task openPause = new Task() {
+            @Override
+            public void run() {
+                PauseView pauseView = new PauseView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay());
+                PauseViewController pauseViewController = new PauseViewController(pauseView, gameViewController.getStateManager());
+                SubState pauseSubstate = new SubState(pauseViewController, pauseView);
+                // Add closing task.
+                pauseViewController.setClosePause(new Task() {
+                    @Override
+                    public void run() { pauseSubstate.dismiss(); }
+
+                    @Override
+                    public void stop() { }
+                });
+                // Add the substate
+                gameViewController.addSubState(pauseSubstate);
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
         Task clearSubStates= new Task() {
             @Override
             public void run() {
@@ -287,13 +266,6 @@ public class AvatarController extends EntityController {
             public void stop() {}
         };
 
-        addKeyPressMapping(moveNorth, KeyEvent.VK_W);
-        addKeyPressMapping(moveNorthWest, KeyEvent.VK_Q);
-        addKeyPressMapping(moveSouthWest, KeyEvent.VK_Z);
-        addKeyPressMapping(moveSouth, KeyEvent.VK_S);
-        addKeyPressMapping(moveSouthEast, KeyEvent.VK_C);
-        addKeyPressMapping(moveNorthEast, KeyEvent.VK_E);
-
         //skills keymapping for avatars
         addKeyPressMapping(bindWoundSkill,KeyEvent.VK_1);
         addKeyPressMapping(firstSkill,KeyEvent.VK_2);
@@ -301,18 +273,14 @@ public class AvatarController extends EntityController {
         addKeyPressMapping(thirdSkill,KeyEvent.VK_4);
 //        addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
 
-        addKeyPressMapping(moveNorthWest, KeyEvent.VK_NUMPAD7);
-        addKeyPressMapping(moveNorth, KeyEvent.VK_NUMPAD8);
-        addKeyPressMapping(moveNorthEast, KeyEvent.VK_NUMPAD9);
-        addKeyPressMapping(moveSouthEast, KeyEvent.VK_NUMPAD3);
-        addKeyPressMapping(moveSouth, KeyEvent.VK_NUMPAD2);
-        addKeyPressMapping(moveSouthWest, KeyEvent.VK_NUMPAD1);
-
         // TODO: Testing opening a random overlay toast view
         addKeyPressMapping(openToastTestView, KeyEvent.VK_L);
 
         // Open Inventory
         addKeyPressMapping(openInventory, KeyEvent.VK_I);
+
+        //Open Pause Menu
+        addKeyPressMapping(openPause, KeyEvent.VK_P);
     }
     //Method is called whenever entity moves. Basically checks what is in the tile through
     //Tile detection and then whether an NPC is detected, it'll paint the interaction
@@ -326,7 +294,7 @@ public class AvatarController extends EntityController {
 
             //Changes the AvatarController in gameview controller to NPCInteractionController
             NPCActionView npcView = new NPCActionView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay(), td.getNpc());
-            NPCInteractionController npcIC = new NPCInteractionController(npcView, gameViewController.getStateManager(), npc, avatar);
+            NPCInteractionController npcIC = new NPCInteractionController(npcView, gameViewController.getStateManager(), npc);
 
             gameViewController.setSubController(npcIC);
             gameView.initNPCActionView(npcView);
@@ -336,7 +304,6 @@ public class AvatarController extends EntityController {
 
 
         }else {
-//            System.out.println("Action is false");
             gameView.renderNPCAction(false);
             gameViewController.setSubController(null);
         }
@@ -375,6 +342,18 @@ public class AvatarController extends EntityController {
 
         return number;
 
+    }
+
+    public void stopMoving(){
+        avatar.stopMoving();
+    }
+
+    public TileDetection move(Map.Direction direction){
+        return avatar.move(direction);
+    }
+
+    public void startInteraction(NPC npc){
+        avatar.startInteraction(npc);
     }
 
 }

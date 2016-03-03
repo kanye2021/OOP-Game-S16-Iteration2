@@ -31,6 +31,10 @@ public abstract class Skill {
     protected ConditionList conditionsToActivate = new ConditionList();
     private int level;
 
+    protected boolean cooldown;
+
+    protected int cooldownTime;
+    protected final int SECONDS = 1000;
     public Skill() {
 
         this.level = 1;

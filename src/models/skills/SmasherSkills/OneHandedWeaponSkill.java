@@ -20,6 +20,8 @@ public class OneHandedWeaponSkill extends PassiveSkill {
         baseDamage=MID;
         baseSpeed=MID;
         oneHandedWeaponLv=1;
+        cooldownTime=MIDTIME;
+        cooldown=false;
     }
 
     @Override

@@ -24,14 +24,11 @@ public class NPCInteractionController extends ViewController {
     private NPC npc;
     private ArrayList<Action> actionList;
 
-    //testing something out here
-    private Avatar avatar;
 
-    public NPCInteractionController(View view, StateManager stateManager, NPC npc, Avatar avatar) {
+    public NPCInteractionController(View view, StateManager stateManager, NPC npc) {
         super(view, stateManager);
         myOption = 0;
         this.npc = npc;
-        this.avatar = avatar;
         this.actionList = npc.getActionList();
     }
 
