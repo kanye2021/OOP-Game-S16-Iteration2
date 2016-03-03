@@ -32,6 +32,7 @@ public class AreaViewport extends View implements Observer {
     private int hexHeight; // derived ^^
     private int horizDistanceBtwnTiles; // This is derived from hexSize
     private int vertDistanceBtwnTiles; // This is derived from hexSize
+    private Point viewportOffset; // This is used to drag the viewport around.
 
     //Some other food
     public HashMap<Point, Tile> seenTiles = new HashMap<>();
@@ -43,7 +44,13 @@ public class AreaViewport extends View implements Observer {
         this.map = map;
         this.avatar = avatar;
         avatar.addObserver(this);
+        viewportOffset = new Point(0, 0);
         scaleView();
+    }
+
+    public void setViewportOffset(Point offset){
+        viewportOffset = offset;
+        getDisplay().repaint();
     }
 
     @Override
@@ -82,6 +89,9 @@ public class AreaViewport extends View implements Observer {
         // Convert the first tile into a TileNode and push it into the queue.
         TileNode root = new TileNode(map.getTileAt(logicalPoint), logicalPoint, pixelPoint);
         root.distanceFromAvatar = 0;
+
+        // Offset the root based upon the offset ammound
+        root.pixelPoint.translate((int)viewportOffset.getX(), (int)viewportOffset.getY());
         tileQueue.offer(root); // offer is analogous to push (or enqueue).
 
         while(!tileQueue.isEmpty()){

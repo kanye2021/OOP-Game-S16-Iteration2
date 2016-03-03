@@ -49,12 +49,12 @@ public class RunGame extends JFrame {
         add(display);
         pack(); // May or may not need this.
 
-        // Setup the keyboard listener
+        // Setup the keyboard, resize, and mouse listener
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(inputManager);
-
-        // Setup the resize listener
         addComponentListener(inputManager);
+        addMouseListener(inputManager);
+        addMouseMotionListener(inputManager);
 
         setTitle("RPG GAME");
         setLocationRelativeTo(null);

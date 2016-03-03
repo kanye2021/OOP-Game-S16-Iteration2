@@ -44,6 +44,17 @@ public abstract class ViewController {
         stateManager.refreshState();
     }
 
+
+    // The default behavior of a mouse move is to do nothing. If a view controller wishes to do something on a mouse
+    // move it must overrride this function.
+    public void handleMouseDragged(java.awt.event.MouseEvent e){
+
+    }
+
+    public void handleMouseReleased(java.awt.event.MouseEvent e){
+
+    }
+
     protected abstract void initKeyPressMapping();
 
     private final void initDefaultEscapeMapping() {
@@ -113,5 +124,7 @@ public abstract class ViewController {
         return number;
 
     }
+
+
 
 }

@@ -10,6 +10,10 @@ import java.awt.event.KeyEvent;
  */
 public class PickPocketSkill extends ActiveSkill {
 
+    public PickPocketSkill(){
+        cooldown = false;
+        cooldownTime = 3*SECONDS;
+    }
     @Override
     public SkillDictionary initID() {
 
@@ -19,8 +23,22 @@ public class PickPocketSkill extends ActiveSkill {
 
     @Override
     public void onActivate(Entity entity) {
-
+        if(cooldown){
+            System.out.println("Cooldown is not over yet!");
+            return;
+        }
+        cooldown = true;
+        //TODO:Pick the pockets here!
         System.out.println("I am pick pocket skill");
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        cooldown = false;
+                    }
+                },
+                cooldownTime
+        );
 
     }
 
