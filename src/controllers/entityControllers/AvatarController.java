@@ -1,5 +1,6 @@
 package controllers.entityControllers;
 
+import controllers.*;
 import controllers.GameViewController;
 import controllers.InventoryViewController;
 import models.entities.Avatar;
@@ -17,6 +18,7 @@ import models.skills.SummonerSkills.StaffSkill;
 import utilities.InputMapping;
 import utilities.SubState;
 import utilities.Task;
+import views.*;
 import views.GameView;
 import views.InventoryView;
 import views.ToastView;
@@ -231,6 +233,30 @@ public class AvatarController extends EntityController {
             @Override
             public void stop() {}
         };
+
+        Task openPause = new Task() {
+            @Override
+            public void run() {
+                PauseView pauseView = new PauseView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay());
+                PauseViewController pauseViewController = new PauseViewController(pauseView, gameViewController.getStateManager());
+                SubState pauseSubstate = new SubState(pauseViewController, pauseView);
+                // Add closing task.
+                pauseViewController.setClosePause(new Task() {
+                    @Override
+                    public void run() { pauseSubstate.dismiss(); }
+
+                    @Override
+                    public void stop() { }
+                });
+                // Add the substate
+                gameViewController.addSubState(pauseSubstate);
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
         Task clearSubStates= new Task() {
             @Override
             public void run() {
@@ -252,6 +278,9 @@ public class AvatarController extends EntityController {
 
         // Open Inventory
         addKeyPressMapping(openInventory, KeyEvent.VK_I);
+
+        //Open Pause Menu
+        addKeyPressMapping(openPause, KeyEvent.VK_P);
     }
     //Method is called whenever entity moves. Basically checks what is in the tile through
     //Tile detection and then whether an NPC is detected, it'll paint the interaction
