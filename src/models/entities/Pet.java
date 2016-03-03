@@ -40,6 +40,11 @@ public class Pet extends NPC {
     }
 
     @Override
+    public void initActions() {
+
+    }
+
+    @Override
     protected HashMap<Map.Direction, String> initSprites() {
         String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/pet-samples/raichu/");
 

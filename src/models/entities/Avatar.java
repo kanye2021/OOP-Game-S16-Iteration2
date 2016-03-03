@@ -46,8 +46,30 @@ public abstract class Avatar extends Entity {
         return null; // Keyboard controller!
 
     }
+
+    //TODO need avatar to fix the interaction with other entities.
     @Override
     public void startInteraction(NPC npc){
+        /**
+         * if the avatar is already at this point
+         * then the tileDetection has verified
+         * that there is an entity there.
+         *
+         * now the avatar needs to (or the npc needs to relay) the
+         * purpose of the interaction
+         *
+         *
+         * npc has a set of actionlists
+         * so if villager has talk and attack
+         * then maybe
+         *
+         *
+         * Well the npcInteractionController facilitates the action performed.
+         * so pass maybe the avatar as a parameter?
+         */
+
+        //get the list of actions??
+
 
 
         return;

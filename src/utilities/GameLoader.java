@@ -4,6 +4,7 @@ import controllers.entityControllers.MountController;
 import controllers.entityControllers.PetController;
 import models.entities.*;
 import models.entities.npc.Horse;
+import models.entities.npc.Mount;
 import models.entities.npc.NPC;
 import models.entities.npc.Villager;
 import models.items.Item;
@@ -84,10 +85,11 @@ public class GameLoader {
 
         //TODO: Figure out the mount shit implementation
         Horse horse = new Horse(new Point(-10,-4),newMap);
-        MountController mountController = new MountController(horse);
+        MountController mc = new MountController(horse);
         newMap.insertEntity(horse);
-        game.setMount(horse,mountController);
-        System.out.println("I'm in the game loader");
+        game.setAvatarsMount(horse,mc);
+
+
     }
 
     private Map loadMap(String filepath){
@@ -172,7 +174,6 @@ public class GameLoader {
 
                     item = Item.ItemDictionary.itemFromID(id);
                     if (item == null) {
-                        System.out.println("What the fuck");
                     } else {
                         System.out.println("successfully loaded an item");
                     }

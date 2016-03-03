@@ -42,6 +42,12 @@ public class Enemy extends NPC{
         };
         return occupation;
     }
+
+    @Override
+    public void initActions() {
+
+    }
+
     //TODO: Needs to be separated entity controllers that do different things
 
 

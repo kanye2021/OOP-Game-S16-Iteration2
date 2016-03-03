@@ -1,7 +1,7 @@
 package controllers.entityControllers;
 
 import models.entities.Entity;
-import models.entities.npc.Mount;
+import models.entities.npc.MountEntity;
 import models.map.Map;
 import utilities.Task;
 
@@ -16,7 +16,7 @@ import java.util.Observer;
 public class MountController extends NPCController implements Observer {
 
 
-    private Mount mount;
+    private MountEntity mount;
     Task moveNorth;
     Task moveNorthWest;
     Task moveSouthWest;
@@ -25,7 +25,7 @@ public class MountController extends NPCController implements Observer {
     Task moveNorthEast;
     private HashMap<Task, Point> taskMovementVector = new HashMap<>();
 
-    public MountController(Mount mount){
+    public MountController(MountEntity mount){
         this.mount = mount;
         createMovementTasks();
 

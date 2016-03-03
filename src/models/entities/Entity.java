@@ -3,7 +3,7 @@ package models.entities;
 import controllers.entityControllers.EntityController;
 import models.Equipment;
 import models.Inventory;
-import models.entities.npc.Mount;
+import models.entities.npc.MountEntity;
 import models.entities.npc.NPC;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
@@ -44,7 +44,7 @@ public abstract class Entity extends Observable implements ActionListener{
     protected Pet pet;
 
     //Entity may have mount
-    protected Mount mount;
+    protected MountEntity mount;
 
     protected ArrayList<String> passableTerrain;
     protected boolean canMove;
@@ -123,6 +123,9 @@ public abstract class Entity extends Observable implements ActionListener{
         }
     }
 
+
+
+    //This method checks the tile for a valid entity to initiate actions on
     public final TileDetection move(Map.Direction direction){
         updateMovementTimerDelay();
         orientation = direction;
@@ -230,6 +233,7 @@ public abstract class Entity extends Observable implements ActionListener{
     protected abstract Occupation initOccupation();
     protected abstract HashMap<Map.Direction, String> initSprites();
     protected abstract EntityController initController();
+
     public abstract void startInteraction(NPC npc);
     public final Image getImage(){
 
@@ -240,9 +244,13 @@ public abstract class Entity extends Observable implements ActionListener{
     public final Pet getPet() {
         return this.pet;
     }
+    public final MountEntity getMount(){ return this.mount; }
     public final void setPet(Pet pet) {
         this.pet = pet;
     }
-    public final void setMount(Mount mount){this.mount = mount;}
+
+    public final void setMount(MountEntity mount){
+        System.out.println("I am setting the mount");
+        this.mount = mount;}
 
 }

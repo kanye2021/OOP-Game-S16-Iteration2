@@ -24,6 +24,7 @@ public class Villager extends NPC{
         initActions();
     }
     //---------NPC Stuff------------
+    @Override
     public void initActions(){
         actionList.add(new Talk(this, "Blah blah"));
         actionList.add (new Attack(this));

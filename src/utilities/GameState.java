@@ -9,6 +9,8 @@ import models.entities.Avatar;
 import models.entities.Pet;
 
 import models.entities.npc.Horse;
+import models.entities.npc.Mount;
+import models.entities.npc.MountEntity;
 import models.entities.npc.NPC;
 
 import models.map.Map;
@@ -70,7 +72,7 @@ public class GameState extends State {
     }
 
     //TODO: I don't think it should be here
-    public void setMount(Horse horse, MountController mountController){
+    public void setAvatarsMount(MountEntity horse, MountController mountController){
         this.avatar.setMount(horse);
         this.avatar.addObserver(mountController);
     }

@@ -326,12 +326,15 @@ public class AvatarController extends EntityController {
 
             //Changes the AvatarController in gameview controller to NPCInteractionController
             NPCActionView npcView = new NPCActionView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay(), td.getNpc());
-            NPCInteractionController npcIC = new NPCInteractionController(npcView, gameViewController.getStateManager(), npc);
+            NPCInteractionController npcIC = new NPCInteractionController(npcView, gameViewController.getStateManager(), npc, avatar);
+
             gameViewController.setSubController(npcIC);
             gameView.initNPCActionView(npcView);
             gameView.renderNPCAction(true);
             System.out.println(td.getNpc());
-            avatar.startInteraction(npc);
+
+
+
         }else {
 //            System.out.println("Action is false");
             gameView.renderNPCAction(false);

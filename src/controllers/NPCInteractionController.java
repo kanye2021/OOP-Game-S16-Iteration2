@@ -1,6 +1,7 @@
 package controllers;
 
 import controllers.ViewController;
+import models.entities.Avatar;
 import models.entities.npc.Action;
 import models.entities.npc.NPC;
 import utilities.StateManager;
@@ -23,10 +24,14 @@ public class NPCInteractionController extends ViewController {
     private NPC npc;
     private ArrayList<Action> actionList;
 
-    public NPCInteractionController(View view, StateManager stateManager, NPC npc) {
+    //testing something out here
+    private Avatar avatar;
+
+    public NPCInteractionController(View view, StateManager stateManager, NPC npc, Avatar avatar) {
         super(view, stateManager);
         myOption = 0;
         this.npc = npc;
+        this.avatar = avatar;
         this.actionList = npc.getActionList();
     }
 

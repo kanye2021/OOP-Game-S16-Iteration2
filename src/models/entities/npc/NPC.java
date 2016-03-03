@@ -51,6 +51,8 @@ public abstract class NPC extends Entity {
         return actionList;
     }
 
+    public abstract void initActions();
+
 
 
 
