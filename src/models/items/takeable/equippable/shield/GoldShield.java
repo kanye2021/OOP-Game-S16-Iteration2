@@ -17,7 +17,8 @@ public class GoldShield extends EquippableItem{
         name = "Gold Shield";
         description = "Shield made of gold";
         component = Equipment.Component.SHIELD;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/secondary/smasher-template-shield.png");
+        monetaryValue = GOLDCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 40)
         );

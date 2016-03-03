@@ -17,9 +17,10 @@ public class GoldGloves extends EquippableItem{
         name = "Gold Gloves";
         description = "Gloves made of gold";
         component = Equipment.Component.GLOVES;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/gloves/templateGloves.png");
+        monetaryValue = GOLDCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 20)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, 25)
         );
         requiredLv = 20;
     }

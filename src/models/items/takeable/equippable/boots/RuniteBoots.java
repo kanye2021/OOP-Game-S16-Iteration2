@@ -17,7 +17,8 @@ public class RuniteBoots extends EquippableItem{
         name = "Runite Boots";
         description = "Boots made of runite";
         component = Equipment.Component.BOOTS;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/boots/runiteBoots.png");
+        monetaryValue = RUNITECOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 40)
         );

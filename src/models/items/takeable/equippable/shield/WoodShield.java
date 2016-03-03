@@ -17,7 +17,8 @@ public class WoodShield extends EquippableItem{
         name = "Wood Shield";
         description = "Shield made of wood";
         component = Equipment.Component.SHIELD;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/secondary/smasher-template-shield.png");
+        monetaryValue = WOODCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 10)
         );

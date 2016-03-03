@@ -43,6 +43,7 @@ public class BindWoundsSkill extends ActiveSkill {
             //statsCondition.checkCondition();//somehow checks condition.  Need austie to look at
             stats.modifyMana(cost);
             stats.modifyHealth(healAmt);
+            System.out.println("Can you take this? FIRST AID!");
         }
     }
 

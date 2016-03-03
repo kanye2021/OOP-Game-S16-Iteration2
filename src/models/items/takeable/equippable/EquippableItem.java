@@ -17,6 +17,22 @@ public class EquippableItem extends TakeableItem {
 
     protected int requiredLv;
 
+    //TODO:Go back to the items classes and put the constants in oh boi
+    protected final int WOODCOST = 10;
+    protected final int IRONCOST = 50;
+    protected final int STEELCOST = 100;
+    protected final int MITHRILCOST = 200;
+    protected final int GOLDCOST = 400;
+    protected final int RUNITECOST = 800;
+    protected final int WOODATK = 10;
+    protected final int IRONATK = 20;
+    protected final int STEELATK = 30;
+    protected final int MITHRILATK = 40;
+    protected final int GOLDATK = 60;
+    protected final int RUNITEATK = 80;
+
+
+
     @Override
     public boolean onTouch(Entity entity) {
         // This super call will add to inventory

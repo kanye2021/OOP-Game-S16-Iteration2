@@ -18,12 +18,12 @@ public class MithrilHelmet extends EquippableItem {
         name = "Mithril Helmet";
         description = "A helmet made of mithril";
         component = Equipment.Component.HELMET;
-        sprite = new Sprite("path");
-        monetaryValue = 120;
+        sprite = new Sprite("./src/res/items/takeable/armor/head/smasher-template-helm.png");
+        monetaryValue = MITHRILCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, 40)
         );
-        requiredLv = 30;
+        requiredLv = 20;
     }
 
 }

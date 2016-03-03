@@ -16,9 +16,10 @@ public class MithrilGreaves extends EquippableItem {
         name = "Mithril Greaves";
         description = "Greaves made of mithril";
         component = Equipment.Component.GREAVES;
-        sprite = new Sprite("pathname");
+        sprite = new Sprite("./src/res/items/takeable/armor/legs/smasher-template-greaves.png");
+        monetaryValue = MITHRILCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 20)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, 25)
         );
         requiredLv = 30;
     }
