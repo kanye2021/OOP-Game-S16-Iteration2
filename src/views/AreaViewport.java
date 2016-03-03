@@ -61,6 +61,10 @@ public class AreaViewport extends View implements Observer {
         Graphics2D g2 = (Graphics2D) g.create();
 
         breadthFirstRender(logicalPoint, pixelPoint, g2);
+
+        g.setColor(Color.WHITE);
+        g.drawString(logicalPoint.toString(), viewportWidth - g.getFontMetrics().stringWidth(logicalPoint.toString()) - 50, 25);
+
     }
 
     // This will traverse through all the tiles using a breadth first search. It will then render that tile.

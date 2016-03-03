@@ -172,9 +172,9 @@ public class GameLoader {
 
                     item = Item.ItemDictionary.itemFromID(id);
                     if (item == null) {
-                        System.out.println("What the fuck");
+                        System.out.println("GameLoader: unrecognized itemID");
                     } else {
-                        System.out.println("successfully loaded an item");
+                        System.out.println("GameLoader: successfully loaded an item (id = " + id + ")");
                     }
                     //if take-able
 //                    if (itemType.equals(Item.Type.TAKE_ABLE.toString())) {

@@ -4,6 +4,7 @@ import models.conditions.Condition;
 import models.conditions.ConditionList;
 import models.conditions.StatCondition;
 import models.stats.Stats;
+import views.sprites.Sprite;
 
 /**
  * Created by aseber on 3/1/16.
@@ -13,6 +14,7 @@ public class GateOfKanye extends InteractiveItem {
     public GateOfKanye() {
 
         ID = ItemDictionary.GATE_OF_KANYE;
+        sprite = new Sprite("./src/res/items/interactive/KanyeGate.png");
 
     }
 

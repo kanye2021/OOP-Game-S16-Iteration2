@@ -12,7 +12,7 @@ public class Sprite {
     Image image;
 
     public Sprite(String imagePath) {
-        System.out.println("SPRITE IMAGE PATH" + imagePath);
+        System.out.println("Sprite image path: " + imagePath);
         image = IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath(imagePath)).getImage();
 
     }
