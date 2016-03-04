@@ -11,27 +11,34 @@ import java.util.TimerTask;
 public class Stats {
 
     public enum Type {
-        LEVEL,
-        LIVES,
-        STRENGTH,
-        AGILITY,
-        INTELLECT,
-        HARDINESS,
-        EXPERIENCE,
-        MOVEMENT,
-        HEALTH,
-        MAX_HEALTH,
-        MANA,
-        MAX_MANA,
-        WEAPON_MODIFIER,
-        ARMOR_MODIFIER,
-        RADIUS_OF_VISIBILITY,
-        EXP_TO_LEVEL,
-        LAST_EXP_TO_LEVEL,
-        OFFSENSIVE_RATING,
-        DEFENSIVE_RATING,
-        ARMOR_RATING,
-        TOTAL_WEIGHT
+        // Descriptor is just used to show the name of the stat on the view
+        LEVEL("Level"),
+        LIVES("Lives"),
+        STRENGTH("Strength"),
+        AGILITY("Agility"),
+        INTELLECT("Intellect"),
+        HARDINESS("Hardiness"),
+        EXPERIENCE("EXP"),
+        MOVEMENT("Movement"),
+        HEALTH("Health"),
+        MAX_HEALTH("Max Health"),
+        MANA("Mana"),
+        MAX_MANA("Max Mana"),
+        WEAPON_MODIFIER("Weapon Damage"),
+        ARMOR_MODIFIER("Armor Modifier"),
+        RADIUS_OF_VISIBILITY("Radius of Vis."),
+        EXP_TO_LEVEL("EXP To Level"),
+        LAST_EXP_TO_LEVEL("Last EXP To Level"),
+        OFFSENSIVE_RATING("Offense"),
+        DEFENSIVE_RATING("Defense"),
+        ARMOR_RATING("Armor"),
+        TOTAL_WEIGHT("Weight");
+
+        private String descriptor;
+
+        Type(String descriptor){this.descriptor = descriptor;}
+
+        public String getDescriptor() { return descriptor; }
     }
 
 
