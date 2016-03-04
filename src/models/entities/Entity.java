@@ -194,9 +194,7 @@ public abstract class Entity extends Observable implements ActionListener{
 
     public final void equipItem(EquippableItem item){
         inventory.removeItem(item);
-        // TODO: implement equipped items
-//        equippedItems.addItem(item);
-
+        equipment.setEquipmentComponent(item.getComponent(), item);
         applyStatMod(item.getOnEquipModifications());
     }
 
@@ -212,11 +210,10 @@ public abstract class Entity extends Observable implements ActionListener{
     }
 
     public final void unequipItem(EquippableItem item){
-        //equipment.removeItem(item);
-        //inventory.addItem(item);
-
-        // this should not happen here. It should happen inside item?
-        //removeStatMod(item.getStatModification());
+        // Unequip (Which will remove stat mods)
+        equipment.unEquipItem(item);
+        // Add to inventory
+        inventory.addItem(item);
     }
 
     // Wrappers for occupation

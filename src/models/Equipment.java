@@ -24,21 +24,30 @@ public class Equipment {
     // Then make interactive items finally!
 
     public enum Location {
+        // Descriptor is just used to display the location "name" on the view.
+        HEAD("Head"),
+        NECK("Neck"),
+        CHEST("Chest"),
+        BACK("Back"),
+        LEGS("Legs"),
+        FEET("Greaves"),
+        HANDS("Gloves"),
+        LEFT_ARM("Left"),
+        RIGHT_ARM("Right");
 
-        HEAD,
-        CHEST,
-        LEGS,
-        FEET,
-        HANDS,
-        LEFT_ARM,
-        RIGHT_ARM,
+        private String descriptor;
 
+        Location(String descriptor){this.descriptor = descriptor;}
+
+        public String getDescriptor() { return descriptor; }
     }
 
     public enum Component {
 
         HELMET(Location.HEAD),                                        // Maps to HEAD
+        AMULET(Location.NECK),                                        // Maps to Neck for necklace/ammy
         CHESTPLATE(Location.CHEST),                                   // Maps to CHEST
+        CAPE(Location.BACK),                                          // Maps to BACK for cape
         GREAVES(Location.LEGS),                                       // Maps to LEGS
         BOOTS(Location.FEET),                                         // Maps to FEET
         GLOVES(Location.HANDS),                                       // Maps to HANDS
@@ -71,7 +80,9 @@ public class Equipment {
 
     //Equipped Items
     private EquipmentSlot head;
+    private EquipmentSlot neck;
     private EquipmentSlot chest;
+    private EquipmentSlot back;
     private EquipmentSlot legs;
     private EquipmentSlot feet;
     private EquipmentSlot hands;
@@ -86,9 +97,21 @@ public class Equipment {
     public Equipment(Entity entity) {
 
         this.entity = entity;
+        this.head = new EquipmentSlot();
+        this.neck = new EquipmentSlot();
+        this.chest = new EquipmentSlot();
+        this.back = new EquipmentSlot();
+        this.legs = new EquipmentSlot();
+        this.feet = new EquipmentSlot();
+        this.hands = new EquipmentSlot();
+        this.leftArm = new EquipmentSlot();
+        this.rightArm = new EquipmentSlot();
+
 
         locationMap.put(Location.HEAD, () -> head);
+        locationMap.put(Location.NECK, () -> neck);
         locationMap.put(Location.CHEST, () -> chest);
+        locationMap.put(Location.BACK , () -> back);
         locationMap.put(Location.LEGS, () -> legs);
         locationMap.put(Location.FEET, () -> feet);
         locationMap.put(Location.HANDS, () -> hands);
@@ -101,6 +124,12 @@ public class Equipment {
 
         return locationMap.get(location).get().getSlotContents();
 
+    }
+
+    // If we call the above function and there is no equipment at the specified location,
+    // Will get a null ptr exception. Use this method to verify if there is something first before.
+    public boolean isEquipmentAtLocation(Location location) {
+        return locationMap.get(location).get().getSlotContents() != null;
     }
 
     public EquippableItem[] getEquipmentLocation(Component component) {
@@ -123,45 +152,44 @@ public class Equipment {
 
     }
 
-    public void setEquipmentComponent(Component component, EquippableItem item) {
+    public void unEquipItem(EquippableItem item) {
+        Component component = item.getComponent();
+        removeEquipmentFromAffectedLocations(component);
+    }
 
+    public void removeEquipmentFromAffectedLocations(Component component) {
         HashSet<EquippableItem> equipmentToRemove = new HashSet<>();
         Set<Location> union = new HashSet<>(component.affectedLocations);
         EquippableItem slotContents;
 
         // First find all affected locations
         for (Location location : component.affectedLocations) {
-
             slotContents = locationMap.get(location).get().getSlotContents();
-
             if (slotContents != null) {
-
                 equipmentToRemove.add(slotContents);
                 union.addAll(slotContents.getComponent().affectedLocations);
-
             }
-
         }
 
         // Remove all equipment from affected locations
         for (Location location : union) {
-
             removeEquipmentFromLocation(location);
-
         }
 
         // Remove all stat modifications those items did
         for (EquippableItem itemToRemove : equipmentToRemove) {
-
             itemToRemove.onUnequip(entity);
-
         }
+    }
+
+    public void setEquipmentComponent(Component component, EquippableItem item) {
+
+        // Just pulled the code that used to be here into its own function
+        removeEquipmentFromAffectedLocations(component);
 
         // Set all locations to the new item
         for (Location location : component.affectedLocations) {
-
             locationMap.get(location).get().setSlotContents(item);
-
         }
 
         // And finally apply the stat modification the item does
