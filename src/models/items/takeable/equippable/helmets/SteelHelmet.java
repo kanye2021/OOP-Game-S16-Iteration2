@@ -21,9 +21,11 @@ public class SteelHelmet extends EquippableItem {
         sprite = new Sprite("./src/res/items/takeable/armor/head/knight_helm.png");
         monetaryValue = STEELCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 35)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, STEELDEF)
         );
-        requiredLv = 10;
+        requiredLv = STEELLV;
+        itemWeight = STEELWEIGHT;
+        range = RANGE;
     }
 
 }

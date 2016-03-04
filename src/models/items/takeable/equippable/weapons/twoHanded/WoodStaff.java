@@ -22,6 +22,8 @@ public class WoodStaff extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.WEAPON_MODIFIER, WOODATK)
         );
-        requiredLv = 1;
+        requiredLv = WOODLV;
+        itemWeight = WOODWEIGHT;
+        range = SUMMONERRANGE;
     }
 }

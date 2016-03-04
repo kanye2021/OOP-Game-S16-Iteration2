@@ -20,8 +20,10 @@ public class GoldTwoHandSword extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/smasher.template-2h.png");
         monetaryValue = GOLDCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.WEAPON_MODIFIER, GOLDATK)
+                new StatModification(Stats.Type.WEAPON_MODIFIER, GOLDATK*2)
         );
-        requiredLv = 30;
+        requiredLv = GOLDLV;
+        itemWeight = GOLDWEIGHT;
+        range = SMASHERRANGE;
     }
 }

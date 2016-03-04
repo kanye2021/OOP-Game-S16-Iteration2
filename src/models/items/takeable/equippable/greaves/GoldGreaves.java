@@ -20,8 +20,10 @@ public class GoldGreaves extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/legs/smasher-template-greaves.png");
         monetaryValue = GOLDCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 15)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, GOLDDEF)
         );
-        requiredLv = 20;
+        requiredLv = GOLDLV;
+        itemWeight = GOLDWEIGHT;
+        range = RANGE;
     }
 }

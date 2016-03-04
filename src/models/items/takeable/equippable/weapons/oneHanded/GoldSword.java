@@ -22,6 +22,8 @@ public class GoldSword extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.WEAPON_MODIFIER, GOLDATK)
         );
-        requiredLv = 30;
+        requiredLv = GOLDLV;
+        itemWeight = GOLDWEIGHT;
+        range = SMASHERRANGE;
     }
 }

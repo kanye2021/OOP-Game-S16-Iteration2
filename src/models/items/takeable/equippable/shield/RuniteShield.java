@@ -20,8 +20,10 @@ public class RuniteShield extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/secondary/smasher-runite-shield.png");
         monetaryValue = RUNITECOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 60)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, RUNITEDEF)
         );
-        requiredLv = 40;
+        requiredLv = RUNITELV;
+        itemWeight = RUNITEWEIGHT;
+        range = RANGE;
     }
 }

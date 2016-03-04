@@ -20,8 +20,10 @@ public class IronGreaves extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/legs/smasher-template-greaves.png");
         monetaryValue = IRONCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 10)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, IRONDEF)
         );
-        requiredLv = 5;
+        requiredLv = IRONLV;
+        itemWeight = IRONWEIGHT;
+        range = RANGE;
     }
 }

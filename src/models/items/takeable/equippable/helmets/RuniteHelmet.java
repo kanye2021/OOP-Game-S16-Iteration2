@@ -21,9 +21,11 @@ public class RuniteHelmet extends EquippableItem {
         sprite = new Sprite("./src/res/items/takeable/armor/head/smasher-runite-helm.png");
         monetaryValue = RUNITECOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 80)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, RUNITEDEF)
         );
-        requiredLv = 40;
+        requiredLv = RUNITELV;
+        itemWeight = RUNITEWEIGHT;
+        range = RANGE;
     }
 
 }

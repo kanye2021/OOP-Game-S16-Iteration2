@@ -21,9 +21,11 @@ public class GoldHelmet extends EquippableItem {
         sprite = new Sprite("./src/res/items/takeable/armor/head/gold_knight.png");
         monetaryValue = GOLDCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 55)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, GOLDDEF)
         );
-        requiredLv = 30;
+        requiredLv = GOLDLV;
+        itemWeight = GOLDWEIGHT;
+        range = RANGE;
     }
 
 }

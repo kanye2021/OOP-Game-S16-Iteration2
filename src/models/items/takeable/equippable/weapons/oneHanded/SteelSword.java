@@ -20,8 +20,10 @@ public class SteelSword extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/weapons/oneHanded/smasher-template-sword.png");
         monetaryValue = 100;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.WEAPON_MODIFIER, 15)
+                new StatModification(Stats.Type.WEAPON_MODIFIER, STEELDEF)
         );
-        requiredLv = 10;
+        requiredLv = STEELLV;
+        itemWeight = STEELWEIGHT;
+        range = SMASHERRANGE;
     }
 }

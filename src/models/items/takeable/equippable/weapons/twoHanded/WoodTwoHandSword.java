@@ -20,8 +20,10 @@ public class WoodTwoHandSword extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/smasher.template-2h.png");
         monetaryValue = WOODCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.WEAPON_MODIFIER, WOODATK)
+                new StatModification(Stats.Type.WEAPON_MODIFIER, WOODATK*2)
         );
-        requiredLv = 1;
+        requiredLv = WOODLV;
+        itemWeight = WOODWEIGHT;
+        range = SMASHERRANGE;
     }
 }

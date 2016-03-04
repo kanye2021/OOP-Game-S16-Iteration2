@@ -20,8 +20,10 @@ public class WoodShield extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/secondary/smasher-template-shield.png");
         monetaryValue = WOODCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 10)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, WOODDEF)
         );
-        requiredLv = 1;
+        requiredLv = WOODLV;
+        itemWeight = WOODWEIGHT;
+        range = RANGE;
     }
 }

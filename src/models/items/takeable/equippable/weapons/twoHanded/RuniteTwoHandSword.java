@@ -20,8 +20,10 @@ public class RuniteTwoHandSword extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/smasher.template-2h.png");
         monetaryValue = RUNITECOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.WEAPON_MODIFIER, RUNITEATK)
+                new StatModification(Stats.Type.WEAPON_MODIFIER, RUNITEATK*2)
         );
-        requiredLv = 40;
+        requiredLv = RUNITELV;
+        itemWeight = RUNITEWEIGHT;
+        range = SMASHERRANGE;
     }
 }

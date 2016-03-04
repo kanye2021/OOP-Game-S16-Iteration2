@@ -21,8 +21,10 @@ public class WoodChestplate extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/chest/smasher-template-chestplate.png");
         monetaryValue = WOODCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 15)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, WOODDEF)
         );
-        requiredLv = 1;
+        requiredLv = WOODLV;
+        itemWeight = WOODWEIGHT;
+        range = RANGE;
     }
 }

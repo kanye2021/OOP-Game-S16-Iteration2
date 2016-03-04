@@ -20,8 +20,10 @@ public class MithrilGloves extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/gloves/templateGloves.png");
         monetaryValue = MITHRILCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 20)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, MITHRILDEF)
         );
-        requiredLv = 30;
+        requiredLv = MITHRILLV;
+        itemWeight = MITHRILWEIGHT;
+        range = RANGE;
     }
 }

@@ -21,9 +21,11 @@ public class IronHelmet extends EquippableItem {
         sprite = new Sprite("./src/res/items/takeable/armor/head/IronHelm.png");
         monetaryValue = IRONCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 25)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, IRONDEF)
         );
-        requiredLv = 5;
+        requiredLv = IRONLV;
+        itemWeight = IRONWEIGHT;
+        range = RANGE;
     }
 
 }
