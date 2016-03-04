@@ -21,9 +21,10 @@ public class WoodBoots extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/boots/templateBoots.png");
         monetaryValue=WOODCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 5)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, WOODDEF)
         );
-        requiredLv = 1;
-
+        requiredLv = WOODLV;
+        itemWeight = WOODWEIGHT;
+        range = RANGE;
     }
 }

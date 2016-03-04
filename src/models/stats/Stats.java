@@ -30,7 +30,8 @@ public class Stats {
         LAST_EXP_TO_LEVEL,
         OFFSENSIVE_RATING,
         DEFENSIVE_RATING,
-        ARMOR_RATING
+        ARMOR_RATING,
+        TOTAL_WEIGHT
     }
 
 
@@ -59,6 +60,7 @@ public class Stats {
     private int weaponModifier;
     private int armorModifier;
     private int radiusOfVisiblility;
+    private int totalWeight;
 
     private TimerTask currentTask;
     private String lastTaskType;
@@ -88,6 +90,7 @@ public class Stats {
         statGetMap.put(Type.OFFSENSIVE_RATING, () -> getOffensiveRating());
         statGetMap.put(Type.DEFENSIVE_RATING, () -> getDefensiveRating());
         statGetMap.put(Type.ARMOR_RATING, () -> getArmorRating());
+        statGetMap.put(Type.TOTAL_WEIGHT, () -> getTotalWeight());
 
         statSetMap.put(Type.LIVES, (delta) -> modifyLives(delta));
         statSetMap.put(Type.STRENGTH, (delta) -> modifyStrength(delta));
@@ -101,7 +104,7 @@ public class Stats {
         statSetMap.put(Type.WEAPON_MODIFIER, (delta) -> modifyWeaponModifier(delta));
         statSetMap.put(Type.ARMOR_MODIFIER, (delta) -> modifyArmorModifier(delta));
         statSetMap.put(Type.RADIUS_OF_VISIBILITY, (delta) -> modifyRadiusOfVisibility(delta));
-
+        statSetMap.put(Type.TOTAL_WEIGHT, (delta) -> modifyTotalWeight(delta));
     }
 
     public void applyStatMod(StatModificationList statMod){
@@ -215,6 +218,9 @@ public class Stats {
         this.radiusOfVisiblility = MathUtilities.putInRange(0, this.radiusOfVisiblility + delta, Integer.MAX_VALUE);
     }
 
+    private void modifyTotalWeight(int delta){
+        this.totalWeight = MathUtilities.putInRange(0, this.totalWeight + delta, Integer.MAX_VALUE);
+    }
 
     private int getLives() {
         return this.lives;
@@ -295,5 +301,7 @@ public class Stats {
     }
 
     private int getRadiusOfVisiblility() { return radiusOfVisiblility; }
+
+    private int getTotalWeight(){return totalWeight;}
 
 }

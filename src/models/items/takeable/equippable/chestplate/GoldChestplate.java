@@ -21,8 +21,10 @@ public class GoldChestplate extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/chest/smasher-template-chestplate.png");
         monetaryValue = GOLDCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 75)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, GOLDDEF)
         );
-        requiredLv = 20;
+        requiredLv = GOLDLV;
+        itemWeight = GOLDWEIGHT;
+        range = RANGE;
     }
 }

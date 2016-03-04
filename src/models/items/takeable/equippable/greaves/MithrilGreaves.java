@@ -19,8 +19,10 @@ public class MithrilGreaves extends EquippableItem {
         sprite = new Sprite("./src/res/items/takeable/armor/legs/smasher-template-greaves.png");
         monetaryValue = MITHRILCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 25)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, MITHRILDEF)
         );
-        requiredLv = 30;
+        requiredLv = MITHRILLV;
+        itemWeight = MITHRILWEIGHT;
+        range = RANGE;
     }
 }

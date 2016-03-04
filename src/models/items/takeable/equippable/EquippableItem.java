@@ -30,8 +30,39 @@ public class EquippableItem extends TakeableItem {
     protected final int MITHRILATK = 40;
     protected final int GOLDATK = 60;
     protected final int RUNITEATK = 80;
+    protected final int WOODDEF= 5;
+    protected final int IRONDEF = 10;
+    protected final int STEELDEF = 20;
+    protected final int MITHRILDEF = 30;
+    protected final int GOLDDEF = 40;
+    protected final int RUNITEDEF = 60;
+    protected final int WOODWEIGHT = 2;
+    protected final int IRONWEIGHT = 4;
+    protected final int STEELWEIGHT = 6;
+    protected final int MITHRILWEIGHT = 8;
+    protected final int GOLDWEIGHT = 10;
+    protected final int RUNITEWEIGHT = 12;
+    protected final int WOODLV = 1;
+    protected final int IRONLV = 5;
+    protected final int STEELLV = 10;
+    protected final int MITHRILLV = 20;
+    protected final int GOLDLV = 30;
+    protected final int RUNITELV = 40;
 
+    protected int itemWeight;
+    //Currently range is kind of bad design since range is only for weapons but putting it here
+    //For now In case of special stuff that increases range make it
+    protected int range;
 
+    protected final int RANGE = 0;
+
+    //Used for weapons
+    protected final int SMASHERRANGE = 1;
+    protected final int SNEAKRANGE = 4;
+    protected final int SUMMONERRANGE = 4;
+
+    //Concatenate the ranges and get 144? Last number of muliplication table in
+    //elementary school?  Illuminati confirmed
 
     @Override
     public boolean onTouch(Entity entity) {

@@ -20,8 +20,10 @@ public class MithrilTwoHandSword extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/smasher.template-2h.png");
         monetaryValue = MITHRILCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.WEAPON_MODIFIER, MITHRILATK)
+                new StatModification(Stats.Type.WEAPON_MODIFIER, MITHRILATK*2)
         );
-        requiredLv = 20;
+        requiredLv = MITHRILLV;
+        itemWeight = MITHRILWEIGHT;
+        range = SMASHERRANGE;
     }
 }

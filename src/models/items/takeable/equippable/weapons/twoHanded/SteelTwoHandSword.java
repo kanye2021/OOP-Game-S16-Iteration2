@@ -20,8 +20,10 @@ public class SteelTwoHandSword extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/smasher.template-2h.png");
         monetaryValue = STEELCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.WEAPON_MODIFIER, STEELATK)
+                new StatModification(Stats.Type.WEAPON_MODIFIER, STEELATK*2)
         );
-        requiredLv = 10;
+        requiredLv = STEELLV;
+        itemWeight = STEELWEIGHT;
+        range = SMASHERRANGE;
     }
 }

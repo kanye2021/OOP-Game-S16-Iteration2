@@ -20,9 +20,10 @@ public class WoodSword extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/weapons/oneHanded/smasher-template-sword.png");
         monetaryValue = 10;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.WEAPON_MODIFIER, 5)
+                new StatModification(Stats.Type.WEAPON_MODIFIER, WOODATK)
         );
-        requiredLv = 1;
+        requiredLv = WOODLV;
 
+        range = SMASHERRANGE;
     }
 }

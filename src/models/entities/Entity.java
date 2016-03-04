@@ -46,6 +46,7 @@ public abstract class Entity extends Observable implements ActionListener{
     //Entity may have mount
     protected MountEntity mount;
 
+
     protected ArrayList<String> passableTerrain;
     protected boolean canMove;
     private javax.swing.Timer movementTimer;
@@ -74,6 +75,7 @@ public abstract class Entity extends Observable implements ActionListener{
 
         this.sprite = new DirectionalSprite(initSprites());
         this.map = map;
+
 
         initInitialStats().applyStats(stats);
         skills.addAll(occupation.getSkills());
@@ -252,5 +254,6 @@ public abstract class Entity extends Observable implements ActionListener{
     public final void setMount(MountEntity mount){
         System.out.println("I am setting the mount");
         this.mount = mount;}
+
 
 }

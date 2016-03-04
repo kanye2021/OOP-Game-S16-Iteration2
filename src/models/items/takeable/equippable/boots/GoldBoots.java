@@ -20,8 +20,10 @@ public class GoldBoots extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/boots/templateBoots.png");
         monetaryValue = GOLDCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 20)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, GOLDDEF)
         );
-        requiredLv = 20;
+        requiredLv = GOLDLV;
+        itemWeight = GOLDWEIGHT;
+        range = RANGE;
     }
 }

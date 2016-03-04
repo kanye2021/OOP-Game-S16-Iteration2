@@ -20,8 +20,10 @@ public class GoldShield extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/secondary/smasher-template-shield.png");
         monetaryValue = GOLDCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 40)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, GOLDDEF)
         );
-        requiredLv = 20;
+        requiredLv = GOLDLV;
+        itemWeight = GOLDWEIGHT;
+        range = RANGE;
     }
 }

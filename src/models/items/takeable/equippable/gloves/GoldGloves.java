@@ -20,9 +20,11 @@ public class GoldGloves extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/gloves/templateGloves.png");
         monetaryValue = GOLDCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 25)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, GOLDDEF)
         );
-        requiredLv = 20;
+        requiredLv = GOLDLV;
+        itemWeight = GOLDWEIGHT;
+        range = RANGE;
     }
 
 }
