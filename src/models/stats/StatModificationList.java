@@ -37,4 +37,7 @@ public class StatModificationList {
 
     }
 
+    public ArrayList<StatModification> getModifications() {
+        return modifications;
+    }
 }
