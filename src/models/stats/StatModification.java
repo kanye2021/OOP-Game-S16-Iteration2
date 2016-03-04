@@ -1,5 +1,7 @@
 package models.stats;
 
+import models.items.interactive.InteractiveItem;
+
 /**
  * Created by Bradley on 2/19/16.
  */
@@ -24,5 +26,10 @@ public class StatModification {
 
         stats.modifyStat(statToModify, -modifyAmount);
 
+    }
+
+    public String toString() {
+        String sign = modifyAmount > 0 ? "+" : "";
+        return sign + Integer.toString(modifyAmount) + " " + statToModify.getDescriptor();
     }
 }

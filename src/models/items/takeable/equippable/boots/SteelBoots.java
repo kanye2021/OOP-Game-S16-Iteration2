@@ -20,8 +20,10 @@ public class SteelBoots extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/boots/templateBoots.png");
         monetaryValue = STEELCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 15)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, STEELDEF)
         );
-        requiredLv = 10;
+        requiredLv = STEELLV;
+        itemWeight = STEELWEIGHT;
+        range = RANGE;
     }
 }

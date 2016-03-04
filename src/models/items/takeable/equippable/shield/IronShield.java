@@ -20,8 +20,10 @@ public class IronShield extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/secondary/smasher-template-shield.png");
         monetaryValue = IRONCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 20)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, IRONDEF)
         );
-        requiredLv = 5;
+        requiredLv = IRONLV;
+        itemWeight = IRONWEIGHT;
+        range = RANGE;
     }
 }

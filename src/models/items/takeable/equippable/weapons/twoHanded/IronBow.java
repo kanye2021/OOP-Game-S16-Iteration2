@@ -22,6 +22,8 @@ public class IronBow extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.WEAPON_MODIFIER, IRONATK)
         );
-        requiredLv = 5;
+        requiredLv = IRONLV;
+        itemWeight = IRONWEIGHT;
+        range = SNEAKRANGE;
     }
 }

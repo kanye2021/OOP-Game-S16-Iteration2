@@ -21,8 +21,10 @@ public class SteelChestplate extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/chest/smasher-template-chestplate.png");
         monetaryValue = STEELCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 45)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, STEELDEF)
         );
-        requiredLv = 10;
+        requiredLv = STEELLV;
+        itemWeight = STEELWEIGHT;
+        range = RANGE;
     }
 }

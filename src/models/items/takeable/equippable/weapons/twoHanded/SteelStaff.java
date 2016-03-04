@@ -22,6 +22,8 @@ public class SteelStaff extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.WEAPON_MODIFIER, STEELATK)
         );
-        requiredLv = 30;
+        requiredLv = STEELLV;
+        itemWeight = STEELWEIGHT;
+        range = SUMMONERRANGE;
     }
 }

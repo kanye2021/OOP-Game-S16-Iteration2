@@ -21,8 +21,10 @@ public class MithrilShield extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/secondary/smasher-template-shield.png");
         monetaryValue=MITHRILCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 50)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, MITHRILDEF)
         );
-        requiredLv = 30;
+        requiredLv = MITHRILLV;
+        itemWeight = MITHRILWEIGHT;
+        range = RANGE;
     }
 }

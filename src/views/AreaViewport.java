@@ -159,12 +159,12 @@ public class AreaViewport extends View implements Observer {
             Image itemImage = item.getImage();
 //            itemImage = itemImage.getScaledInstance(hexSize, hexSize, 0); // TODO SEE WHAT THE LAST PARAMETER IS WHEN YOU HAVE WIFI
 
-            // Resize the entity image
+            // Resize the item image
             int scaledWidth = hexWidth * 1;
             int scaledHeight = hexHeight * 1;
 
-            int itemX = (int)(tileNode.pixelPoint.getX() - itemImage.getWidth(null) /2);
-            int itemY = (int)(tileNode.pixelPoint.getY() - itemImage.getHeight(null) /2);
+            int itemX = (int)(tileNode.pixelPoint.getX() - scaledWidth /2);
+            int itemY = (int)(tileNode.pixelPoint.getY() - scaledHeight /2);
             g.drawImage(itemImage, itemX, itemY, scaledWidth, scaledHeight,  getDisplay());
         }
 

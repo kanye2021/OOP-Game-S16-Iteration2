@@ -20,8 +20,10 @@ public class WoodGreaves extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/legs/smasher-template-greaves.png");
         monetaryValue = WOODCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 5)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, WOODDEF)
         );
-        requiredLv = 1;
+        requiredLv = WOODLV;
+        itemWeight = WOODWEIGHT;
+        range = RANGE;
     }
 }

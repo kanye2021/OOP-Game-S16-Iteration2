@@ -20,8 +20,10 @@ public class MithrilBoots extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/boots/templateBoots.png");
         monetaryValue = MITHRILCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 30)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, MITHRILDEF)
         );
-        requiredLv = 30;
+        requiredLv = MITHRILLV;
+        itemWeight = MITHRILWEIGHT;
+        range = RANGE;
     }
 }

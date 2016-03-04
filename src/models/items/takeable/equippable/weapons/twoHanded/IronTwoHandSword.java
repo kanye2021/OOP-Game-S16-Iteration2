@@ -20,8 +20,10 @@ public class IronTwoHandSword extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/smasher.template-2h.png");
         monetaryValue = IRONCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.WEAPON_MODIFIER, IRONATK)
+                new StatModification(Stats.Type.WEAPON_MODIFIER, IRONATK*2)
         );
-        requiredLv = 5;
+        requiredLv = IRONLV;
+        itemWeight = IRONWEIGHT;
+        range = SMASHERRANGE;
     }
 }

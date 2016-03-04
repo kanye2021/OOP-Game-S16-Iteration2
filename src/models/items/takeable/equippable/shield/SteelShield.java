@@ -20,8 +20,10 @@ public class SteelShield extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/secondary/smasher-template-shield.png");
         monetaryValue = STEELCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 30)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, STEELDEF)
         );
-        requiredLv = 10;
+        requiredLv = STEELLV;
+        itemWeight = STEELWEIGHT;
+        range = RANGE;
     }
 }

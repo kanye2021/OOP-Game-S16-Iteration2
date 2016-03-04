@@ -11,26 +11,34 @@ import java.util.TimerTask;
 public class Stats {
 
     public enum Type {
-        LEVEL,
-        LIVES,
-        STRENGTH,
-        AGILITY,
-        INTELLECT,
-        HARDINESS,
-        EXPERIENCE,
-        MOVEMENT,
-        HEALTH,
-        MAX_HEALTH,
-        MANA,
-        MAX_MANA,
-        WEAPON_MODIFIER,
-        ARMOR_MODIFIER,
-        RADIUS_OF_VISIBILITY,
-        EXP_TO_LEVEL,
-        LAST_EXP_TO_LEVEL,
-        OFFSENSIVE_RATING,
-        DEFENSIVE_RATING,
-        ARMOR_RATING
+        // Descriptor is just used to show the name of the stat on the view
+        LEVEL("Level"),
+        LIVES("Lives"),
+        STRENGTH("Strength"),
+        AGILITY("Agility"),
+        INTELLECT("Intellect"),
+        HARDINESS("Hardiness"),
+        EXPERIENCE("EXP"),
+        MOVEMENT("Movement"),
+        HEALTH("Health"),
+        MAX_HEALTH("Max Health"),
+        MANA("Mana"),
+        MAX_MANA("Max Mana"),
+        WEAPON_MODIFIER("Weapon Damage"),
+        ARMOR_MODIFIER("Armor Modifier"),
+        RADIUS_OF_VISIBILITY("Radius of Vis."),
+        EXP_TO_LEVEL("EXP To Level"),
+        LAST_EXP_TO_LEVEL("Last EXP To Level"),
+        OFFSENSIVE_RATING("Offense"),
+        DEFENSIVE_RATING("Defense"),
+        ARMOR_RATING("Armor"),
+        TOTAL_WEIGHT("Weight");
+
+        private String descriptor;
+
+        Type(String descriptor){this.descriptor = descriptor;}
+
+        public String getDescriptor() { return descriptor; }
     }
 
 
@@ -59,6 +67,7 @@ public class Stats {
     private int weaponModifier;
     private int armorModifier;
     private int radiusOfVisiblility;
+    private int totalWeight;
 
     private TimerTask currentTask;
     private String lastTaskType;
@@ -88,6 +97,7 @@ public class Stats {
         statGetMap.put(Type.OFFSENSIVE_RATING, () -> getOffensiveRating());
         statGetMap.put(Type.DEFENSIVE_RATING, () -> getDefensiveRating());
         statGetMap.put(Type.ARMOR_RATING, () -> getArmorRating());
+        statGetMap.put(Type.TOTAL_WEIGHT, () -> getTotalWeight());
 
         statSetMap.put(Type.LIVES, (delta) -> modifyLives(delta));
         statSetMap.put(Type.STRENGTH, (delta) -> modifyStrength(delta));
@@ -101,7 +111,7 @@ public class Stats {
         statSetMap.put(Type.WEAPON_MODIFIER, (delta) -> modifyWeaponModifier(delta));
         statSetMap.put(Type.ARMOR_MODIFIER, (delta) -> modifyArmorModifier(delta));
         statSetMap.put(Type.RADIUS_OF_VISIBILITY, (delta) -> modifyRadiusOfVisibility(delta));
-
+        statSetMap.put(Type.TOTAL_WEIGHT, (delta) -> modifyTotalWeight(delta));
     }
 
     public void applyStatMod(StatModificationList statMod){
@@ -215,6 +225,9 @@ public class Stats {
         this.radiusOfVisiblility = MathUtilities.putInRange(0, this.radiusOfVisiblility + delta, Integer.MAX_VALUE);
     }
 
+    private void modifyTotalWeight(int delta){
+        this.totalWeight = MathUtilities.putInRange(0, this.totalWeight + delta, Integer.MAX_VALUE);
+    }
 
     private int getLives() {
         return this.lives;
@@ -295,5 +308,7 @@ public class Stats {
     }
 
     private int getRadiusOfVisiblility() { return radiusOfVisiblility; }
+
+    private int getTotalWeight(){return totalWeight;}
 
 }
