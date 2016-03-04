@@ -29,7 +29,7 @@ public class StatModification {
     }
 
     public String toString() {
-        String sign = modifyAmount > 0 ? "+" : "-";
+        String sign = modifyAmount > 0 ? "+" : "";
         return sign + Integer.toString(modifyAmount) + " " + statToModify.getDescriptor();
     }
 }

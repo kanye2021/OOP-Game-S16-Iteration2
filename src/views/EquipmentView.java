@@ -162,7 +162,7 @@ public class EquipmentView extends View {
 
                 // Draw the name of the item underneath it rly smallly
                 String itemName = item.getName();
-                g.setColor(rlySmallColor);
+                g.setColor(Color.BLACK);
                 FontMetrics fm = g.getFontMetrics(rlySmall);
                 g.setFont(rlySmall);
                 rec = fm.getStringBounds(itemName, g);
@@ -197,9 +197,7 @@ public class EquipmentView extends View {
 
     private void drawInfoPane(Graphics g, EquippableItem item) {
         Rectangle2D rec;
-        int statModsX = info_pane_x;
-        int initialY,  statModsY;
-        initialY = statModsY= info_pane_y;
+        FontMetrics fm;
         int h = 0;
         int w = 0;
 
@@ -212,35 +210,58 @@ public class EquipmentView extends View {
         g.fillRect(info_pane_x, info_pane_y, info_pane_w, info_pane_h);
 
         // Draw Title
-        FontMetrics fm2 = g.getFontMetrics(infoTitle);
+        String infoString = item.getName();
         g.setFont(infoTitle);
         g.setColor(primary);
-        String infoTitle = item.getName();
-        rec = fm2.getStringBounds(infoTitle, g);
-        w = (int) rec.getWidth();
-        h = (int) rec.getHeight();
+        fm = g.getFontMetrics(infoTitle);
+        if (infoString.length() > 10) {
+            // Split into 2 strings
+            String[] split = infoString.split("\\s+");
+            String infoString1 = split[0];
+            String infoString2 = split[1];
 
-        g.drawString(infoTitle, statModsX + (info_pane_w - w)/2, info_pane_y - ((int) (rec.getHeight()) + fm2.getAscent()));
+            // Draw both
+            rec = fm.getStringBounds(infoString1, g);
+            int w1 = (int) rec.getWidth();
+            int h1 = (int) rec.getHeight();
+            rec = fm.getStringBounds(infoString2, g);
+            int w2 = (int) rec.getWidth();
+            int h2 = (int) rec.getHeight();
+            int y1 = info_pane_y - (h1 + h2 + fm.getAscent());
+            int y2 = info_pane_y - (h2 + fm.getAscent());
+            g.drawString(infoString1, info_pane_x + (info_pane_w - w1)/2, y1);
+            g.drawString(infoString2, info_pane_x + (info_pane_w - w2)/2, y2);
+
+        } else {
+            // Else, only 1 line.
+            rec = fm.getStringBounds(infoString, g);
+            w = (int) rec.getWidth();
+            h = (int) rec.getHeight();
+            g.drawString(infoString, info_pane_x + (info_pane_w - w) / 2, info_pane_y - (h + fm.getAscent()));
+        }
 
         // Draw gray line too
         g.setColor(Color.lightGray);
-        int line_w = info_pane_w/10;
+        int line_w = info_pane_w/15;
         g.fillRect(info_pane_x - line_w/2, rect_xy_offset_top, line_w , info_pane_h + top_pane_h);
 
+        int statModsX = info_pane_x + line_w;
+        int initialY,  statModsY;
+        initialY = statModsY= info_pane_y;
 
         // Draw Stat Mods toStrings first
         g.setColor(Color.RED);
         g.setFont(small);
-        fm2 = g.getFontMetrics(small);
+        fm = g.getFontMetrics(small);
         statModsY = initialY;
         g.setColor(Color.RED);
         for (StatModification s : item.getOnEquipModifications().getModifications()) {
             String statModString  = s.toString();
-            rec = fm2.getStringBounds(statModString, g);
+            rec = fm.getStringBounds(statModString, g);
             w = (int) rec.getWidth();
             h = (int) rec.getHeight();
-            g.drawString(statModString, statModsX + (info_pane_w - w)/2, statModsY - fm2.getAscent());
-            statModsY += h + fm2.getAscent();
+            g.drawString(statModString, statModsX, statModsY - fm.getAscent());
+            statModsY += h + fm.getAscent();
         }
 
     }
