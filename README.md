@@ -1,4 +1,4 @@
-# OOP-Game-S16
+# OOP-Game-S16 V2
 Objected Oriented Programming Spring 2016, Iteration 2.
 
 **Team KANYE 2020**
@@ -11,10 +11,22 @@ Objected Oriented Programming Spring 2016, Iteration 2.
 - David Yeung
 
 
-## How to run
+# How to run
+
+## IDE ([IntelliJ](https://www.jetbrains.com/idea/) is preferred)
+-  Clone the repository if you do not have the source code, with:
+```bash
+git clone https://github.com/kanye2021/OOP-Game-S16-Iteration2.git
+```
+- In [IntelliJ](https://www.jetbrains.com/idea/) `File > New Project From Exisiting Sources...`
+- Or at splash screen select `New Project From Exisiting Sources...`
+- Select root directory
+
+
+## Source
 - Clone the repository if you do not have the source code, with:
 ```bash
-git clone https://github.com/kanye2021/OOP-Game-S162.git
+git clone https://github.com/kanye2021/OOP-Game-S16-Iteration2.git
 ```
 - Run the following command at the root directory to compile and run the game:   
 ```bash
