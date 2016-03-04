@@ -3536,6 +3536,7 @@
     </tile>
     <tile x="-2" y="-2">
         <terrain type="grass"/>
+        <item id="6000"/>
     </tile>
     <tile x="-2" y="-1">
         <terrain type="grass"/>
@@ -4139,6 +4140,7 @@
     </tile>
     <tile x="2" y="-2">
         <terrain type="grass"/>
+        <item id="5000"/>
     </tile>
     <tile x="2" y="-1">
         <terrain type="mountain"/>

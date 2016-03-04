@@ -1,5 +1,6 @@
 package models;
 
+import models.items.Item;
 import models.items.takeable.TakeableItem;
 
 import java.awt.*;
@@ -104,6 +105,15 @@ public class Inventory {
         int index = 0;
         for(ItemNode node : itemNodeArrayList){
             if(node.getItem() == item)
+                index = node.getAmount();
+        }
+        return index;
+    }
+
+    public int getAmountOfItem(Item.ItemDictionary item) {
+        int index = 0;
+        for(ItemNode node : itemNodeArrayList){
+            if(node.getItem().getID() == item)
                 index = node.getAmount();
         }
         return index;
