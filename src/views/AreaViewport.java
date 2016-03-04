@@ -170,7 +170,9 @@ public class AreaViewport extends View implements Observer {
 
         // Display entities on the map
         Entity entity = tileNode.tile.getEntity();
+
         if (entity != null) {
+
             Image entityImage = entity.getImage();
 
             // Resize the entity image

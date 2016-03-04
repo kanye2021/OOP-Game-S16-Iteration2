@@ -2,7 +2,10 @@ package models.entities;
 
 
 import controllers.entityControllers.EntityController;
+import models.entities.npc.Mount;
 import models.entities.npc.NPC;
+import models.entities.npc.Talk;
+import models.entities.npc.Unmount;
 import models.map.Map;
 import models.occupation.Occupation;
 import models.occupation.Sneak;
@@ -23,6 +26,7 @@ public class Pet extends NPC {
         passableTerrain.add("grass");
     }
 
+
     // Controller will be a "PetController" which implements Observer and observes the Avatar's location
     // Whenever Avatar moves Pet will follow, etc
 
@@ -32,6 +36,7 @@ public class Pet extends NPC {
         // Pets can be SNeaks i guess for now.
         return new Sneak();
     }
+
 
 
     @Override

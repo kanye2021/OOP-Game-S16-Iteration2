@@ -1,25 +1,52 @@
 package models.entities.npc;
 
-import controllers.entityControllers.NPCController;
+import models.entities.Entity;
 import models.map.Map;
+import utilities.Task;
 
 import java.awt.*;
-
+import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
- * Created by denzel on 3/1/16.
+ * Created by denzel on 3/3/16.
  */
-public abstract class Mount extends NPC {
 
-    //Constructor for the mount with location on a map
-    public Mount(Point location, Map map){
-        super(location,map);
+//The Npc is what youre INTERACTING WITH
+
+public class Mount extends Action {
+
+    //I think I need this
+    Task moveNorth;
+    Task moveNorthWest;
+    Task moveSouthWest;
+    Task moveSouth;
+    Task moveSouthEast;
+    Task moveNorthEast;
+    private HashMap<Task, Point> taskMovementVector = new HashMap<>();
+
+
+    public Mount(NPC npc){
+        super(npc);
+
+    }
+
+    @Override
+    public String getName() {
+        return "Mount";
+    }
+
+    @Override
+    public void activate() {
+       mount();
     }
 
 
-    //set Terrain and speed for the mount
-    protected abstract void setTerrain(String terrain);
-    protected abstract void setMovement(int movement);
+    public void mount(){
+
+    }
+
 
 
 }

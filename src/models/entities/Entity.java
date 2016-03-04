@@ -3,7 +3,7 @@ package models.entities;
 import controllers.entityControllers.EntityController;
 import models.Equipment;
 import models.Inventory;
-import models.entities.npc.Mount;
+import models.entities.npc.MountEntity;
 import models.entities.npc.NPC;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
@@ -42,9 +42,8 @@ public abstract class Entity extends Observable implements ActionListener{
 
     // All entities should be able to have a pet.
     protected Pet pet;
+    protected MountEntity mount;
 
-    //Entity may have mount
-    protected Mount mount;
 
 
     protected ArrayList<String> passableTerrain;
@@ -245,7 +244,8 @@ public abstract class Entity extends Observable implements ActionListener{
     public final void setPet(Pet pet) {
         this.pet = pet;
     }
-    public final void setMount(Mount mount){this.mount = mount;}
+    public final void setMount(MountEntity mount){ this.mount = mount;}
+
 
 
 }

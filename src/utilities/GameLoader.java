@@ -1,15 +1,12 @@
 package utilities;
 
-import controllers.entityControllers.MountController;
+
 import controllers.entityControllers.PetController;
 import models.entities.*;
-import models.entities.npc.Horse;
+import models.entities.npc.MountEntity;
 import models.entities.npc.NPC;
 import models.entities.npc.Villager;
 import models.items.Item;
-import models.items.interactive.InteractiveItem;
-import models.items.oneshot.OneShotItem;
-import models.items.takeable.TakeableItem;
 import models.map.Decal;
 import models.map.Map;
 import models.map.Terrain;
@@ -72,22 +69,24 @@ public class GameLoader {
         newMap.insertEntity(pet);
         game.setAvatarsPet(pet, petController);
 
-        // TODO: Inilialize the npcs. (needs to be done by xml)
+
+        // TODO: Initialize the npcs. (needs to be done by xml)
         //TODO: Current a tmp npc
         Point tmp = new Point(-10,-3);
         Villager newVillager = new Villager(tmp, newMap);
         newMap.insertEntity(newVillager);
         ArrayList<NPC> tmpList = new ArrayList<>();
         tmpList.add(newVillager);
+
+//        //TODO: Figure out the mount shit implementation
+//        Point tmp1 = new Point(-10,-5);
+//        MountEntity horse = new MountEntity(tmp1,newMap);
+//        newMap.insertEntity(horse);
+//        tmpList.add(horse);
+
+
         game.setNpcList(tmpList);
 
-
-        //TODO: Figure out the mount shit implementation
-        Horse horse = new Horse(new Point(-10,-4),newMap);
-        MountController mountController = new MountController(horse);
-        newMap.insertEntity(horse);
-        game.setMount(horse,mountController);
-        System.out.println("I'm in the game loader");
     }
 
     private Map loadMap(String filepath){
@@ -172,7 +171,6 @@ public class GameLoader {
 
                     item = Item.ItemDictionary.itemFromID(id);
                     if (item == null) {
-                        System.out.println("What the fuck");
                     } else {
                         System.out.println("successfully loaded an item");
                     }

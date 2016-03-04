@@ -15,7 +15,7 @@ import java.util.Observer;
  */
 public class PetController extends NPCController implements Observer {
 
-    private int maximumDistanceFromOwner = 2;
+    private int maximumDistanceFromOwner = 0;
 
     private Pet pet;
     Task moveNorth;
@@ -28,8 +28,8 @@ public class PetController extends NPCController implements Observer {
 
     public PetController(Pet pet){
         this.pet = pet;
-        createMovementTasks();
 
+        createMovementTasks();
         taskMovementVector.put(moveNorth, new Point(0, -1));
         taskMovementVector.put(moveNorthWest, new Point(-1, -1));
         taskMovementVector.put(moveNorthEast, new Point(1, -1));

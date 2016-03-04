@@ -86,6 +86,7 @@ public class Map {
             //return currentLocation;
             return new TileDetection(null, currentLocation);
         }
+        //TODO This crashes when you interact with the Pet
         if (desiredTile.hasNPC()){
             return new TileDetection((NPC)desiredTile.getEntity(), currentLocation);
         }
