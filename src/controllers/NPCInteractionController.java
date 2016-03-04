@@ -5,6 +5,7 @@ import models.entities.npc.Action;
 import models.entities.npc.NPC;
 import utilities.StateManager;
 import utilities.Task;
+import views.Display;
 import views.LoadGameView;
 import views.NPCActionView;
 import views.View;
