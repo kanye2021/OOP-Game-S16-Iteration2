@@ -6,8 +6,10 @@ import models.items.Item;
 import models.map.Map;
 import models.map.Terrain;
 import models.map.Tile;
+import models.stats.Stats;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.*;
 import java.util.Queue;
 
@@ -181,9 +183,61 @@ public class AreaViewport extends View implements Observer {
             int entityY = (int) (tileNode.pixelPoint.getY() - scaledHeight / 2);
 
             g.drawImage(entityImage, entityX, entityY, scaledWidth, scaledHeight, getDisplay());
+            g.setClip(oldClip);
+            drawEntityHealthBar(g, entity, entityX, entityY);
+
         }
 
         g.setClip(oldClip);
+
+
+    }
+
+    private void drawEntityHealthBar(Graphics g, Entity entity, int entityX, int entityY) {
+        Stats stats = entity.getStats();
+        // Start with the healthbar
+        // Get the necessary stats
+        int health = stats.getStat(Stats.Type.HEALTH);
+        int maxHealth = stats.getStat(Stats.Type.MAX_HEALTH);
+
+        // Sizes
+        int healthBarWidth = getScreenWidth()/12;
+        int healthBarHeight = getScreenHeight()/53;
+
+        // Set the font
+        Font f = new Font("Courier New", 1, 14);
+        g.setFont(f);
+
+
+        // Set the location and size of the health bar.
+        int healthBarX = entityX - healthBarWidth/3;
+        int healthBarY = entityY - healthBarHeight;
+
+
+        // Draw the outline of the health bar.
+        g.setColor(Color.RED);
+        g.fillRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
+
+        // Determine what fraction of the healthbar should be shown.
+        double healthFraction = (double) health / (double) maxHealth;
+        int healthFillWidth = (int) (healthFraction * healthBarWidth);
+
+        // Fill the healthbar
+        g.setColor(Color.GREEN);
+        g.fillRect(healthBarX, healthBarY, healthFillWidth, healthBarHeight);
+
+        // Display the fraction of health
+        g.setColor(Color.WHITE);
+        String healthFractionString = "(" + health + "/" + maxHealth + ")";
+        FontMetrics fm = g.getFontMetrics(f);
+
+        // Place the font at the right of the bar
+        Rectangle2D healthFractionRect = fm.getStringBounds(healthFractionString, g);
+
+        int healthFractionX = healthBarX + (healthBarWidth - (int) healthFractionRect.getWidth())/2;
+        int healthFractionY = healthBarY + healthBarHeight - 4;
+        g.drawString(healthFractionString, healthFractionX, healthFractionY);
+
     }
 
     // This will be used in the BF traversal to get the list of adjacent tiles.
