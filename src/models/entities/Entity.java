@@ -95,6 +95,13 @@ public abstract class Entity extends Observable implements ActionListener{
     public boolean canTraverseTerrain(Terrain terrain){
         return passableTerrain.contains(terrain.getType());
     }
+
+    public boolean canTraverseTerrain(Point point) {
+
+        return passableTerrain.contains(map.getTileAt(point).getTerrain().getType());
+
+    }
+
     // Location getter/setter
     public final Point getLocation() {
         return location;
@@ -221,7 +228,7 @@ public abstract class Entity extends Observable implements ActionListener{
 
 
     // Used to go to a new map
-    public final void setmap(Map map){
+    public final void setMap(Map map){
         this.map = map;
     }
 
