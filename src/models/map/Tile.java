@@ -16,6 +16,7 @@ public class Tile {
     private Decal decal;
     private Item item;
     private Entity entity;
+    private NPC npc;
     private boolean seen;
 
 //    public Tile(Terrain terrain, AreaEffect areaEffect, Decal decal, Item item, Entity entity) {
@@ -110,6 +111,7 @@ public class Tile {
     public Entity getEntity() {
         return entity;
     }
+    public NPC getNPC(){ return (NPC)entity; }
 
     public void removeItem() {
         item = null;

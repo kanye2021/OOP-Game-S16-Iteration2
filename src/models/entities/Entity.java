@@ -9,6 +9,7 @@ import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
 import models.map.Terrain;
+import models.map.Tile;
 import models.occupation.Occupation;
 import models.skills.Skill;
 import models.skills.SkillList;
@@ -256,4 +257,13 @@ public abstract class Entity extends Observable implements ActionListener{
         this.mount = mount;}
 
 
+    //TODO This is a no no I think
+    public Map getMap(){
+        return map;
+    }
+
+
+    public Tile getTileAtEntityLocation (){
+        return map.getTileAt(this.location);
+    }
 }

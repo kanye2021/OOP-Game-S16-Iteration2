@@ -3,9 +3,12 @@ package controllers.entityControllers;
 import controllers.*;
 import controllers.GameViewController;
 import controllers.InventoryViewController;
+import models.attack.Attack;
+import models.attack.RangedAttack;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.map.Map;
+import models.map.Tile;
 import models.skills.CommonSkills.BindWoundsSkill;
 import models.skills.Skill;
 import models.skills.SneakSkills.CreepSkill;
@@ -66,6 +69,19 @@ public class AvatarController extends EntityController {
             @Override
             public void run() {
                 bindWoundsSkill.onActivate(avatar);
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
+        Task genericAttack = new Task() {
+            @Override
+            public void run() {
+                RangedAttack rangedAttack = new RangedAttack(avatar, 10,avatar.getMap());
+                rangedAttack.hitEntity();
             }
 
             @Override
@@ -271,6 +287,7 @@ public class AvatarController extends EntityController {
         addKeyPressMapping(firstSkill,KeyEvent.VK_2);
         addKeyPressMapping(secondSkill,KeyEvent.VK_3);
         addKeyPressMapping(thirdSkill,KeyEvent.VK_4);
+        addKeyPressMapping(genericAttack,KeyEvent.VK_5);
 //        addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
 
         // TODO: Testing opening a random overlay toast view
@@ -353,7 +370,7 @@ public class AvatarController extends EntityController {
     }
 
     public void startInteraction(NPC npc){
-        avatar.startInteraction(npc);
+        System.out.println("Please refactor me");
     }
 
 }

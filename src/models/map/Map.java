@@ -82,13 +82,17 @@ public class Map {
 
         // Get the tile at that location. Exit if it is not on the map.
         Tile desiredTile = tiles.get(desiredLocation);
+
         if(desiredTile == null) {
             //return currentLocation;
             return new TileDetection(null, currentLocation);
         }
+
+
         if (desiredTile.hasNPC()){
             return new TileDetection((NPC)desiredTile.getEntity(), currentLocation);
         }
+
         // Tell the tile that the entity wants to move to it. If it is successful, the tile will return true and carry
         // out any actions that result from the move. If not, it will return false.
         boolean entityMoved = desiredTile.insertEntity(entity);
@@ -106,4 +110,6 @@ public class Map {
     public Tile getTileAt(Point p){
         return tiles.get(p);
     }
+
+
 }
