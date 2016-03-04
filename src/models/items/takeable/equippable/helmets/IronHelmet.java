@@ -4,16 +4,11 @@ import models.Equipment;
 import models.conditions.Condition;
 import models.conditions.ConditionList;
 import models.conditions.StatCondition;
-import models.entities.Entity;
-import models.entities.SneakAvatar;
 import models.items.takeable.equippable.EquippableItem;
-import models.map.Map;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
 import models.stats.Stats;
 import views.sprites.Sprite;
-
-import java.awt.*;
 
 /**
  * Created by aseber on 2/22/16.

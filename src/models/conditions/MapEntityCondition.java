@@ -11,9 +11,14 @@ import java.awt.*;
  */
 
 public class MapEntityCondition extends MapCondition {
+    // Param 0 = Entity
+    // setParameter(1, location);
+    // setParameter(2, point);
+    // setParameter(3, map);
 
     public MapEntityCondition(Entity entity, MapCondition.Location location, Point point, Map map, Variable... runtimeArguments) {
 
+        super(runtimeArguments);
         setParameter(0, entity);
         setParameter(1, location);
         setParameter(2, point);
@@ -34,16 +39,13 @@ public class MapEntityCondition extends MapCondition {
 
         if (entityOnMap != null) {
 
-            //int i1 = entityOnMap.getID();
-            //int i2 = entity.getID();
-
-            //return location.checkLocation(i1, i2);
+            return location.checkLocation(entity, entityOnMap);
 
         }
 
         // A bit hacky, but it allows us to return true when the item isn't in that location, or false when it is.
         // Dependent on the equality checker!
-        return location.checkLocation(1, 0);
+        return location.checkLocation(entity, null);
 
     }
 
