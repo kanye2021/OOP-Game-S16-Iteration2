@@ -25,7 +25,7 @@ public class RangedAttack extends Attack {
 
 
     //Do TileDetection stuff for rangedAttacks
-    public void hitEntity() {
+    public boolean hitEntity() {
 
         Point starting = new Point(entity.getLocation());
 
@@ -36,11 +36,12 @@ public class RangedAttack extends Attack {
                 entity.startInteraction(map.getTileAt(starting).getNPC());
                 map.getTileAt(starting).getEntity().getStats().modifyStat(Stats.Type.HEALTH,-1);
                 System.out.println(map.getTileAt(starting).getEntity() + " hp is: " + map.getTileAt(starting).getEntity().getStats().getStat(Stats.Type.HEALTH));
-
+                return true;
             }
             starting.translate(0,1);
             range--;
         }
+        return false;
 
     }
 }
