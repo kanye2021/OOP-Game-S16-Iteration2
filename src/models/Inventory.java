@@ -1,9 +1,11 @@
 package models;
 
+import models.items.Item;
 import models.items.takeable.TakeableItem;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by aseber on 2/22/16.
@@ -69,6 +71,12 @@ public class Inventory {
         return itemNodeArrayList;
     }
 
+    // Check that inventory is not empty before calling this method.
+    public TakeableItem getRandomItem() {
+        ItemNode randomNode = itemNodeArrayList.get((new Random()).nextInt(itemNodeArrayList.size()));
+        return randomNode.getItem();
+    }
+
     public int getMaxCapacity(){
         return maxCapacity;
     }
@@ -129,41 +137,24 @@ public class Inventory {
             // References shud be the same so this equality shud work.
             // If not gotta override .equals()
             if (node.getItem() == item) {
-                itemNodeArrayList.remove(node);
+                int amount = node.getAmount();
+                // If have more than one, just decrease amount, otherwise remove that node.
+                if ( amount > 1) {
+                    node.setAmount(amount - 1);
+                } else {
+                    itemNodeArrayList.remove(node);
+                }
                 return true;
             }
         }
         return false;
     }
 
-    //"Overloading" adding and removing items with different return types
-
-    public void addsItem(TakeableItem item) {
-        // If at capacity, return false and dont add item
-        if (itemNodeArrayList.size() == maxCapacity) {
-            return;
-        } else {
-            itemNodeArrayList.add(new ItemNode(item));
-            return;
-        }
-    }
-
-    public void removesItem(TakeableItem item) {
-        // Search the array list for the matching item
-        for (ItemNode node: itemNodeArrayList ) {
-            // References shud be the same so this equality shud work.
-            // If not gotta override .equals()
-            if (node.getItem() == item) {
-                itemNodeArrayList.remove(node);
-                return;
-            }
-        }
-        return;
-    }
-
     public void setMaxCapacity(int maxCapacity){
         this.maxCapacity = maxCapacity;
     }
+
+    public boolean isEmpty() { return itemNodeArrayList.size() == 0; };
 
 
 

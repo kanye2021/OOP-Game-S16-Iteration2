@@ -4,6 +4,7 @@ import models.Inventory;
 import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.items.Item;
+import models.items.takeable.TakeableItem;
 import models.map.Map;
 import models.map.Tile;
 import models.skills.ActiveSkill;
@@ -46,28 +47,33 @@ public class PickPocketSkill extends ActiveSkill {
             cooldown=false;
             return;
         }
-        Inventory entityInvent = entity.getInventory();
-        ArrayList<Inventory.ItemNode> entityInventory = entity.getInventory().getItemNodeArrayList();
-        if(stealItem(target)==null){
-            System.out.println("Target did not have an item");
+        Inventory entityInventory = entity.getInventory();
+        Inventory targetInventory = target.getInventory();
+        if(targetInventory.isEmpty()){
+            System.out.println("Target did not have any items!!! Nothing 2 steal :(");
             cooldown=false;
             return;
-        }
-        entityInventory.add(stealItem(target));
-        //entityInvent.addItem(stealItem(target).getItem());
-        //stealsItem(entity,target);
-        cooldown = true;
+        } else {
+            // Pick that pocket
+            TakeableItem stolenItem = stealItem(targetInventory);
 
-        System.out.println("I am pick pocket skill");
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        cooldown = false;
-                    }
-                },
-                cooldownTime
-        );
+            // Pocket the item
+            entityInventory.addItem(stolenItem);
+
+            // Cool-down that skill
+            cooldown = true;
+
+            System.out.println("I am pick pocket skill");
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            cooldown = false;
+                        }
+                    },
+                    cooldownTime
+            );
+        }
 
     }
 
@@ -124,20 +130,18 @@ public class PickPocketSkill extends ActiveSkill {
 
     }
 
-    public Inventory.ItemNode stealItem(Entity target){
-        //Inventory targetInventory = target.getInventory();
-        ArrayList<Inventory.ItemNode> inventory = target.getInventory().getItemNodeArrayList();
-        if(inventory.isEmpty()){//considers for the case the target does not have an item
-            return null;
-        }
-        Random random = new Random();
-        int randomIndex = random.nextInt(inventory.size());//I dont think it will throw out of bounds exception
-        Inventory.ItemNode stolenItem = inventory.get(randomIndex);
+    public TakeableItem stealItem(Inventory targetInventory) {
+        // Function only called if target has at least 1 item in inventory.
 
-        inventory.remove(stolenItem);//removes the item
+        // Get a random item
+        TakeableItem stolenItem = targetInventory.getRandomItem();
+
+        // Remove that item from target's inventory.
+        targetInventory.removeItem(stolenItem);//removes the item
+
+        // Print shit and return
         System.out.println("Its Mr.Steal yo girl");
         return stolenItem;
-
     }
 /*
     public void stealsItem(Entity entity, Entity target){
