@@ -210,7 +210,7 @@ public class AvatarController extends EntityController {
                     //first skill should be something..
                     Skill thirdSkill = avatar.getSpecificSkill(Skill.SkillDictionary.PICK_POCKET);
                     System.out.println(thirdSkill);
-                    PickPocketSkill pickPocketSkill = (PickPocketSkill) secondSkill;
+                    PickPocketSkill pickPocketSkill = (PickPocketSkill) thirdSkill;
                     pickPocketSkill.onActivate(avatar);
 
                 }else{

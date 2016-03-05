@@ -136,6 +136,31 @@ public class Inventory {
         return false;
     }
 
+    //"Overloading" adding and removing items with different return types
+
+    public void addsItem(TakeableItem item) {
+        // If at capacity, return false and dont add item
+        if (itemNodeArrayList.size() == maxCapacity) {
+            return;
+        } else {
+            itemNodeArrayList.add(new ItemNode(item));
+            return;
+        }
+    }
+
+    public void removesItem(TakeableItem item) {
+        // Search the array list for the matching item
+        for (ItemNode node: itemNodeArrayList ) {
+            // References shud be the same so this equality shud work.
+            // If not gotta override .equals()
+            if (node.getItem() == item) {
+                itemNodeArrayList.remove(node);
+                return;
+            }
+        }
+        return;
+    }
+
     public void setMaxCapacity(int maxCapacity){
         this.maxCapacity = maxCapacity;
     }
