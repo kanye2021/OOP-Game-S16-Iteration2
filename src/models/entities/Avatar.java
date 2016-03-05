@@ -59,15 +59,15 @@ public abstract class Avatar extends Entity {
         return money;
     }
     public void buyItem(TakeableItem item){
-        int price = item.getPrice();
-        if (money >= price) { //Buy the item
+        int price = item.getMonetaryValue();
+        if (money >= price) { //Buy the item (two checks are being done
             inventory.addItem(item);
-            money -= item.getPrice();
+            money -= item.getMonetaryValue();
         }
     }
     public void sellItem(TakeableItem item){
-        int price = item.getPrice()/2;
+        int price = item.getMonetaryValue()/2;
         inventory.removeItem(item);
-        money += item.getPrice();
+        money += item.getMonetaryValue();
     }
 }

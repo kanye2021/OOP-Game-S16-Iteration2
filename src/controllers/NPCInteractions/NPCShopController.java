@@ -89,10 +89,10 @@ public class NPCShopController extends ViewController {
             @Override
             public void run() {
                 TakeableItem currentItem = itemNodeArrayList.get(selectedItemIndex).getItem();
-                if (currentItem.isEquipable()) {
+                if (avatar.getAmountofMoney() > currentItem.getMonetaryValue()) {
                     //avatar.equipItem((EquippableItem) currentItem);
-                    avatar.buyItem(currentItem);
                     ((ShopKeeper)shopKeeper).sell(currentItem);
+                    avatar.buyItem(currentItem);
                 } else {
                     // weird to tell them item to use itself then pass the entity o_O ?
 //                    currentItem.onUse();

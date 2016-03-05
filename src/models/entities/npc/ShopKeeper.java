@@ -36,7 +36,7 @@ public class ShopKeeper extends NPC{
         int id = 1000; //starts at 1000 (HELMS)
         for (int i = 0; i < 2; i++) { //default level
             Item newItem = Item.ItemDictionary.itemFromID(id + i);
-            newItem.setPrice(500);
+            ((TakeableItem)newItem).setMonetaryValue(500 + (i * 100));
             inventory.addItem((TakeableItem)newItem);
         }
     }

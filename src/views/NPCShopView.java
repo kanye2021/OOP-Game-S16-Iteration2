@@ -86,8 +86,7 @@ public class NPCShopView extends View {
         renderTitle(g);
         renderItemsView(g);
         renderInfoView(g);
-        //Draw the monies
-        renderMoney(g);
+
     }
 
     private void renderTitle(Graphics g) {
@@ -105,7 +104,7 @@ public class NPCShopView extends View {
         Rectangle2D titleRect = fm.getStringBounds(title, g);
 
         // Get the location of the title
-        int titleX = titleStartX + titleWidth / 2 - (int) titleRect.getWidth() / 2;
+        int titleX = titleStartX + titleWidth / 2 - (int) titleRect.getWidth() / 3;
         int titleY = titleStartY + (int) titleRect.getHeight() + titleMargin;
 
         // Draw the title
@@ -119,27 +118,42 @@ public class NPCShopView extends View {
         Rectangle2D instRect = fm2.getStringBounds(instructions, g);
 
         // Get the location of the instr
-        int instX = titleStartX + titleWidth / 2 - (int) instRect.getWidth() / 2;
+        int instX = titleStartX + titleWidth / 2 - (int) instRect.getWidth() / 3;
         int instY = titleStartY + titleHeight - instMargin;
 
         // Draw the instr
         g.drawString(instructions, instX, instY);
 
+        //Draw the monies
+        String currentMoney = "Current Money: ";
+        int width = fm2.stringWidth(currentMoney);
+        int height = fm2.getHeight();
+        g.drawString(currentMoney, titleStartX + 5, titleStartY * 3 + height);
+        int startMoney = titleStartX + 5 + width;
+        renderMoney(g, avatar.getAmountofMoney(), startMoney, titleStartY * 3);
+
     }
-    public void renderMoney(Graphics g){
+    public void renderMoney(Graphics g, int amountMoney, int imgStart_X, int imgStart_Y){
+        //Renders the money amount
+        String value = Integer.toString(amountMoney);
+        g.setFont(smallFont);
+        FontMetrics fm = g.getFontMetrics();
+        int valueWidth = fm.stringWidth(value);
+
         ///Renders the icon
         String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/etc/money.png");
         Sprite s = new Sprite(imageBasePath);
         Image money = s.getImage();
-        int imgStart_X = titleStartX ;
-        int imgStart_Y = titleStartY * 3;
+//        int imgStart_X = titleStartX ;
+//        int imgStart_Y = titleStartY * 3;
         int imgWidth = money.getWidth(null)/2;
         int imgHeight = money.getHeight(null)/2;
-        g.drawImage(money, imgStart_X, imgStart_Y, imgWidth, imgHeight, null);
-        String value = Integer.toString(avatar.getAmountofMoney());
-        //draw amount
-        g.setFont(smallFont);
-        g.drawString(value,imgStart_X + imgWidth, imgStart_Y + (int)(imgHeight * .66));
+
+        g.drawImage(money, imgStart_X + valueWidth, imgStart_Y, imgWidth, imgHeight, null);
+
+        g.drawString(value, imgStart_X, imgStart_Y + (int)(imgHeight * .66));
+
+
 
     }
 
@@ -228,7 +242,7 @@ public class NPCShopView extends View {
         g2.setColor(new Color(25, 25, 25));
         g2.fillRect(0, 0, itemViewWidth, itemViewHeight);
 
-        if (!itemNodeList.isEmpty()) {
+        if (itemNodeList.size() > selectedItem) {
             TakeableItem item = itemNodeList.get(selectedItem).getItem();
 
             paintSelectedIcon(g2, item);
@@ -260,7 +274,8 @@ public class NPCShopView extends View {
 
         int xpos = infoViewWidth / 2 - infoDescriptionWidth / 2;
         g2.setColor(Color.LIGHT_GRAY);
-        g2.fillRect(xpos, infoYMargin, infoDescriptionWidth, infoElementHeight);
+        int descriptionBoxWidth = infoDescriptionWidth + infoElementHeight;
+        g2.fillRect(xpos, infoYMargin, descriptionBoxWidth, infoElementHeight);
 
         if (item != null) {
             String description = item.getDescription();
@@ -269,7 +284,7 @@ public class NPCShopView extends View {
             int lines = 0;
             output[0] = subString[0];
 
-            int descriptionWidth = (int) (infoDescriptionWidth * 0.8);
+            int descriptionWidth = (int) (descriptionBoxWidth * 0.8);
 
             for (int i = 1; i < subString.length; i++) {
                 if (fm.stringWidth(output[lines] + " " + subString[i]) < descriptionWidth) {
@@ -288,8 +303,8 @@ public class NPCShopView extends View {
             }
 
             // Prints out the monetary value of the item
-            String price = Integer.toString(item.getPrice()) + " C";
-            int stringX = infoDescriptionWidth - xpos;
+            String price = Integer.toString(item.getMonetaryValue()) + " C";
+            int stringX = infoDescriptionWidth + xpos;
             int stringY = ypos + fm.getHeight()/2;
             g2.drawString(price, stringX, stringY);
         }
@@ -299,7 +314,7 @@ public class NPCShopView extends View {
     private void paintOptions(Graphics g2, TakeableItem item) {
 
         g2.setColor(Color.LIGHT_GRAY);
-        g2.fillRect(infoViewWidth - infoXMargin - infoElementHeight, infoYMargin, infoElementHeight, infoElementHeight);
+        //g2.fillRect(infoViewWidth - infoXMargin - infoElementHeight, infoYMargin, infoElementHeight, infoElementHeight);
 
 
         if (item == null) {
