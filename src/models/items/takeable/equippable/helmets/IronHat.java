@@ -1,6 +1,7 @@
 package models.items.takeable.equippable.helmets;
 
 import models.Equipment;
+import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
@@ -8,17 +9,16 @@ import models.stats.Stats;
 import views.sprites.Sprite;
 
 /**
- * Created by aseber on 2/22/16.
+ * Created by ben on 3/5/16.
  */
-public class IronHelmet extends EquippableItem {
+public class IronHat extends EquippableItem{
+    public IronHat() {
 
-    public IronHelmet() {
-
-        ID = ItemDictionary.IRON_HELMET;
-        name = "Iron Helmet";
-        description = "A helmet made of iron";
+        ID = Item.ItemDictionary.IRON_HAT;
+        name = "Iron Hat";
+        description = "A pointy hat that is the color of Iron";
         component = Equipment.Component.HELMET;
-        sprite = new Sprite("./src/res/items/takeable/armor/head/smasher-template-helm.png");
+        sprite = new Sprite("./src/res/items/takeable/armor/head/summoner-template-helm.png");
         monetaryValue = IRONCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, IRONDEF)
@@ -27,5 +27,4 @@ public class IronHelmet extends EquippableItem {
         itemWeight = IRONWEIGHT;
         range = RANGE;
     }
-
 }
