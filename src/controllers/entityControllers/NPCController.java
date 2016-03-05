@@ -1,11 +1,9 @@
 package controllers.entityControllers;
 
-import models.entities.npc.Action;
+import models.entities.npc.actions.Action;
 import models.entities.npc.NPC;
-import utilities.InputMapping;
 import views.GameView;
-import views.NPCActionView;
-import views.View;
+import views.NPCMenuView;
 
 import java.util.ArrayList;
 
@@ -15,7 +13,7 @@ import java.util.ArrayList;
 //Movement on its NPC (handling movement by itself)
 public class NPCController extends EntityController {
     private NPC npc;
-    private NPCActionView npcView;
+    private NPCMenuView npcView;
     private ArrayList<Action> actionList;
 
     public NPCController(){} //Default constructor

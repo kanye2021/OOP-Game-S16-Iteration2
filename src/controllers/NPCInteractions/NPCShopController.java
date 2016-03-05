@@ -1,45 +1,49 @@
-package controllers;
+package controllers.NPCInteractions;
 
+import controllers.GameViewController;
+import controllers.ViewController;
 import models.Inventory;
+import models.entities.Avatar;
 import models.entities.Entity;
-import models.entities.npc.actions.Action;
-import models.entities.npc.NPC;
+import models.entities.npc.ShopKeeper;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
 import utilities.StateManager;
 import utilities.Task;
-import views.InventoryView;
 import views.NPCMenuView;
+import views.NPCShopView;
 import views.View;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
- * Created by sergiopuleri on 3/2/16.
+ * Created by dyeung on 3/2/16.
  */
-public class InventoryViewController extends ViewController {
-
+public class NPCShopController extends ViewController {
     private int selectedItemIndex;
     private Task previousItem;
     private Task nextItem;
-    private Task dropItem;
     // useItem will equip an equippable item or use a consumable or whatever, or not do anything if not consumable or equippable
-    private Task useItem;
+    private Task playerBuyItem;
+    private Task playerSellItem;
     private Task closeInventory;
+    private Task escape;
 
-
-    private Entity entity;
+    private Entity shopKeeper;
     private Inventory inventory;
     private ArrayList<Inventory.ItemNode> itemNodeArrayList;
-
-    public InventoryViewController(View view, StateManager stateManager, Entity entity) {
+    private NPCMenuView menuView;
+    private Avatar avatar; //The person who is doing the buying
+    private GameViewController gameViewController;
+    public NPCShopController(View view, StateManager stateManager, GameViewController gvController, Entity entity, Avatar avatar) {
         super(view, stateManager);
         selectedItemIndex = 0;
-        this.entity = entity;
+        this.shopKeeper = entity;
         this.inventory = entity.getInventory();
         this.itemNodeArrayList = inventory.getItemNodeArrayList();
-        ((InventoryView)view).setItemNodeList(this.itemNodeArrayList);
+        this.avatar = avatar;
+        this.gameViewController = gvController;
     }
 
     @Override
@@ -50,7 +54,7 @@ public class InventoryViewController extends ViewController {
             public void run() {
                 if (selectedItemIndex > 0) {
                     selectedItemIndex--;
-                    ((InventoryView) view).updateSelected(selectedItemIndex);
+                    ((NPCShopView) view).updateSelected(selectedItemIndex);
                 }
             }
 
@@ -63,44 +67,53 @@ public class InventoryViewController extends ViewController {
             public void run() {
                 if (selectedItemIndex < itemNodeArrayList.size() - 1){
                     selectedItemIndex++;
-                    ((InventoryView) view).updateSelected(selectedItemIndex);
+                    ((NPCShopView) view).updateSelected(selectedItemIndex);
                 }
             }
             @Override
             public void stop() {}
         };
 
-        dropItem = new Task() {
+        playerSellItem = new Task() {
             @Override
             public void run() {
                 TakeableItem currentItem = itemNodeArrayList.get(selectedItemIndex).getItem();
-                entity.dropItem(currentItem);
-                selectedItemIndex--;
-                if (selectedItemIndex < 0) selectedItemIndex = 0;
-                ((InventoryView) view).updateSelected(selectedItemIndex);
+                shopKeeper.dropItem(currentItem);
             }
 
             @Override
             public void stop() {}
         };
 
-        useItem = new Task() {
+        playerBuyItem = new Task() {
             @Override
             public void run() {
                 TakeableItem currentItem = itemNodeArrayList.get(selectedItemIndex).getItem();
                 if (currentItem.isEquipable()) {
-                    entity.equipItem((EquippableItem) currentItem);
+                    //avatar.equipItem((EquippableItem) currentItem);
+                    avatar.buyItem(currentItem);
+                    ((ShopKeeper)shopKeeper).sell(currentItem);
                 } else {
                     // weird to tell them item to use itself then pass the entity o_O ?
 //                    currentItem.onUse();
                 }
-                selectedItemIndex--;
-                if (selectedItemIndex < 0) selectedItemIndex = 0;
-                ((InventoryView) view).updateSelected(selectedItemIndex);
             }
 
             @Override
             public void stop() {}
+        };
+        escape = new Task(){
+
+            @Override
+            public void run() {
+                System.out.println("Making sure this is turned on");
+                gameViewController.turnOffSubState();
+            }
+
+            @Override
+            public void stop() {
+
+            }
         };
 
 
@@ -108,8 +121,8 @@ public class InventoryViewController extends ViewController {
         addKeyPressMapping(nextItem, KeyEvent.VK_DOWN);
         addKeyPressMapping(previousItem, KeyEvent.VK_LEFT);
         addKeyPressMapping(nextItem, KeyEvent.VK_RIGHT);
-        addKeyPressMapping(useItem, KeyEvent.VK_ENTER);
-        addKeyPressMapping(dropItem, KeyEvent.VK_D);
+        addKeyPressMapping(playerBuyItem, KeyEvent.VK_ENTER);
+        addKeyPressMapping(escape, KeyEvent.VK_BACK_SPACE);
 
     }
 

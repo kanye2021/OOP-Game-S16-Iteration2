@@ -4,6 +4,8 @@ import controllers.GameViewController;
 import controllers.entityControllers.AvatarController;
 import controllers.entityControllers.EntityController;
 import models.entities.npc.NPC;
+import models.items.takeable.TakeableItem;
+import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
 import models.stats.StatModificationList;
 
@@ -14,10 +16,11 @@ import java.awt.*;
  */
 public abstract class Avatar extends Entity {
     private int radiusOfVisiblility;
-
+    private int money;
     public Avatar(Point location, Map map) {
         super(location, map);
         this.radiusOfVisiblility = 4;
+        money = 1000;
     }
 
     @Override
@@ -51,5 +54,20 @@ public abstract class Avatar extends Entity {
 
 
         return;
+    }
+    public int getAmountofMoney(){
+        return money;
+    }
+    public void buyItem(TakeableItem item){
+        int price = item.getPrice();
+        if (money >= price) { //Buy the item
+            inventory.addItem(item);
+            money -= item.getPrice();
+        }
+    }
+    public void sellItem(TakeableItem item){
+        int price = item.getPrice()/2;
+        inventory.removeItem(item);
+        money += item.getPrice();
     }
 }

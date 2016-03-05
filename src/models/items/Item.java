@@ -172,7 +172,7 @@ public abstract class Item {
 
     protected ItemDictionary ID;
     protected Sprite sprite;
-
+    protected int itemAmount = 0;
     public abstract boolean onTouch(Entity entity); // Method to describe what happens when an item is touched
 
     public ItemDictionary getID() {
@@ -208,7 +208,13 @@ public abstract class Item {
     }
 
     public abstract String getType();
-
+    //Money part of items
+    public void setPrice(int amount){
+        itemAmount = amount;
+    }
+    public int getPrice(){
+        return itemAmount;
+    }
 
 
 }
