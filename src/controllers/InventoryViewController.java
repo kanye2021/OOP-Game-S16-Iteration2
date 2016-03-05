@@ -76,6 +76,7 @@ public class InventoryViewController extends ViewController {
                 TakeableItem currentItem = itemNodeArrayList.get(selectedItemIndex).getItem();
                 entity.dropItem(currentItem);
                 selectedItemIndex--;
+                if (selectedItemIndex < 0) selectedItemIndex = 0;
                 ((InventoryView) view).updateSelected(selectedItemIndex);
             }
 
@@ -94,6 +95,7 @@ public class InventoryViewController extends ViewController {
 //                    currentItem.onUse();
                 }
                 selectedItemIndex--;
+                if (selectedItemIndex < 0) selectedItemIndex = 0;
                 ((InventoryView) view).updateSelected(selectedItemIndex);
             }
 
