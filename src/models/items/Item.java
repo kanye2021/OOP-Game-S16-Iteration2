@@ -87,12 +87,12 @@ public abstract class Item {
         GOLD_BOW(1710) {public Item createInstance() {return new GoldBow();}},
         RUNITE_BOW(1711) {public Item createInstance() {return new RuniteBow();}},
 
-        WOOD_STAFF(1712) {public Item createInstance() {return new WoodBow();}},
-        IRON_STAFF(1713) {public Item createInstance() {return new IronBow();}},
-        STEEL_STAFF(1714) {public Item createInstance() {return new SteelBow();}},
-        MITHRIL_STAFF(1715) {public Item createInstance() {return new MithrilBow();}},
-        GOLD_STAFF(1716) {public Item createInstance() {return new GoldBow();}},
-        RUNITE_STAFF(1717) {public Item createInstance() {return new RuniteBow();}},
+        WOOD_STAFF(1712) {public Item createInstance() {return new WoodStaff();}},
+        IRON_STAFF(1713) {public Item createInstance() {return new IronStaff();}},
+        STEEL_STAFF(1714) {public Item createInstance() {return new SteelStaff();}},
+        MITHRIL_STAFF(1715) {public Item createInstance() {return new MithrilStaff();}},
+        GOLD_STAFF(1716) {public Item createInstance() {return new GoldStaff();}},
+        RUNITE_STAFF(1717) {public Item createInstance() {return new RuniteStaff();}},
 
         GRAVE(2000) {public Item createInstance() {return new Grave();}},
         OCTOPUS(2001) {public Item createInstance() {return new Octopus();}},
