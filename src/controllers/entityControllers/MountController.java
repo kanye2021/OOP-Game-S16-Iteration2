@@ -26,6 +26,7 @@ public class MountController extends NPCController implements Observer {
     private HashMap<Task, Point> taskMovementVector = new HashMap<>();
 
     public MountController(Mount mount){
+        super(mount);
         this.mount = mount;
         createMovementTasks();
 

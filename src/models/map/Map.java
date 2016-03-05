@@ -110,4 +110,17 @@ public class Map {
     public Tile getTileAt(Point p){
         return tiles.get(p);
     }
+
+    // Useful wrapper functions to avoid violating demeters law
+    public Entity getEntityAt(Point p){
+        return tiles.get(p).getEntity();
+    }
+
+    public Item getItemAt(Point p){
+        return tiles.get(p).getItem();
+    }
+
+    public Terrain getTerrainAt(Point p){
+        return tiles.get(p).getTerrain();
+    }
 }

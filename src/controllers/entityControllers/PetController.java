@@ -27,6 +27,7 @@ public class PetController extends NPCController implements Observer {
     private HashMap<Task, Map.Direction> taskMovementVector = new HashMap<>();
 
     public PetController(Pet pet){
+        super(pet);
         this.pet = pet;
         createMovementTasks();
 

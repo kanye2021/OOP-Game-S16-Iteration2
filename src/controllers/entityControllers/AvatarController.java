@@ -30,7 +30,7 @@ import java.awt.event.KeyEvent;
 /**
  * Created by Bradley on 2/26/2016.
  */
-public class AvatarController extends EntityController {
+public class AvatarController {
     private InputMapping keyPressMapping;
     private Avatar avatar;
     // Required to manage SubStates. i.e: Inventory, EquippedItems, Entity Interactions.

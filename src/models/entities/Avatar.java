@@ -1,7 +1,5 @@
 package models.entities;
 
-import controllers.GameViewController;
-import controllers.entityControllers.AvatarController;
 import controllers.entityControllers.EntityController;
 import models.entities.npc.NPC;
 import models.items.takeable.TakeableItem;
@@ -55,6 +53,7 @@ public abstract class Avatar extends Entity {
 
         return;
     }
+
     public int getAmountofMoney(){
         return money;
     }

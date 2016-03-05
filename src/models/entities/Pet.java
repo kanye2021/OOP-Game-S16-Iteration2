@@ -1,8 +1,8 @@
 package models.entities;
 
 
-import controllers.entityControllers.EntityController;
-import models.entities.npc.NPC;
+import controllers.entityControllers.AI.Brain;
+import controllers.entityControllers.AI.Thought.Personalities;
 import models.map.Map;
 import models.occupation.Occupation;
 import models.occupation.Sneak;
@@ -21,6 +21,7 @@ public class Pet extends NPC {
     public Pet(Point location, Map map) {
         super(location, map);
         passableTerrain.add("grass");
+        brain = new Brain(this, Personalities.FRIENDLY);
     }
 
     // Controller will be a "PetController" which implements Observer and observes the Avatar's location

@@ -4,7 +4,6 @@ import controllers.ViewController;
 import views.Display;
 import views.View;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
@@ -27,5 +26,8 @@ public class State {
         // Update the display.
         display.repaint();
     }
+
+    public void update(){}
+
 
 }

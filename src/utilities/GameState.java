@@ -3,7 +3,6 @@ package utilities;
 import controllers.GameViewController;
 import controllers.entityControllers.AvatarController;
 import controllers.entityControllers.MountController;
-import controllers.entityControllers.NPCController;
 import controllers.entityControllers.PetController;
 import models.entities.Avatar;
 import models.entities.Pet;
@@ -12,7 +11,6 @@ import models.entities.npc.Horse;
 import models.entities.npc.NPC;
 
 import models.map.Map;
-import views.GameView;
 import views.View;
 
 import java.util.ArrayList;
@@ -79,5 +77,12 @@ public class GameState extends State {
         this.npcList = npcList;
     }
 
+    @Override
+    public void update(){
+        for(NPC npc: npcList){
+            npc.update();
+        }
+        avatar.update();
+    }
 }
 

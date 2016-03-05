@@ -1,7 +1,13 @@
 package controllers.entityControllers;
 
+import models.entities.npc.Action;
+import controllers.entityControllers.AI.Brain;
+import models.entities.npc.Action;
 import models.entities.npc.actions.Action;
 import models.entities.npc.NPC;
+import views.GameView;
+import views.NPCActionView;
+import views.View;
 import views.GameView;
 import views.NPCMenuView;
 
@@ -11,16 +17,17 @@ import java.util.ArrayList;
  * Created by Bradley on 2/27/16.
  */
 //Movement on its NPC (handling movement by itself)
-public class NPCController extends EntityController {
+public class NPCController {
     private NPC npc;
+    private NPCActionView npcView;
     private NPCMenuView npcView;
     private ArrayList<Action> actionList;
+    private Brain brain;
 
-    public NPCController(){} //Default constructor
-    public NPCController(NPC npc, GameView view){
-       // this.gameView = view;
+    public NPCController(NPC npc){
         this.npc = npc;
-    }
+    } //Default constructor
+
 
     //When you start the interaction, it'll tell views to render a view
     public void start(){
