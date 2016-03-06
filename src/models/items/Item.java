@@ -136,6 +136,12 @@ public abstract class Item {
         GOLD_STAFF(1716) {public Item createInstance() {return new GoldStaff();}},
         RUNITE_STAFF(1717) {public Item createInstance() {return new RuniteStaff();}},
 
+        SWAMPHACKS_SHIRT(1800){public Item createInstance(){return new Special_SwampHacksShirt();}},
+        YEEZY(1801){public Item createInstance(){return new Special_Yeezy();}},
+        ENERGY_SWORD(1802){public Item createInstance(){return new Special_EnergySword();}},
+
+
+
         GRAVE(2000) {public Item createInstance() {return new Grave();}},
         OCTOPUS(2001) {public Item createInstance() {return new Octopus();}},
         STATUE(2002) {public Item createInstance() {return new Statue();}};
