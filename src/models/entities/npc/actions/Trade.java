@@ -6,8 +6,8 @@ import models.entities.npc.NPC;
 /**
  * Created by dyeung on 3/2/16.
  */
-public class Buy extends Action {
-    public Buy(NPC npc){
+public class Trade extends Action {
+    public Trade(NPC npc){
         super(npc);
     }
     @Override
@@ -17,6 +17,6 @@ public class Buy extends Action {
 
     @Override
     public String getName() {
-        return "Buy";
+        return "Trade";
     }
 }

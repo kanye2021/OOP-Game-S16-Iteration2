@@ -21,15 +21,20 @@ import java.util.ArrayList;
  */
 public class NPCShopView extends View {
     private final String ITEM_IMAGE_LOCATION = "./src/res/items/takeable/";
-    private final int ITEMS_PER_ROW = 10;
+    private final int ITEMS_PER_ROW = 5;
     //INVENTORY TITLE
     private int titleStartX;
     private int titleStartY;
     private int titleWidth;
     private int titleHeight;
 
-
-    //INVETORY DIMENSION
+    //Background for Inventories
+    private int backgroundX;
+    private int backgroundY;
+    private int backgroundWidth;
+    private int backgroundHeight;
+    private int bgMargin;
+    //INVENTORY DIMENSION
     private int inventoryViewXStart;
     private int inventoryViewYStart;
     private int inventoryViewWidth;
@@ -62,8 +67,9 @@ public class NPCShopView extends View {
     private Font titleFont;
 
     private int selectedItem;
-    private ArrayList<Inventory.ItemNode> itemNodeList;
-
+    private int selectedView;
+    private ArrayList<Inventory.ItemNode> shopNodeList;
+    private ArrayList<Inventory.ItemNode> invNodeList;
     private String takeableItemRootFilepath;
     private NPC npc;
     private Avatar avatar;
@@ -71,21 +77,18 @@ public class NPCShopView extends View {
         super(width, height, display);
         takeableItemRootFilepath = IOUtilities.getFileSystemDependentPath("./src/res/items/takeable/");
         selectedItem = 0;
+        selectedView = 0;
         this.npc = npc;
-        itemNodeList = npc.getInventory().getItemNodeArrayList(); //Sorry dave
+        shopNodeList = npc.getInventory().getItemNodeArrayList(); //Sorry dave
         this.avatar = avatar;
+        invNodeList = avatar.getInventory().getItemNodeArrayList();
     }
-
-    public void setItemNodeList(ArrayList<Inventory.ItemNode> itemNodeList) {
-        this.itemNodeList = itemNodeList;
-    }
-
 
     @Override
     public void render(Graphics g) {
         renderTitle(g);
-        renderItemsView(g);
-        renderInfoView(g);
+        renderInv(g);
+        renderShop(g);
 
     }
 
@@ -104,7 +107,7 @@ public class NPCShopView extends View {
         Rectangle2D titleRect = fm.getStringBounds(title, g);
 
         // Get the location of the title
-        int titleX = titleStartX + titleWidth / 2 - (int) titleRect.getWidth() / 3;
+        int titleX = titleStartX + titleWidth / 2 - (int) titleRect.getWidth() / 2;
         int titleY = titleStartY + (int) titleRect.getHeight() + titleMargin;
 
         // Draw the title
@@ -113,29 +116,24 @@ public class NPCShopView extends View {
 
         // Get ready to draw the instructions
         g.setFont(smallFont);
-        String instructions = "Press [Enter] to buy an item, [backspace] to exit";
+        String instructions = "Press [Enter] to buy an item, [backspace] to exit, [tab] to switch buy/sell";
         FontMetrics fm2 = g.getFontMetrics(smallFont);
         Rectangle2D instRect = fm2.getStringBounds(instructions, g);
 
         // Get the location of the instr
-        int instX = titleStartX + titleWidth / 2 - (int) instRect.getWidth() / 3;
+        int instX = titleStartX + titleWidth / 2 - (int) instRect.getWidth() / 2;
         int instY = titleStartY + titleHeight - instMargin;
 
         // Draw the instr
         g.drawString(instructions, instX, instY);
 
-        //Draw the monies
-        String currentMoney = "Current Money: ";
-        int width = fm2.stringWidth(currentMoney);
-        int height = fm2.getHeight();
-        g.drawString(currentMoney, titleStartX + 5, titleStartY * 3 + height);
-        int startMoney = titleStartX + 5 + width;
-        renderMoney(g, avatar.getAmountofMoney(), startMoney, titleStartY * 3);
+        //Render the backdrop
+        g.setColor(new Color(73, 73, 73));
+        g.fillRect(backgroundX, backgroundY, backgroundWidth, backgroundHeight);
 
     }
-    public void renderMoney(Graphics g, int amountMoney, int imgStart_X, int imgStart_Y){
+    public void renderMoney(Graphics g, String value, int imgStart_X, int imgStart_Y){
         //Renders the money amount
-        String value = Integer.toString(amountMoney);
         g.setFont(smallFont);
         FontMetrics fm = g.getFontMetrics();
         int valueWidth = fm.stringWidth(value);
@@ -153,46 +151,96 @@ public class NPCShopView extends View {
 
         g.drawString(value, imgStart_X, imgStart_Y + (int)(imgHeight * .66));
 
-
-
     }
+    private void renderInv(Graphics g){
+        String miniTitle = "My Inventory";
+        int titleX = backgroundX + (bgMargin * 2);
+        int titleY = backgroundY + bgMargin;
+        g.setColor(Color.lightGray);
+        g.setFont(smallFont);
+        g.drawString(miniTitle,titleX,titleY);
 
-    private void renderItemsView(Graphics g) {
+
+        int startX = backgroundX + inventoryViewWidth - titleX;
+        int startY = titleY - bgMargin;
+        renderMoney(g, "Wallet: " + avatar.getAmountofMoney(), startX, startY);
+
+        //Render the actual inv view
+        int invStartX = backgroundX + bgMargin;
+        int invStartY = backgroundY + bgMargin * 2;
+        if (selectedView == 0) {
+            renderItemsView(g, invNodeList, invStartX, invStartY, true); //This is for the inventory view
+        }else{
+            renderItemsView(g, invNodeList, invStartX, invStartY, false); //This is for the inventory view
+        }
+    }
+    private void renderShop(Graphics g){
+        String miniTitle = "Shop";
+        int titleX = backgroundX + inventoryViewWidth + (bgMargin * 4);
+        int titleY = backgroundY + bgMargin;
+        g.setColor(Color.lightGray);
+        g.setFont(smallFont);
+        g.drawString(miniTitle,titleX,titleY);
+
+        int shopStartX = backgroundX + inventoryViewWidth + (bgMargin * 3);
+        int shopStartY = backgroundY + (bgMargin*2);
+        if (selectedView == 1) {
+            renderItemsView(g, shopNodeList, shopStartX, shopStartY, true);
+        }else {
+            renderItemsView(g, shopNodeList, shopStartX, shopStartY, false);
+        }
+    }
+    private void renderItemsView(Graphics g, ArrayList<Inventory.ItemNode> itemNodeList, int startX, int startY, boolean isSelected) {
         BufferedImage overImage = new BufferedImage(itemViewWidth, itemViewHeight, BufferedImage.TYPE_INT_RGB);
         Graphics g2 = overImage.getGraphics();
 
-        //paint background
-        g2.setColor(new Color(32, 32, 32));
-        g2.fillRect(0, 0, itemViewWidth, itemViewHeight);
-
-        int size = itemNodeList.size();
-
-        int xPosStart = itemMargin;
-        int xPosInc = itemMargin + itemWidth;
-        int yPosInc = itemMargin + itemHeight;
-        int xpos = xPosStart;
-        int ypos = itemMargin;
-
-        for (int i = 0; i < size; i++) {
-
-            //selected
-            if (selectedItem == i) {
-                g2.setColor(Color.RED);
-                //change
-                g2.drawRect(xpos - 3, ypos - 3, this.itemWidth + 6, this.itemHeight + 6);
-            }
-            paintIcon(g2, xpos, ypos, itemNodeList.get(i));
-            //paintItemValue(g2, xpos, ypos, itemNodeList.get(i).getItem());
-
-            //increment for next paint
-            if ((i + 1) % ITEMS_PER_ROW == 0) {
-                xpos = xPosStart;
-                ypos += yPosInc;
-            } else {
-                xpos += xPosInc;
-            }
+        if (isSelected){
+//            g2.setColor(Color.RED);
+//            g2.drawRect(startX - 5, startY - 5, inventoryViewWidth + 6, inventoryViewHeight + 6);
+            g.setColor(new Color(169, 46, 44));
+            g.fillRect(startX - 3, startY - 3, inventoryViewWidth + 6, inventoryViewHeight + 6);
         }
-        g.drawImage(overImage, this.itemViewXStart, this.itemViewYStart, this.itemViewWidth, this.itemViewHeight, null);
+            int size = itemNodeList.size();
+            int xPosStart = itemMargin ;
+            int xPosInc = itemMargin + itemWidth;
+            int yPosInc = itemMargin + itemHeight;
+            int xpos = xPosStart;
+            int ypos = itemMargin;
+
+            for (int i = 0; i < size; i++) {
+
+                //selected
+                if (selectedItem == i && isSelected) {
+                    g2.setColor(Color.RED);
+                    //change
+                    g2.drawRect(xpos - 3, ypos - 3, this.itemWidth + 6, this.itemHeight + 6);
+                }
+                paintIcon(g2, xpos, ypos, itemNodeList.get(i));
+                //paintItemValue(g2, xpos, ypos, itemNodeList.get(i).getItem());
+
+                //increment for next paint
+                if ((i + 1) % ITEMS_PER_ROW == 0) {
+                    xpos = xPosStart;
+                    ypos += yPosInc;
+                } else {
+                    xpos += xPosInc;
+                }
+            }
+           // g.drawImage(overImage, this.itemViewXStart, this.itemViewYStart, this.itemViewWidth, this.itemViewHeight, null);
+            g.setColor(new Color(238, 238, 238));
+            g.drawImage(overImage, startX, startY, this.itemViewWidth, this.itemViewHeight, null);
+
+            TakeableItem selected;
+            if (itemNodeList.size() > selectedItem && isSelected) {
+                selected = itemNodeList.get(selectedItem).getItem();
+            }else {
+                selected = null;
+            }
+            int infoStartY = startY + itemViewHeight;
+
+            renderInfoView(g, selected, startX, infoStartY);
+
+
     }
 
     private void paintIcon(Graphics g, int xpos, int ypos, Inventory.ItemNode itemNode) {
@@ -234,48 +282,47 @@ public class NPCShopView extends View {
 //
 //    }
 
-    private void renderInfoView(Graphics g) {
+    private void renderInfoView(Graphics g, TakeableItem item, int startX, int startY) {
         BufferedImage overImage = new BufferedImage(infoViewWidth, infoViewHeight, BufferedImage.TYPE_INT_RGB);
         Graphics g2 = overImage.getGraphics();
 
         //paint background
-        g2.setColor(new Color(25, 25, 25));
+        g2.setColor(new Color(151, 151, 151));
         g2.fillRect(0, 0, itemViewWidth, itemViewHeight);
 
-        if (itemNodeList.size() > selectedItem) {
-            TakeableItem item = itemNodeList.get(selectedItem).getItem();
+        paintSelectedIcon(g2, item, infoXMargin, infoYMargin);
 
-            paintSelectedIcon(g2, item);
+        paintInfo(g2, item, startX + infoViewWidth, startY);
 
-            paintInfo(g2, item);
+        paintOptions(g2, item);
 
-            paintOptions(g2, item);
-        }
+        //g.drawImage(overImage, this.infoViewXStart, this.infoViewYStart, this.infoViewWidth, this.infoViewHeight, null);
+        g.drawImage(overImage, startX, startY, this.infoViewWidth, this.infoViewHeight, null);
 
-        g.drawImage(overImage, this.infoViewXStart, this.infoViewYStart, this.infoViewWidth, this.infoViewHeight, null);
     }
 
 
-    private void paintSelectedIcon(Graphics g2, TakeableItem item) {
+    private void paintSelectedIcon(Graphics g2, TakeableItem item, int startX, int startY) {
+        g2.setColor(new Color(32,32,32));
         if (item == null) {
-            g2.setColor(Color.LIGHT_GRAY);
-            g2.fillRect(infoXMargin, infoYMargin, infoElementHeight, infoElementHeight);
+            g2.fillRect(startX, startY, infoElementHeight, infoElementHeight);
         } else {
-            g2.setColor(Color.LIGHT_GRAY);
-            g2.fillRect(infoXMargin, infoYMargin, infoElementHeight, infoElementHeight);
-            g2.drawImage(item.getImage(), infoXMargin, infoYMargin, infoElementHeight, infoElementHeight, null);
+            //g2.fillRect(infoXMargin, infoYMargin, infoElementHeight, infoElementHeight);
+            //g2.drawImage(item.getImage(), infoXMargin, infoYMargin, infoElementHeight, infoElementHeight, null);
+            g2.fillRect(startX, startY, infoElementHeight, infoElementHeight);
+            g2.drawImage(item.getImage(), startX, startY, infoElementHeight, infoElementHeight, null);
         }
     }
 
-    private void paintInfo(Graphics g2, TakeableItem item) {
+    private void paintInfo(Graphics g2, TakeableItem item, int startX, int startY) {
 
         g2.setFont(font);
         FontMetrics fm = g2.getFontMetrics();
 
-        int xpos = infoViewWidth / 2 - infoDescriptionWidth / 2;
+        //int xpos = infoViewWidth / 2 - infoDescriptionWidth / 2;
         g2.setColor(Color.LIGHT_GRAY);
         int descriptionBoxWidth = infoDescriptionWidth + infoElementHeight;
-        g2.fillRect(xpos, infoYMargin, descriptionBoxWidth, infoElementHeight);
+        g2.fillRect(startX, startY, descriptionBoxWidth, infoElementHeight);
 
         if (item != null) {
             String description = item.getDescription();
@@ -304,7 +351,7 @@ public class NPCShopView extends View {
 
             // Prints out the monetary value of the item
             String price = Integer.toString(item.getMonetaryValue()) + " C";
-            int stringX = infoDescriptionWidth + xpos;
+            int stringX = infoDescriptionWidth + startX;
             int stringY = ypos + fm.getHeight()/2;
             g2.drawString(price, stringX, stringY);
         }
@@ -312,22 +359,23 @@ public class NPCShopView extends View {
 
 
     private void paintOptions(Graphics g2, TakeableItem item) {
-
-        g2.setColor(Color.LIGHT_GRAY);
+        int startX = infoViewWidth - infoXMargin - infoElementHeight;
+        int startY = infoYMargin;
+        //g2.setColor(new Color(32,32,32));
         //g2.fillRect(infoViewWidth - infoXMargin - infoElementHeight, infoYMargin, infoElementHeight, infoElementHeight);
 
-
-        if (item == null) {
-
-        } else {
-
+        if (item != null) {
+            String amount = Integer.toString(item.getMonetaryValue());
+            g2.drawString(amount, startX, startY);
         }
 
     }
     public void updateSelected(int index) {
         selectedItem = index;
     }
-
+    public void updateSelectedView(int index) {
+        selectedView = index;
+    }
     @Override
     public void scaleView() {
         font = new Font("Courier New", 1, getScreenWidth()/50);
@@ -340,13 +388,18 @@ public class NPCShopView extends View {
         titleStartY = (int) (getScreenHeight() * 0.05);
         titleWidth = (int) (getScreenWidth() * 0.8);
         titleHeight = (int) (getScreenHeight() * 0.15);
+        //Background Dimension
+        backgroundX = titleStartX;
+        backgroundY = titleStartY + titleHeight + 10;
+        backgroundWidth = (int) (getScreenWidth() * 0.8) ;
+        backgroundHeight = (int) (getScreenHeight() * 0.52);
 
-
-        //INVETORY DIMENSION
-        inventoryViewXStart = (int) (getScreenWidth() * 0.1);
+        //INVENTORY DIMENSION
+        bgMargin = getScreenWidth()/70;
+        inventoryViewXStart = titleStartX;
         inventoryViewYStart = titleStartY + titleHeight;
-        inventoryViewWidth = (int) (getScreenWidth() * 0.8);
-        inventoryViewHeight = (int) (getScreenHeight() * 0.52);
+        inventoryViewWidth = (int) (getScreenWidth() * 0.8)/2 - (bgMargin*2);
+        inventoryViewHeight = (int) (getScreenHeight() * 0.52) - (bgMargin*4);
 
         //ITEM VIEW DIMENSION
         itemViewXStart = inventoryViewXStart;

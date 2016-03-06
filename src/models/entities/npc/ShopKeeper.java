@@ -1,7 +1,7 @@
 package models.entities.npc;
 
 import models.entities.npc.actions.Attack;
-import models.entities.npc.actions.Buy;
+import models.entities.npc.actions.Trade;
 import models.entities.npc.actions.Talk;
 import models.items.Item;
 import models.items.takeable.TakeableItem;
@@ -29,15 +29,14 @@ public class ShopKeeper extends NPC{
     public void initActions(){
         actionList.add(new Talk(this));
         actionList.add (new Attack(this));
-        actionList.add(new Buy(this));
+        actionList.add(new Trade(this));
         dialogue = "Welcome to my store where I can sell you stuff!";
     }
     public void initInventory(){
         int id = 1000; //starts at 1000 (HELMS)
         for (int i = 0; i < 2; i++) { //default level
             Item newItem = Item.ItemDictionary.itemFromID(id + i);
-            ((TakeableItem)newItem).setMonetaryValue(500 + (i * 100));
-            inventory.addItem((TakeableItem)newItem);
+            buy((TakeableItem)newItem);
         }
     }
 
@@ -71,10 +70,14 @@ public class ShopKeeper extends NPC{
     public void talk(){
 
     }
-    public void buy(){
-
+    public void buy(TakeableItem item){
+        int currentValue = item.getMonetaryValue();
+        item.setMonetaryValue(currentValue + 10); //NPCS add value to the item
+        inventory.addItem(item);
     }
     public void sell(TakeableItem item){
+        int currentValue = item.getMonetaryValue();
+        item.setMonetaryValue(currentValue - 10); //Item value returns back to original
         inventory.removeItem(item);
     }
 

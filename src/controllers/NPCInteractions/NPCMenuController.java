@@ -73,7 +73,7 @@ public class NPCMenuController extends ViewController {
                 }else {
                     Action a = actionList.get(myOption);
                     a.activate();
-                    if (a.getName() == "Buy") {
+                    if (a.getName() == "Trade") {
                         //Start to add a new VIEW to npc
                         //Converts to a talk
                         NPCShopView buyView = new NPCShopView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), npc, avatar);

@@ -20,7 +20,7 @@ public abstract class Avatar extends Entity {
     public Avatar(Point location, Map map) {
         super(location, map);
         this.radiusOfVisiblility = 4;
-        money = 1000;
+        money = 100;
     }
 
     @Override
@@ -60,14 +60,14 @@ public abstract class Avatar extends Entity {
     }
     public void buyItem(TakeableItem item){
         int price = item.getMonetaryValue();
-        if (money >= price) { //Buy the item (two checks are being done
+        if (money >= price) { //Trade the item (two checks are being done
             inventory.addItem(item);
             money -= item.getMonetaryValue();
         }
     }
-    public void sellItem(TakeableItem item){
-        int price = item.getMonetaryValue()/2;
+    public void sellItem(TakeableItem item, int factor){
+        int price = item.getMonetaryValue()/factor;
         inventory.removeItem(item);
-        money += item.getMonetaryValue();
+        money += price;
     }
 }
