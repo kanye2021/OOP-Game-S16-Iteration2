@@ -1,6 +1,9 @@
 package models.items.takeable.equippable.weapons.oneHanded;
 
 import models.Equipment;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
@@ -20,7 +23,14 @@ public class SteelSword extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/weapons/oneHanded/smasher-template-sword.png");
         monetaryValue = 100;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.WEAPON_MODIFIER, 15)
+                new StatModification(Stats.Type.WEAPON_MODIFIER, STEELDEF)
         );
+
+        equipConditions = new ConditionList(
+            new StatCondition(null, STEELLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+        );
+        itemWeight = STEELWEIGHT;
+        range = SMASHERRANGE;
+
     }
 }

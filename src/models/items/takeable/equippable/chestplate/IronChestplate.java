@@ -1,6 +1,9 @@
 package models.items.takeable.equippable.chestplate;
 
 import models.Equipment;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
@@ -21,7 +24,14 @@ public class IronChestplate extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/chest/smasher-template-chestplate.png");
         monetaryValue = IRONCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 30)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, IRONDEF)
         );
+
+        equipConditions = new ConditionList(
+                new StatCondition(null, IRONLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+        );
+        itemWeight = IRONWEIGHT;
+        range = RANGE;
+
     }
 }

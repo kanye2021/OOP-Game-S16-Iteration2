@@ -1,6 +1,9 @@
 package models.items.takeable.equippable.boots;
 
 import models.Equipment;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
@@ -20,7 +23,14 @@ public class IronBoots extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/boots/templateBoots.png");
         monetaryValue = IRONCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 10)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, IRONDEF)
         );
+
+        equipConditions = new ConditionList(
+                new StatCondition(null, IRONLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+        );
+        itemWeight = IRONWEIGHT;
+        range = RANGE;
+
     }
 }

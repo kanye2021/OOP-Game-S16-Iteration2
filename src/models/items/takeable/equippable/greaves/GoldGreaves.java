@@ -1,6 +1,9 @@
 package models.items.takeable.equippable.greaves;
 
 import models.Equipment;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
@@ -19,7 +22,13 @@ public class GoldGreaves extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/legs/smasher-template-greaves.png");
         monetaryValue = GOLDCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 15)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, GOLDDEF)
         );
+        equipConditions = new ConditionList(
+                new StatCondition(null, GOLDLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+        );
+        itemWeight = GOLDWEIGHT;
+        range = RANGE;
+
     }
 }

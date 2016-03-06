@@ -1,6 +1,7 @@
 package models.items.takeable.equippable.weapons.twoHanded;
 
 import models.Equipment;
+import models.conditions.*;
 import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
@@ -20,7 +21,12 @@ public class WoodTwoHandSword extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/smasher.template-2h.png");
         monetaryValue = WOODCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.WEAPON_MODIFIER, WOODATK)
+                new StatModification(Stats.Type.WEAPON_MODIFIER, WOODATK*2)
         );
+        equipConditions = new ConditionList(
+            new StatCondition(null, WOODLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+        );
+        itemWeight = WOODWEIGHT;
+        range = SMASHERRANGE;
     }
 }

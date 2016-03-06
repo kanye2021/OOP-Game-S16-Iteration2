@@ -24,11 +24,13 @@ public class WoodHelmet extends EquippableItem {
         sprite = new Sprite("./src/res/items/takeable/armor/head/WoodHelm.png");
         monetaryValue = WOODCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 10)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, WOODDEF)
         );
         equipConditions = new ConditionList(
-                new StatCondition(null, 1, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+                new StatCondition(null, WOODLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
         );
+        itemWeight = WOODWEIGHT;
+        range = RANGE;
 
     }
 

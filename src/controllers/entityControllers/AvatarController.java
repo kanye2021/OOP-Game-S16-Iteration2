@@ -141,7 +141,7 @@ public class AvatarController extends EntityController {
             }
         };
 
-            Task openInventory = new Task() {
+        Task openInventory = new Task() {
             @Override
             public void run() {
                 InventoryView inventoryView = new InventoryView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay());
@@ -158,6 +158,30 @@ public class AvatarController extends EntityController {
                 // Add the substate
                 gameViewController.addSubState(inventorySubState);
 
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
+        Task openEquipment = new Task() {
+            @Override
+            public void run() {
+                EquipmentView equipmentView = new EquipmentView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay());
+                EquipmentViewController equipmentViewController = new EquipmentViewController(equipmentView, gameViewController.getStateManager(), avatar);
+                SubState equipmentSubState = new SubState(equipmentViewController, equipmentView);
+                // Add closing task.
+                equipmentViewController.setCloseEquipmentTask(new Task() {
+                    @Override
+                    public void run() { equipmentSubState.dismiss(); }
+
+                    @Override
+                    public void stop() { }
+                });
+                // Add the substate
+                gameViewController.addSubState(equipmentSubState);
             }
 
             @Override
@@ -278,6 +302,9 @@ public class AvatarController extends EntityController {
 
         // Open Inventory
         addKeyPressMapping(openInventory, KeyEvent.VK_I);
+
+        // Open Equipment
+        addKeyPressMapping(openEquipment, KeyEvent.VK_Y);
 
         //Open Pause Menu
         addKeyPressMapping(openPause, KeyEvent.VK_P);

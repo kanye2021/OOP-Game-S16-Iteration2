@@ -46,6 +46,7 @@ public abstract class Entity extends Observable implements ActionListener{
     //Entity may have mount
     protected Mount mount;
 
+
     protected ArrayList<String> passableTerrain;
     protected boolean canMove;
     private javax.swing.Timer movementTimer;
@@ -74,6 +75,7 @@ public abstract class Entity extends Observable implements ActionListener{
 
         this.sprite = new DirectionalSprite(initSprites());
         this.map = map;
+
 
         initInitialStats().applyStats(stats);
         skills.addAll(occupation.getSkills());
@@ -198,10 +200,12 @@ public abstract class Entity extends Observable implements ActionListener{
     }
 
     public final void equipItem(EquippableItem item){
-        // TODO: implement equipped items
-//        equippedItems.addItem(item);
 
         item.onUse(this);
+
+        //inventory.removeItem(item);
+        //equipment.setEquipmentComponent(item.getComponent(), item);
+        //applyStatMod(item.getOnEquipModifications());
     }
 
     public final void dropItem(TakeableItem item){
@@ -216,11 +220,10 @@ public abstract class Entity extends Observable implements ActionListener{
     }
 
     public final void unequipItem(EquippableItem item){
-        //equipment.removeItem(item);
-        //inventory.addItem(item);
-
-        // this should not happen here. It should happen inside item?
-        //removeStatMod(item.getStatModification());
+        // Unequip (Which will remove stat mods)
+        equipment.unEquipItem(item);
+        // Add to inventory
+        inventory.addItem(item);
     }
 
     // Wrappers for occupation
@@ -250,5 +253,6 @@ public abstract class Entity extends Observable implements ActionListener{
         this.pet = pet;
     }
     public final void setMount(Mount mount){this.mount = mount;}
+
 
 }

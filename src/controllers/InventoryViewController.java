@@ -75,6 +75,9 @@ public class InventoryViewController extends ViewController {
             public void run() {
                 TakeableItem currentItem = itemNodeArrayList.get(selectedItemIndex).getItem();
                 entity.dropItem(currentItem);
+                selectedItemIndex--;
+                if (selectedItemIndex < 0) selectedItemIndex = 0;
+                ((InventoryView) view).updateSelected(selectedItemIndex);
             }
 
             @Override
@@ -91,6 +94,9 @@ public class InventoryViewController extends ViewController {
                     // weird to tell them item to use itself then pass the entity o_O ?
 //                    currentItem.onUse();
                 }
+                selectedItemIndex--;
+                if (selectedItemIndex < 0) selectedItemIndex = 0;
+                ((InventoryView) view).updateSelected(selectedItemIndex);
             }
 
             @Override

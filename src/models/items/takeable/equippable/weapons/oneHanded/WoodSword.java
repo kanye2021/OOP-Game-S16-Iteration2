@@ -1,6 +1,9 @@
 package models.items.takeable.equippable.weapons.oneHanded;
 
 import models.Equipment;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
@@ -20,8 +23,14 @@ public class WoodSword extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/weapons/oneHanded/smasher-template-sword.png");
         monetaryValue = 10;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.WEAPON_MODIFIER, 5)
+                new StatModification(Stats.Type.WEAPON_MODIFIER, WOODATK)
         );
 
+        equipConditions = new ConditionList(
+            new StatCondition(null, WOODLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+        );
+
+
+        range = SMASHERRANGE;
     }
 }

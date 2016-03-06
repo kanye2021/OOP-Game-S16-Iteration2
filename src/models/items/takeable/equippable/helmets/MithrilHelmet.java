@@ -24,11 +24,13 @@ public class MithrilHelmet extends EquippableItem {
         sprite = new Sprite("./src/res/items/takeable/armor/head/smasher-template-helm.png");
         monetaryValue = MITHRILCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 40)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, MITHRILDEF)
         );
         equipConditions = new ConditionList(
-                new StatCondition(null, 20, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+                new StatCondition(null, MITHRILLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
         );
+        itemWeight = MITHRILWEIGHT;
+        range = RANGE;
 
     }
 
