@@ -197,7 +197,7 @@ public class AreaViewport extends View implements Observer {
 
         // Draw Area Effects / Decals
         Decal decal = tileNode.tile.getDecal();
-        if(decal!=null){
+        if(decal!=null && decal.isVisible()){
             Image decalImage = decal.getImage();
 
             // Resize the item image

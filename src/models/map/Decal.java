@@ -13,7 +13,8 @@ public class Decal {
         RED_CROSS("red-cross.png"),
         SKULL_CROSSBONES("skull-and-crossbones.png"),
         GOLD_STAR("gold-star.png"),
-        TELEPORT("teleport-sample.png");
+        TELEPORT("teleport-sample.png"),
+        TRAP("trap-sample.png");
 
         String pathToFile;
         final String rootPath = "./src/res/decals/";
@@ -25,15 +26,20 @@ public class Decal {
 
     private int id;
     private Image image;
+    private boolean visible;
 
     public Decal(Types type) {
         id = type.ordinal();
         image = IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath(getPathToFile())).getImage();
-
+        visible = true;
     }
 
     public Image getImage() { return image; }
     public int getID() { return id; }
+
+    public boolean isVisible() { return visible; }
+
+    public void setVisible(boolean visible) { this.visible = visible; }
 
     public String getPathToFile() { return Types.values()[getID()].getPathToFile(); }
 }

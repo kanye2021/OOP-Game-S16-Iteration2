@@ -15,12 +15,15 @@ public class TrapAreaEffect extends AreaEffect {
         init();
     }
     public void init() {
-        // Invisible, no decal
-        decal = null;
+        decal = new Decal(Decal.Types.TRAP);
+        // Initially not visible
+        decal.setVisible(false);
     }
     @Override
     public void onTouch(Entity entity) {
+        // When activiated, becomes visibile
         entity.takeDamage(-AMOUNT_OF_DAMAGE);
+        decal.setVisible(true);
     }
 
     @Override
