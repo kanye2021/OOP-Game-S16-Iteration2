@@ -1,5 +1,9 @@
 package models.map;
 
+import utilities.IOUtilities;
+
+import java.awt.*;
+
 /**
  * Created by Bradley on 2/26/2016.
  */
@@ -8,35 +12,34 @@ public class Decal {
     public enum Types {
         RED_CROSS("red-cross.png"),
         SKULL_CROSSBONES("skull-and-crossbones.png"),
-        GOLD_STAR("gold-star.png");
+        GOLD_STAR("gold-star.png"),
+        TELEPORT("teleport-sample.png"),
+        TRAP("trap-sample.png");
 
         String pathToFile;
+        final String rootPath = "./src/res/decals/";
 
-        Types(String pathToFile) {
+        Types(String pathToFile) { this.pathToFile = rootPath + pathToFile; }
 
-            this.pathToFile = pathToFile;
-        }
-
-        public String getPathToFile() {
-
-            return pathToFile;
-        }
+        public String getPathToFile() { return pathToFile; }
     }
 
     private int id;
+    private Image image;
+    private boolean visible;
 
     public Decal(Types type) {
-
         id = type.ordinal();
+        image = IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath(getPathToFile())).getImage();
+        visible = true;
     }
 
-    public int getID() {
+    public Image getImage() { return image; }
+    public int getID() { return id; }
 
-        return id;
-    }
+    public boolean isVisible() { return visible; }
 
-    public String getPathToFile() {
+    public void setVisible(boolean visible) { this.visible = visible; }
 
-        return Types.values()[getID()].getPathToFile();
-    }
+    public String getPathToFile() { return Types.values()[getID()].getPathToFile(); }
 }

@@ -574,7 +574,7 @@
     </tile>
     <tile x="-22" y="15">
         <terrain type="grass"/>
-        <area-effect type="heal-damage"/>
+        <area-effect type="heal-damage" value="5"/>
     </tile>
     <tile x="-22" y="16">
         <terrain type="mountain"/>
@@ -959,7 +959,7 @@
     </tile>
     <tile x="-19" y="-7">
         <terrain type="grass"/>
-        <area-effect type="heal-damage"/>
+        <area-effect type="heal-damage" value="5"/>
     </tile>
     <tile x="-19" y="-6">
         <terrain type="grass"/>
@@ -1615,7 +1615,7 @@
     </tile>
     <tile x="-15" y="11">
         <terrain type="grass"/>
-        <area-effect type="take-damage"/>
+        <area-effect type="take-damage" value="5"/>
     </tile>
     <tile x="-15" y="12">
         <terrain type="grass"/>
@@ -2085,7 +2085,7 @@
     </tile>
     <tile x="-12" y="17">
         <terrain type="mountain"/>
-        <area-effect type="take-damage"/>
+        <area-effect type="take-damage" value="5"/>
     </tile>
     <tile x="-12" y="18">
         <terrain type="sea"/>
@@ -2155,7 +2155,7 @@
     </tile>
     <tile x="-11" y="-10">
         <terrain type="grass"/>
-        <area-effect type="heal-damage"/>
+        <area-effect type="heal-damage" value="5"/>
     </tile>
     <tile x="-11" y="-9">
         <terrain type="grass"/>
@@ -2249,7 +2249,7 @@
     </tile>
     <tile x="-11" y="21">
         <terrain type="sea"/>
-        <area-effect type="take-damage"/>
+        <area-effect type="take-damage" value="5"/>
     </tile>
     <tile x="-11" y="22">
         <terrain type="sea"/>
@@ -2479,21 +2479,27 @@
     </tile>
     <tile x="-9" y="-4">
         <terrain type="grass"/>
+        <area-effect type="instant-death"/>
     </tile>
     <tile x="-9" y="-3">
         <terrain type="grass"/>
+        <area-effect type="heal-damage" value="5"/>
     </tile>
     <tile x="-9" y="-2">
         <terrain type="grass"/>
+        <area-effect type="take-damage" value="5"/>
     </tile>
     <tile x="-9" y="-1">
         <terrain type="grass"/>
+        <area-effect type="level-up"/>
     </tile>
     <tile x="-9" y="0">
         <terrain type="grass"/>
+        <area-effect type="teleport" value="-10,-15"/>
     </tile>
     <tile x="-9" y="1">
         <terrain type="grass"/>
+        <area-effect type="trap" value="5"/>
     </tile>
     <tile x="-9" y="2">
         <terrain type="grass"/>
@@ -2756,7 +2762,7 @@
     </tile>
     <tile x="-7" y="-12">
         <terrain type="grass"/>
-        <area-effect type="heal-damage"/>
+        <area-effect type="heal-damage" value="5"/>
     </tile>
     <tile x="-7" y="-11">
         <terrain type="grass"/>
@@ -3229,7 +3235,7 @@
     </tile>
     <tile x="-4" y="-5">
         <terrain type="mountain"/>
-        <area-effect type="heal-damage"/>
+        <area-effect type="heal-damage" value="5"/>
     </tile>
     <tile x="-4" y="-4">
         <terrain type="mountain"/>
@@ -3420,7 +3426,7 @@
     </tile>
     <tile x="-3" y="8">
         <terrain type="mountain"/>
-        <area-effect type="heal-damage"/>
+        <area-effect type="heal-damage" value="5"/>
     </tile>
     <tile x="-3" y="9">
         <terrain type="mountain"/>
@@ -3961,7 +3967,7 @@
     </tile>
     <tile x="1" y="-13">
         <terrain type="mountain"/>
-        <area-effect type="take-damage"/>
+        <area-effect type="take-damage" value="5"/>
     </tile>
     <tile x="1" y="-12">
         <terrain type="mountain"/>
@@ -4503,7 +4509,7 @@
     </tile>
     <tile x="4" y="17">
         <terrain type="mountain"/>
-        <area-effect type="heal-damage"/>
+        <area-effect type="heal-damage" value="5"/>
     </tile>
     <tile x="4" y="18">
         <terrain type="mountain"/>
@@ -4525,7 +4531,7 @@
     </tile>
     <tile x="4" y="24">
         <terrain type="mountain"/>
-        <area-effect type="take-damage"/>
+        <area-effect type="take-damage" value="5"/>
     </tile>
     <tile x="5" y="-25">
         <terrain type="mountain"/>
@@ -4565,7 +4571,7 @@
     </tile>
     <tile x="5" y="-13">
         <terrain type="grass"/>
-        <area-effect type="take-damage"/>
+        <area-effect type="take-damage" value="5"/>
     </tile>
     <tile x="5" y="-12">
         <terrain type="grass"/>
@@ -4871,7 +4877,7 @@
     </tile>
     <tile x="7" y="-12">
         <terrain type="grass"/>
-        <area-effect type="take-damage"/>
+        <area-effect type="take-damage" value="5"/>
     </tile>
     <tile x="7" y="-11">
         <terrain type="grass"/>
@@ -5158,7 +5164,7 @@
     </tile>
     <tile x="9" y="-18">
         <terrain type="grass"/>
-        <area-effect type="heal-damage"/>
+        <area-effect type="heal-damage" value="5"/>
     </tile>
     <tile x="9" y="-17">
         <terrain type="sea"/>
@@ -6155,7 +6161,7 @@
     </tile>
     <tile x="15" y="13">
         <terrain type="grass"/>
-        <area-effect type="heal-damage"/>
+        <area-effect type="heal-damage" value="5"/>
     </tile>
     <tile x="15" y="14">
         <terrain type="mountain"/>
@@ -7308,7 +7314,7 @@
     </tile>
     <tile x="23" y="-5">
         <terrain type="grass"/>
-        <area-effect type="heal-damage"/>
+        <area-effect type="heal-damage" value="5"/>
     </tile>
     <tile x="23" y="-4">
         <terrain type="grass"/>

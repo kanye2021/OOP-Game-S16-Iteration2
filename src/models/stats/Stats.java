@@ -1,6 +1,7 @@
 package models.stats;
 
 import utilities.MathUtilities;
+import views.Display;
 
 import java.util.EnumMap;
 import java.util.TimerTask;
@@ -174,6 +175,16 @@ public class Stats {
     private void modifyHardiness(int delta) {
         this.hardiness = MathUtilities.putInRange(0, this.hardiness + delta, Integer.MAX_VALUE);
         updateDerivedStats();
+    }
+
+    // Wrapper for modify level
+    public void levelUp() {
+        modifyExperience(expReqLvUp);
+    }
+
+    // Wrapper to animate loosing a life (health bar slides down)
+    public void loseALife() {
+        modifyHealth(-maxHealth);
     }
 
     private void modifyExperience(int delta) {
