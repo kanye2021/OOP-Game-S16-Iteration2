@@ -20,7 +20,7 @@ public class GameView extends View implements Observer{
     private StatusViewport statusViewport;
     private ArrayList<SubState> substates;
     //Container of views that will turn on or off
-    private NPCActionView npcActionView;
+    private NPCMenuView npcActionView;
 
     private boolean hasNPCAction;
     public GameView(int width, int height, Display display){
@@ -36,7 +36,7 @@ public class GameView extends View implements Observer{
     public void initStatusViewport(Stats stats){
         this.statusViewport = new StatusViewport(getScreenWidth(), getScreenHeight(), getDisplay(), stats);
     }
-    public void initNPCActionView(NPCActionView view){
+    public void initNPCActionView(NPCMenuView view){
         this.npcActionView = view;
         //showEntityInteraction = false;
     }
@@ -64,6 +64,12 @@ public class GameView extends View implements Observer{
         super.onWindowResize(component);
         areaViewport.onWindowResize(component);
         statusViewport.onWindowResize(component);
+        npcActionView.onWindowResize(component);
+        // Render all subviews on top of the AreaViewPort.
+        for (SubState subview : this.substates) {
+            View v = subview.getView();
+            v.onWindowResize(component);
+        }
     }
 
     @Override

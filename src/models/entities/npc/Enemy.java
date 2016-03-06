@@ -52,5 +52,8 @@ public class Enemy extends NPC{
         HashMap<Map.Direction, String> imagePaths = new HashMap<>();
         return imagePaths;
     }
+    public void talk(){
+
+    }
 
 }

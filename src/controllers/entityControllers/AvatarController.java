@@ -3,6 +3,7 @@ package controllers.entityControllers;
 import controllers.*;
 import controllers.GameViewController;
 import controllers.InventoryViewController;
+import controllers.NPCInteractions.NPCMenuController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.map.Map;
@@ -21,6 +22,7 @@ import utilities.Task;
 import views.*;
 import views.GameView;
 import views.InventoryView;
+import views.NPCMenuView;
 import views.ToastView;
 
 import java.awt.event.KeyEvent;
@@ -357,6 +359,11 @@ public class AvatarController extends EntityController {
 
     public void startInteraction(NPC npc){
         avatar.startInteraction(npc);
+    }
+
+    //I am so sorry for doing this...
+    public Avatar getAvatar(){
+        return avatar;
     }
 
 }

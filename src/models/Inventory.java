@@ -154,8 +154,14 @@ public class Inventory {
         this.maxCapacity = maxCapacity;
     }
 
+
     public boolean isEmpty() { return itemNodeArrayList.size() == 0; };
 
+
+
+    public int getCurrentSize(){
+        return itemNodeArrayList.size();
+    }
 
 
 
