@@ -6,7 +6,7 @@ import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.items.Item;
 import models.items.takeable.TakeableItem;
-import sun.jvm.hotspot.jdi.IntegerTypeImpl;
+//import sun.jvm.hotspot.jdi.IntegerTypeImpl;
 import utilities.IOUtilities;
 import views.sprites.Sprite;
 
