@@ -2,14 +2,14 @@ package controllers;
 
 import models.Inventory;
 import models.entities.Entity;
-import models.entities.npc.Action;
+import models.entities.npc.actions.Action;
 import models.entities.npc.NPC;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
 import utilities.StateManager;
 import utilities.Task;
 import views.InventoryView;
-import views.NPCActionView;
+import views.NPCMenuView;
 import views.View;
 
 import java.awt.event.KeyEvent;

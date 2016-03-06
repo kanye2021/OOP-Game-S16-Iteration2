@@ -172,7 +172,6 @@ public abstract class Item {
 
     protected ItemDictionary ID;
     protected Sprite sprite;
-
     public abstract boolean onTouch(Entity entity); // Method to describe what happens when an item is touched
 
     public ItemDictionary getID() {
