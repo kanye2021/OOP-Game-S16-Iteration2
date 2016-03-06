@@ -45,7 +45,7 @@ public class Horse extends MountEntity {
     @Override
     public void initActions() {
         System.out.println("WTF");
-        actionList.add(new Talk(this, "I am a horse."));
+        
         actionList.add(new Mount(this));
     }
 

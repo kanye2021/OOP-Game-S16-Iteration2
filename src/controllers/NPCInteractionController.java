@@ -2,12 +2,12 @@ package controllers;
 
 import controllers.ViewController;
 import models.entities.Avatar;
-import models.entities.npc.Action;
+import models.entities.npc.actions.Action;
 import models.entities.npc.NPC;
 import utilities.StateManager;
 import utilities.Task;
 import views.LoadGameView;
-import views.NPCActionView;
+import views.NPCMenuView;
 import views.View;
 
 import java.awt.event.KeyEvent;
@@ -40,7 +40,7 @@ public class NPCInteractionController extends ViewController {
             public void run() {
                 if (myOption > 0) {
                     myOption--;
-                    ((NPCActionView) view).updateSelectedOption(myOption);
+                    ((NPCMenuView) view).updateSelectedOption(myOption);
 
                 }
             }
@@ -55,7 +55,7 @@ public class NPCInteractionController extends ViewController {
                 if (myOption < actionList.size() - 1){
                     myOption++;
 
-                    ((NPCActionView) view).updateSelectedOption(myOption);
+                    ((NPCMenuView) view).updateSelectedOption(myOption);
 
                 }
             }

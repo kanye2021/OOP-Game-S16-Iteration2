@@ -12,31 +12,16 @@ import java.awt.*;
 public class TileDetection {
     private NPC npc;
     private Point location;
-    private Map map;
-
-    public TileDetection(NPC npc, Point location){
-
-        this.location = location;
+    private boolean moved;
+    private boolean teleported;
+    public TileDetection(NPC npc, Point location, boolean moved, boolean teleported) {
         this.npc = npc;
-
+        this.location = location;
+        this.moved = moved;
+        this.teleported = teleported;
     }
     public boolean npcDetected(){
-        if (npc == null){
-            return false;
-        }else {
-            return true;
-        }
-    }
-
-    //TODO: For now it checks verticallly in front of the Avatar
-    //ranged utility function for NPC detection
-    public boolean npcDetectedRanged(int range, Point starting){
-        while(range != 0) {
-            starting.translate(0,1);
-            System.out.println(map.getTileAt(starting).getEntity());
-            range--;
-        }
-        return true;
+        return npc != null;
     }
 
 
@@ -45,5 +30,29 @@ public class TileDetection {
     }
     public NPC getNpc(){
         return npc;
+    }
+
+    public void setNpc(NPC npc) {
+        this.npc = npc;
+    }
+
+    public void setLocation(Point location) {
+        this.location = location;
+    }
+
+    public boolean isMoved() {
+        return moved;
+    }
+
+    public void setMoved(boolean moved) {
+        this.moved = moved;
+    }
+
+    public boolean isTeleported() {
+        return teleported;
+    }
+
+    public void setTeleported(boolean teleported) {
+        this.teleported = teleported;
     }
 }

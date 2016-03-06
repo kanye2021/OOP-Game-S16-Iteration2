@@ -1,12 +1,11 @@
 package models.entities.npc;
 
 import controllers.entityControllers.EntityController;
-import controllers.entityControllers.NPCController;
+import controllers.entityControllers.ShopKeeperController;
 import models.entities.Entity;
+import models.entities.npc.actions.Action;
 import models.map.Map;
 import models.stats.StatModificationList;
-import views.GameView;
-import views.NPCActionView;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,10 +15,11 @@ import java.util.ArrayList;
  */
 public abstract class NPC extends Entity {
     protected ArrayList<Action> actionList;
-
+    protected String dialogue;
     public NPC(Point location, Map map) {
         super(location, map);
         actionList = new ArrayList<>();
+        dialogue = "..."; //Default dialogue for each npc
     }
 
     @Override
@@ -39,7 +39,7 @@ public abstract class NPC extends Entity {
     }
 
     @Override
-    protected final EntityController initController() {
+    protected final EntityController initController(){
         return null; // AIController!
     }
 
@@ -52,8 +52,6 @@ public abstract class NPC extends Entity {
     }
 
     public abstract void initActions();
-
-
 
 
 }

@@ -1,9 +1,12 @@
-package models.entities.npc;
+package models.entities.npc.actions;
 
 import models.entities.Avatar;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
 import models.stats.Stats;
+
+import models.entities.npc.NPC;
+import models.entities.npc.actions.Action;
 
 /**
  * Created by dyeung on 2/28/16.

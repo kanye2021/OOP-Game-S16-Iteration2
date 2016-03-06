@@ -59,4 +59,7 @@ public class Pet extends NPC {
         imagePaths.put(Map.Direction.NORTH_WEST, imageBasePath + "NW.png");
         return imagePaths;
     }
+    public void talk(){
+
+    }
 }
