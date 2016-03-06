@@ -227,6 +227,35 @@ public class AvatarController extends EntityController {
             }
         };
 
+        Task fourthSkill = new Task(){
+            @Override
+            public void run() {
+                //if smasher, get first skill
+                if(avatar.getOccupation().contains("Smasher")){
+                    //Technically the Smasher class has no actives
+
+                }else if(avatar.getOccupation().contains("Summoner")){
+                    //No more skills
+                }else if(avatar.getOccupation().contains("Sneak")){
+                    //first skill should be something..
+                    //first skill should be something..
+                    Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
+                    System.out.println(fourthSkill);
+                    DetectRemoveTrapSkill detectRemoveTrapSkill = (DetectRemoveTrapSkill) fourthSkill;
+                    detectRemoveTrapSkill.removeTrap(avatar);
+
+                }else{
+                    System.out.println("What are you");
+                }
+
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
 
 
 
@@ -297,7 +326,7 @@ public class AvatarController extends EntityController {
         addKeyPressMapping(firstSkill,KeyEvent.VK_2);
         addKeyPressMapping(secondSkill,KeyEvent.VK_3);
         addKeyPressMapping(thirdSkill,KeyEvent.VK_4);
-//        addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
+        addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
 
         // TODO: Testing opening a random overlay toast view
         addKeyPressMapping(openToastTestView, KeyEvent.VK_L);

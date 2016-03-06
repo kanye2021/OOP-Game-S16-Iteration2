@@ -16,6 +16,7 @@ public class Tile {
     private Decal decal;
     private Item item;
     private Entity entity;
+    private Trap trap;
     private boolean seen;
 
 //    public Tile(Terrain terrain, AreaEffect areaEffect, Decal decal, Item item, Entity entity) {
@@ -39,6 +40,7 @@ public class Tile {
         this.decal = tile.getDecal();
         this.item = tile.getItem();
         this.entity = tile.getEntity();
+        this.trap = tile.getTrap();
     }
 
     // For now if there is already an entity on the tile. adding an entity will replace that
@@ -111,6 +113,8 @@ public class Tile {
         return entity;
     }
 
+    public Trap getTrap(){return trap;}
+
     public void removeItem() {
         item = null;
     }
@@ -140,6 +144,14 @@ public class Tile {
         if (entity != null){ //assume all entities are npcs now
             return true;
         }else {
+            return false;
+        }
+    }
+    public boolean hasTrap(){
+        if(trap!= null){
+            return true;
+        }
+        else{
             return false;
         }
     }
