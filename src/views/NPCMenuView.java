@@ -1,7 +1,8 @@
 package views;
 
-import models.entities.npc.Action;
+import models.entities.npc.actions.Action;
 import models.entities.npc.NPC;
+import utilities.SubState;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by dyeung on 2/28/16.
  */
-public class NPCActionView extends View{
+public class NPCMenuView extends View{
     //Scalable variables
     private int actionView_Width ;
     private int actionView_Height;
@@ -23,25 +24,26 @@ public class NPCActionView extends View{
     int selectedOption;
     //Actual Data to modify with
     private NPC npc;
-
-    public NPCActionView(int width, int height, Display display, NPC npc){
+    private ArrayList<SubState> substates;
+    public NPCMenuView(int width, int height, Display display, NPC npc){
         super(width,height, display);
         this.npc = npc;
-        scaleView(width,height);
         selectedOption = 0;
+        substates = new ArrayList<>();
     }
 
     @Override
     public void render(Graphics g) {
-        renderTitle(g);
-        renderOptions(g);
+        if (substates.isEmpty()) {
+            //Renders the base Menu view
+            renderTitle(g);
+            renderOptions(g);
+        }else {
+            substates.get(0).render(g); //Renders the very first substate only
+        }
     }
     @Override
-    public void scaleView(){
-//Doesn't do jack (cause its a viewport)
-    }
-
-    public void scaleView(int screenWidth, int screenHeight) {
+    public void scaleView() {
 
         actionView_Width = (getScreenWidth() / 6);
         //System.out.println("Action View: " + actionView_Width);
@@ -52,6 +54,11 @@ public class NPCActionView extends View{
         buttonFont = new Font("Helvetica", Font.BOLD, getScreenWidth() / 86);
         buttonWidth = getScreenWidth() / 6;
         buttonHeight = getScreenHeight() / 25;
+        if (substates != null) {
+            for (SubState s : substates) {
+                s.scaleView(); //scales every view in substate
+            }
+        }
 
     }
     public void renderTitle(Graphics g){
@@ -64,16 +71,23 @@ public class NPCActionView extends View{
         int i = 0;
         Color primaryColor;
         Color secondaryColor;
-        for (Action a : npcActions) {
-            String actionName = a.getName();
-            FontMetrics fm = g.getFontMetrics(buttonFont);
+        int boxX = actionView_Start_X;
+        int boxY;
+//        int boxWidth = buttonWidth;
+//        int boxHeight = buttonHeight;
+        FontMetrics fm = g.getFontMetrics(buttonFont);
 
-            Rectangle2D rectangle = fm.getStringBounds(actionName, g);
+        ArrayList<String> menuOptions = new ArrayList<>();
+        for (int j = 0; j < npcActions.size(); j++) {
+            menuOptions.add(npcActions.get(j).getName());
+        }
+        menuOptions.add("Exit");
 
-            int boxX = actionView_Start_X; //getScreenWidth() / 2 - buttonWidth / 2;
-            int boxY = buttonHeight * i;
-            int boxDX = buttonWidth;
-            int boxDY = buttonHeight;
+        for (String optionName : menuOptions) {
+            Rectangle2D rectangle = fm.getStringBounds(optionName, g);
+
+            boxY = buttonHeight * i;
+
             int stringX = boxX + (int) (rectangle.getWidth() / 2);
             int stringY = i * buttonHeight + (int) (rectangle.getHeight() / 2) + fm.getAscent();
 
@@ -87,14 +101,26 @@ public class NPCActionView extends View{
 
             }
             g.setColor(primaryColor);
-            g.fillRect(boxX, boxY, boxDX, boxDY);
+            g.fillRect(boxX, boxY, buttonWidth, buttonHeight);
             g.setColor(secondaryColor);
-            g.drawString(actionName, stringX, stringY);
+            g.drawString(optionName, stringX, stringY);
             i++;
         }
+
     }
     public void updateSelectedOption(int sel){
         selectedOption = sel;
     }
 
+    public void addSubState(SubState s) {
+        //s.setParent(this);
+        this.substates.add(s);
+    }
+    public void insertSubState(SubState s, int index) {
+        //s.setParent(this);
+        this.substates.add(index, s);
+    }
+    public void removeSubState(SubState s){
+        this.substates.remove(s);
+    }
 }

@@ -140,7 +140,9 @@ public class Inventory {
         this.maxCapacity = maxCapacity;
     }
 
-
+    public int getCurrentSize(){
+        return itemNodeArrayList.size();
+    }
 
 
 }
