@@ -45,6 +45,11 @@ public abstract class TakeableItem extends Item {
         return monetaryValue;
     }
 
+    //The idea being that some villagers might sell something for higher than it actually is
+    public void setMonetaryValue(int money) {
+        monetaryValue = money;
+    }
+
     public boolean isEquipable() {
         return false;
     }

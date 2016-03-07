@@ -5,6 +5,7 @@ import controllers.GameViewController;
 import controllers.InventoryViewController;
 import models.attack.Attack;
 import models.attack.RangedAttack;
+import controllers.NPCInteractions.NPCMenuController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.map.Map;
@@ -24,6 +25,7 @@ import utilities.Task;
 import views.*;
 import views.GameView;
 import views.InventoryView;
+import views.NPCMenuView;
 import views.ToastView;
 
 import java.awt.event.KeyEvent;
@@ -226,7 +228,7 @@ public class AvatarController extends EntityController {
                     //first skill should be something..
                     Skill thirdSkill = avatar.getSpecificSkill(Skill.SkillDictionary.PICK_POCKET);
                     System.out.println(thirdSkill);
-                    PickPocketSkill pickPocketSkill = (PickPocketSkill) secondSkill;
+                    PickPocketSkill pickPocketSkill = (PickPocketSkill) thirdSkill;
                     pickPocketSkill.onActivate(avatar);
 
                 }else{
@@ -337,7 +339,7 @@ public class AvatarController extends EntityController {
             System.out.println("Action is true");
 
             //Changes the AvatarController in gameview controller to NPCInteractionController
-            NPCActionView npcView = new NPCActionView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay(), td.getNpc());
+            NPCMenuView npcView = new NPCMenuView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay(), td.getNpc());
             NPCInteractionController npcIC = new NPCInteractionController(npcView, gameViewController.getStateManager(), npc);
 
             gameViewController.setSubController(npcIC);
@@ -398,6 +400,11 @@ public class AvatarController extends EntityController {
 
     public void startInteraction(NPC npc){
         System.out.println("Please refactor me");
+    }
+
+    //I am so sorry for doing this...
+    public Avatar getAvatar(){
+        return avatar;
     }
 
 }

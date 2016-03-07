@@ -1,5 +1,7 @@
 package models.entities.npc;
 
+import models.entities.npc.actions.Action;
+
 /**
  * Created by denzel on 3/3/16.
  */

@@ -18,7 +18,7 @@ public class GoldHelmet extends EquippableItem {
         name = "Gold Helmet";
         description = "A helmet made of gold";
         component = Equipment.Component.HELMET;
-        sprite = new Sprite("./src/res/items/takeable/armor/head/gold_knight.png");
+        sprite = new Sprite("./src/res/items/takeable/armor/head/smasher-template-helm.png");
         monetaryValue = GOLDCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, GOLDDEF)

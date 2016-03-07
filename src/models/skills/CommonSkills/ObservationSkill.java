@@ -39,7 +39,7 @@ public class ObservationSkill extends PassiveSkill {
         upperBoundError = percentError;
         lowerBoundError = -percentError;
     }
-
+    //TODO:Get this to be displayed on the area viewport
     public int getCombatPercentError() {
         resetBounds();
         Random random = new Random();
