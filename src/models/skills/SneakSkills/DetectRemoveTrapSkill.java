@@ -174,7 +174,11 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
         if(desiredTile == null){
             return false;
         }
-        String typeOfAOE = desiredTile.getAreaEffect().getType();
+        AreaEffect areaEffect = desiredTile.getAreaEffect();
+        if(areaEffect==null){
+            return false;
+        }
+        String typeOfAOE = areaEffect.getType();
         if(typeOfAOE== "trap"){
             System.out.println("Trap is here yo");
             //return desiredTile;
