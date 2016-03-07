@@ -27,7 +27,7 @@ public class RuniteGreaves extends EquippableItem{
         );
 
         equipConditions = new ConditionList(
-                new StatCondition(null, RUNITELV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+                new StatCondition(null, RUNITELV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = RUNITEWEIGHT;
         range = RANGE;

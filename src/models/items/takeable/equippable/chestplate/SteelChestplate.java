@@ -28,7 +28,7 @@ public class SteelChestplate extends EquippableItem{
         );
 
         equipConditions = new ConditionList(
-                new StatCondition(null, STEELLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+                new StatCondition(null, STEELLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = STEELWEIGHT;
         range = RANGE;

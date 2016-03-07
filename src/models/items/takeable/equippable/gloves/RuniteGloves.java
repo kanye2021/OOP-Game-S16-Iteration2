@@ -26,7 +26,7 @@ public class RuniteGloves extends EquippableItem{
                 new StatModification(Stats.Type.ARMOR_MODIFIER, RUNITEDEF)
         );
         equipConditions = new ConditionList(
-                new StatCondition(null, RUNITELV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+                new StatCondition(null, RUNITELV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = RUNITEWEIGHT;
         range = RANGE;

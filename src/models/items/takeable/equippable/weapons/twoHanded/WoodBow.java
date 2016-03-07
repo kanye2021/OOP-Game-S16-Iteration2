@@ -1,14 +1,10 @@
 package models.items.takeable.equippable.weapons.twoHanded;
 
 import models.Equipment;
-import models.conditions.Condition;
-import models.conditions.ConditionList;
-import models.conditions.StatCondition;
+import models.conditions.*;
 import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
-import models.stats.StatModification;
-import models.stats.StatModificationList;
-import models.stats.Stats;
+import models.stats.*;
 import views.sprites.Sprite;
 
 /**
@@ -27,7 +23,7 @@ public class WoodBow extends EquippableItem{
         );
 
         equipConditions = new ConditionList(
-            new StatCondition(null, WOODLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+            new StatCondition(null, WOODLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = WOODWEIGHT;
         range = SNEAKRANGE;

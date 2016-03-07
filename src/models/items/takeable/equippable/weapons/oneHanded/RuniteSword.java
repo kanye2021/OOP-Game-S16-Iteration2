@@ -26,7 +26,7 @@ public class RuniteSword extends EquippableItem{
                 new StatModification(Stats.Type.WEAPON_MODIFIER, RUNITEATK)
         );
         equipConditions = new ConditionList(
-                new StatCondition(null, RUNITELV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+                new StatCondition(null, RUNITELV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = RUNITEWEIGHT;
         range = SMASHERRANGE;

@@ -26,7 +26,7 @@ public class Special_Yeezy extends EquippableItem{
                 new StatModification(Stats.Type.MOVEMENT, CHUCKNORRISDEF)//basically defense into spd
         );
         equipConditions = new ConditionList(
-                new StatCondition(null, CHUCKNORRISLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+                new StatCondition(null, CHUCKNORRISLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = CHUCKNORRISWEIGHT;
         range = RANGE;

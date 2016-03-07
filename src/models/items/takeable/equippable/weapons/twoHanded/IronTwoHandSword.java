@@ -26,7 +26,7 @@ public class IronTwoHandSword extends EquippableItem{
                 new StatModification(Stats.Type.WEAPON_MODIFIER, IRONATK*2)
         );
         equipConditions = new ConditionList(
-                new StatCondition(null, IRONLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+                new StatCondition(null, IRONLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = IRONWEIGHT;
         range = SMASHERRANGE;
