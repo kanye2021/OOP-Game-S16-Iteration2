@@ -41,7 +41,6 @@
     </tile>
     <tile x="-25" y="-12">
         <terrain type="grass"/>
-        <item id="1" type="obstacle"/>
     </tile>
     <tile x="-25" y="-11">
         <terrain type="grass"/>
@@ -2331,7 +2330,6 @@
     </tile>
     <tile x="-10" y="-2">
         <terrain type="grass"/>
-        <item id="1001" type="takeable"/>
     </tile>
     <tile x="-10" y="-1">
         <terrain type="grass"/>
@@ -3547,6 +3545,7 @@
     </tile>
     <tile x="-2" y="-2">
         <terrain type="grass"/>
+        <item id="6000"/>
     </tile>
     <tile x="-2" y="-1">
         <terrain type="grass"/>
@@ -3849,7 +3848,6 @@
     </tile>
     <tile x="0" y="-2">
         <terrain type="grass"/>
-
     </tile>
     <tile x="0" y="-1">
         <terrain type="grass"/>
@@ -4151,6 +4149,7 @@
     </tile>
     <tile x="2" y="-2">
         <terrain type="grass"/>
+        <item id="5000"/>
     </tile>
     <tile x="2" y="-1">
         <terrain type="mountain"/>
@@ -4451,7 +4450,7 @@
     </tile>
     <tile x="4" y="-2">
         <terrain type="grass"/>
-        <item id="2" type="interactive"/>
+        <item id="1100"/>
     </tile>
     <tile x="4" y="-1">
         <terrain type="mountain"/>
@@ -4731,7 +4730,6 @@
     </tile>
     <tile x="6" y="-10">
         <terrain type="grass"/>
-        <item id="3" type="one-shot"/>
     </tile>
     <tile x="6" y="-9">
         <terrain type="grass"/>
@@ -4780,7 +4778,6 @@
     </tile>
     <tile x="6" y="6">
         <terrain type="grass"/>
-        <item id="7" type="take-able"/>
     </tile>
     <tile x="6" y="7">
         <terrain type="grass"/>
@@ -4890,7 +4887,6 @@
     </tile>
     <tile x="7" y="-8">
         <terrain type="grass"/>
-        <item id="7" type="one-shot"/>
     </tile>
     <tile x="7" y="-7">
         <terrain type="grass"/>
@@ -4921,7 +4917,6 @@
     </tile>
     <tile x="7" y="2">
         <terrain type="grass"/>
-        <item id="0" type="take-able"/>
     </tile>
     <tile x="7" y="3">
         <terrain type="grass"/>
@@ -5048,7 +5043,6 @@
     </tile>
     <tile x="8" y="-6">
         <terrain type="grass"/>
-        <item id="7" type="take-able"/>
     </tile>
     <tile x="8" y="-5">
         <terrain type="grass"/>
@@ -5061,7 +5055,6 @@
     </tile>
     <tile x="8" y="-2">
         <terrain type="grass"/>
-        <item id="1" type="take-able"/>
     </tile>
     <tile x="8" y="-1">
         <terrain type="grass"/>
@@ -5222,7 +5215,6 @@
     </tile>
     <tile x="9" y="1">
         <terrain type="grass"/>
-        <item id="5" type="one-shot"/>
     </tile>
     <tile x="9" y="2">
         <terrain type="grass"/>
@@ -5364,7 +5356,6 @@
     </tile>
     <tile x="10" y="-2">
         <terrain type="grass"/>
-        <item id="1" type="one-shot"/>
     </tile>
     <tile x="10" y="-1">
         <terrain type="grass"/>
@@ -6115,7 +6106,6 @@
     </tile>
     <tile x="15" y="-2">
         <terrain type="grass"/>
-        <item id="3" type="take-able"/>
     </tile>
     <tile x="15" y="-1">
         <terrain type="grass"/>
@@ -6256,7 +6246,6 @@
     </tile>
     <tile x="16" y="-6">
         <terrain type="grass"/>
-        <item id="2" type="take-able"/>
     </tile>
     <tile x="16" y="-5">
         <terrain type="grass"/>

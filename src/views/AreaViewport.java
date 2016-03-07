@@ -89,6 +89,9 @@ public class AreaViewport extends View implements Observer {
 
         breadthFirstRender(logicalPoint, pixelPoint, g2);
 
+        g.setColor(Color.WHITE);
+        g.drawString(logicalPoint.toString(), viewportWidth - g.getFontMetrics().stringWidth(logicalPoint.toString()) - 50, 25);
+
         // Once finish rendering all tiles with appropiate FoW transparencies, draw stuff that ignores transparencies
         // Like health bars.
         for (EntityLocationTuple et : this.entityLocationTuples) {

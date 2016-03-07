@@ -1,7 +1,9 @@
 package models.items.takeable.equippable.boots;
 
 import models.Equipment;
-import models.items.Item;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
@@ -22,8 +24,12 @@ public class MithrilBoots extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, MITHRILDEF)
         );
-        requiredLv = MITHRILLV;
+
+        equipConditions = new ConditionList(
+            new StatCondition(null, MITHRILLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+        );
         itemWeight = MITHRILWEIGHT;
         range = RANGE;
+
     }
 }

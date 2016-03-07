@@ -1,9 +1,8 @@
 package models.items;
 
 import models.entities.Entity;
-import models.items.obstacle.Grave;
-import models.items.obstacle.Octopus;
-import models.items.obstacle.Statue;
+import models.items.interactive.*;
+import models.items.obstacle.*;
 import models.items.takeable.equippable.chestplate.*;
 import models.items.takeable.equippable.helmets.*;
 import models.items.takeable.equippable.greaves.*;
@@ -13,6 +12,7 @@ import models.items.takeable.equippable.shield.*;
 import models.items.takeable.equippable.weapons.oneHanded.*;
 import models.items.takeable.equippable.weapons.twoHanded.*;
 
+import models.items.takeable.quest.KeyOfKanye;
 import views.sprites.Sprite;
 
 import java.awt.*;
@@ -24,6 +24,7 @@ public abstract class Item {
 
     public enum ItemDictionary {
 
+        // Helmets
         WOOD_HELMET(1000) {public Item createInstance() {return new WoodHelmet();}},
         IRON_HELMET(1001) {public Item createInstance() {return new IronHelmet();}},
         STEEL_HELMET(1002) {public Item createInstance() {return new SteelHelmet();}},
@@ -94,6 +95,7 @@ public abstract class Item {
         GOLD_BOOTS(1304) {public Item createInstance() {return new GoldBoots();}},
         RUNITE_BOOTS(1305) {public Item createInstance() {return new RuniteBoots();}},
 
+        // Gloves
         WOOD_GLOVES(1400) {public Item createInstance() {return new WoodGloves();}},
         IRON_GLOVES(1401) {public Item createInstance() {return new IronGloves();}},
         STEEL_GLOVES(1402) {public Item createInstance() {return new SteelGloves();}},
@@ -101,6 +103,7 @@ public abstract class Item {
         GOLD_GLOVES(1404) {public Item createInstance() {return new GoldGloves();}},
         RUNITE_GLOVES(1405) {public Item createInstance() {return new RuniteGloves();}},
 
+        // Shields
         WOOD_SHIELD(1500) {public Item createInstance() {return new WoodShield();}},
         IRON_SHIELD(1501) {public Item createInstance() {return new IronShield();}},
         STEEL_SHIELD(1502) {public Item createInstance() {return new SteelShield();}},
@@ -108,6 +111,7 @@ public abstract class Item {
         GOLD_SHIELD(1504) {public Item createInstance() {return new GoldShield();}},
         RUNITE_SHIELD(1505) {public Item createInstance() {return new RuniteShield();}},
 
+        // One handed weapons
         WOOD_SWORD(1600) {public Item createInstance() {return new WoodSword();}},
         IRON_SWORD(1601) {public Item createInstance() {return new IronSword();}},
         STEEL_SWORD(1602) {public Item createInstance() {return new SteelSword();}},
@@ -115,6 +119,7 @@ public abstract class Item {
         GOLD_SWORD(1604) {public Item createInstance() {return new GoldSword();}},
         RUNITE_SWORD(1605) {public Item createInstance() {return new RuniteSword();}},
 
+        // Two handed weapons
         WOOD_TWO_HAND_SWORD(1700) {public Item createInstance() {return new WoodTwoHandSword();}},
         IRON_TWO_HAND_SWORD(1701) {public Item createInstance() {return new IronTwoHandSword();}},
         STEEL_TWO_HAND_SWORD(1702) {public Item createInstance() {return new SteelTwoHandSword();}},
@@ -122,6 +127,7 @@ public abstract class Item {
         GOLD_TWO_HAND_SWORD(1704) {public Item createInstance() {return new GoldTwoHandSword();}},
         RUNITE_TWO_HAND_SWORD(1705) {public Item createInstance() {return new RuniteTwoHandSword();}},
 
+        // Bows
         WOOD_BOW(1706) {public Item createInstance() {return new WoodBow();}},
         IRON_BOW(1707) {public Item createInstance() {return new IronBow();}},
         STEEL_BOW(1708) {public Item createInstance() {return new SteelBow();}},
@@ -141,11 +147,16 @@ public abstract class Item {
         ENERGY_SWORD(1802){public Item createInstance(){return new Special_EnergySword();}},
 
 
-
+        // Obstacles
         GRAVE(2000) {public Item createInstance() {return new Grave();}},
         OCTOPUS(2001) {public Item createInstance() {return new Octopus();}},
-        STATUE(2002) {public Item createInstance() {return new Statue();}};
+        STATUE(2002) {public Item createInstance() {return new Statue();}},
 
+        // Interactive items
+        GATE_OF_KANYE(5000) {public Item createInstance() {return new GateOfKanye();}},
+
+        // Quest items
+        KEY_OF_KANYE(6000) {public Item createInstance() {return new KeyOfKanye();}};
 
         private int ID;
         public abstract Item createInstance();

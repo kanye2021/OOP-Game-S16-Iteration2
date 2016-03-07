@@ -1,6 +1,9 @@
 package models.items.takeable.equippable.greaves;
 
 import models.Equipment;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
@@ -26,8 +29,11 @@ public class IronGreaves extends EquippableItem{
                 new StatModification(Stats.Type.MOVEMENT, -10)
 
         );
-        requiredLv = IRONLV;
+        equipConditions = new ConditionList(
+                new StatCondition(null, IRONLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+        );
         itemWeight = IRONWEIGHT;
         range = RANGE;
+
     }
 }

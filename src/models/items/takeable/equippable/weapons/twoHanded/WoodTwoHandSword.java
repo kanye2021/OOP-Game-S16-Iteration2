@@ -1,6 +1,7 @@
 package models.items.takeable.equippable.weapons.twoHanded;
 
 import models.Equipment;
+import models.conditions.*;
 import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
@@ -22,7 +23,9 @@ public class WoodTwoHandSword extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.WEAPON_MODIFIER, WOODATK*2)
         );
-        requiredLv = WOODLV;
+        equipConditions = new ConditionList(
+            new StatCondition(null, WOODLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+        );
         itemWeight = WOODWEIGHT;
         range = SMASHERRANGE;
     }

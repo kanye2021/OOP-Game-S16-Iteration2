@@ -1,6 +1,9 @@
 package models.items.takeable.equippable.boots;
 
 import models.Equipment;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
@@ -22,7 +25,9 @@ public class Special_Yeezy extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.MOVEMENT, CHUCKNORRISDEF)//basically defense into spd
         );
-        requiredLv = CHUCKNORRISLV;
+        equipConditions = new ConditionList(
+                new StatCondition(null, CHUCKNORRISLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+        );
         itemWeight = CHUCKNORRISWEIGHT;
         range = RANGE;
     }

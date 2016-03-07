@@ -5,7 +5,9 @@
 
 package models.conditions;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ORCondition extends Condition {
@@ -22,11 +24,11 @@ public class ORCondition extends Condition {
 
     }
 
-    public boolean checkCondition() {
+    public boolean checkCondition(Object... args) {
 
         for (Condition condition : conditions) {
 
-            if (condition.checkCondition()) {
+            if (condition.checkCondition(args)) {
 
                 return true;
 
