@@ -1,11 +1,7 @@
 package models.attack;
 
 import models.entities.Entity;
-import models.entities.npc.Enemy;
-import models.entities.npc.NPC;
 import models.map.Map;
-import models.map.Tile;
-import models.skills.SneakSkills.TileDetection;
 import models.stats.Stats;
 
 import java.awt.*;
@@ -25,6 +21,7 @@ public class RangedAttack extends Attack {
 
 
     //Do TileDetection stuff for rangedAttacks
+    @Override
     public boolean hitEntity() {
 
         Point starting = new Point(entity.getLocation());
@@ -42,6 +39,11 @@ public class RangedAttack extends Attack {
             range--;
         }
         return false;
+
+    }
+
+    @Override
+    protected void initSprites() {
 
     }
 }

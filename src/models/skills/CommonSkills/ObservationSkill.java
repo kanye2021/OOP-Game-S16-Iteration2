@@ -15,6 +15,7 @@ public class ObservationSkill extends PassiveSkill {
     private int upperBoundError;
     private int lowerBoundError;
     private final int constant = 4;
+
     public ObservationSkill(){
         observationLv = 1;
         percentError = 100;

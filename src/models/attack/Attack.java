@@ -21,10 +21,12 @@ public abstract class Attack{
         this.entity = entity;
         this.range = range;
         this.map = map;
-        this.location = location;
     }
 
 
 
     //any other methods that all attacks should have
+    protected abstract void initSprites();
+    protected abstract boolean hitEntity();
+
 }
