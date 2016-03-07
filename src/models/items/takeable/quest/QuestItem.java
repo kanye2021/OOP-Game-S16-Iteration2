@@ -11,7 +11,7 @@ public class QuestItem extends TakeableItem {
     @Override
     public void onUse(Entity entity) {
 
-        // do nothing!
+        // Do nothing when the item is used inside the inventory.
 
     }
 

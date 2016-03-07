@@ -212,9 +212,6 @@ public abstract class Entity extends Observable implements ActionListener{
 
         item.onUse(this);
 
-        //inventory.removeItem(item);
-        //equipment.setEquipmentComponent(item.getComponent(), item);
-        //applyStatMod(item.getOnEquipModifications());
     }
 
     public final void dropItem(TakeableItem item){

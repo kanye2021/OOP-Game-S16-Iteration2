@@ -3,9 +3,6 @@ package models.conditions;
 import models.entities.Entity;
 import models.items.takeable.equippable.EquippableItem;
 
-import java.lang.reflect.Type;
-import java.util.HashMap;
-
 /**
  * Created by aseber
  * on 2/6/16.

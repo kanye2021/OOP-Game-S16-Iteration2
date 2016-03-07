@@ -67,22 +67,12 @@ public class EquippableItem extends TakeableItem {
     //Concatenate the ranges and get 144? Last number of muliplication table in
     //elementary school?  Illuminati confirmed
 
-    @Override
-    public boolean onTouch(Entity entity) {
-        // This super call will add to inventory
-        // Via takeableitem's implementation
-        return super.onTouch(entity);
-    }
-
     // Equivalent to equipping.
     public final void onUse(Entity entity) {
         if (equipConditions.checkCondition(entity)) {
-            System.out.println("Condition passed!");
             entity.applyStatMod(onEquipModifications);
-            // remove item from inventory
             entity.getInventory().removeItem(this);
             entity.getEquipment().equipItem(this);
-
         }
 
     }
