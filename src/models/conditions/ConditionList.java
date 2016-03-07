@@ -1,8 +1,5 @@
 package models.conditions;
 
-import models.conditions.Condition;
-import models.entities.Entity;
-
 import java.util.ArrayList;
 
 /**

@@ -4,7 +4,6 @@ import models.conditions.Condition;
 import models.conditions.ConditionList;
 import models.conditions.InventoryCondition;
 import models.conditions.StatCondition;
-import models.items.Item;
 import models.stats.Stats;
 import views.sprites.Sprite;
 
@@ -24,8 +23,8 @@ public class GateOfKanye extends InteractiveItem {
     protected ConditionList initConditions() {
 
         ConditionList conditions = new ConditionList(
-            //new StatCondition(null, 5, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0),
-            new InventoryCondition(null, Condition.Comparison.AT_LEAST, 1, ItemDictionary.KEY_OF_KANYE, Condition.Variable.PASS0)
+            new StatCondition(null, 5, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST),
+            new InventoryCondition(null, Condition.Comparison.AT_LEAST, 1, ItemDictionary.KEY_OF_KANYE)
         );
 
         return conditions;

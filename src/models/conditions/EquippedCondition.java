@@ -11,15 +11,12 @@ public class EquippedCondition extends Condition {
     // Param 0 = Entity
     // Param 1 = EquippableItem
 
-    public EquippedCondition(Entity entity, EquippableItem item, Condition.Variable... runtimeArguments) {
-        super(runtimeArguments);
+    public EquippedCondition(Entity entity, EquippableItem item) {
         setParameter(0, entity);
         setParameter(1, item);
     }
 
-    public boolean checkCondition(Object... args) {
-
-        getRuntimeParameters(args);
+    protected boolean checkConditionInternal() {
 
         Entity entity = (Entity) getParameter(0);
         EquippableItem item = (EquippableItem) getParameter(1);

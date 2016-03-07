@@ -19,9 +19,8 @@ public class MapItemCondition extends MapCondition {
 
     // The map conditional statement. It only supports one point on the map at this time but it can be expanded to any number
     // in the future given functons in Map that return rectangles, circles etc.
-    public MapItemCondition(Item.ItemDictionary item, MapCondition.Location location, Point point, Map map, Variable... runtimeArguments) {
+    public MapItemCondition(Item.ItemDictionary item, MapCondition.Location location, Point point, Map map) {
 
-        super(runtimeArguments);
         setParameter(0, item);
         setParameter(1, location);
         setParameter(2, point);
@@ -29,9 +28,7 @@ public class MapItemCondition extends MapCondition {
 
     }
 
-    public boolean checkCondition(Object... args) {
-
-        getRuntimeParameters(args);
+    protected boolean checkConditionInternal() {
 
         Item.ItemDictionary item = (Item.ItemDictionary) getParameter(0);
         MapCondition.Location location = (MapCondition.Location) getParameter(1);

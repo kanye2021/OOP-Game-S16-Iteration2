@@ -27,7 +27,7 @@ public class IronSword extends EquippableItem{
         );
 
         equipConditions = new ConditionList(
-            new StatCondition(null, IRONLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+            new StatCondition(null, IRONLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = IRONWEIGHT;
         range = SMASHERRANGE;

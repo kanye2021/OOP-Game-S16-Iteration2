@@ -26,7 +26,7 @@ public class RuniteTwoHandSword extends EquippableItem{
                 new StatModification(Stats.Type.WEAPON_MODIFIER, RUNITEATK*2)
         );
         equipConditions = new ConditionList(
-                new StatCondition(null, RUNITELV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+                new StatCondition(null, RUNITELV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
 
         itemWeight = RUNITEWEIGHT;

@@ -26,7 +26,7 @@ public class GoldSword extends EquippableItem{
                 new StatModification(Stats.Type.WEAPON_MODIFIER, GOLDATK)
         );
         equipConditions = new ConditionList(
-                new StatCondition(null, GOLDLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+                new StatCondition(null, GOLDLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = GOLDWEIGHT;
         range = SMASHERRANGE;

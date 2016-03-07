@@ -44,7 +44,7 @@ public abstract class Condition {
         }
     }
 
-    public enum Variable {
+    private enum Variable {
         PASS0,
         PASS1,
         PASS2,
@@ -56,16 +56,10 @@ public abstract class Condition {
         PASS8
     }
 
-    protected Condition(Variable... runtimeArguments) {
-
-        this.runtimeArguments = new ArrayList(Arrays.asList(runtimeArguments));
-
-    }
-
     private ArrayList<Variable> runtimeArguments = new ArrayList<>();
     private HashMap<Integer, Object> parameters = new HashMap<>();
 
-    protected final void getRuntimeParameters(Object... args) {
+    private void getRuntimeParameters(Object... args) {
 
         int currentPlace = 0;
 
@@ -80,6 +74,12 @@ public abstract class Condition {
 
     protected final void setParameter(int integer, Object object) {
 
+        if (object == null) {
+
+            runtimeArguments.add(Variable.values()[integer]);
+
+        }
+
         parameters.put(integer, object);
 
     }
@@ -91,7 +91,15 @@ public abstract class Condition {
     }
 
     //Check the conditions
-    public abstract boolean checkCondition(Object... args);
+
+    public final boolean checkCondition(Object... args) {
+
+        getRuntimeParameters(args);
+        return checkConditionInternal();
+
+    }
+
+    protected abstract boolean checkConditionInternal();
 
 }
 

@@ -13,9 +13,8 @@ public class InventoryCondition extends Condition {
     // Param 2 = int
     // Param 3 = Item.ItemDictionary
 
-    public InventoryCondition(Entity entity, Condition.Comparison itemComparison, int count, Item.ItemDictionary item, Variable... runtimeArguments) {
+    public InventoryCondition(Entity entity, Condition.Comparison itemComparison, int count, Item.ItemDictionary item) {
 
-        super(runtimeArguments);
         setParameter(0, entity);
         setParameter(1, itemComparison);
         setParameter(2, count);
@@ -23,9 +22,7 @@ public class InventoryCondition extends Condition {
 
     }
 
-    public boolean checkCondition(Object... args) {
-
-        getRuntimeParameters(args);
+    protected boolean checkConditionInternal() {
 
         Entity entity = (Entity) getParameter(0);
         Condition.Comparison itemComparison = (Condition.Comparison) getParameter(1);

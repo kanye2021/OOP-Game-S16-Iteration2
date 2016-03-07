@@ -17,18 +17,14 @@ public class StatCondition extends Condition {
     // Param 2 = Stats.Type
     // Param 3 = Condition.Comparison
 
-    private int requiredAmount;
-    public StatCondition(Entity entity, int requiredAmount, Stats.Type statType, Condition.Comparison comparison, Condition.Variable... runtimeArguments) {
-        super(runtimeArguments);
+    public StatCondition(Entity entity, int requiredAmount, Stats.Type statType, Condition.Comparison comparison) {
         setParameter(0, entity);
         setParameter(1, requiredAmount);
         setParameter(2, statType);
         setParameter(3, comparison);
     }
 
-    public boolean checkCondition(Object... args) {
-
-        getRuntimeParameters(args);
+    protected boolean checkConditionInternal() {
 
         Entity entity = (Entity) getParameter(0);
         int requiredAmount = (int) getParameter(1);

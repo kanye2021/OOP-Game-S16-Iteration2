@@ -16,9 +16,8 @@ public class MapEntityCondition extends MapCondition {
     // setParameter(2, point);
     // setParameter(3, map);
 
-    public MapEntityCondition(Entity entity, MapCondition.Location location, Point point, Map map, Variable... runtimeArguments) {
+    public MapEntityCondition(Entity entity, MapCondition.Location location, Point point, Map map) {
 
-        super(runtimeArguments);
         setParameter(0, entity);
         setParameter(1, location);
         setParameter(2, point);
@@ -26,9 +25,7 @@ public class MapEntityCondition extends MapCondition {
 
     }
 
-    public boolean checkCondition(Object... args) {
-
-        getRuntimeParameters(args);
+    public boolean checkConditionInternal() {
 
         Entity entity = (Entity) getParameter(0);
         MapCondition.Location location = (MapCondition.Location) getParameter(1);

@@ -24,7 +24,7 @@ public class WoodTwoHandSword extends EquippableItem{
                 new StatModification(Stats.Type.WEAPON_MODIFIER, WOODATK*2)
         );
         equipConditions = new ConditionList(
-            new StatCondition(null, WOODLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+            new StatCondition(null, WOODLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = WOODWEIGHT;
         range = SMASHERRANGE;

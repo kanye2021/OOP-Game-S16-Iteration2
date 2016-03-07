@@ -26,7 +26,7 @@ public class WoodRobe extends EquippableItem{
                 new StatModification(Stats.Type.ARMOR_MODIFIER, WOODDEF)
         );
         equipConditions = new ConditionList(
-                new StatCondition(null, WOODLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST, Condition.Variable.PASS0)
+                new StatCondition(null, WOODLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = WOODWEIGHT;
         range = RANGE;
