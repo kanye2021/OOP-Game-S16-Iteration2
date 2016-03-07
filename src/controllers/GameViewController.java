@@ -92,18 +92,21 @@ public class GameViewController extends ViewController{
 
     @Override
     protected void initKeyPressMapping() {
-        addKeyPressMapping(new Task() {
+        Task task = new Task() {
             @Override
             public void run() {
-                ((GameView)view).toggleDetailedStats();
+                ((GameView) view).toggleDetailedStats();
             }
 
             @Override
             public void stop() {
 
             }
-        }, KeyEvent.VK_P);
-        addKeyPressMapping(new Task() {
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_P);
+
+        task = new Task() {
             @Override
             public void run() {
                 moveAndDetect(Map.Direction.NORTH);
@@ -111,42 +114,65 @@ public class GameViewController extends ViewController{
 
             @Override
             public void stop() { avatarController.stopMoving(); }
-        }, KeyEvent.VK_W);
-        addKeyPressMapping(new Task() {
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_W);
+        addKeyPressMapping(task, KeyEvent.VK_NUMPAD8);
+
+        task = new Task() {
             @Override
             public void run() { moveAndDetect(Map.Direction.NORTH_WEST);}
 
             @Override
             public void stop() { avatarController.stopMoving(); }
-        }, KeyEvent.VK_Q);
-        addKeyPressMapping(new Task() {
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_Q);
+        addKeyPressMapping(task, KeyEvent.VK_NUMPAD7);
+
+        task = new Task() {
             @Override
             public void run() { moveAndDetect(Map.Direction.SOUTH_WEST);}
 
             @Override
             public void stop() { avatarController.stopMoving(); }
-        }, KeyEvent.VK_Z);
-        addKeyPressMapping(new Task() {
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_Z);
+        addKeyPressMapping(task, KeyEvent.VK_NUMPAD1);
+
+        task = new Task() {
             @Override
             public void run() { moveAndDetect(Map.Direction.SOUTH);}
 
             @Override
             public void stop() { avatarController.stopMoving(); }
-        }, KeyEvent.VK_S);
-        addKeyPressMapping(new Task() {
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_S);
+        addKeyPressMapping(task, KeyEvent.VK_NUMPAD2);
+
+        task = new Task() {
             @Override
             public void run() { moveAndDetect(Map.Direction.SOUTH_EAST);}
 
             @Override
             public void stop() { avatarController.stopMoving(); }
-        }, KeyEvent.VK_C);
-        addKeyPressMapping(new Task() {
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_C);
+        addKeyPressMapping(task, KeyEvent.VK_NUMPAD3);
+
+        task = new Task() {
             @Override
             public void run() { moveAndDetect(Map.Direction.NORTH_EAST);}
 
             @Override
             public void stop() { avatarController.stopMoving(); }
-        }, KeyEvent.VK_E);
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_E);
+        addKeyPressMapping(task, KeyEvent.VK_NUMPAD9);
     }
     @Override
     public void handleMouseDragged(java.awt.event.MouseEvent e){
