@@ -20,7 +20,7 @@ public class MithrilTwoHandSword extends EquippableItem{
         name = "MITHRIL 2h Sword";
         description = "2h sword made of mithril";
         component = Equipment.Component.TWO_HANDED_WEAPON;
-        sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/smasher.template-2h.png");
+        sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/smasher-template-2h.png");
         monetaryValue = MITHRILCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.WEAPON_MODIFIER, MITHRILATK*2)

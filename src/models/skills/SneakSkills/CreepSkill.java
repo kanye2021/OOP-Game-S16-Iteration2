@@ -1,9 +1,11 @@
 package models.skills.SneakSkills;
 
 import models.entities.Entity;
+import models.map.Map;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
@@ -44,10 +46,13 @@ public class CreepSkill extends ActiveSkill {
             stats.modifyStat(Stats.Type.MOVEMENT, -delta);//decreases speed by a constant
             int init =stats.getStat(Stats.Type.MOVEMENT);
                     //TODO:show that the avatar looks invisible
+
             //TODO:implement back attack to cause extra damaage
+
             //This timer means after 5 seconds it will revert movement back to the old speedS
             System.out.println("Do you fail here?");
             System.out.println(init);
+
             new java.util.Timer().schedule(
                     new java.util.TimerTask() {
                         @Override
@@ -74,4 +79,54 @@ public class CreepSkill extends ActiveSkill {
 
     }
 
+    public boolean sneakBehind(Entity entity, Entity target){
+        Map.Direction entityOrientation = entity.getOrientation();
+        Map.Direction targetOrientation = target.getOrientation();
+
+        Point entityLoc = entity.getLocation();
+        Point targetLoc = target.getLocation();
+        //need to consider offset
+
+        if(entityOrientation!=targetOrientation){
+            return false;
+        }
+
+        //offSet is assuming the same direction as the cartesian plane posted on slack
+
+        Point offset = new Point();
+
+        if(entityOrientation== Map.Direction.NORTH){
+            offset.x=0;
+            offset.y=-1;
+        }
+        else if(entityOrientation == Map.Direction.NORTH_EAST){
+            offset.x=1;
+            offset.y=-1;
+        }
+        else if(entityOrientation == Map.Direction.SOUTH_EAST){
+            offset.x=1;
+            offset.y=0;
+        }
+        else if(entityOrientation == Map.Direction.SOUTH){
+            offset.x=0;
+            offset.y=1;
+        }
+        else if(entityOrientation == Map.Direction.SOUTH_WEST){
+            offset.x=-1;
+            offset.y=1;
+        }
+        else if(entityOrientation == Map.Direction.NORTH_WEST){
+            offset.x=-1;
+            offset.y=0;
+        }
+        else{
+            offset.x=0;
+            offset.y=0;
+            System.out.println("Really? You put in that much work to break the program?");
+        }
+        if(entityLoc.x+offset.x==targetLoc.x&&entityLoc.y+offset.y==targetLoc.y){
+            return true;
+        }
+        return false;
+    }
 }

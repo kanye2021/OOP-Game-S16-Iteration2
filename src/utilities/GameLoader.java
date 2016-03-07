@@ -5,11 +5,8 @@ import controllers.entityControllers.PetController;
 import models.entities.*;
 import models.entities.npc.Horse;
 import models.entities.npc.NPC;
-import models.entities.npc.Villager;
+import models.entities.npc.ShopKeeper;
 import models.items.Item;
-import models.items.interactive.InteractiveItem;
-import models.items.oneshot.OneShotItem;
-import models.items.takeable.TakeableItem;
 import models.map.Decal;
 import models.map.Map;
 import models.map.Terrain;
@@ -75,7 +72,7 @@ public class GameLoader {
         // TODO: Inilialize the npcs. (needs to be done by xml)
         //TODO: Current a tmp npc
         Point tmp = new Point(-10,-3);
-        Villager newVillager = new Villager(tmp, newMap);
+        ShopKeeper newVillager = new ShopKeeper(tmp, newMap);
         newMap.insertEntity(newVillager);
         ArrayList<NPC> tmpList = new ArrayList<>();
         tmpList.add(newVillager);
@@ -201,7 +198,7 @@ public class GameLoader {
                     //entity = new Entity();
                     Point p = new Point();
                     p.setLocation(x,y);
-                    //entity = new Villager();
+                    //entity = new ShopKeeper();
                 }
 
 //                tiles.get(new Point(x, y)) = new Tile(terrain, areaEffect, decal, item, entity);

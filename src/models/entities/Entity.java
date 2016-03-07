@@ -113,7 +113,8 @@ public abstract class Entity extends Observable implements ActionListener{
     public String getOccupation(){
         return occupation.getOccupation();
     }
-
+    public Map.Direction getOrientation(){return orientation;}
+    public Map getMap(){return map;}
     //Returns specific skill by name
     public Skill getSpecificSkill(Skill.SkillDictionary skill){
         Skill found = null;

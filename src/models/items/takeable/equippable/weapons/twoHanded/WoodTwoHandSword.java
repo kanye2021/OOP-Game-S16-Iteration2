@@ -18,7 +18,7 @@ public class WoodTwoHandSword extends EquippableItem{
         name = "Wood 2h Sword";
         description = "2h sword made of wood";
         component = Equipment.Component.TWO_HANDED_WEAPON;
-        sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/smasher.template-2h.png");
+        sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/smasher-template-2h.png");
         monetaryValue = WOODCOST;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.WEAPON_MODIFIER, WOODATK*2)

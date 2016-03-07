@@ -48,4 +48,7 @@ public class SubState {
     public void dismiss() {
         this.parent.removeSubState(this);
     }
+    public void scaleView(){
+        view.scaleView();
+    }
 }

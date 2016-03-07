@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.NPCInteractions.NPCMenuController;
 import controllers.entityControllers.AvatarController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
@@ -9,7 +10,7 @@ import utilities.StateManager;
 import utilities.SubState;
 import utilities.Task;
 import views.GameView;
-import views.NPCActionView;
+import views.NPCMenuView;
 import views.View;
 
 import java.awt.*;
@@ -75,7 +76,7 @@ public class GameViewController extends ViewController{
         if(!hasSubstateThatWantsToTakeInput && avatarController!=null){
             avatarController.handleKeyPress(e);
         }
-        if (activeSubController != null){
+        if (activeSubController != null) {
             activeSubController.handleKeyPress(e);
         }
     }
@@ -184,17 +185,20 @@ public class GameViewController extends ViewController{
             System.out.println("Action is true");
 
             //Changes the AvatarController in gameview controller to NPCInteractionController
-            NPCActionView npcView = new NPCActionView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), td.getNpc());
-            NPCInteractionController npcIC = new NPCInteractionController(npcView, getStateManager(), npc);
+            NPCMenuView npcView = new NPCMenuView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), td.getNpc());
+            NPCMenuController npcIC = new NPCMenuController(npcView, getStateManager(), this, npc, avatarController);
             setSubController(npcIC);
             ((GameView)view).initNPCActionView(npcView);
             ((GameView)view).renderNPCAction(true);
             avatarController.startInteraction(npc);
         }else {
-//            System.out.println("Action is false");
-            ((GameView)view).renderNPCAction(false);
-            setSubController(null);
+            turnOffSubState();
         }
+    }
+
+    public void turnOffSubState(){//Turns off the view and controller (used from other controllers)
+        ((GameView)view).renderNPCAction(false);
+        setSubController(null);
     }
 
 }
