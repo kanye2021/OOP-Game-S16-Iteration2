@@ -1,6 +1,5 @@
 package models.entities;
 
-import com.sun.java.swing.plaf.gtk.GTKConstants;
 import controllers.entityControllers.EntityController;
 import models.Equipment;
 import models.Inventory;
