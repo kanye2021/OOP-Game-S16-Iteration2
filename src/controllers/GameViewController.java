@@ -5,7 +5,7 @@ import controllers.entityControllers.AvatarController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.map.Map;
-import models.skills.SneakSkills.TileDetection;
+import utilities.TileDetection;
 import utilities.StateManager;
 import utilities.SubState;
 import utilities.Task;
@@ -27,7 +27,6 @@ public class GameViewController extends ViewController{
 
     private ArrayList<NPC> npcList;
     private AvatarController avatarController;
-    private ViewController activeSubController;
 
     // Both of these are used to handle dragging the viewport around.
     private boolean mousePressed;
@@ -38,7 +37,6 @@ public class GameViewController extends ViewController{
     public GameViewController(View view, StateManager stateManager){
         super(view, stateManager);
         npcList = new ArrayList<>();
-        activeSubController = null;
         mouseStartLocation = new Point(0, 0);
         mousePressed = false;
         offset = new Point(0, 0);
@@ -75,9 +73,6 @@ public class GameViewController extends ViewController{
     public void insertSubState(SubState s, int index) {
         ((GameView)view).insertSubState(s, index);
     }
-    public void setSubController(ViewController vc){
-        activeSubController = vc;
-    }
     @Override
     public final void handleKeyPress(KeyEvent e) {
         super.handleKeyPress(e);
@@ -89,14 +84,11 @@ public class GameViewController extends ViewController{
         if(!hasSubstateThatWantsToTakeInput && avatarController!=null){
             avatarController.handleKeyPress(e);
         }
-        if (activeSubController != null){
-            activeSubController.handleKeyPress(e);
-        }
         // GameVC shud always handle keypress if no substate will handle. David P, will be covering this.
         // AvatarControlller will never handle keypress. -> David P's got this
         // Just putting this here to work in my case
         if (e.getKeyCode() == KeyEvent.VK_X) {
-    }
+        }
 
     }
 
@@ -201,7 +193,7 @@ public class GameViewController extends ViewController{
             mouseStartLocation = new Point(e.getXOnScreen(), e.getYOnScreen());
         }
 
-        System.out.println("MouseDragged");
+        //System.out.println("MouseDragged");
         offset = new Point(e.getXOnScreen(), e.getYOnScreen());
         offset.translate((int)(-mouseStartLocation.getX()), (int)(-mouseStartLocation.getY()));
         offset.translate((int)lastOffset.getX(), (int)lastOffset.getY());
@@ -227,7 +219,7 @@ public class GameViewController extends ViewController{
         return view.getDisplay();
     }
 
-    //Method is called whenever entity moves. Basically checks what is in the tile through
+    //Method is called whenever avatar moves. Basically checks what is in the tile through
     //Tile detection and then whether an NPC is detected, it'll paint the interaction
     public void moveAndDetect(Map.Direction direction){
 
@@ -238,26 +230,32 @@ public class GameViewController extends ViewController{
 
         TileDetection td;
         td = avatarController.move(direction);
-        NPC npc = td.getNpc();
+        if (td != null) {
+            if (td.npcDetected()) {
+                NPC npc = (NPC) td.getEntity();
 
-        if (td.npcDetected()){
-            System.out.println("Action is true");
-            //Changes the AvatarController in gameview controller to NPCInteractionController
-            NPCMenuView npcView = new NPCMenuView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), td.getNpc());
-            NPCMenuController npcIC = new NPCMenuController(npcView, getStateManager(), this, npc, avatarController);
-            setSubController(npcIC);
-            ((GameView)view).initNPCActionView(npcView);
-            ((GameView)view).renderNPCAction(true);
-            avatarController.startInteraction(npc);
-        }else {
-            turnOffSubState();
+                //Changes the AvatarController in gameview controller to NPCInteractionController
+                NPCMenuView npcView = new NPCMenuView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), npc);
+                NPCMenuController npcIC = new NPCMenuController(npcView, getStateManager(), this, npc, avatarController);
+
+                SubState npcActionSubState = new SubState(npcIC, npcView);
+                // Add closing task.
+                npcIC.setClose(new Task() {
+                    @Override
+                    public void run() { npcActionSubState.dismiss(); }
+
+                    @Override
+                    public void stop() { }
+                });
+                // Add the substate
+                addSubState(npcActionSubState);
+//                ((GameView) view).initNPCActionView(npcView);
+//                ((GameView) view).renderNPCAction(true);
+                avatarController.startInteraction(npc);
+            }
         }
     }
 
-    public void turnOffSubState(){//Turns off the view and controller (used from other controllers)
-            ((GameView)view).renderNPCAction(false);
-            setSubController(null);
-        }
 
 }
 

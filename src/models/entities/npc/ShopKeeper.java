@@ -64,7 +64,7 @@ public class ShopKeeper extends NPC{
         imagePaths.put(Map.Direction.NORTH_EAST, imageBasePath + "NE.png");
         imagePaths.put(Map.Direction.SOUTH_EAST, imageBasePath + "SE.png");
         imagePaths.put(Map.Direction.SOUTH, imageBasePath + "S.png");
-        imagePaths.put(Map.Direction.SOUTH_WEST, imageBasePath + "W.png");
+        imagePaths.put(Map.Direction.SOUTH_WEST, imageBasePath + "SW.png");
         imagePaths.put(Map.Direction.NORTH_WEST, imageBasePath + "NW.png");
 
         return imagePaths;

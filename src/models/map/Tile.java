@@ -5,7 +5,7 @@ import models.area_effects.AreaEffect;
 import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.items.Item;
-import models.skills.SneakSkills.TileDetection;
+import utilities.TileDetection;
 
 import java.awt.*;
 
@@ -148,8 +148,8 @@ public class Tile {
     public void setSeen(){ seen = true; }
     public boolean getSeen(){ return seen; }
 
-    //Checks if the entity is actually a NPC
-    public boolean hasNPC(){
+    //Checks if the tile has an Entity
+    public boolean hasEntity(){
         return entity != null;
     }
     public boolean hasTrap(){

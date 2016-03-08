@@ -16,7 +16,7 @@ public class TalkViewController extends ViewController {
 
     //Tasks
     private Task continueText;
-
+    private Task closeActions;
 
     //Stuff
     private NPC npc;
@@ -35,8 +35,9 @@ public class TalkViewController extends ViewController {
             public void run(){
                 npc.progressDialogue(); //Goes to next dialogue box
                 if(npc.getDialogueLocation() == npc.getDialogue().size()){
-                    gameViewController.turnOffSubState();
-                    npc.resetDialogue();
+                    //gameViewController.turnOffSubState();
+                    //npc.resetDialogue();
+                    closeActions.run();
                 }
             }
 
@@ -50,4 +51,8 @@ public class TalkViewController extends ViewController {
     public TalkViewController getTalkViewController(){
         return this;
     }
+    public void setClose(Task task){
+        closeActions = task;
+    }
+
 }
