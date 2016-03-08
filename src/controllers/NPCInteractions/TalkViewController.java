@@ -33,7 +33,7 @@ public class TalkViewController extends ViewController {
         continueText = new Task(){
             @Override
             public void run(){
-                npc.progressDialogue();
+                npc.progressDialogue(); //Goes to next dialogue box
                 if(npc.getDialogueLocation() == npc.getDialogue().size()){
                     gameViewController.turnOffSubState();
                     npc.resetDialogue();
