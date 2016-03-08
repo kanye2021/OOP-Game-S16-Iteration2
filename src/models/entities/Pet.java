@@ -1,9 +1,9 @@
 package models.entities;
 
 
-import controllers.entityControllers.AI.Brain;
 import controllers.entityControllers.AI.PetBrain;
 import controllers.entityControllers.AI.Thought.Personalities;
+import models.entities.npc.NPC;
 import models.map.Map;
 import models.occupation.Occupation;
 import models.occupation.Sneak;

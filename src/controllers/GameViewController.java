@@ -238,7 +238,6 @@ public class GameViewController extends ViewController{
 
         TileDetection td;
         td = avatarController.move(direction);
-        if(td != null){
         NPC npc = td.getNpc();
 
         if (td.npcDetected()){
@@ -263,4 +262,3 @@ public class GameViewController extends ViewController{
 
 }
 
-}
