@@ -255,7 +255,7 @@ public class EquipmentView extends View {
         fm = g.getFontMetrics(small);
         statModsY = initialY;
         g.setColor(Color.RED);
-        for (StatModification s : item.getOnEquipModifications().getModifications()) {
+        for (StatModification s : item.getModifications().getModifications()) {
             String statModString  = s.toString();
             rec = fm.getStringBounds(statModString, g);
             w = (int) rec.getWidth();

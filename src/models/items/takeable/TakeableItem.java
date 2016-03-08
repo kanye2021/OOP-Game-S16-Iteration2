@@ -15,7 +15,7 @@ public abstract class TakeableItem extends Item {
     protected int monetaryValue;
 
     @Override
-    public boolean onTouch(Entity entity) {
+    public final boolean onTouch(Entity entity) {
         boolean added = entity.addItemToInventory(this);
         entity.applyStatMod(onPickUpModifications);
         return added;

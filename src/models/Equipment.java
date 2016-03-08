@@ -79,15 +79,15 @@ public class Equipment {
     private Entity entity;
 
     //Equipped Items
-    private EquipmentSlot head;
-    private EquipmentSlot neck;
-    private EquipmentSlot chest;
-    private EquipmentSlot back;
-    private EquipmentSlot legs;
-    private EquipmentSlot feet;
-    private EquipmentSlot hands;
-    private EquipmentSlot leftArm;
-    private EquipmentSlot rightArm;
+    private EquipmentSlot head = new EquipmentSlot();
+    private EquipmentSlot neck = new EquipmentSlot();
+    private EquipmentSlot chest = new EquipmentSlot();
+    private EquipmentSlot back = new EquipmentSlot();
+    private EquipmentSlot legs = new EquipmentSlot();
+    private EquipmentSlot feet = new EquipmentSlot();
+    private EquipmentSlot hands = new EquipmentSlot();
+    private EquipmentSlot leftArm = new EquipmentSlot();
+    private EquipmentSlot rightArm = new EquipmentSlot();
     private EnumMap<Location, EquippableItemLocationTask> locationMap = new EnumMap<>(Location.class);
 
     // do getters and setters through this enummap stuff. only need to do
@@ -97,16 +97,6 @@ public class Equipment {
     public Equipment(Entity entity) {
 
         this.entity = entity;
-        this.head = new EquipmentSlot();
-        this.neck = new EquipmentSlot();
-        this.chest = new EquipmentSlot();
-        this.back = new EquipmentSlot();
-        this.legs = new EquipmentSlot();
-        this.feet = new EquipmentSlot();
-        this.hands = new EquipmentSlot();
-        this.leftArm = new EquipmentSlot();
-        this.rightArm = new EquipmentSlot();
-
 
         locationMap.put(Location.HEAD, () -> head);
         locationMap.put(Location.NECK, () -> neck);
@@ -153,8 +143,9 @@ public class Equipment {
     }
 
     public void unEquipItem(EquippableItem item) {
-        Component component = item.getComponent();
-        removeEquipmentFromAffectedLocations(component);
+
+        removeEquipmentFromAffectedLocations(item.getComponent());
+
     }
 
     public void removeEquipmentFromAffectedLocations(Component component) {
@@ -182,18 +173,16 @@ public class Equipment {
         }
     }
 
-    public void setEquipmentComponent(Component component, EquippableItem item) {
+    public void equipItem(EquippableItem item) {
 
         // Just pulled the code that used to be here into its own function
-        removeEquipmentFromAffectedLocations(component);
+        removeEquipmentFromAffectedLocations(item.getComponent());
 
         // Set all locations to the new item
-        for (Location location : component.affectedLocations) {
+        for (Location location : item.getComponent().affectedLocations) {
+
             locationMap.get(location).get().setSlotContents(item);
         }
-
-        // And finally apply the stat modification the item does
-        item.onUse(entity);
 
     }
 

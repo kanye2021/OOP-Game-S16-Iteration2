@@ -1,38 +1,41 @@
 package models.conditions;
 import models.entities.Entity;
+import models.items.takeable.equippable.EquippableItem;
 import models.stats.Stats;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
 
 /**
  * Created by ben on 2/28/16.
  */
 
 //TODO: Polish/Test the condition checker
-public class StatCondition {
-    private Entity entity;
-    private Condition.Comparison comparison;
-    private Stats stats;
-    private Stats.Type statType;
-    private int entityAmt;//This is to hold if the entity has enough of the stat
+public class StatCondition extends Condition {
+    // Param 0 = Entity
+    // Param 1 = int
+    // Param 2 = Stats.Type
+    // Param 3 = Condition.Comparison
 
-    private int requiredAmount;
-    public StatCondition(Entity entity, int requiredAmt, Stats.Type statType, Condition.Comparison comparison){
-        this.entity = entity;
-        this.stats = entity.getStats();
-        this.statType = statType;
-        this.comparison = comparison;
-        this.requiredAmount = requiredAmt;
-    }
-    //getStatType is used to find the stats of a certain entity so we can compare it in checkCondition
-    private void getStatType(){
-
-        //First things first find it!
-
-        entityAmt = stats.getStat(statType);
-
+    public StatCondition(Entity entity, int requiredAmount, Stats.Type statType, Condition.Comparison comparison) {
+        setParameter(0, entity);
+        setParameter(1, requiredAmount);
+        setParameter(2, statType);
+        setParameter(3, comparison);
     }
 
-    public boolean checkCondition(){
-        getStatType();
-        return (comparison.isValid(entityAmt, requiredAmount));
+    protected boolean checkConditionInternal() {
+
+        Entity entity = (Entity) getParameter(0);
+        int requiredAmount = (int) getParameter(1);
+        Stats.Type statType = (Stats.Type) getParameter(2);
+        Condition.Comparison comparison = (Comparison) getParameter(3);
+
+        Stats stats = entity.getStats();
+
+        int currentAmount = stats.getStat(statType);
+
+        return (comparison.isValid(currentAmount, requiredAmount));
+
     }
 }

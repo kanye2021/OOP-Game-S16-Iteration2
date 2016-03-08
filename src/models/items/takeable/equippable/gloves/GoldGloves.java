@@ -1,11 +1,10 @@
 package models.items.takeable.equippable.gloves;
 
 import models.Equipment;
+import models.conditions.*;
 import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
-import models.stats.StatModification;
-import models.stats.StatModificationList;
-import models.stats.Stats;
+import models.stats.*;
 import views.sprites.Sprite;
 
 /**
@@ -22,9 +21,12 @@ public class GoldGloves extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, GOLDDEF)
         );
-        requiredLv = GOLDLV;
+        equipConditions = new ConditionList(
+                new StatCondition(null, GOLDLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
+        );
         itemWeight = GOLDWEIGHT;
         range = RANGE;
+
     }
 
 }

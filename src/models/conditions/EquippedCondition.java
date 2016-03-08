@@ -1,7 +1,6 @@
 package models.conditions;
 
 import models.entities.Entity;
-import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
 
 /**
@@ -9,19 +8,18 @@ import models.items.takeable.equippable.EquippableItem;
  * on 2/6/16.
  */
 public class EquippedCondition extends Condition {
-
-    //Properties of InventoryCondition
-    private Entity entity;
-    private EquippableItem item;
+    // Param 0 = Entity
+    // Param 1 = EquippableItem
 
     public EquippedCondition(Entity entity, EquippableItem item) {
-
-        this.entity = entity;
-        this.item = item;
-
+        setParameter(0, entity);
+        setParameter(1, item);
     }
 
-    public boolean checkCondition() {
+    protected boolean checkConditionInternal() {
+
+        Entity entity = (Entity) getParameter(0);
+        EquippableItem item = (EquippableItem) getParameter(1);
 
         EquippableItem equippedItems = entity.getEquipment().getEquipmentLocation(item.getComponent())[0];
 

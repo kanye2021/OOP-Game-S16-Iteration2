@@ -117,6 +117,15 @@ public class Inventory {
         return index;
     }
 
+    public int getAmountOfItem(Item.ItemDictionary item) {
+        int index = 0;
+        for(ItemNode node : itemNodeArrayList){
+            if(node.getItem().getID() == item)
+                index = node.getAmount();
+        }
+        return index;
+    }
+
     // Setters / Modifiers
     public void setItemNodeArrayList(ArrayList<ItemNode> itemNodeArrayList){
         this.itemNodeArrayList = itemNodeArrayList;
