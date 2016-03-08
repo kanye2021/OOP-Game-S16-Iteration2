@@ -37,7 +37,7 @@ public class ToastView extends View {
         FontMetrics fm = g.getFontMetrics(toastFont);
         Rectangle2D r1 = fm.getStringBounds(toastText, g);
         int msg_x = x_pos + (toastWidth - (int)r1.getWidth())/2;
-        int msg_y = y_pos + (int) r1.getHeight()/2 + fm.getAscent();
+        int msg_y = y_pos + (toastHeight - (int) r1.getHeight())/2 + fm.getAscent();
         g.drawString(toastText, msg_x, msg_y);
     }
 

@@ -1,9 +1,6 @@
 package controllers;
 
-import utilities.GameState;
-import utilities.State;
-import utilities.StateManager;
-import utilities.Task;
+import utilities.*;
 import views.*;
 
 import java.awt.event.KeyEvent;
@@ -56,20 +53,27 @@ public class AvatarCreationViewController extends ViewController {
                         gameViewController = new GameViewController(gameView, stateManager);
                         nextState = new GameState(gameViewController, gameView, "smasher");
                         stateManager.setActiveState(nextState);
+                        // Set the gameViewController, initially here.
+                        Toast.setGameViewController(gameViewController);
                         break;
                     case SUMMONER:
                         gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         gameViewController = new GameViewController(gameView, stateManager);
                         nextState = new GameState(gameViewController, gameView, "summoner");
                         stateManager.setActiveState(nextState);
+                        // Set the gameViewController, initially here.
+                        Toast.setGameViewController(gameViewController);
                         break;
                     case SNEAK:
                         gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(),view.getDisplay());
                         gameViewController = new GameViewController(gameView, stateManager);
                         nextState = new GameState(gameViewController, gameView, "sneak");
                         stateManager.setActiveState(nextState);
+                        // Set the gameViewController, initially here.
+                        Toast.setGameViewController(gameViewController);
                         break;
                 }
+
             }
             @Override
             public void stop() {}

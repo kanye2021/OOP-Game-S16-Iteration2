@@ -15,6 +15,7 @@ import models.skills.SkillList;
 import models.skills.SneakSkills.TileDetection;
 import models.stats.StatModificationList;
 import models.stats.Stats;
+import utilities.Toast;
 import views.sprites.DirectionalSprite;
 
 import javax.swing.*;
@@ -149,6 +150,7 @@ public abstract class Entity extends Observable implements ActionListener{
     }
 
     public final TileDetection teleport(Point point) {
+        Toast.createToastWithTimer("Just teleported lol", 500);
         TileDetection td =  map.moveEntity(Entity.this, point);
         location = td.getLocation();
         actionPerformed(null);
