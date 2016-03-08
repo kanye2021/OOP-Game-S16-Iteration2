@@ -27,6 +27,10 @@ public class TwoHandedWeaponSkill extends PassiveSkill {
         return Skill.SkillDictionary.TWO_HANDED_WEAPON;
 
     }
+    @Override
+    public String getName() {
+        return "Two Handed Weapon Mastery";
+    }
 
     @Override
     public void onUpdate(Entity entity) {

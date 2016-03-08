@@ -31,6 +31,12 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
     }
 
     @Override
+    public String getName() {
+        return "Detect & Remove Trap";
+    }
+
+
+    @Override
     public void onActivate(Entity entity) {
         if(cooldown){
             System.out.println("Cooldown time is not over!");

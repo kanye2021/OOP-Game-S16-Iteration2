@@ -50,6 +50,7 @@ public class GameViewController extends ViewController{
     public void initViewports(Map map, Avatar avatar, ArrayList<NPC> npcList){
         ((GameView)view).initAreaViewport(map, avatar);
         ((GameView)view).initStatusViewport(avatar.getStats());
+        ((GameView)view).initSkillViewport(avatar.getSkills());
     }
 
     public void addSubState(SubState s) {

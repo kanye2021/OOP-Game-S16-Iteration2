@@ -28,6 +28,11 @@ public class CreepSkill extends ActiveSkill {
     }
 
     @Override
+    public String getName() {
+        return "Creep";
+    }
+
+    @Override
     public void onActivate(Entity entity) {
         if(cooldown){
             System.out.println("Calm Down and Cool Down m8");
