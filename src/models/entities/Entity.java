@@ -1,6 +1,6 @@
 package models.entities;
 
-import controllers.entityControllers.EntityController;
+import controllers.entityControllers.AvatarController;
 import models.Equipment;
 import models.Inventory;
 import models.entities.npc.Mount;
@@ -33,7 +33,7 @@ public abstract class Entity extends Observable{
     protected Inventory inventory;
     protected Equipment equipment;
     protected Occupation occupation;
-    protected EntityController controller;
+    protected AvatarController controller;
     protected Map map;
 
     // All entities should be able to have a pet.
@@ -63,7 +63,6 @@ public abstract class Entity extends Observable{
         this.skills = occupation.getSkills();
         this.inventory = new Inventory(30);
         this.equipment = new Equipment(this);
-        this.controller = initController();
         passableTerrain = new ArrayList<>();
         //occupation.initStats(this.stats); // This will setup the stats and skills particular to this occupation.
         //occupation.initSkills(this.skills);
@@ -246,7 +245,6 @@ public abstract class Entity extends Observable{
     protected abstract StatModificationList initInitialStats();
     protected abstract Occupation initOccupation();
     protected abstract HashMap<Map.Direction, String> initSprites();
-    protected abstract EntityController initController();
     public abstract void startInteraction(NPC npc);
     public final Image getImage(){
 

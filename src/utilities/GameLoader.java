@@ -1,7 +1,6 @@
 package utilities;
 
 import controllers.entityControllers.MountController;
-import controllers.entityControllers.PetController;
 import models.area_effects.*;
 import models.entities.*;
 import models.entities.npc.Horse;
@@ -66,9 +65,7 @@ public class GameLoader {
         // TODO: Delete later. Just for testing and debugging pets.
         // init the pet one tile right the avatar (DEFAULT_START_LOCATION)
         Pet pet = new Pet(new Point(0, -1), newMap);
-        PetController petController = new PetController(pet);
         newMap.insertEntity(pet);
-        game.setAvatarsPet(pet, petController);
 
         // TODO: Inilialize the npcs. (needs to be done by xml)
         //TODO: Current a tmp npc
@@ -77,6 +74,7 @@ public class GameLoader {
         newMap.insertEntity(newVillager);
         ArrayList<NPC> tmpList = new ArrayList<>();
         tmpList.add(newVillager);
+        tmpList.add(pet);
         game.setNpcList(tmpList);
 
 

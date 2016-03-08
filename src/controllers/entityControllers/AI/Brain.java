@@ -15,10 +15,10 @@ public class Brain {
 
     // TODO: I don't think that the brain should have the npc (it should only be the other way around). Try to find a way
     // around having to do this.
-    private NPC npc;
-    private VisualCortex visualCortex;
-    private FrontalLobe frontalLobe;
-    private MotorCortex motorCortex;
+    protected NPC npc;
+    protected VisualCortex visualCortex;
+    protected FrontalLobe frontalLobe;
+    protected MotorCortex motorCortex;
 
     public Brain(NPC npc, Personalities personality){
         this.npc = npc;

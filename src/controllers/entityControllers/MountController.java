@@ -13,7 +13,7 @@ import java.util.Observer;
 /**
  * Created by denzel on 3/1/16.
  */
-public class MountController extends NPCController implements Observer {
+public class MountController implements Observer {
 
 
     private Mount mount;
@@ -26,7 +26,6 @@ public class MountController extends NPCController implements Observer {
     private HashMap<Task, Point> taskMovementVector = new HashMap<>();
 
     public MountController(Mount mount){
-        super(mount);
         this.mount = mount;
         createMovementTasks();
 

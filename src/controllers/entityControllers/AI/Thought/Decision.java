@@ -8,6 +8,7 @@ public enum Decision {
     ATTACK,
     TRADE,
     GET_ITEM,
+    FOLLOW,
     DEFAULT;
 
     private Object attachment; // Kinda wierd, but decisions need to have a thing attached to them (Either entity or item.)

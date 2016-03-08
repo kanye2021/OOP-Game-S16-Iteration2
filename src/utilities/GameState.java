@@ -3,9 +3,7 @@ package utilities;
 import controllers.GameViewController;
 import controllers.entityControllers.AvatarController;
 import controllers.entityControllers.MountController;
-import controllers.entityControllers.PetController;
 import models.entities.Avatar;
-import models.entities.Pet;
 
 import models.entities.npc.Horse;
 import models.entities.npc.NPC;
@@ -44,10 +42,6 @@ public class GameState extends State {
 
         //viewController.setAvatarController(new AvatarController(avatar, (GameView)view));
 
-        for (NPC npc : npcList){
-            //n.addObserver((GameView)view);
-            viewController.setNpcControllers(npc);
-        }
         // Int the viewports
         viewController.initViewports(map, avatar, npcList);
     }
@@ -59,12 +53,6 @@ public class GameState extends State {
     public void setAvatar(Avatar avatar){
 
         this.avatar = avatar;
-    }
-
-    // TODO: Method may not belong here, just for developing/testing.
-    public void setAvatarsPet(Pet pet, PetController petController) {
-        this.avatar.setPet(pet);
-        this.avatar.addObserver(petController);
     }
 
     //TODO: I don't think it should be here
