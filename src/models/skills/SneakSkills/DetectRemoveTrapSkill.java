@@ -118,7 +118,7 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
 
             areaEffect1.setRemoved(true);//Makes it "Removed" So when onTouch is called nothing happens
             //TODO:Figure out if it is possible to delete the object
-
+            cost = 10;
         }
 
     }

@@ -5,6 +5,7 @@ import models.entities.Entity;
 import models.Equipment;
 import models.items.takeable.TakeableItem;
 import models.stats.StatModificationList;
+import utilities.Toast;
 
 /**
  * Created by aseber on 2/21/16.
@@ -73,6 +74,10 @@ public class EquippableItem extends TakeableItem {
             entity.applyStatMod(onEquipModifications);
             entity.getInventory().removeItem(this);
             entity.getEquipment().equipItem(this);
+        } else {
+
+            Toast.createToastWithTimer("You need a higher level in order to equip this item.", 1000);
+
         }
 
     }

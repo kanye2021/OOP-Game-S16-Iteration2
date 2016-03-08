@@ -49,9 +49,6 @@ public class GameViewController extends ViewController{
     public void setAvatarController(AvatarController controller){
         avatarController = controller;
     }
-    public void setNpcControllers(NPC npc){
-        npcList.add(npc);
-    }
     public void initViewports(Map map, Avatar avatar, ArrayList<NPC> npcList){
         ((GameView)view).initAreaViewport(map, avatar);
         ((GameView)view).initStatusViewport(avatar.getStats());
@@ -92,14 +89,14 @@ public class GameViewController extends ViewController{
         if(!hasSubstateThatWantsToTakeInput && avatarController!=null){
             avatarController.handleKeyPress(e);
         }
-        if (activeSubController != null) {
+        if (activeSubController != null){
             activeSubController.handleKeyPress(e);
         }
         // GameVC shud always handle keypress if no substate will handle. David P, will be covering this.
         // AvatarControlller will never handle keypress. -> David P's got this
         // Just putting this here to work in my case
         if (e.getKeyCode() == KeyEvent.VK_X) {
-        }
+    }
 
     }
 
@@ -117,7 +114,7 @@ public class GameViewController extends ViewController{
         Task task = new Task() {
             @Override
             public void run() {
-                ((GameView) view).toggleDetailedStats();
+                ((GameView)view).toggleDetailedStats();
             }
 
             @Override
@@ -259,8 +256,9 @@ public class GameViewController extends ViewController{
     }
 
     public void turnOffSubState(){//Turns off the view and controller (used from other controllers)
-        ((GameView)view).renderNPCAction(false);
-        setSubController(null);
-    }
+            ((GameView)view).renderNPCAction(false);
+            setSubController(null);
+        }
 
 }
+

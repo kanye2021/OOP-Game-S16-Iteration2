@@ -1,6 +1,5 @@
 package models.entities.npc;
 
-import controllers.entityControllers.NPCController;
 import models.map.Map;
 
 import java.awt.*;

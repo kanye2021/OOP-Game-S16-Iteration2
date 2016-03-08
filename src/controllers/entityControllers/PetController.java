@@ -14,7 +14,7 @@ import java.util.Observer;
 /**
  * Created by sergiopuleri on 2/28/16.
  */
-public class PetController extends NPCController implements Observer {
+public class PetController implements Observer {
 
     private int maximumDistanceFromOwner = 2;
 
