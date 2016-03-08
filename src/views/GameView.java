@@ -121,6 +121,11 @@ public class GameView extends View implements Observer{
     public void toggleDetailedStats() {
         statusViewport.toggleDetails();
     }
+
+    public void toggleDebugInformation() {
+        areaViewport.toggleDebugInformation();
+    }
+
     @Override
     public void update(Observable o, Object arg) {
     }

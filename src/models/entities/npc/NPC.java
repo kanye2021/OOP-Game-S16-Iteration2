@@ -57,4 +57,10 @@ public abstract class NPC extends Entity {
         brain.think();
     }
 
+    public String getType() {
+
+        return "NPC" + "-" + super.getType();
+
+    }
+
 }

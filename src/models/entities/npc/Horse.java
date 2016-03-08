@@ -63,5 +63,10 @@ public class Horse extends Mount {
         return imagePaths;
     }
 
+    public String getType() {
+
+        return "Horse" + "-" + super.getType();
+
+    }
 
 }
