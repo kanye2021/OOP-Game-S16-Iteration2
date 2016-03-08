@@ -35,9 +35,9 @@ public class NPCShopController extends ViewController {
     private Task doAction;
 
     private Entity shopKeeper;
-    private ArrayList<Inventory.ItemNode> shopNodeList;
-    private ArrayList<Inventory.ItemNode> avatarNodeList;
-    private ArrayList<Inventory.ItemNode> currentList;
+    private Inventory shopNodeList;
+    private Inventory avatarNodeList;
+    private Inventory currentList;
     private NPCMenuView menuView;
     private Avatar avatar; //The person who is doing the buying
     private GameViewController gameViewController;
@@ -46,8 +46,8 @@ public class NPCShopController extends ViewController {
         selectedItemIndex = 0;
         selectedView = 0;
         this.shopKeeper = entity;
-        this.shopNodeList = entity.getInventory().getItemNodeArrayList();
-        this.avatarNodeList = avatar.getInventory().getItemNodeArrayList();
+        this.shopNodeList = entity.getInventory();
+        this.avatarNodeList = avatar.getInventory();
         this.avatar = avatar;
         this.gameViewController = gvController;
         updateCurrentList();
@@ -72,7 +72,7 @@ public class NPCShopController extends ViewController {
         nextItem = new Task() {
             @Override
             public void run() {
-                if (selectedItemIndex < currentList.size() - 1){
+                if (selectedItemIndex < currentList.getCurrentSize() - 1){
                     selectedItemIndex++;
                     ((NPCShopView) view).updateSelected(selectedItemIndex);
                 }
@@ -84,9 +84,11 @@ public class NPCShopController extends ViewController {
         playerSellItem = new Task() {
             @Override
             public void run() {
-                TakeableItem currentItem = avatarNodeList.get(selectedItemIndex).getItem();
-                avatar.sellItem(currentItem,1);
-                ((ShopKeeper)shopKeeper).buy(currentItem);
+                TakeableItem currentItem = avatarNodeList.getItemAtIndex(selectedItemIndex);
+                if (currentItem != null) {
+                    avatar.sellItem(currentItem, 1);
+                    ((ShopKeeper) shopKeeper).buy(currentItem);
+                }
             }
 
             @Override
@@ -96,38 +98,26 @@ public class NPCShopController extends ViewController {
         playerBuyItem = new Task() {
             @Override
             public void run() {
-                TakeableItem currentItem = shopNodeList.get(selectedItemIndex).getItem();
-                if (avatar.getAmountofMoney() > currentItem.getMonetaryValue()) {
-                    //avatar.equipItem((EquippableItem) currentItem);
-                    avatar.buyItem(currentItem);
-                    ((ShopKeeper)shopKeeper).sell(currentItem);
-                } else {
-                    // weird to tell them item to use itself then pass the entity o_O ?
+                TakeableItem currentItem = shopNodeList.getItemAtIndex(selectedItemIndex);
+                if (currentItem != null) {
+                    if (avatar.getAmountofMoney() > currentItem.getMonetaryValue()) {
+                        avatar.buyItem(currentItem);
+                        ((ShopKeeper) shopKeeper).sell(currentItem);
+                    } else {
+                        // weird to tell them item to use itself then pass the entity o_O ?
 //                    currentItem.onUse();
+                    }
                 }
             }
 
             @Override
             public void stop() {}
         };
-        escape = new Task(){
 
-            @Override
-            public void run() {
-                System.out.println("Making sure this is turned on");
-                gameViewController.turnOffSubState();
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
         switchViews = new Task(){
 
             @Override
             public void run() {
-                System.out.println("Making sure it works: " +selectedView);
                 selectedView = selectedView ^ 1;
                 ((NPCShopView)view).updateSelectedView(selectedView);
                 selectedItemIndex = 0;
@@ -162,7 +152,6 @@ public class NPCShopController extends ViewController {
         addKeyPressMapping(previousItem, KeyEvent.VK_LEFT);
         addKeyPressMapping(nextItem, KeyEvent.VK_RIGHT);
         addKeyPressMapping(doAction, KeyEvent.VK_ENTER);
-        addKeyPressMapping(escape, KeyEvent.VK_BACK_SPACE);
         addKeyPressMapping(switchViews, KeyEvent.VK_TAB);
 
     }
@@ -178,5 +167,9 @@ public class NPCShopController extends ViewController {
         }else {
             currentList = shopNodeList;
         }
+    }
+    public void setClose(Task task){
+        escape = task;
+        addKeyPressMapping(escape, KeyEvent.VK_BACK_SPACE);
     }
 }

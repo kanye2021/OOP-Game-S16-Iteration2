@@ -25,7 +25,7 @@ public final class Toast {
         // Pass null so that GameVC handles input.
         SubState toastSubState = new SubState(null, toastView);
         gameViewController.addToastWithDefaultCloseKeyBindOfX(toastSubState);
-        gameViewController.turnOffSubState();
+        //gameViewController.turnOffSubState();
     }
 
     public static void createToastWithTimer(String message, int time) {

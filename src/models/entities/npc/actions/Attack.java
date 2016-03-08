@@ -1,5 +1,6 @@
 package models.entities.npc.actions;
 
+import controllers.ViewController;
 import models.entities.Avatar;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
@@ -7,6 +8,7 @@ import models.stats.Stats;
 
 import models.entities.npc.NPC;
 import models.entities.npc.actions.Action;
+import views.View;
 
 /**
  * Created by dyeung on 2/28/16.
@@ -17,7 +19,8 @@ public class Attack extends Action {
     }
 
     @Override
-    public void activate(){
+    public void activate(View view, ViewController viewController){
+        //Since Attack activate doesn't create a new view, the view/viewcontrollers will be
         //be able to attack the npc
         doDamage();
     }
@@ -32,6 +35,11 @@ public class Attack extends Action {
     @Override
     public String getName() {
         return "Attack";
+    }
+
+    @Override
+    public void setAvatar(Avatar avatar){
+        this.avatar = avatar;
     }
 
 }

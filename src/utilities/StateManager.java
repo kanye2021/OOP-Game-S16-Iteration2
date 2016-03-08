@@ -14,6 +14,7 @@ public class StateManager implements ActionListener{
     private Display display;
     private InputManager inputManager;
     private Stack<State> stateStack;
+    private SubState activeTalkState;
     public Timer gameTimer;
 
     public StateManager(Display display, InputManager inputManager, int frameRate){
@@ -30,13 +31,13 @@ public class StateManager implements ActionListener{
         state.activate(inputManager, display);
     }
 
-    public void goToPreviousState(){
-        if(stateStack.size() >= 2){
+
+    public void goToPreviousState() {
+        if (stateStack.size() >= 2) {
             stateStack.pop();
             setActiveState(stateStack.peek());
         }
     }
-
 
 
     public void refreshState() {
@@ -50,3 +51,5 @@ public class StateManager implements ActionListener{
         display.repaint();
     }
 }
+
+

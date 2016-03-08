@@ -27,6 +27,10 @@ public class State {
         display.repaint();
     }
 
+
+    public View getView(){
+        return view;
+    }
     public void update(){}
 
 

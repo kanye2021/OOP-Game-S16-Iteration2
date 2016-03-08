@@ -83,7 +83,7 @@ public class GameLoader {
         MountController mountController = new MountController(horse);
         newMap.insertEntity(horse);
         game.setMount(horse,mountController);
-        System.out.println("I'm in the game loader");
+        //System.out.println("I'm in the game loader");
     }
 
     private Map loadMap(String filepath){
