@@ -1,6 +1,9 @@
 package models.items.takeable.equippable.gloves;
 
 import models.Equipment;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
@@ -20,8 +23,13 @@ public class IronGloves extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/gloves/templateGloves.png");
         monetaryValue = IRONCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 10)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, IRONDEF)
         );
-        requiredLv = 5;
+        equipConditions = new ConditionList(
+                new StatCondition(null, IRONLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
+        );
+        itemWeight = IRONWEIGHT;
+        range = RANGE;
+
     }
 }

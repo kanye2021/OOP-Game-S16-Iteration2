@@ -2,6 +2,7 @@ package models.skills.SmasherSkills;
 
 import models.entities.Entity;
 import models.skills.PassiveSkill;
+import models.stats.Stats;
 
 /**
  * Created by aseber on 2/24/16.
@@ -12,6 +13,7 @@ public class BrawlingSkill extends PassiveSkill {
     private int baseSpeed;
     private int finalDamage;
     private int brawlLv;
+
     public BrawlingSkill(){
         baseDamage=LOW;
         baseSpeed=HIGH;
@@ -32,6 +34,7 @@ public class BrawlingSkill extends PassiveSkill {
         finalDamage = baseDamage + brawlLv;
 
     }
+    public int getCombatWeight(Entity entity){return ((int) 0.5*entity.getStats().getStat(Stats.Type.TOTAL_WEIGHT));}
     public int getFinalDamage(){//Used for combat always gets final damage
         return finalDamage;
     }

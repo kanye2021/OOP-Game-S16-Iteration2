@@ -11,15 +11,10 @@ public class ConsumableItem extends TakeableItem {
 
     public StatModificationList onConsumeModifications;
 
-    public boolean onTouch(Entity entity) {
-
-        return false;
-
-    }
-
     public void onUse(Entity entity) {
 
         entity.applyStatMod(onConsumeModifications);
+        entity.getInventory().removeItem(this);
 
     }
 

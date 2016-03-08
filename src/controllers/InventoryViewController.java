@@ -2,14 +2,14 @@ package controllers;
 
 import models.Inventory;
 import models.entities.Entity;
-import models.entities.npc.Action;
+import models.entities.npc.actions.Action;
 import models.entities.npc.NPC;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
 import utilities.StateManager;
 import utilities.Task;
 import views.InventoryView;
-import views.NPCActionView;
+import views.NPCMenuView;
 import views.View;
 
 import java.awt.event.KeyEvent;
@@ -75,6 +75,9 @@ public class InventoryViewController extends ViewController {
             public void run() {
                 TakeableItem currentItem = itemNodeArrayList.get(selectedItemIndex).getItem();
                 entity.dropItem(currentItem);
+                selectedItemIndex--;
+                if (selectedItemIndex < 0) selectedItemIndex = 0;
+                ((InventoryView) view).updateSelected(selectedItemIndex);
             }
 
             @Override
@@ -91,6 +94,9 @@ public class InventoryViewController extends ViewController {
                     // weird to tell them item to use itself then pass the entity o_O ?
 //                    currentItem.onUse();
                 }
+                selectedItemIndex--;
+                if (selectedItemIndex < 0) selectedItemIndex = 0;
+                ((InventoryView) view).updateSelected(selectedItemIndex);
             }
 
             @Override

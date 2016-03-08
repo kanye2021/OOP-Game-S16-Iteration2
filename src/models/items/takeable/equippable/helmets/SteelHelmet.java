@@ -1,6 +1,9 @@
 package models.items.takeable.equippable.helmets;
 
 import models.Equipment;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
@@ -21,9 +24,14 @@ public class SteelHelmet extends EquippableItem {
         sprite = new Sprite("./src/res/items/takeable/armor/head/knight_helm.png");
         monetaryValue = STEELCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 35)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, STEELDEF)
         );
-        requiredLv = 10;
+        equipConditions = new ConditionList(
+                new StatCondition(null, STEELLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
+        );
+        itemWeight = STEELWEIGHT;
+        range = RANGE;
+
     }
 
 }

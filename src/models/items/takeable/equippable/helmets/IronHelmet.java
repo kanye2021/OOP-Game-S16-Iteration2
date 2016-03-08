@@ -1,6 +1,9 @@
 package models.items.takeable.equippable.helmets;
 
 import models.Equipment;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
@@ -18,12 +21,17 @@ public class IronHelmet extends EquippableItem {
         name = "Iron Helmet";
         description = "A helmet made of iron";
         component = Equipment.Component.HELMET;
-        sprite = new Sprite("./src/res/items/takeable/armor/head/IronHelm.png");
+        sprite = new Sprite("./src/res/items/takeable/armor/head/smasher-template-helm.png");
         monetaryValue = IRONCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 25)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, IRONDEF)
         );
-        requiredLv = 5;
+        equipConditions = new ConditionList(
+            new StatCondition(null, IRONLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
+        );
+        itemWeight = IRONWEIGHT;
+        range = RANGE;
+
     }
 
 }

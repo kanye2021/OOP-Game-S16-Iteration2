@@ -1,6 +1,9 @@
 package models.items.takeable.equippable.weapons.twoHanded;
 
 import models.Equipment;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
@@ -17,11 +20,17 @@ public class MithrilTwoHandSword extends EquippableItem{
         name = "MITHRIL 2h Sword";
         description = "2h sword made of mithril";
         component = Equipment.Component.TWO_HANDED_WEAPON;
-        sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/smasher.template-2h.png");
+        sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/smasher-template-2h.png");
         monetaryValue = MITHRILCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.WEAPON_MODIFIER, MITHRILATK)
+                new StatModification(Stats.Type.WEAPON_MODIFIER, MITHRILATK*2)
         );
-        requiredLv = 20;
+
+        equipConditions = new ConditionList(
+                new StatCondition(null, MITHRILLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
+        );
+        itemWeight = MITHRILWEIGHT;
+        range = SMASHERRANGE;
+
     }
 }

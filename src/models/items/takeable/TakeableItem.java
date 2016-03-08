@@ -15,7 +15,7 @@ public abstract class TakeableItem extends Item {
     protected int monetaryValue;
 
     @Override
-    public boolean onTouch(Entity entity) {
+    public final boolean onTouch(Entity entity) {
         boolean added = entity.addItemToInventory(this);
         entity.applyStatMod(onPickUpModifications);
         return added;
@@ -43,6 +43,11 @@ public abstract class TakeableItem extends Item {
 
     public int getMonetaryValue() {
         return monetaryValue;
+    }
+
+    //The idea being that some villagers might sell something for higher than it actually is
+    public void setMonetaryValue(int money) {
+        monetaryValue = money;
     }
 
     public boolean isEquipable() {

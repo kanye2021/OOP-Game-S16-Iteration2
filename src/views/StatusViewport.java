@@ -61,6 +61,7 @@ public class StatusViewport extends View {
             Graphics2D g2 = (Graphics2D) g.create();
             drawStatAttributes(g2);
         }
+
     }
 
     private void drawLevelAndLives(Graphics g){

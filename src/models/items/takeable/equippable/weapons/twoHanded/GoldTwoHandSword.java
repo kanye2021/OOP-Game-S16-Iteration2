@@ -1,7 +1,9 @@
 package models.items.takeable.equippable.weapons.twoHanded;
 
 import models.Equipment;
-import models.items.Item;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
@@ -17,11 +19,15 @@ public class GoldTwoHandSword extends EquippableItem{
         name = "Gold 2h Sword";
         description = "2h sword made of gold";
         component = Equipment.Component.TWO_HANDED_WEAPON;
-        sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/smasher.template-2h.png");
+        sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/smasher-template-2h.png");
         monetaryValue = GOLDCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.WEAPON_MODIFIER, GOLDATK)
+                new StatModification(Stats.Type.WEAPON_MODIFIER, GOLDATK*2)
         );
-        requiredLv = 30;
+        equipConditions = new ConditionList(
+                new StatCondition(null, GOLDLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
+        );
+        itemWeight = GOLDWEIGHT;
+        range = SMASHERRANGE;
     }
 }

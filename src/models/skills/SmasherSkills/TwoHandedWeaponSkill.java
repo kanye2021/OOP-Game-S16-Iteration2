@@ -3,6 +3,7 @@ package models.skills.SmasherSkills;
 import models.entities.Entity;
 import models.skills.PassiveSkill;
 import models.skills.Skill;
+import models.stats.Stats;
 
 /**
  * Created by aseber on 2/24/16.
@@ -32,6 +33,9 @@ public class TwoHandedWeaponSkill extends PassiveSkill {
         twoHandedWeaponLv = getLevel();
         finalDamage = baseDamage + twoHandedWeaponLv;
     }
+
+    public int getCombatWeight(Entity entity){return (2*entity.getStats().getStat(Stats.Type.TOTAL_WEIGHT));}
+
 
     public int getFinalDamage() {
         return finalDamage;

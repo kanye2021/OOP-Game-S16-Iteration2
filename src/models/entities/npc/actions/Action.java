@@ -1,6 +1,7 @@
-package models.entities.npc;
+package models.entities.npc.actions;
 
 import models.entities.Avatar;
+import models.entities.npc.NPC;
 import sun.security.x509.AVA;
 
 /**
@@ -8,15 +9,11 @@ import sun.security.x509.AVA;
  */
 public abstract class Action {
 
-
     //Actions occur between two people
-    protected NPC npc;
-
+    protected NPC npc; //Thing being interacted
     public Action(NPC npc){
         this.npc = npc;
     }
-
-    //TODO: I dont htink this should be public but it works.
     public abstract void activate();
     public abstract String getName();
 }

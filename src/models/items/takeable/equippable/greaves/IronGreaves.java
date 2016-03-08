@@ -1,6 +1,9 @@
 package models.items.takeable.equippable.greaves;
 
 import models.Equipment;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
@@ -20,8 +23,17 @@ public class IronGreaves extends EquippableItem{
         sprite = new Sprite("./src/res/items/takeable/armor/legs/smasher-template-greaves.png");
         monetaryValue = IRONCOST;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.ARMOR_MODIFIER, 10)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, IRONDEF),
+                // just testing multiple stat mods
+                new StatModification(Stats.Type.HARDINESS, 20),
+                new StatModification(Stats.Type.MOVEMENT, -10)
+
         );
-        requiredLv = 5;
+        equipConditions = new ConditionList(
+                new StatCondition(null, IRONLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
+        );
+        itemWeight = IRONWEIGHT;
+        range = RANGE;
+
     }
 }

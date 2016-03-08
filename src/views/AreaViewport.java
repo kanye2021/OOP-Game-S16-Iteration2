@@ -1,13 +1,17 @@
 package views;
 
+import models.area_effects.AreaEffect;
 import models.entities.Avatar;
 import models.entities.Entity;
 import models.items.Item;
+import models.map.Decal;
 import models.map.Map;
 import models.map.Terrain;
 import models.map.Tile;
+import models.stats.Stats;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.*;
 import java.util.Queue;
 
@@ -37,10 +41,24 @@ public class AreaViewport extends View implements Observer {
     //Some other food
     public HashMap<Point, Tile> seenTiles = new HashMap<>();
 
+    //G
+    private Graphics regularGraphicsNotEffedUpWithTransparency;
+
+    // Just a container to hold an entity and a location in order to draw the health bars w/o opacity messed up
+    private class EntityLocationTuple {
+        public final Point point;
+        public final Entity entity;
+        public EntityLocationTuple(Entity e, Point p) {
+            this.point = p;
+            this.entity = e;
+        }
+    }
+    private ArrayList<EntityLocationTuple> entityLocationTuples;
 
     public AreaViewport(int width, int height, Display display, Map map, Avatar avatar){
         super(width, height, display);
 
+        entityLocationTuples = new ArrayList<EntityLocationTuple>();
         this.map = map;
         this.avatar = avatar;
         avatar.addObserver(this);
@@ -55,6 +73,8 @@ public class AreaViewport extends View implements Observer {
 
     @Override
     public void render(Graphics g){
+        regularGraphicsNotEffedUpWithTransparency = g;
+
         // Draw a black background
         g.setColor(Color.BLACK);
         g.fillRect(0,0,viewportWidth, viewportHeight);
@@ -68,6 +88,18 @@ public class AreaViewport extends View implements Observer {
         Graphics2D g2 = (Graphics2D) g.create();
 
         breadthFirstRender(logicalPoint, pixelPoint, g2);
+
+        g.setColor(Color.WHITE);
+        g.drawString(logicalPoint.toString(), viewportWidth - g.getFontMetrics().stringWidth(logicalPoint.toString()) - 50, 25);
+
+        // Once finish rendering all tiles with appropiate FoW transparencies, draw stuff that ignores transparencies
+        // Like health bars.
+        for (EntityLocationTuple et : this.entityLocationTuples) {
+            drawEntityHealthBar(regularGraphicsNotEffedUpWithTransparency, et.entity, et.point);
+
+        }
+        // Delete all so they dont get redrawn every time the instance of this class draws..
+        this.entityLocationTuples.clear();
     }
 
     // This will traverse through all the tiles using a breadth first search. It will then render that tile.
@@ -152,21 +184,34 @@ public class AreaViewport extends View implements Observer {
         g.drawImage(terrainImage, terrainX, terrainY, hexWidth, hexHeight, getDisplay());
 
 
-        // TODO: Implement items and areaEffects / Decals
-//        // Draw the items
+        // Draw the items
         Item item = tileNode.tile.getItem();
         if(item!=null){
             Image itemImage = item.getImage();
-//            itemImage = itemImage.getScaledInstance(hexSize, hexSize, 0); // TODO SEE WHAT THE LAST PARAMETER IS WHEN YOU HAVE WIFI
 
-            // Resize the entity image
+            // Resize the item image
             int scaledWidth = hexWidth * 1;
             int scaledHeight = hexHeight * 1;
 
-            int itemX = (int)(tileNode.pixelPoint.getX() - itemImage.getWidth(null) /2);
-            int itemY = (int)(tileNode.pixelPoint.getY() - itemImage.getHeight(null) /2);
+            int itemX = (int)(tileNode.pixelPoint.getX() - scaledWidth /2);
+            int itemY = (int)(tileNode.pixelPoint.getY() - scaledHeight /2);
             g.drawImage(itemImage, itemX, itemY, scaledWidth, scaledHeight,  getDisplay());
         }
+
+        // Draw Area Effects / Decals
+        Decal decal = tileNode.tile.getDecal();
+        if(decal!=null && decal.isVisible()){
+            Image decalImage = decal.getImage();
+
+            // Resize the item image
+            int scaledWidth = hexWidth * 3/5;
+            int scaledHeight = hexHeight * 3/5;
+
+            int itemX = (int)(tileNode.pixelPoint.getX() - scaledWidth /2);
+            int itemY = (int)(tileNode.pixelPoint.getY() - scaledHeight /2);
+            g.drawImage(decalImage, itemX, itemY, scaledWidth, scaledHeight,  getDisplay());
+        }
+
 
         // Display entities on the map
         Entity entity = tileNode.tile.getEntity();
@@ -181,9 +226,65 @@ public class AreaViewport extends View implements Observer {
             int entityY = (int) (tileNode.pixelPoint.getY() - scaledHeight / 2);
 
             g.drawImage(entityImage, entityX, entityY, scaledWidth, scaledHeight, getDisplay());
+
+            // Add this entity to list of entities and their locations to render its health later alligator
+            this.entityLocationTuples.add(new EntityLocationTuple(entity, new Point(entityX, entityY)));
+
         }
 
         g.setClip(oldClip);
+
+
+    }
+
+    private void drawEntityHealthBar(Graphics g, Entity entity, Point p) {
+        int entityX = (int) p.getX();
+        int entityY = (int) p.getY();
+
+        Stats stats = entity.getStats();
+        // Start with the healthbar
+        // Get the necessary stats
+        int health = stats.getStat(Stats.Type.HEALTH);
+        int maxHealth = stats.getStat(Stats.Type.MAX_HEALTH);
+
+        // Sizes
+        int healthBarWidth = getScreenWidth()/12;
+        int healthBarHeight = getScreenHeight()/53;
+
+        // Set the font
+        Font f = new Font("Courier New", 1, 14);
+        g.setFont(f);
+
+
+        // Set the location and size of the health bar.
+        int healthBarX = entityX - healthBarWidth/3;
+        int healthBarY = entityY - healthBarHeight;
+
+
+        // Draw the outline of the health bar.
+        g.setColor(Color.RED);
+        g.fillRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
+
+        // Determine what fraction of the healthbar should be shown.
+        double healthFraction = (double) health / (double) maxHealth;
+        int healthFillWidth = (int) (healthFraction * healthBarWidth);
+
+        // Fill the healthbar
+        g.setColor(Color.GREEN);
+        g.fillRect(healthBarX, healthBarY, healthFillWidth, healthBarHeight);
+
+        // Display the fraction of health
+        g.setColor(Color.WHITE);
+        String healthFractionString = "(" + health + "/" + maxHealth + ")";
+        FontMetrics fm = g.getFontMetrics(f);
+
+        // Place the font at the right of the bar
+        Rectangle2D healthFractionRect = fm.getStringBounds(healthFractionString, g);
+
+        int healthFractionX = healthBarX + (healthBarWidth - (int) healthFractionRect.getWidth())/2;
+        int healthFractionY = healthBarY + healthBarHeight - 4;
+        g.drawString(healthFractionString, healthFractionX, healthFractionY);
+
     }
 
     // This will be used in the BF traversal to get the list of adjacent tiles.
@@ -309,7 +410,13 @@ public class AreaViewport extends View implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        setAvatar((Avatar)o);
         getDisplay().repaint();
+    }
+
+    public void setAvatar(Avatar a) {
+        this.avatar = a;
+        avatar.addObserver(this);
     }
 
     // This is a simple data stortage class used for the traversing tile and rendering.

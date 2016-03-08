@@ -3,6 +3,7 @@ package controllers.entityControllers;
 import controllers.*;
 import controllers.GameViewController;
 import controllers.InventoryViewController;
+import controllers.NPCInteractions.NPCMenuController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.map.Map;
@@ -21,6 +22,7 @@ import utilities.Task;
 import views.*;
 import views.GameView;
 import views.InventoryView;
+import views.NPCMenuView;
 import views.ToastView;
 
 import java.awt.event.KeyEvent;
@@ -141,7 +143,7 @@ public class AvatarController extends EntityController {
             }
         };
 
-            Task openInventory = new Task() {
+        Task openInventory = new Task() {
             @Override
             public void run() {
                 InventoryView inventoryView = new InventoryView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay());
@@ -158,6 +160,30 @@ public class AvatarController extends EntityController {
                 // Add the substate
                 gameViewController.addSubState(inventorySubState);
 
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
+        Task openEquipment = new Task() {
+            @Override
+            public void run() {
+                EquipmentView equipmentView = new EquipmentView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay());
+                EquipmentViewController equipmentViewController = new EquipmentViewController(equipmentView, gameViewController.getStateManager(), avatar);
+                SubState equipmentSubState = new SubState(equipmentViewController, equipmentView);
+                // Add closing task.
+                equipmentViewController.setCloseEquipmentTask(new Task() {
+                    @Override
+                    public void run() { equipmentSubState.dismiss(); }
+
+                    @Override
+                    public void stop() { }
+                });
+                // Add the substate
+                gameViewController.addSubState(equipmentSubState);
             }
 
             @Override
@@ -186,8 +212,37 @@ public class AvatarController extends EntityController {
                     //first skill should be something..
                     Skill thirdSkill = avatar.getSpecificSkill(Skill.SkillDictionary.PICK_POCKET);
                     System.out.println(thirdSkill);
-                    PickPocketSkill pickPocketSkill = (PickPocketSkill) secondSkill;
+                    PickPocketSkill pickPocketSkill = (PickPocketSkill) thirdSkill;
                     pickPocketSkill.onActivate(avatar);
+
+                }else{
+                    System.out.println("What are you");
+                }
+
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
+        Task fourthSkill = new Task(){
+            @Override
+            public void run() {
+                //if smasher, get first skill
+                if(avatar.getOccupation().contains("Smasher")){
+                    //Technically the Smasher class has no actives
+
+                }else if(avatar.getOccupation().contains("Summoner")){
+                    //No more skills
+                }else if(avatar.getOccupation().contains("Sneak")){
+                    //first skill should be something..
+                    //first skill should be something..
+                    Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
+                    System.out.println(fourthSkill);
+                    DetectRemoveTrapSkill detectRemoveTrapSkill = (DetectRemoveTrapSkill) fourthSkill;
+                    detectRemoveTrapSkill.removeTrap(avatar);
 
                 }else{
                     System.out.println("What are you");
@@ -271,13 +326,16 @@ public class AvatarController extends EntityController {
         addKeyPressMapping(firstSkill,KeyEvent.VK_2);
         addKeyPressMapping(secondSkill,KeyEvent.VK_3);
         addKeyPressMapping(thirdSkill,KeyEvent.VK_4);
-//        addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
+        addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
 
         // TODO: Testing opening a random overlay toast view
         addKeyPressMapping(openToastTestView, KeyEvent.VK_L);
 
         // Open Inventory
         addKeyPressMapping(openInventory, KeyEvent.VK_I);
+
+        // Open Equipment
+        addKeyPressMapping(openEquipment, KeyEvent.VK_Y);
 
         //Open Pause Menu
         addKeyPressMapping(openPause, KeyEvent.VK_P);
@@ -330,6 +388,11 @@ public class AvatarController extends EntityController {
 
     public void startInteraction(NPC npc){
         avatar.startInteraction(npc);
+    }
+
+    //I am so sorry for doing this...
+    public Avatar getAvatar(){
+        return avatar;
     }
 
 }

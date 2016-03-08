@@ -10,6 +10,9 @@ import models.stats.StatModificationList;
  * Created by aseber on 2/22/16.
  */
 public abstract class Occupation {
+    public Occupation(){
+
+    }
 
     private static final SkillList defaultSkills = new SkillList(
         new BargainSkill(),
