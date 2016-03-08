@@ -1,6 +1,7 @@
-package models.skills.SneakSkills;
+package utilities;
 
 import models.conditions.MapCondition;
+import models.entities.Entity;
 import models.entities.npc.NPC;
 
 import java.awt.*;
@@ -9,14 +10,14 @@ import java.awt.*;
  * Created by dyeung on 3/1/16.
  */
 public class TileDetection {
-    private NPC npc;
+    private Entity entity;
     private Point location;
-    public TileDetection(NPC npc, Point location){
-        this.npc = npc;
+    public TileDetection(Entity entity, Point location){
+        this.entity = entity;
         this.location = location;
     }
     public boolean npcDetected(){
-        if (npc == null){
+        if (entity == null){
             return false;
         }else {
             return true;
@@ -26,7 +27,7 @@ public class TileDetection {
     public Point getLocation(){
         return location;
     }
-    public NPC getNpc(){
-        return npc;
+    public Entity getEntity(){
+        return entity;
     }
 }

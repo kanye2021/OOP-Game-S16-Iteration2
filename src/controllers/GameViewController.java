@@ -5,7 +5,7 @@ import controllers.entityControllers.AvatarController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.map.Map;
-import models.skills.SneakSkills.TileDetection;
+import utilities.TileDetection;
 import utilities.StateManager;
 import utilities.SubState;
 import utilities.Task;
@@ -155,7 +155,7 @@ public class GameViewController extends ViewController{
             mouseStartLocation = new Point(e.getXOnScreen(), e.getYOnScreen());
         }
 
-        System.out.println("MouseDragged");
+        //System.out.println("MouseDragged");
         offset = new Point(e.getXOnScreen(), e.getYOnScreen());
         offset.translate((int)(-mouseStartLocation.getX()), (int)(-mouseStartLocation.getY()));
         offset.translate((int)lastOffset.getX(), (int)lastOffset.getY());
@@ -179,13 +179,13 @@ public class GameViewController extends ViewController{
 
         TileDetection td;
         td = avatarController.move(direction);
-        NPC npc = td.getNpc();
+        NPC npc = (NPC)td.getEntity();
 
         if (td.npcDetected()){
-            System.out.println("Action is true");
+            //System.out.println("Action is true");
 
             //Changes the AvatarController in gameview controller to NPCInteractionController
-            NPCMenuView npcView = new NPCMenuView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), td.getNpc());
+            NPCMenuView npcView = new NPCMenuView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), npc);
             NPCMenuController npcIC = new NPCMenuController(npcView, getStateManager(), this, npc, avatarController);
             setSubController(npcIC);
             ((GameView)view).initNPCActionView(npcView);

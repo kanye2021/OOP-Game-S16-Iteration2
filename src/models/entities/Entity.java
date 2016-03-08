@@ -12,7 +12,7 @@ import models.map.Terrain;
 import models.occupation.Occupation;
 import models.skills.Skill;
 import models.skills.SkillList;
-import models.skills.SneakSkills.TileDetection;
+import utilities.TileDetection;
 import models.stats.StatModificationList;
 import models.stats.Stats;
 import views.sprites.DirectionalSprite;

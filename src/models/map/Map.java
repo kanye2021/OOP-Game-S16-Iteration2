@@ -2,7 +2,7 @@ package models.map;
 
 import models.entities.Entity;
 import models.items.Item;
-import models.skills.SneakSkills.TileDetection;
+import utilities.TileDetection;
 import models.entities.npc.NPC;
 import java.awt.*;
 import java.util.HashMap;
