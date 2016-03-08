@@ -15,9 +15,9 @@ import views.sprites.Sprite;
 /**
  * Created by aseber on 2/22/16.
  */
-public class helmetTemplate extends EquippableItem {
+public class helmet extends EquippableItem {
 
-    public helmetTemplate(equippableItemDecoration decoration) {
+    public helmet(equippableItemDecoration decoration) {
 
         ID = ItemDictionary.getDictionaryItemFromID(1000 + decoration.IDModifier);
         name = "{NAME} Helmet".replace("{NAME}", decoration.nameModifier);

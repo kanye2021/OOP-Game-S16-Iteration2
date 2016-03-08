@@ -3,7 +3,7 @@ package utilities;
 /**
  * Created by aseber on 2/24/16.
  */
-public class MathUtilities {
+public final class MathUtilities {
 
     public static int putInRange(int min, int current, int max) {
 

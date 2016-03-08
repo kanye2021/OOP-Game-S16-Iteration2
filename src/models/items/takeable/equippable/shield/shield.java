@@ -1,4 +1,4 @@
-package models.items.takeable.equippable.boots;
+package models.items.takeable.equippable.shield;
 
 import models.Equipment;
 import models.conditions.Condition;
@@ -14,25 +14,25 @@ import views.sprites.DecoratedSprite;
 import views.sprites.Sprite;
 
 /**
- * Created by aseber on 3/7/16.
+ * Created by ben on 2/27/16.
  */
-public class bootTemplate extends EquippableItem {
-
-    public bootTemplate(equippableItemDecoration decoration){
-        ID = Item.ItemDictionary.getDictionaryItemFromID(1300 + decoration.IDModifier);
-        name = "{NAME} Boots".replace("{NAME}", decoration.nameModifier);
-        description = "Boots made of {NAME}".replace("{NAME}", decoration.descriptionModifier);
-        component = Equipment.Component.BOOTS;
-        sprite = new DecoratedSprite("./src/res/items/takeable/armor/boots/templateBoots.png", decoration.colorMap);
+public class shield extends EquippableItem{
+    public shield(equippableItemDecoration decoration){
+        ID = Item.ItemDictionary.getDictionaryItemFromID(1500 + decoration.IDModifier);
+        name = "{NAME} Shield".replace("{NAME}", decoration.nameModifier);
+        description = "Shield made of {NAME}".replace("{NAME}", decoration.descriptionModifier);
+        component = Equipment.Component.SHIELD;
+        sprite = new DecoratedSprite("./src/res/items/takeable/armor/secondary/smasher-template-shield.png", decoration.colorMap);
         monetaryValue = decoration.monetaryModifier;
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, decoration.defenseModifier)
         );
+
         equipConditions = new ConditionList(
                 new StatCondition(null, decoration.levelRequiredModifier, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = decoration.weightModifier;
         range = RANGE;
-    }
 
+    }
 }

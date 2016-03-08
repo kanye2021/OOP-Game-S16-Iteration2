@@ -3,6 +3,7 @@ package controllers.entityControllers;
 import models.entities.Entity;
 import models.entities.Pet;
 import models.map.Map;
+import utilities.NavigationUtilities;
 import utilities.Task;
 
 import java.awt.*;
@@ -24,18 +25,18 @@ public class PetController extends NPCController implements Observer {
     Task moveSouth;
     Task moveSouthEast;
     Task moveNorthEast;
-    private HashMap<Task, Map.Direction> taskMovementVector = new HashMap<>();
+    private HashMap<Map.Direction, Task> taskMovementVector = new HashMap<>();
 
     public PetController(Pet pet){
         this.pet = pet;
         createMovementTasks();
 
-        taskMovementVector.put(moveNorth, Map.Direction.NORTH);
-        taskMovementVector.put(moveNorthWest, Map.Direction.NORTH_WEST);
-        taskMovementVector.put(moveNorthEast, Map.Direction.NORTH_EAST);
-        taskMovementVector.put(moveSouthEast, Map.Direction.SOUTH_EAST);
-        taskMovementVector.put(moveSouth, Map.Direction.SOUTH);
-        taskMovementVector.put(moveSouthWest, Map.Direction.SOUTH_WEST);
+        taskMovementVector.put(Map.Direction.NORTH, moveNorth);
+        taskMovementVector.put(Map.Direction.NORTH_WEST, moveNorthWest);
+        taskMovementVector.put(Map.Direction.NORTH_EAST, moveNorthEast);
+        taskMovementVector.put(Map.Direction.SOUTH_EAST, moveSouthEast);
+        taskMovementVector.put(Map.Direction.SOUTH, moveSouth);
+        taskMovementVector.put(Map.Direction.SOUTH_WEST, moveSouthWest);
 
     }
 
@@ -93,27 +94,10 @@ public class PetController extends NPCController implements Observer {
 
         // Follow the avatar
         double petOwnerDistance = pet.getLocation().distance(followeeLocation);
-        Task minimumTask = null;
 
         if (petOwnerDistance > maximumDistanceFromOwner) {
 
-            double minimumDistance = Double.MAX_VALUE;
-
-            // Find the movement vector that results in the pet being the closest to its owner.
-            for (java.util.Map.Entry<Task, Map.Direction> entry : taskMovementVector.entrySet()) {
-
-                Point newPetLocation = entry.getValue().neighbor(petLocation);
-
-                double newPetDistance = newPetLocation.distance(followeeLocation);
-
-                if (newPetDistance < minimumDistance && pet.canTraverseTerrain(newPetLocation)) {
-
-                    minimumDistance = newPetDistance;
-                    minimumTask = entry.getKey();
-
-                }
-
-            }
+            Task minimumTask = taskMovementVector.get(NavigationUtilities.getDirectionToMove(pet, petLocation, followeeLocation));
 
             // And apply it.
             if (minimumTask != null) {

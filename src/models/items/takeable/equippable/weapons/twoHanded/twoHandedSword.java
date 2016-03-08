@@ -1,10 +1,9 @@
-package models.items.takeable.equippable.weapons.oneHanded;
+package models.items.takeable.equippable.weapons.twoHanded;
 
 import models.Equipment;
 import models.conditions.Condition;
 import models.conditions.ConditionList;
 import models.conditions.StatCondition;
-import models.items.Item;
 import models.items.decorations.equippableItemDecoration;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
@@ -16,16 +15,16 @@ import views.sprites.Sprite;
 /**
  * Created by aseber on 3/2/16.
  */
-public class swordTemplate extends EquippableItem{
-    public swordTemplate(equippableItemDecoration decoration){
-        ID = Item.ItemDictionary.getDictionaryItemFromID(1600 + decoration.IDModifier);
-        name = "{NAME} Sword".replace("{NAME}", decoration.nameModifier);
-        description = "Sword made of {NAME}".replace("{NAME}", decoration.descriptionModifier);
-        component = Equipment.Component.ONE_HANDED_WEAPON;
-        sprite = new DecoratedSprite("./src/res/items/takeable/weapons/oneHanded/smasher-template-sword.png", decoration.colorMap);
+public class twoHandedSword extends EquippableItem{
+    public twoHandedSword(equippableItemDecoration decoration){
+        ID = ItemDictionary.getDictionaryItemFromID(1700 + decoration.IDModifier);
+        name = "{NAME} 2h Sword".replace("{NAME}", decoration.nameModifier);
+        description = "2h sword made of gold".replace("{NAME}", decoration.descriptionModifier);
+        component = Equipment.Component.TWO_HANDED_WEAPON;
+        sprite = new DecoratedSprite("./src/res/items/takeable/weapons/twoHanded/smasher-template-2h.png", decoration.colorMap);
         monetaryValue = decoration.monetaryModifier;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.WEAPON_MODIFIER, decoration.attackModifier)
+                new StatModification(Stats.Type.WEAPON_MODIFIER, decoration.attackModifier*2)
         );
         equipConditions = new ConditionList(
                 new StatCondition(null, decoration.levelRequiredModifier, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
