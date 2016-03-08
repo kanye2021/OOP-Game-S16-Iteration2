@@ -49,7 +49,11 @@ public class SubState {
         this.parent.removeSubState(this);
     }
 
-    public void setView(View view){
+    public void setView(View view) {
         this.view = view;
+    }
+
+    public void scaleView(){
+        view.scaleView();
     }
 }

@@ -1,8 +1,6 @@
 package utilities;
 
-import controllers.TalkViewController;
 import views.Display;
-import views.TalkView;
 
 import java.util.Stack;
 

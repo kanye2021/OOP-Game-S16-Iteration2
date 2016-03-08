@@ -1,6 +1,9 @@
 package models.items.takeable.equippable.greaves;
 
 import models.Equipment;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
@@ -22,7 +25,9 @@ public class SteelSkirt extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, STEELDEF)
         );
-        requiredLv = STEELLV;
+        equipConditions = new ConditionList(
+                new StatCondition(null, STEELLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
+        );
         itemWeight = STEELWEIGHT;
         range = RANGE;
     }

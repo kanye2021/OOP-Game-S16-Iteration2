@@ -24,90 +24,89 @@ public class PetController extends NPCController implements Observer {
     Task moveSouth;
     Task moveSouthEast;
     Task moveNorthEast;
-    private HashMap<Task, Point> taskMovementVector = new HashMap<>();
+    private HashMap<Task, Map.Direction> taskMovementVector = new HashMap<>();
 
     public PetController(Pet pet){
         this.pet = pet;
         createMovementTasks();
 
-        taskMovementVector.put(moveNorth, new Point(0, -1));
-        taskMovementVector.put(moveNorthWest, new Point(-1, -1));
-        taskMovementVector.put(moveNorthEast, new Point(1, -1));
-        taskMovementVector.put(moveSouthEast, new Point(1, 1));
-        taskMovementVector.put(moveSouth, new Point(0, 1));
-        taskMovementVector.put(moveSouthWest, new Point(-1, 1));
+        taskMovementVector.put(moveNorth, Map.Direction.NORTH);
+        taskMovementVector.put(moveNorthWest, Map.Direction.NORTH_WEST);
+        taskMovementVector.put(moveNorthEast, Map.Direction.NORTH_EAST);
+        taskMovementVector.put(moveSouthEast, Map.Direction.SOUTH_EAST);
+        taskMovementVector.put(moveSouth, Map.Direction.SOUTH);
+        taskMovementVector.put(moveSouthWest, Map.Direction.SOUTH_WEST);
 
     }
-    
-    private void createMovementTasks() {        
-             moveNorth = new Task() {
-                @Override
-                public void run() { pet.move(Map.Direction.NORTH);}
 
-                @Override
-                public void stop() { pet.stopMoving(); }
-            };
-            moveNorthWest = new Task() {
-                @Override
-                public void run() { pet.move(Map.Direction.NORTH_WEST);}
+    private void createMovementTasks() {
+        moveNorth = new Task() {
+            @Override
+            public void run() { pet.move(Map.Direction.NORTH);}
 
-                @Override
-                public void stop() { pet.stopMoving(); }
-            };
-            moveSouthWest = new Task() {
-                @Override
-                public void run() { pet.move(Map.Direction.SOUTH_WEST);}
+            @Override
+            public void stop() { pet.stopMoving(); }
+        };
+        moveNorthWest = new Task() {
+            @Override
+            public void run() { pet.move(Map.Direction.NORTH_WEST);}
 
-                @Override
-                public void stop() { pet.stopMoving(); }
-            };
-            moveSouth = new Task() {
-                @Override
-                public void run() { pet.move(Map.Direction.SOUTH);}
+            @Override
+            public void stop() { pet.stopMoving(); }
+        };
+        moveSouthWest = new Task() {
+            @Override
+            public void run() { pet.move(Map.Direction.SOUTH_WEST);}
 
-                @Override
-                public void stop() { pet.stopMoving(); }
-            };
-            moveSouthEast = new Task() {
-                @Override
-                public void run() { pet.move(Map.Direction.SOUTH_EAST);}
+            @Override
+            public void stop() { pet.stopMoving(); }
+        };
+        moveSouth = new Task() {
+            @Override
+            public void run() { pet.move(Map.Direction.SOUTH);}
 
-                @Override
-                public void stop() { pet.stopMoving(); }
-            };
-            moveNorthEast = new Task() {
-                @Override
-                public void run() { pet.move(Map.Direction.NORTH_EAST);}
+            @Override
+            public void stop() { pet.stopMoving(); }
+        };
+        moveSouthEast = new Task() {
+            @Override
+            public void run() { pet.move(Map.Direction.SOUTH_EAST);}
 
-                @Override
-                public void stop() { pet.stopMoving(); }
-            };       
-        
+            @Override
+            public void stop() { pet.stopMoving(); }
+        };
+        moveNorthEast = new Task() {
+            @Override
+            public void run() { pet.move(Map.Direction.NORTH_EAST);}
+
+            @Override
+            public void stop() { pet.stopMoving(); }
+        };
+
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        Entity followee = (Entity) o;
 
-        Point newFolloweeLocation = followee.getLocation();
+        Point followeeLocation = ((Entity) o).getLocation();
+        Point petLocation = pet.getLocation();
 
         // Follow the avatar
-        double petOwnerDistance = pet.getLocation().distance(newFolloweeLocation);
-        double minimumDistance = Double.MAX_VALUE;
+        double petOwnerDistance = pet.getLocation().distance(followeeLocation);
         Task minimumTask = null;
 
         if (petOwnerDistance > maximumDistanceFromOwner) {
 
+            double minimumDistance = Double.MAX_VALUE;
+
             // Find the movement vector that results in the pet being the closest to its owner.
-            for (java.util.Map.Entry<Task, Point> entry : taskMovementVector.entrySet()) {
+            for (java.util.Map.Entry<Task, Map.Direction> entry : taskMovementVector.entrySet()) {
 
-                Point newPetLocation = new Point(
-                        pet.getLocation().x + entry.getValue().x,
-                        pet.getLocation().y + entry.getValue().y
-                );
+                Point newPetLocation = entry.getValue().neighbor(petLocation);
 
-                double newPetDistance = newPetLocation.distance(newFolloweeLocation);
-                if (newPetDistance < minimumDistance) {
+                double newPetDistance = newPetLocation.distance(followeeLocation);
+
+                if (newPetDistance < minimumDistance && pet.canTraverseTerrain(newPetLocation)) {
 
                     minimumDistance = newPetDistance;
                     minimumTask = entry.getKey();

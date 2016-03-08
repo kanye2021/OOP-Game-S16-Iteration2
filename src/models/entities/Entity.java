@@ -97,6 +97,13 @@ public abstract class Entity extends Observable implements ActionListener{
     public boolean canTraverseTerrain(Terrain terrain){
         return passableTerrain.contains(terrain.getType());
     }
+
+    public boolean canTraverseTerrain(Point point) {
+
+        return passableTerrain.contains(map.getTileAt(point).getTerrain().getType());
+
+    }
+
     // Location getter/setter
     public final Point getLocation() {
         return location;
@@ -107,6 +114,7 @@ public abstract class Entity extends Observable implements ActionListener{
         return occupation.getOccupation();
     }
     public Map.Direction getOrientation(){return orientation;}
+    public Map getMap(){return map;}
     //Returns specific skill by name
     public Skill getSpecificSkill(Skill.SkillDictionary skill){
         Skill found = null;
@@ -125,17 +133,25 @@ public abstract class Entity extends Observable implements ActionListener{
         }
     }
 
-    public final TileDetection move(Map.Direction direction){
+    public final TileDetection move(Map.Direction direction) {
         updateMovementTimerDelay();
         orientation = direction;
         currentMovement = direction;
+        Point desiredLocation = direction.neighbor(getLocation());
 
-        TileDetection td = map.moveEntity(Entity.this, currentMovement);
+        TileDetection td = map.moveEntity(Entity.this, desiredLocation);
         location = td.getLocation();
         // Call action performed so there is no lag when you press a button and start the timer.
         actionPerformed(null);
         movementTimer.start();
 
+        return td;
+    }
+
+    public final TileDetection teleport(Point point) {
+        TileDetection td =  map.moveEntity(Entity.this, point);
+        location = td.getLocation();
+        actionPerformed(null);
         return td;
     }
 
@@ -193,9 +209,9 @@ public abstract class Entity extends Observable implements ActionListener{
     }
 
     public final void equipItem(EquippableItem item){
-        inventory.removeItem(item);
-        equipment.setEquipmentComponent(item.getComponent(), item);
-        applyStatMod(item.getOnEquipModifications());
+
+        item.onUse(this);
+
     }
 
     public final void dropItem(TakeableItem item){
@@ -221,7 +237,7 @@ public abstract class Entity extends Observable implements ActionListener{
 
 
     // Used to go to a new map
-    public final void setmap(Map map){
+    public final void setMap(Map map){
         this.map = map;
     }
 
@@ -244,5 +260,24 @@ public abstract class Entity extends Observable implements ActionListener{
     }
     public final void setMount(Mount mount){this.mount = mount;}
 
+    // Wrapper to levelup an entity
+    public void levelUp() {
+        this.stats.levelUp();
+    }
+
+    // Wrapper to die (lose a life)
+    public void die() {
+        this.stats.loseALife();
+    }
+
+    // Wrapper to heal life
+    public void heal(int amount) {
+        this.stats.modifyStat(Stats.Type.HEALTH, amount);
+    }
+
+    // Wrapper to take damage
+    public void takeDamage(int amount) {
+        this.stats.modifyStat(Stats.Type.HEALTH, amount);
+    }
 
 }

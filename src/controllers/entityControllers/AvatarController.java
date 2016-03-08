@@ -3,6 +3,7 @@ package controllers.entityControllers;
 import controllers.*;
 import controllers.GameViewController;
 import controllers.InventoryViewController;
+import controllers.NPCInteractions.NPCMenuController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.map.Map;
@@ -21,6 +22,7 @@ import utilities.Task;
 import views.*;
 import views.GameView;
 import views.InventoryView;
+import views.NPCMenuView;
 import views.ToastView;
 
 import java.awt.event.KeyEvent;
@@ -210,8 +212,37 @@ public class AvatarController extends EntityController {
                     //first skill should be something..
                     Skill thirdSkill = avatar.getSpecificSkill(Skill.SkillDictionary.PICK_POCKET);
                     System.out.println(thirdSkill);
-                    PickPocketSkill pickPocketSkill = (PickPocketSkill) secondSkill;
+                    PickPocketSkill pickPocketSkill = (PickPocketSkill) thirdSkill;
                     pickPocketSkill.onActivate(avatar);
+
+                }else{
+                    System.out.println("What are you");
+                }
+
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
+        Task fourthSkill = new Task(){
+            @Override
+            public void run() {
+                //if smasher, get first skill
+                if(avatar.getOccupation().contains("Smasher")){
+                    //Technically the Smasher class has no actives
+
+                }else if(avatar.getOccupation().contains("Summoner")){
+                    //No more skills
+                }else if(avatar.getOccupation().contains("Sneak")){
+                    //first skill should be something..
+                    //first skill should be something..
+                    Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
+                    System.out.println(fourthSkill);
+                    DetectRemoveTrapSkill detectRemoveTrapSkill = (DetectRemoveTrapSkill) fourthSkill;
+                    detectRemoveTrapSkill.removeTrap(avatar);
 
                 }else{
                     System.out.println("What are you");
@@ -295,7 +326,7 @@ public class AvatarController extends EntityController {
         addKeyPressMapping(firstSkill,KeyEvent.VK_2);
         addKeyPressMapping(secondSkill,KeyEvent.VK_3);
         addKeyPressMapping(thirdSkill,KeyEvent.VK_4);
-//        addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
+        addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
 
         // TODO: Testing opening a random overlay toast view
         addKeyPressMapping(openToastTestView, KeyEvent.VK_L);
@@ -357,6 +388,11 @@ public class AvatarController extends EntityController {
 
     public void startInteraction(NPC npc){
         avatar.startInteraction(npc);
+    }
+
+    //I am so sorry for doing this...
+    public Avatar getAvatar(){
+        return avatar;
     }
 
 }

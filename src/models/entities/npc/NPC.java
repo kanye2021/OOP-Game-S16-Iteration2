@@ -1,12 +1,11 @@
 package models.entities.npc;
 
 import controllers.entityControllers.EntityController;
-import controllers.entityControllers.NPCController;
+import controllers.entityControllers.ShopKeeperController;
 import models.entities.Entity;
+import models.entities.npc.actions.Action;
 import models.map.Map;
 import models.stats.StatModificationList;
-import views.GameView;
-import views.NPCActionView;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,10 +15,16 @@ import java.util.ArrayList;
  */
 public abstract class NPC extends Entity {
     protected ArrayList<Action> actionList;
-
-    public NPC(Point location, Map map) {
+    protected ArrayList<String> dialogue;
+    protected int dialogueLocation;
+    public NPC(Point location, Map map, String ... dialogue) {
         super(location, map);
         actionList = new ArrayList<>();
+        this.dialogue = new ArrayList<>();
+        for(String text: dialogue){
+            this.dialogue.add(text);
+        }
+        dialogueLocation = 0;
     }
 
     @Override
@@ -39,7 +44,7 @@ public abstract class NPC extends Entity {
     }
 
     @Override
-    protected final EntityController initController() {
+    protected final EntityController initController(){
         return null; // AIController!
     }
 
@@ -50,8 +55,12 @@ public abstract class NPC extends Entity {
     public ArrayList<Action> getActionList(){
         return actionList;
     }
+    public void progressDialogue() { dialogueLocation++; }
+    public void resetDialogue() { dialogueLocation = 0; }
 
 
+    public ArrayList<String> getDialogue(){ return dialogue; }
+    public int getDialogueLocation(){ return dialogueLocation;}
 
 
 }

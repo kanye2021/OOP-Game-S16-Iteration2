@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.NPCInteractions.NPCMenuController;
 import controllers.entityControllers.AvatarController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
@@ -9,7 +10,7 @@ import utilities.StateManager;
 import utilities.SubState;
 import utilities.Task;
 import views.GameView;
-import views.NPCActionView;
+import views.NPCMenuView;
 import views.View;
 
 import java.awt.*;
@@ -75,7 +76,7 @@ public class GameViewController extends ViewController{
         if(!hasSubstateThatWantsToTakeInput && avatarController!=null){
             avatarController.handleKeyPress(e);
         }
-        if (activeSubController != null){
+        if (activeSubController != null) {
             activeSubController.handleKeyPress(e);
         }
     }
@@ -91,18 +92,21 @@ public class GameViewController extends ViewController{
 
     @Override
     protected void initKeyPressMapping() {
-        addKeyPressMapping(new Task() {
+        Task task = new Task() {
             @Override
             public void run() {
-                ((GameView)view).toggleDetailedStats();
+                ((GameView) view).toggleDetailedStats();
             }
 
             @Override
             public void stop() {
 
             }
-        }, KeyEvent.VK_P);
-        addKeyPressMapping(new Task() {
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_P);
+
+        task = new Task() {
             @Override
             public void run() {
                 moveAndDetect(Map.Direction.NORTH);
@@ -110,42 +114,65 @@ public class GameViewController extends ViewController{
 
             @Override
             public void stop() { avatarController.stopMoving(); }
-        }, KeyEvent.VK_W);
-        addKeyPressMapping(new Task() {
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_W);
+        addKeyPressMapping(task, KeyEvent.VK_NUMPAD8);
+
+        task = new Task() {
             @Override
             public void run() { moveAndDetect(Map.Direction.NORTH_WEST);}
 
             @Override
             public void stop() { avatarController.stopMoving(); }
-        }, KeyEvent.VK_Q);
-        addKeyPressMapping(new Task() {
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_Q);
+        addKeyPressMapping(task, KeyEvent.VK_NUMPAD7);
+
+        task = new Task() {
             @Override
             public void run() { moveAndDetect(Map.Direction.SOUTH_WEST);}
 
             @Override
             public void stop() { avatarController.stopMoving(); }
-        }, KeyEvent.VK_Z);
-        addKeyPressMapping(new Task() {
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_Z);
+        addKeyPressMapping(task, KeyEvent.VK_NUMPAD1);
+
+        task = new Task() {
             @Override
             public void run() { moveAndDetect(Map.Direction.SOUTH);}
 
             @Override
             public void stop() { avatarController.stopMoving(); }
-        }, KeyEvent.VK_S);
-        addKeyPressMapping(new Task() {
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_S);
+        addKeyPressMapping(task, KeyEvent.VK_NUMPAD2);
+
+        task = new Task() {
             @Override
             public void run() { moveAndDetect(Map.Direction.SOUTH_EAST);}
 
             @Override
             public void stop() { avatarController.stopMoving(); }
-        }, KeyEvent.VK_C);
-        addKeyPressMapping(new Task() {
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_C);
+        addKeyPressMapping(task, KeyEvent.VK_NUMPAD3);
+
+        task = new Task() {
             @Override
             public void run() { moveAndDetect(Map.Direction.NORTH_EAST);}
 
             @Override
             public void stop() { avatarController.stopMoving(); }
-        }, KeyEvent.VK_E);
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_E);
+        addKeyPressMapping(task, KeyEvent.VK_NUMPAD9);
     }
     @Override
     public void handleMouseDragged(java.awt.event.MouseEvent e){
@@ -183,17 +210,20 @@ public class GameViewController extends ViewController{
         if (td.npcDetected()){
             System.out.println("Action is true");
             //Changes the AvatarController in gameview controller to NPCInteractionController
-            NPCActionView npcView = new NPCActionView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), td.getNpc());
-            NPCInteractionController npcIC = new NPCInteractionController(npcView, getStateManager(), npc);
+            NPCMenuView npcView = new NPCMenuView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), td.getNpc());
+            NPCMenuController npcIC = new NPCMenuController(npcView, getStateManager(), this, npc, avatarController);
             setSubController(npcIC);
             ((GameView)view).initNPCActionView(npcView);
             ((GameView)view).renderNPCAction(true);
             avatarController.startInteraction(npc);
         }else {
-//            System.out.println("Action is false");
-            ((GameView)view).renderNPCAction(false);
-            setSubController(null);
+            turnOffSubState();
         }
+    }
+
+    public void turnOffSubState(){//Turns off the view and controller (used from other controllers)
+        ((GameView)view).renderNPCAction(false);
+        setSubController(null);
     }
 
 }

@@ -1,9 +1,7 @@
 package controllers;
 
-import controllers.ViewController;
-import models.entities.npc.Action;
 import models.entities.npc.NPC;
-import models.entities.npc.Talk;
+import models.entities.npc.actions.Action;
 import utilities.*;
 import views.*;
 
@@ -36,7 +34,7 @@ public class NPCInteractionController extends ViewController {
             public void run() {
                 if (myOption > 0) {
                     myOption--;
-                    ((NPCActionView) view).updateSelectedOption(myOption);
+                    ((NPCMenuView) view).updateSelectedOption(myOption);
 
                 }
             }
@@ -51,7 +49,7 @@ public class NPCInteractionController extends ViewController {
                 if (myOption < actionList.size() - 1){
                     myOption++;
 
-                    ((NPCActionView) view).updateSelectedOption(myOption);
+                    ((NPCMenuView) view).updateSelectedOption(myOption);
 
                 }
             }
@@ -63,19 +61,6 @@ public class NPCInteractionController extends ViewController {
             @Override
             public void run() {
                 System.out.println("in action");
-                if(actionList.get(myOption).getName() == "Talk"){
-                    TalkView talkView = new TalkView(view.getScreenWidth(), view.getScreenHeight(),view.getDisplay(), ((Talk) (actionList.get(myOption))).getDialogue().get(0));
-                    TalkViewController talkViewController = new TalkViewController(talkView, stateManager, (Talk) (actionList.get(myOption)));
-                    SubState talkState = new SubState(talkViewController, talkView);
-                    GameViewController gameViewController = (GameViewController) (getStateManager().top().getViewController());
-                    GameView gameView = (GameView) (getStateManager().top().getView());
-                    stateManager.setActiveTalkState(talkState);
-                    //gameView.clearSubStates();
-                    gameViewController.addSubState(talkState);
-                    gameViewController.setSubController(talkState.getViewController());
-                    gameView.renderNPCAction(false);
-                    return;
-                }
                 actionList.get(myOption).activate();
             }
 

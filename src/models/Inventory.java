@@ -1,9 +1,11 @@
 package models;
 
+import models.items.Item;
 import models.items.takeable.TakeableItem;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by aseber on 2/22/16.
@@ -69,6 +71,12 @@ public class Inventory {
         return itemNodeArrayList;
     }
 
+    // Check that inventory is not empty before calling this method.
+    public TakeableItem getRandomItem() {
+        ItemNode randomNode = itemNodeArrayList.get((new Random()).nextInt(itemNodeArrayList.size()));
+        return randomNode.getItem();
+    }
+
     public int getMaxCapacity(){
         return maxCapacity;
     }
@@ -109,6 +117,15 @@ public class Inventory {
         return index;
     }
 
+    public int getAmountOfItem(Item.ItemDictionary item) {
+        int index = 0;
+        for(ItemNode node : itemNodeArrayList){
+            if(node.getItem().getID() == item)
+                index = node.getAmount();
+        }
+        return index;
+    }
+
     // Setters / Modifiers
     public void setItemNodeArrayList(ArrayList<ItemNode> itemNodeArrayList){
         this.itemNodeArrayList = itemNodeArrayList;
@@ -129,7 +146,13 @@ public class Inventory {
             // References shud be the same so this equality shud work.
             // If not gotta override .equals()
             if (node.getItem() == item) {
-                itemNodeArrayList.remove(node);
+                int amount = node.getAmount();
+                // If have more than one, just decrease amount, otherwise remove that node.
+                if ( amount > 1) {
+                    node.setAmount(amount - 1);
+                } else {
+                    itemNodeArrayList.remove(node);
+                }
                 return true;
             }
         }
@@ -140,6 +163,14 @@ public class Inventory {
         this.maxCapacity = maxCapacity;
     }
 
+
+    public boolean isEmpty() { return itemNodeArrayList.size() == 0; };
+
+
+
+    public int getCurrentSize(){
+        return itemNodeArrayList.size();
+    }
 
 
 
