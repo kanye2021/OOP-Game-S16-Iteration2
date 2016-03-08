@@ -82,6 +82,15 @@ public class NPCMenuController extends ViewController {
                         NPCShopController shopCtrl = new NPCShopController(buyView, gvController.getStateManager(), gvController, npc, avatar);
                         gvController.setSubController(shopCtrl);
                     }
+
+                    if (a.getName() == "Talk"){
+                        //Display Dialogue
+                        TalkView talkView = new TalkView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), npc);
+                        SubState talkState = new SubState(null, talkView);
+                        ((NPCMenuView) view).addSubState(talkState);
+                        TalkViewController talkViewController = new TalkViewController(talkView, gvController.getStateManager(), gvController, npc);
+                        gvController.setSubController(talkViewController);
+                    }
                 }
             }
 

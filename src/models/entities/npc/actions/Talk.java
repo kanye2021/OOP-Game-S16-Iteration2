@@ -3,6 +3,7 @@ package models.entities.npc.actions;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.entities.npc.actions.Action;
+import views.TalkView;
 
 /**
  * Created by dyeung on 2/28/16.

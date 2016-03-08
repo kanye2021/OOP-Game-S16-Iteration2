@@ -142,7 +142,7 @@ public class PauseView extends View{
 
             Rectangle2D rectangle = fm.getStringBounds(option.toString(), g2d);
 
-            int boxX = (int)(getScreenWidth() * .7- buttonWidth / 2);
+            int boxX = (int)(getScreenWidth() * .7 - buttonWidth / 2);
             int boxY = buttonHeight * option.ordinal() + start;
             int boxDX = buttonWidth;
             int boxDY = buttonHeight;
