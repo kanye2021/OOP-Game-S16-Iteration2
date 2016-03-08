@@ -141,6 +141,7 @@ public class PickPocketSkill extends ActiveSkill {
 
         // Print shit and return
         System.out.println("Its Mr.Steal yo girl");
+        cost = 10;
         return stolenItem;
     }
 /*

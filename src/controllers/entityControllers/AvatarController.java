@@ -120,10 +120,7 @@ public class AvatarController extends EntityController {
 
                 } else if (avatar.getOccupation().contains("Summoner")) {
                     //first skill should be enchantment here
-                    Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.STAFF);
-                    System.out.println(secondSkill);
-                    StaffSkill staffSkill = (StaffSkill) secondSkill;
-                    staffSkill.onActivate(avatar);
+
 
                 } else if (avatar.getOccupation().contains("Sneak")) {
                     //first skill should be something..

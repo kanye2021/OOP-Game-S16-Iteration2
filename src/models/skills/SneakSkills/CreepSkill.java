@@ -15,7 +15,6 @@ public class CreepSkill extends ActiveSkill {
     private javax.swing.Timer debuffTimer;
     private int debuffTimerDelay;
     private boolean isNotRunning;
-    private final int cost = 10;
     private final double constant = 0.5;//reduces speed by half
     public CreepSkill(){
         cooldown = false;
@@ -35,6 +34,7 @@ public class CreepSkill extends ActiveSkill {
             return;
         }
         cooldown=true;
+        cost = 10;
     //need to use alphacomposite on entity here
         int mana = entity.getStats().getStat(Stats.Type.MANA);
         if(mana > cost){
