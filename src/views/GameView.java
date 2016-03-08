@@ -102,9 +102,21 @@ public class GameView extends View implements Observer{
     }
     public void removeSubState(SubState substate) {
         substates.remove(substate);
+        // hacky..... necessary to remove toast from view.
+        // Otherwise will only remove when refresh (key press)
+        getDisplay().repaint();
+    }
+    public void popTopSubState() {
+        substates.remove(substates.size() - 1);
+        // hacky..... necessary to remove toast from view.
+        // Otherwise will only remove when refresh (key press)
+        getDisplay().repaint();
     }
     public void clearSubStates() {
         substates.clear();
+        // hacky..... necessary to remove toast from view.
+        // Otherwise will only remove when refresh (key press)
+        getDisplay().repaint();
     }
     public void toggleDetailedStats() {
         statusViewport.toggleDetails();

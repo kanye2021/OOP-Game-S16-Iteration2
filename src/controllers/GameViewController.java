@@ -9,6 +9,7 @@ import models.skills.SneakSkills.TileDetection;
 import utilities.StateManager;
 import utilities.SubState;
 import utilities.Task;
+import views.Display;
 import views.GameView;
 import views.NPCMenuView;
 import views.View;
@@ -59,6 +60,21 @@ public class GameViewController extends ViewController{
     public void addSubState(SubState s) {
         ((GameView)view).addSubState(s);
     }
+    public void addToastWithDefaultCloseKeyBindOfX(SubState s) {
+        addSubState(s);
+        // Dismiss the toast with "X" Toast
+        Task dismissTask = new Task() {
+            @Override
+            public void run() {
+                s.dismiss();
+            }
+
+            @Override
+            public void stop() {}
+        };
+        // Default to close a Toast is "X"
+        this.addKeyPressMapping(dismissTask, KeyEvent.VK_X);
+    }
     public void insertSubState(SubState s, int index) {
         ((GameView)view).insertSubState(s, index);
     }
@@ -79,6 +95,12 @@ public class GameViewController extends ViewController{
         if (activeSubController != null) {
             activeSubController.handleKeyPress(e);
         }
+        // GameVC shud always handle keypress if no substate will handle. David P, will be covering this.
+        // AvatarControlller will never handle keypress. -> David P's got this
+        // Just putting this here to work in my case
+        if (e.getKeyCode() == KeyEvent.VK_X) {
+        }
+
     }
 
     @Override
@@ -173,6 +195,7 @@ public class GameViewController extends ViewController{
 
         addKeyPressMapping(task, KeyEvent.VK_E);
         addKeyPressMapping(task, KeyEvent.VK_NUMPAD9);
+
     }
     @Override
     public void handleMouseDragged(java.awt.event.MouseEvent e){
@@ -192,6 +215,19 @@ public class GameViewController extends ViewController{
     public void handleMouseReleased(java.awt.event.MouseEvent e){
         mousePressed = false;
         lastOffset = offset;
+    }
+
+    //Wrappers shits for things that have handles to GameVC and need screen dimensions + Display to create otha views
+    public int getScreenWidth() {
+        return view.getScreenWidth();
+    }
+
+    public int getScreenHeight() {
+        return view.getScreenHeight();
+    }
+
+    public Display getDisplay() {
+        return view.getDisplay();
     }
 
     //Method is called whenever entity moves. Basically checks what is in the tile through
