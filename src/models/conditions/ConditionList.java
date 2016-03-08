@@ -1,7 +1,5 @@
 package models.conditions;
 
-import models.conditions.Condition;
-
 import java.util.ArrayList;
 
 /**
@@ -18,9 +16,9 @@ public class ConditionList {
         }
     }
 
-    public boolean checkCondition() {
+    public boolean checkCondition(Object... args) {
         for (Condition condition : conditions) {
-            if (!condition.checkCondition()) {
+            if (!condition.checkCondition(args)) {
                 return false;
             }
         }

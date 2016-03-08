@@ -1,8 +1,10 @@
 package models.entities.npc.actions;
 
+import controllers.ViewController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.entities.npc.actions.Action;
+import views.View;
 
 /**
  * Created by dyeung on 2/28/16.
@@ -12,7 +14,7 @@ public class Talk extends Action {
     public Talk(NPC npc){
         super(npc);
     }
-    public void activate(){
+    public void activate(View view, ViewController viewController){
         startTalk();
     }
     public void startTalk(){
@@ -22,6 +24,11 @@ public class Talk extends Action {
     @Override
     public String getName() {
         return "Talk";
+    }
+
+    @Override
+    public void setAvatar(Avatar avatar){
+        this.avatar = avatar;
     }
 
 }

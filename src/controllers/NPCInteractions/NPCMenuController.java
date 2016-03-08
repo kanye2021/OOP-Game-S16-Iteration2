@@ -22,6 +22,7 @@ public class NPCMenuController extends ViewController {
     private Task previousOption;
     private Task nextOption;
     private Task selectOption;
+    private Task closeActions;
     private NPC npc;
     private ArrayList<Action> actionList;
     private GameViewController gvController;
@@ -68,20 +69,11 @@ public class NPCMenuController extends ViewController {
             public void run() {
                 //TODO: Not a good method but can't think of anything else
                 if (myOption == actionList.size()) { //Checks for the length (if its greater than it must be exit
-                    //TODO: Exit the view
-                    gvController.turnOffSubState();
+                    closeActions.run();
                 }else {
                     Action a = actionList.get(myOption);
-                    a.activate();
-                    if (a.getName() == "Trade") {
-                        //Start to add a new VIEW to npc
-                        //Converts to a talk
-                        NPCShopView buyView = new NPCShopView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), npc, avatar);
-                        SubState sub = new SubState(null, buyView);
-                        ((NPCMenuView) view).addSubState(sub);
-                        NPCShopController shopCtrl = new NPCShopController(buyView, gvController.getStateManager(), gvController, npc, avatar);
-                        gvController.setSubController(shopCtrl);
-                    }
+                    a.setAvatar(avatar);
+                    a.activate(view, gvController);
                 }
             }
 
@@ -93,5 +85,8 @@ public class NPCMenuController extends ViewController {
         addKeyPressMapping(nextOption, KeyEvent.VK_DOWN);
         addKeyPressMapping(selectOption, KeyEvent.VK_ENTER);
 
+    }
+    public void setClose(Task task){
+        closeActions = task;
     }
 }

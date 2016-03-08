@@ -6,7 +6,6 @@
 package models.conditions;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ORCondition extends Condition {
 
@@ -22,11 +21,11 @@ public class ORCondition extends Condition {
 
     }
 
-    public boolean checkCondition() {
+    protected boolean checkConditionInternal() {
 
         for (Condition condition : conditions) {
 
-            if (condition.checkCondition()) {
+            if (condition.checkConditionInternal()) {
 
                 return true;
 

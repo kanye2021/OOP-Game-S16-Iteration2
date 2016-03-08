@@ -14,7 +14,7 @@ import java.awt.event.KeyEvent;
 public class BindWoundsSkill extends ActiveSkill {
     private Stats stats;
     private final int constant = 5;
-    private final int cost = -5;//This is the mana cost it takes to activate this skill
+    //cost = -5;//This is the mana cost it takes to activate this skill
 
     @Override
     public SkillDictionary initID() {
@@ -34,6 +34,7 @@ public class BindWoundsSkill extends ActiveSkill {
     @Override
     public void onActivate(Entity entity) {
     //This is used to heal.
+        cost = 5;
         int mana = entity.getStats().getStat(Stats.Type.MANA);
 
         if (conditionsToActivate.checkCondition()) {

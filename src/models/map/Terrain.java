@@ -22,4 +22,24 @@ public class Terrain {
         String filePath = IOUtilities.getFileSystemDependentPath("./src/res/terrain/" + type + ".png");
         return IOUtilities.getImageIcon(filePath).getImage();
     }
+
+    @Override
+    public boolean equals(Object o) {
+
+        System.out.println("EQUALS");
+        System.out.println(this.getType());
+
+        if (o instanceof Terrain) {
+
+            Terrain otherTerrain = (Terrain) o;
+
+            System.out.println(this.getType() + " = " + otherTerrain.getType());
+            return this.getType().equals(otherTerrain.getType());
+
+        }
+
+        return false;
+
+    }
+
 }

@@ -1,6 +1,5 @@
 package models.entities.npc;
 
-import controllers.entityControllers.EntityController;
 import models.map.Map;
 import models.occupation.Occupation;
 import models.skills.SkillList;

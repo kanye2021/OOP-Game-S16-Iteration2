@@ -1,6 +1,9 @@
 package models.items.takeable.equippable.gloves;
 
 import models.Equipment;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
@@ -22,8 +25,12 @@ public class WoodGloves extends EquippableItem{
         onEquipModifications = new StatModificationList(
                 new StatModification(Stats.Type.ARMOR_MODIFIER, WOODDEF)
         );
-        requiredLv = WOODLV;
+        equipConditions = new ConditionList(
+                new StatCondition(null, WOODLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
+        );
         itemWeight = WOODWEIGHT;
         range = RANGE;
+
     }
+
 }

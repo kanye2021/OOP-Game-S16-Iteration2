@@ -1,6 +1,8 @@
 package models.stats;
 
 import utilities.MathUtilities;
+import utilities.Toast;
+import views.Display;
 
 import java.util.EnumMap;
 import java.util.TimerTask;
@@ -176,6 +178,16 @@ public class Stats {
         updateDerivedStats();
     }
 
+    // Wrapper for modify level
+    public void levelUp() {
+        modifyExperience(expReqLvUp);
+    }
+
+    // Wrapper to animate loosing a life (health bar slides down)
+    public void loseALife() {
+        modifyHealth(-maxHealth);
+    }
+
     private void modifyExperience(int delta) {
         this.experience = MathUtilities.putInRange(0, this.experience + delta, Integer.MAX_VALUE);
 
@@ -202,6 +214,7 @@ public class Stats {
             this.lives--;
             this.health += maxHealth;
             System.out.println("Teleport me to spawn!");
+            Toast.createToast("OUCH I AM DED");
 
         }
 

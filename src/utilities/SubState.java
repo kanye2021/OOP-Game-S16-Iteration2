@@ -51,4 +51,8 @@ public class SubState {
     public void scaleView(){
         view.scaleView();
     }
+
+    public void setNewController(ViewController vc){
+        viewController = vc;
+    }
 }

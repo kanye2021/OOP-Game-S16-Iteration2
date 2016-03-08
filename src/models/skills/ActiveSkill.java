@@ -14,6 +14,7 @@ public abstract class ActiveSkill extends Skill  {
 
     public abstract void onActivate(Entity entity);
 
+    protected int cost;
 
     //activeSkills return true for activeSkill check
     @Override

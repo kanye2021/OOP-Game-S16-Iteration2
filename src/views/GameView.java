@@ -36,10 +36,6 @@ public class GameView extends View implements Observer{
     public void initStatusViewport(Stats stats){
         this.statusViewport = new StatusViewport(getScreenWidth(), getScreenHeight(), getDisplay(), stats);
     }
-    public void initNPCActionView(NPCMenuView view){
-        this.npcActionView = view;
-        //showEntityInteraction = false;
-    }
 
     @Override
     public void render(Graphics g) {
@@ -53,10 +49,10 @@ public class GameView extends View implements Observer{
             subview.render(g);
         }
 
-        //TEST TO CHECK FOR VIEWS
-        if (hasNPCAction){
-            npcActionView.render(g);
-        }
+//        //TEST TO CHECK FOR VIEWS
+//        if (hasNPCAction){
+//            npcActionView.render(g);
+//        }
     }
 
     @Override
@@ -64,7 +60,9 @@ public class GameView extends View implements Observer{
         super.onWindowResize(component);
         areaViewport.onWindowResize(component);
         statusViewport.onWindowResize(component);
-        npcActionView.onWindowResize(component);
+//        if (hasNPCAction) {
+//            npcActionView.onWindowResize(component);
+//        }
         // Render all subviews on top of the AreaViewPort.
         for (SubState subview : this.substates) {
             View v = subview.getView();
@@ -102,9 +100,21 @@ public class GameView extends View implements Observer{
     }
     public void removeSubState(SubState substate) {
         substates.remove(substate);
+        // hacky..... necessary to remove toast from view.
+        // Otherwise will only remove when refresh (key press)
+        getDisplay().repaint();
+    }
+    public void popTopSubState() {
+        substates.remove(substates.size() - 1);
+        // hacky..... necessary to remove toast from view.
+        // Otherwise will only remove when refresh (key press)
+        getDisplay().repaint();
     }
     public void clearSubStates() {
         substates.clear();
+        // hacky..... necessary to remove toast from view.
+        // Otherwise will only remove when refresh (key press)
+        getDisplay().repaint();
     }
     public void toggleDetailedStats() {
         statusViewport.toggleDetails();

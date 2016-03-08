@@ -1,8 +1,10 @@
 package views;
 
+import models.area_effects.AreaEffect;
 import models.entities.Avatar;
 import models.entities.Entity;
 import models.items.Item;
+import models.map.Decal;
 import models.map.Map;
 import models.map.Terrain;
 import models.map.Tile;
@@ -86,6 +88,9 @@ public class AreaViewport extends View implements Observer {
         Graphics2D g2 = (Graphics2D) g.create();
 
         breadthFirstRender(logicalPoint, pixelPoint, g2);
+
+        g.setColor(Color.WHITE);
+        g.drawString(logicalPoint.toString(), viewportWidth - g.getFontMetrics().stringWidth(logicalPoint.toString()) - 50, 25);
 
         // Once finish rendering all tiles with appropiate FoW transparencies, draw stuff that ignores transparencies
         // Like health bars.
@@ -179,8 +184,7 @@ public class AreaViewport extends View implements Observer {
         g.drawImage(terrainImage, terrainX, terrainY, hexWidth, hexHeight, getDisplay());
 
 
-        // TODO: Implement areaEffects / Decals
-//        // Draw the items
+        // Draw the items
         Item item = tileNode.tile.getItem();
         if(item!=null){
             Image itemImage = item.getImage();
@@ -193,6 +197,21 @@ public class AreaViewport extends View implements Observer {
             int itemY = (int)(tileNode.pixelPoint.getY() - scaledHeight /2);
             g.drawImage(itemImage, itemX, itemY, scaledWidth, scaledHeight,  getDisplay());
         }
+
+        // Draw Area Effects / Decals
+        Decal decal = tileNode.tile.getDecal();
+        if(decal!=null && decal.isVisible()){
+            Image decalImage = decal.getImage();
+
+            // Resize the item image
+            int scaledWidth = hexWidth * 3/5;
+            int scaledHeight = hexHeight * 3/5;
+
+            int itemX = (int)(tileNode.pixelPoint.getX() - scaledWidth /2);
+            int itemY = (int)(tileNode.pixelPoint.getY() - scaledHeight /2);
+            g.drawImage(decalImage, itemX, itemY, scaledWidth, scaledHeight,  getDisplay());
+        }
+
 
         // Display entities on the map
         Entity entity = tileNode.tile.getEntity();
@@ -391,7 +410,13 @@ public class AreaViewport extends View implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        setAvatar((Avatar)o);
         getDisplay().repaint();
+    }
+
+    public void setAvatar(Avatar a) {
+        this.avatar = a;
+        avatar.addObserver(this);
     }
 
     // This is a simple data stortage class used for the traversing tile and rendering.

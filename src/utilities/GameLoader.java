@@ -1,7 +1,7 @@
 package utilities;
 
 import controllers.entityControllers.MountController;
-import controllers.entityControllers.PetController;
+import models.area_effects.*;
 import models.entities.*;
 import models.entities.npc.Horse;
 import models.entities.npc.NPC;
@@ -65,9 +65,7 @@ public class GameLoader {
         // TODO: Delete later. Just for testing and debugging pets.
         // init the pet one tile right the avatar (DEFAULT_START_LOCATION)
         Pet pet = new Pet(new Point(0, -1), newMap);
-        PetController petController = new PetController(pet);
         newMap.insertEntity(pet);
-        game.setAvatarsPet(pet, petController);
 
         // TODO: Inilialize the npcs. (needs to be done by xml)
         //TODO: Current a tmp npc
@@ -76,6 +74,7 @@ public class GameLoader {
         newMap.insertEntity(newVillager);
         ArrayList<NPC> tmpList = new ArrayList<>();
         tmpList.add(newVillager);
+        tmpList.add(pet);
         game.setNpcList(tmpList);
 
 
@@ -118,7 +117,7 @@ public class GameLoader {
 
                 // Declare variables use to construct a tile
                 Terrain terrain = null;
-//                AreaEffect areaEffect = null;
+                AreaEffect areaEffect = null;
                 Decal decal = null;
                 Item item = null;
                 Entity entity = null;
@@ -129,32 +128,55 @@ public class GameLoader {
                 terrain = new Terrain(terrainType);
 
 //                // Get the areaEffect if there is one
-//                NodeList areaEffectNodes = tileElement.getElementsByTagName("area-effect");
-//                if (areaEffectNodes.getLength() > 0) {
-//                    Element areaEffectElement = (Element) areaEffectNodes.item(0);
-//                    String areaEffectType = areaEffectElement.getAttribute("type");
-//                    switch (areaEffectType) {
-//                        case "take-damage":
-//                            areaEffect = new TakeDamageAreaEffect();
-//                            break;
-//                        case "heal-damage":
-//                            areaEffect = new HealDamageAreaEffect();
-//                            break;
-//                        case "level-up":
-//                            areaEffect = new LevelUpAreaEffect();
-//                            break;
-//                        case "instant-death":
-//                            areaEffect = new InstantDeathAreaEffect();
-//                            break;
-//                    }
-//                }
+                NodeList areaEffectNodes = tileElement.getElementsByTagName("area-effect");
+                if (areaEffectNodes.getLength() > 0) {
+                    Element areaEffectElement = (Element) areaEffectNodes.item(0);
+                    String areaEffectType = areaEffectElement.getAttribute("type");
+                    String value;
+                    int intValue;
+                    switch (areaEffectType) {
+                        case "take-damage":
+                            value = areaEffectElement.getAttribute("value");
+                            intValue = Integer.parseInt(value);
+                            areaEffect = new TakeDamageAreaEffect(intValue);
+                            break;
+                        case "heal-damage":
+                            value = areaEffectElement.getAttribute("value");
+                            intValue = Integer.parseInt(value);
+                            areaEffect = new HealDamageAreaEffect(intValue);
+                            break;
+                        case "level-up":
+                            areaEffect = new LevelUpAreaEffect();
+                            break;
+                        case "instant-death":
+                            areaEffect = new InstantDeathAreaEffect();
+                            break;
+                        case "teleport":
+                            String[] pointValue = areaEffectElement.getAttribute("value").split(",");
+                            int targetX = Integer.parseInt(pointValue[0]);
+                            int targetY = Integer.parseInt(pointValue[1]);
+                            areaEffect = new TeleportAreaEffect(new Point(targetX, targetY));
+                            break;
+                        case "trap":
+                            value = areaEffectElement.getAttribute("value");
+                            intValue = Integer.parseInt(value);
+                            areaEffect = new TrapAreaEffect(intValue);
+                            break;
+                    }
+                }
 
                 //Decal
-                NodeList decalNodes = tileElement.getElementsByTagName("decal");
-                if (decalNodes.getLength() > 0) {
-                    Element decalElement = (Element) decalNodes.item(0);
-                    int id = Integer.parseInt(decalElement.getAttribute("id"));
-                    decal = new Decal(Decal.Types.values()[id]);
+                // If found area effect, set decal from it.
+                if (areaEffect != null) {
+                    decal = areaEffect.getDecal();
+                }
+                else {
+                    NodeList decalNodes = tileElement.getElementsByTagName("decal");
+                    if (decalNodes.getLength() > 0) {
+                        Element decalElement = (Element) decalNodes.item(0);
+                        int id = Integer.parseInt(decalElement.getAttribute("id"));
+                        decal = new Decal(Decal.Types.values()[id]);
+                    }
                 }
 
 //                // Get the item if there is one
@@ -169,9 +191,9 @@ public class GameLoader {
 
                     item = Item.ItemDictionary.itemFromID(id);
                     if (item == null) {
-                        System.out.println("What the fuck");
+                        System.out.println("GameLoader: unrecognized itemID");
                     } else {
-                        System.out.println("successfully loaded an item");
+                        System.out.println("GameLoader: successfully loaded an item (id = " + id + ")");
                     }
                     //if take-able
 //                    if (itemType.equals(Item.Type.TAKE_ABLE.toString())) {
@@ -202,7 +224,7 @@ public class GameLoader {
                 }
 
 //                tiles.get(new Point(x, y)) = new Tile(terrain, areaEffect, decal, item, entity);
-                tiles.put(new Point(x, y),  new Tile(terrain, decal, item, entity));
+                tiles.put(new Point(x, y),  new Tile(terrain, decal, item, entity, areaEffect));
             }
 
             return new Map(tiles);

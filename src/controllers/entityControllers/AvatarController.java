@@ -28,7 +28,7 @@ import java.awt.event.KeyEvent;
 /**
  * Created by Bradley on 2/26/2016.
  */
-public class AvatarController extends EntityController {
+public class AvatarController {
     private InputMapping keyPressMapping;
     private Avatar avatar;
     // Required to manage SubStates. i.e: Inventory, EquippedItems, Entity Interactions.
@@ -118,10 +118,7 @@ public class AvatarController extends EntityController {
 
                 } else if (avatar.getOccupation().contains("Summoner")) {
                     //first skill should be enchantment here
-                    Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.STAFF);
-                    System.out.println(secondSkill);
-                    StaffSkill staffSkill = (StaffSkill) secondSkill;
-                    staffSkill.onActivate(avatar);
+
 
                 } else if (avatar.getOccupation().contains("Sneak")) {
                     //first skill should be something..
@@ -225,38 +222,35 @@ public class AvatarController extends EntityController {
             }
         };
 
-
-
-
-
-        Task openToastTestView = new Task() {
+        Task fourthSkill = new Task(){
             @Override
             public void run() {
-                ToastView toast = new ToastView(gameView.getScreenWidth(), gameView.getScreenWidth(), gameView.getDisplay(), "Press 'L' to dismiss this toast");
-                // For a "Toast Message" the Game View controller will still be handling input, so pass in null.
-                SubState toastSubState = new SubState(null, toast);
-                // Pass a new inputMapping to the current VC, to handle our interaction within this new SubState:
-                // In this cass the current VC is the GameVC, which passes input to the AvatarVC, so i'm adding this
-                // input mapping to the Avatar Controller.
-                // These input mappings for the new SubState dont need to be created here, if the new substate is the inventory
-                // for example. the inventory VC would handle the new input appings
-                Task openToast = this;
-                AvatarController.this.addKeyPressMapping(new Task() {
-                    @Override
-                    public void run() {
-                        toastSubState.dismiss();
-                        // Re-map the "I" key to open the toast view again
-                        AvatarController.this.addKeyPressMapping(openToast, KeyEvent.VK_L);
-                    }
-                    @Override
-                    public void stop() {}
-                }, KeyEvent.VK_I);
-                // Add the substate
-                gameViewController.addSubState(toastSubState);
+                //if smasher, get first skill
+                if(avatar.getOccupation().contains("Smasher")){
+                    //Technically the Smasher class has no actives
+
+                }else if(avatar.getOccupation().contains("Summoner")){
+                    //No more skills
+                }else if(avatar.getOccupation().contains("Sneak")){
+                    //first skill should be something..
+                    //first skill should be something..
+                    Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
+                    System.out.println(fourthSkill);
+                    DetectRemoveTrapSkill detectRemoveTrapSkill = (DetectRemoveTrapSkill) fourthSkill;
+                    detectRemoveTrapSkill.removeTrap(avatar);
+
+                }else{
+                    System.out.println("What are you");
+                }
+
             }
+
             @Override
-            public void stop() {}
+            public void stop() {
+
+            }
         };
+
 
         Task openPause = new Task() {
             @Override
@@ -295,10 +289,7 @@ public class AvatarController extends EntityController {
         addKeyPressMapping(firstSkill,KeyEvent.VK_2);
         addKeyPressMapping(secondSkill,KeyEvent.VK_3);
         addKeyPressMapping(thirdSkill,KeyEvent.VK_4);
-//        addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
-
-        // TODO: Testing opening a random overlay toast view
-        addKeyPressMapping(openToastTestView, KeyEvent.VK_L);
+        addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
 
         // Open Inventory
         addKeyPressMapping(openInventory, KeyEvent.VK_I);

@@ -122,7 +122,7 @@ public class PickPocketSkill extends ActiveSkill {
         if(desiredTile == null){
             return null;
         }
-        if(desiredTile.hasNPC()){//TODO:Changed hasNPC() to hasEntity() since we may need it for an NPC pickpocketing you
+        if(desiredTile.hasEntity()){
             return desiredTile.getEntity();
         }
 
@@ -141,6 +141,7 @@ public class PickPocketSkill extends ActiveSkill {
 
         // Print shit and return
         System.out.println("Its Mr.Steal yo girl");
+        cost = 10;
         return stolenItem;
     }
 /*
