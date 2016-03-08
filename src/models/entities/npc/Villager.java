@@ -25,7 +25,7 @@ public class Villager extends NPC{
     }
     //---------NPC Stuff------------
     public void initActions(){
-        actionList.add(new Talk(this, "Blah blah", "That's what I say when I'm nervous."));
+        actionList.add(new Talk(this, "Blah blah", "That's what I say when I'm nervous.", "hahahahaha", "pretty sad right..."));
         actionList.add (new Attack(this));
     }
 

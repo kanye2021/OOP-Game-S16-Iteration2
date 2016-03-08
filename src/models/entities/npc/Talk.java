@@ -1,5 +1,6 @@
 package models.entities.npc;
 
+import controllers.TalkViewController;
 import models.entities.Avatar;
 import views.Display;
 import views.TalkView;
@@ -28,13 +29,13 @@ public class Talk extends Action{
     public void activate(){ startTalk(); }
 
     public void startTalk() {
-        for(String text: dialogue){
-            System.out.println(text);
-        }
     }
 
     @Override
     public String getName() {
         return "Talk";
     }
+
+    public ArrayList<String> getDialogue() { return dialogue; }
+
 }

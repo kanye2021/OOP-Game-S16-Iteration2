@@ -182,7 +182,6 @@ public class GameViewController extends ViewController{
 
         if (td.npcDetected()){
             System.out.println("Action is true");
-
             //Changes the AvatarController in gameview controller to NPCInteractionController
             NPCActionView npcView = new NPCActionView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), td.getNpc());
             NPCInteractionController npcIC = new NPCInteractionController(npcView, getStateManager(), npc);

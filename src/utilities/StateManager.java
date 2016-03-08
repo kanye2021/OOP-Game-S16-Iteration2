@@ -1,6 +1,8 @@
 package utilities;
 
+import controllers.TalkViewController;
 import views.Display;
+import views.TalkView;
 
 import java.util.Stack;
 
@@ -11,6 +13,7 @@ public class StateManager {
     private Display display;
     private InputManager inputManager;
     private Stack<State> stateStack;
+    private SubState activeTalkState;
 
     public StateManager(Display display, InputManager inputManager){
         this.display = display;
@@ -23,14 +26,30 @@ public class StateManager {
         state.activate(inputManager, display);
     }
 
-    public void goToPreviousState(){
-        if(stateStack.size() >= 2){
+
+    public void goToPreviousState() {
+        if (stateStack.size() >= 2) {
             stateStack.pop();
             setActiveState(stateStack.peek());
         }
     }
 
+    public State top(){
+        return this.stateStack.peek();
+    }
+
     public void refreshState() {
         display.repaint();
     }
+
+    public void setActiveTalkState(SubState talkState){
+        activeTalkState = talkState;
+    }
+
+    public SubState getActiveTalkState(){
+        return activeTalkState;
+    }
+
 }
+
+

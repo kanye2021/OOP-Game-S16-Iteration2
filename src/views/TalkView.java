@@ -1,5 +1,7 @@
 package views;
 
+import models.entities.npc.Talk;
+
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
@@ -13,14 +15,20 @@ public class TalkView extends View {
     private int talkViewWidth;
     private int talkViewHeight;
 
+    //String Scalables
+    int stringX;
+    int stringY;
+
     //Content to be scaled
-    private String text;
+    private String dialogue;
 
     //Styling Properties:
     private Font generalFont;
 
-    public TalkView(int width, int height, Display display){
+    public TalkView(int width, int height, Display display, String dialogue){
         super(width, height, display);
+        scaleView();
+        this.dialogue = dialogue;
     }
 
 
@@ -30,6 +38,7 @@ public class TalkView extends View {
     public void render(Graphics g){
 
         renderBackground(g);
+        renderDialogue(g);
         Toolkit.getDefaultToolkit().sync();
     }
 
@@ -46,23 +55,22 @@ public class TalkView extends View {
         g2d.fillRect(talkViewXStart, talkViewYStart, talkViewWidth, talkViewHeight);
     }
 
-    private void renderString(Graphics g){
-
+    private void renderDialogue(Graphics g){
+        g.drawString(dialogue, stringX, stringY);
     }
 
 
     @Override
     public void scaleView(){
         //PAUSE VIEW DIMENSIONS
-        talkViewXStart = (int) (getScreenWidth() * 0.43
-        );
+        talkViewXStart = (int) (getScreenWidth() * 0.3);
         talkViewYStart = (int) (getScreenHeight() * 0.15);
-        talkViewWidth = (int) (getScreenWidth() * 0.18);
-        talkViewHeight = (int) (getScreenHeight() * 0.3);
+        talkViewWidth = (int) (getScreenWidth() * 0.3);
+        talkViewHeight = (int) (getScreenHeight() * 0.15);
 
         //STRING DIMENSIONS
-        int StringX;
-        int StringY;
+        stringX = (int) (getScreenWidth() * 0.31);
+        stringY = (int) (getScreenHeight() * 0.18);
 
 
         // Scale font

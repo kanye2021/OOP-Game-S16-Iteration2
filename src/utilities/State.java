@@ -28,4 +28,12 @@ public class State {
         display.repaint();
     }
 
+    public ViewController getViewController(){
+        return viewController;
+    }
+
+    public View getView(){
+        return view;
+    }
+
 }

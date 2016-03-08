@@ -48,4 +48,8 @@ public class SubState {
     public void dismiss() {
         this.parent.removeSubState(this);
     }
+
+    public void setView(View view){
+        this.view = view;
+    }
 }

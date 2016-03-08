@@ -3,12 +3,9 @@ package controllers;
 import controllers.ViewController;
 import models.entities.npc.Action;
 import models.entities.npc.NPC;
-import utilities.StateManager;
-import utilities.Task;
-import views.Display;
-import views.LoadGameView;
-import views.NPCActionView;
-import views.View;
+import models.entities.npc.Talk;
+import utilities.*;
+import views.*;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -65,13 +62,26 @@ public class NPCInteractionController extends ViewController {
         selectOption = new Task() {
             @Override
             public void run() {
-
                 System.out.println("in action");
+                if(actionList.get(myOption).getName() == "Talk"){
+                    TalkView talkView = new TalkView(view.getScreenWidth(), view.getScreenHeight(),view.getDisplay(), ((Talk) (actionList.get(myOption))).getDialogue().get(0));
+                    TalkViewController talkViewController = new TalkViewController(talkView, stateManager, (Talk) (actionList.get(myOption)));
+                    SubState talkState = new SubState(talkViewController, talkView);
+                    GameViewController gameViewController = (GameViewController) (getStateManager().top().getViewController());
+                    GameView gameView = (GameView) (getStateManager().top().getView());
+                    stateManager.setActiveTalkState(talkState);
+                    //gameView.clearSubStates();
+                    gameViewController.addSubState(talkState);
+                    gameViewController.setSubController(talkState.getViewController());
+                    gameView.renderNPCAction(false);
+                    return;
+                }
                 actionList.get(myOption).activate();
             }
 
             @Override
             public void stop() {}
+
         };
 
         addKeyPressMapping(previousOption, KeyEvent.VK_UP);

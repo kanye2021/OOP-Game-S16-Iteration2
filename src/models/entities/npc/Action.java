@@ -2,6 +2,7 @@ package models.entities.npc;
 
 import models.entities.Avatar;
 import sun.security.x509.AVA;
+import views.Display;
 
 /**
  * Created by dyeung on 2/28/16.
