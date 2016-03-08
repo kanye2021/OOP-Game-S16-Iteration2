@@ -54,7 +54,6 @@ public class AvatarCreationView extends View {
         selected = OccupationOptions.SMASHER;
         arrowFilePath = "./src/res/arrow.png";
         arrowFilePath = IOUtilities.getFileSystemDependentPath(arrowFilePath);
-
     }
 
     public OccupationOptions getSelected() {

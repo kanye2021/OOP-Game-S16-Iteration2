@@ -1,7 +1,7 @@
 package models.entities.npc;
 
-import controllers.entityControllers.EntityController;
-import controllers.entityControllers.ShopKeeperController;
+import controllers.entityControllers.AI.Brain;
+import controllers.entityControllers.AI.Thought.Personalities;
 import models.entities.Entity;
 import models.entities.npc.actions.Action;
 import models.map.Map;
@@ -15,10 +15,14 @@ import java.util.ArrayList;
  */
 public abstract class NPC extends Entity {
     protected ArrayList<Action> actionList;
+
     protected ArrayList<String> dialogue;
     protected int dialogueLocation;
+    protected Brain brain;
+
     public NPC(Point location, Map map, String ... dialogue) {
         super(location, map);
+        brain = new Brain(this, Personalities.AGNOSTIC); // Agnostic is the default personailty.
         actionList = new ArrayList<>();
         this.dialogue = new ArrayList<>();
         for(String text: dialogue){
@@ -42,12 +46,6 @@ public abstract class NPC extends Entity {
         return initialStats;
 
     }
-
-    @Override
-    protected final EntityController initController(){
-        return null; // AIController!
-    }
-
     //Starts the interaction between entities (For now it is also showcasing the view list
     public void startInteraction(){
         System.out.println("Starts interaction with npc");
@@ -62,5 +60,12 @@ public abstract class NPC extends Entity {
     public ArrayList<String> getDialogue(){ return dialogue; }
     public int getDialogueLocation(){ return dialogueLocation;}
 
+
+
+
+    public void update(){
+        super.update();
+        brain.think();
+    }
 
 }

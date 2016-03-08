@@ -13,7 +13,7 @@ import java.util.Observer;
 /**
  * Created by denzel on 3/1/16.
  */
-public class MountController extends NPCController implements Observer {
+public class MountController implements Observer {
 
 
     private Mount mount;

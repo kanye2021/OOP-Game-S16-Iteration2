@@ -1,6 +1,6 @@
 package models.entities;
 
-import controllers.entityControllers.EntityController;
+import controllers.entityControllers.AvatarController;
 import models.Equipment;
 import models.Inventory;
 import models.entities.npc.Mount;
@@ -15,20 +15,16 @@ import models.skills.SkillList;
 import models.skills.SneakSkills.TileDetection;
 import models.stats.StatModificationList;
 import models.stats.Stats;
+import utilities.Toast;
 import views.sprites.DirectionalSprite;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Observable;
+import java.util.*;
 
 /**
  * Created by Bradley on 2/18/16.
  */
-public abstract class Entity extends Observable implements ActionListener{
+public abstract class Entity extends Observable{
 
     protected Point location;
     protected Map.Direction orientation;
@@ -37,7 +33,7 @@ public abstract class Entity extends Observable implements ActionListener{
     protected Inventory inventory;
     protected Equipment equipment;
     protected Occupation occupation;
-    protected EntityController controller;
+    protected AvatarController controller;
     protected Map map;
 
     // All entities should be able to have a pet.
@@ -48,17 +44,16 @@ public abstract class Entity extends Observable implements ActionListener{
 
 
     protected ArrayList<String> passableTerrain;
-    protected boolean canMove;
-    private javax.swing.Timer movementTimer;
-    private int movementTimerDelay;
+
+    // Stuff for movement
+    private Timer movementTimer;
+    private boolean canMove;
     private Map.Direction currentMovement;
-//    private TimerTask currentMovement;
 
     // Plans for sprite: Entity will have a getImage() method to return the image
     // to render on the AreaViewport. It will call sprite.getCurrentImage(orientation)
     // which will return the appropriate image.
     protected DirectionalSprite sprite;
-    protected DirectionalSprite cansprite;
 
     public Entity(Point location, Map map) {
         this.location = location;
@@ -68,7 +63,6 @@ public abstract class Entity extends Observable implements ActionListener{
         this.skills = occupation.getSkills();
         this.inventory = new Inventory(30);
         this.equipment = new Equipment(this);
-        this.controller = initController();
         passableTerrain = new ArrayList<>();
         //occupation.initStats(this.stats); // This will setup the stats and skills particular to this occupation.
         //occupation.initSkills(this.skills);
@@ -82,18 +76,20 @@ public abstract class Entity extends Observable implements ActionListener{
         occupation.getStats().applyStats(stats);
 
         // Setup the movement timer.
-        movementTimer = new Timer(300, this);
-        updateMovementTimerDelay();
+        movementTimer = new Timer();
         currentMovement = null;
+        canMove = true;
     }
 
-    private void updateMovementTimerDelay(){
-        movementTimerDelay = 300 - (stats.getStat(Stats.Type.MOVEMENT) / 5);
+    private int getMovementDelay(){
+        int movementTimerDelay = 300 - (stats.getStat(Stats.Type.MOVEMENT) / 5);
+
         if(movementTimerDelay < 50){
             movementTimerDelay = 50;
         }
-        movementTimer.setDelay(movementTimerDelay);
+        return movementTimerDelay;
     }
+
     public boolean canTraverseTerrain(Terrain terrain){
         return passableTerrain.contains(terrain.getType());
     }
@@ -114,6 +110,7 @@ public abstract class Entity extends Observable implements ActionListener{
         return occupation.getOccupation();
     }
     public Map.Direction getOrientation(){return orientation;}
+
     public Map getMap(){return map;}
     //Returns specific skill by name
     public Skill getSpecificSkill(Skill.SkillDictionary skill){
@@ -133,37 +130,41 @@ public abstract class Entity extends Observable implements ActionListener{
         }
     }
 
-    public final TileDetection move(Map.Direction direction) {
-        updateMovementTimerDelay();
+    public final TileDetection move(Map.Direction direction){
         orientation = direction;
         currentMovement = direction;
-        Point desiredLocation = direction.neighbor(getLocation());
 
-        TileDetection td = map.moveEntity(Entity.this, desiredLocation);
-        location = td.getLocation();
-        // Call action performed so there is no lag when you press a button and start the timer.
-        actionPerformed(null);
-        movementTimer.start();
-
-        return td;
+        return updateLocation();
     }
 
     public final TileDetection teleport(Point point) {
+        Toast.createToastWithTimer("Just teleported lol", 500);
         TileDetection td =  map.moveEntity(Entity.this, point);
         location = td.getLocation();
-        actionPerformed(null);
         return td;
     }
 
     public final void stopMoving(){
-        movementTimer.stop();
         currentMovement = null;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e){
-        setChanged();
-        notifyObservers();
+    public TileDetection updateLocation(){
+        if(canMove && currentMovement!=null){
+            TileDetection td = map.moveEntity(Entity.this, currentMovement);
+            location = td.getLocation();
+            setChanged();
+            notifyObservers();
+
+            canMove = false;
+            movementTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    canMove = true;
+                }
+            }, getMovementDelay());
+            return td;
+        }
+        return null;
     }
 
     // Wrapper functions for Stats
@@ -244,7 +245,6 @@ public abstract class Entity extends Observable implements ActionListener{
     protected abstract StatModificationList initInitialStats();
     protected abstract Occupation initOccupation();
     protected abstract HashMap<Map.Direction, String> initSprites();
-    protected abstract EntityController initController();
     public abstract void startInteraction(NPC npc);
     public final Image getImage(){
 
@@ -260,6 +260,13 @@ public abstract class Entity extends Observable implements ActionListener{
     }
     public final void setMount(Mount mount){this.mount = mount;}
 
+    public void setOrientation(Map.Direction orientation){
+        this.orientation = orientation;
+    }
+
+    public void update(){
+        updateLocation();
+	}
     // Wrapper to levelup an entity
     public void levelUp() {
         this.stats.levelUp();
@@ -279,5 +286,4 @@ public abstract class Entity extends Observable implements ActionListener{
     public void takeDamage(int amount) {
         this.stats.modifyStat(Stats.Type.HEALTH, amount);
     }
-
 }

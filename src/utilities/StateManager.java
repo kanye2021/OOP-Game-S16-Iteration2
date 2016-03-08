@@ -2,21 +2,28 @@ package utilities;
 
 import views.Display;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Stack;
 
 /**
  * Created by Bradley on 2/17/16.
  */
-public class StateManager {
+public class StateManager implements ActionListener{
     private Display display;
     private InputManager inputManager;
     private Stack<State> stateStack;
     private SubState activeTalkState;
+    public Timer gameTimer;
 
-    public StateManager(Display display, InputManager inputManager){
+    public StateManager(Display display, InputManager inputManager, int frameRate){
         this.display = display;
         this.inputManager = inputManager;
         this.stateStack = new Stack<>();
+
+        gameTimer = new Timer(frameRate, this);
+        gameTimer.start();
     }
 
     public void setActiveState(State state){
@@ -32,22 +39,17 @@ public class StateManager {
         }
     }
 
-    public State top(){
-        return this.stateStack.peek();
-    }
 
     public void refreshState() {
         display.repaint();
     }
 
-    public void setActiveTalkState(SubState talkState){
-        activeTalkState = talkState;
-    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
-    public SubState getActiveTalkState(){
-        return activeTalkState;
+        stateStack.peek().update();
+        display.repaint();
     }
-
 }
 
 

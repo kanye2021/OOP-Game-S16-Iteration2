@@ -9,7 +9,7 @@ import java.awt.*;
  */
 public class Sprite {
 
-    Image image;
+    protected Image image;
 
     public Sprite(String imagePath) {
         //System.out.println("SPRITE IMAGE PATH" + imagePath);

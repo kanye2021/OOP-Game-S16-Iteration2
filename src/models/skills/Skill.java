@@ -20,6 +20,9 @@ public abstract class Skill {
         BOON,
         BANE,
         STAFF,
+        FIREBALL,
+        GROUND_DASHER,
+        INDIGNATION,
         PICK_POCKET,  // Skills Sneaks have
         DETECT_REMOVE_TRAP,
         CREEP,
