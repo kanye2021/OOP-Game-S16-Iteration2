@@ -11,6 +11,7 @@ import models.occupation.Smasher;
 import utilities.IOUtilities;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -24,13 +25,15 @@ public class ShopKeeper extends NPC{
         passableTerrain.add("grass");
         initActions();
         initInventory(); //Adds items to the inventory
+
     }
     //---------NPC Stuff------------
     public void initActions(){
         actionList.add(new Talk(this));
         actionList.add (new Attack(this));
         actionList.add(new Trade(this));
-        dialogue = "Welcome to my store where I can sell you stuff!";
+        dialogue.add("Welcome to my store where I can sell you stuff!");
+        dialogue.add("Don't have much though...");
     }
     public void initInventory(){
         int id = 1000; //starts at 1000 (HELMS)

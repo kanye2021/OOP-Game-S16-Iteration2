@@ -16,14 +16,19 @@ import java.util.ArrayList;
 public abstract class NPC extends Entity {
     protected ArrayList<Action> actionList;
 
+    protected ArrayList<String> dialogue;
+    protected int dialogueLocation;
     protected Brain brain;
 
-    protected String dialogue;
-    public NPC(Point location, Map map) {
+    public NPC(Point location, Map map, String ... dialogue) {
         super(location, map);
-        actionList = new ArrayList<>();
         brain = new Brain(this, Personalities.AGNOSTIC); // Agnostic is the default personailty.
-        dialogue = "..."; //Default dialogue for each npc
+        actionList = new ArrayList<>();
+        this.dialogue = new ArrayList<>();
+        for(String text: dialogue){
+            this.dialogue.add(text);
+        }
+        dialogueLocation = 0;
     }
 
     @Override
@@ -48,6 +53,12 @@ public abstract class NPC extends Entity {
     public ArrayList<Action> getActionList(){
         return actionList;
     }
+    public void progressDialogue() { dialogueLocation++; }
+    public void resetDialogue() { dialogueLocation = 0; }
+
+
+    public ArrayList<String> getDialogue(){ return dialogue; }
+    public int getDialogueLocation(){ return dialogueLocation;}
 
 
 
