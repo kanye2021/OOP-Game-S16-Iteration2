@@ -15,12 +15,13 @@ import java.awt.*;
 /**
  * Created by sergiopuleri on 2/1/16.
  */
-public class RunGame extends JFrame {
+public class RunGame extends JFrame{
 
     private Display display;
     private InputManager inputManager;
     private final int INITIAL_WIDTH = 1200;
     private final int INITIAL_HEIGHT = 800;
+    private final int FRAMERATE = 100;
 
     @Override
     public void setExtendedState(int state) {
@@ -38,7 +39,7 @@ public class RunGame extends JFrame {
         inputManager = new InputManager();
 
         // Create the state manager.
-        StateManager stateManager = new StateManager(display, inputManager);
+        StateManager stateManager = new StateManager(display, inputManager, FRAMERATE);
 
         // Setup the first state (Start Menu).
         StartMenuView startMenuView = new StartMenuView(INITIAL_WIDTH, INITIAL_HEIGHT, display);
