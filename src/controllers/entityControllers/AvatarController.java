@@ -12,11 +12,8 @@ import models.skills.Skill;
 import models.skills.SneakSkills.CreepSkill;
 import models.skills.SneakSkills.DetectRemoveTrapSkill;
 import models.skills.SneakSkills.PickPocketSkill;
-import models.skills.SummonerSkills.FireBallSkill;
+import models.skills.SummonerSkills.*;
 import utilities.TileDetection;
-import models.skills.SummonerSkills.BoonSkill;
-import models.skills.SummonerSkills.EnchantmentSkill;
-import models.skills.SummonerSkills.StaffSkill;
 import utilities.InputMapping;
 import utilities.SubState;
 import utilities.Task;
@@ -145,6 +142,10 @@ public class AvatarController {
 
         }else if(avatar.getOccupation().contains("Summoner")){
             //No more skills
+            Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.INDIGNATION);
+            System.out.println(fourthSkill);
+            IndignationSkill indignationSkill = (IndignationSkill) fourthSkill;
+            indignationSkill.onActivate(avatar);
         }else if(avatar.getOccupation().contains("Sneak")){
             //first skill should be something..
             //first skill should be something..
@@ -157,6 +158,7 @@ public class AvatarController {
             System.out.println("What are you");
         }
     }
+
 
 
     protected void initKeyPressMapping(){}
