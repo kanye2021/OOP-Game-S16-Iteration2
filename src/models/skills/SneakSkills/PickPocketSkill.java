@@ -28,7 +28,7 @@ public class PickPocketSkill extends ActiveSkill {
         // Shud call call super in ea. subclass of a skill
         super();
         cooldown = false;
-        cooldownTime = 3*SECONDS;
+        cooldownTime = 5*SECONDS;
         currentCooldownRemaining = 0;
     }
 

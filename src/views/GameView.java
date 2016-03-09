@@ -45,13 +45,16 @@ public class GameView extends View implements Observer{
 
     @Override
     public void render(Graphics g) {
-        if(areaViewport!=null && statusViewport!= null){
+        if(areaViewport!=null ){
             areaViewport.render(g);
-            statusViewport.render(g);
         }
         if (skillViewport != null) {
             skillViewport.render(g);
         }
+        if (statusViewport!= null) {
+            statusViewport.render(g);
+        }
+
 
         // Render all subviews on top of the AreaViewPort.
         for (SubState subview : this.substates) {

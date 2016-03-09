@@ -77,7 +77,6 @@ public abstract class Skill {
         // After the time is up "cooldown" is set to false;
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
-                    long elapsedTime;
                     @Override
                     public void run() {
                         cooldown = false;
@@ -100,10 +99,10 @@ public abstract class Skill {
         Timer timer = new Timer();
 
         currentCooldownRemaining = cooldownTime;
-        long startTime = System.currentTimeMillis();
+        double startTime = System.currentTimeMillis();
 
         timer.schedule(new TimerTask() {
-            long elapsedTime = 0;
+            double elapsedTime = 0;
             @Override
             public void run() {
                 if (cooldown) {
@@ -126,7 +125,7 @@ public abstract class Skill {
         return cooldownTime;
     }
 
-    public double getCurrentCooldownRemaining() {
+    public double getCooldownTimeRemaining() {
         return currentCooldownRemaining;
     }
 
