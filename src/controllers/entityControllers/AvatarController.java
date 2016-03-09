@@ -4,6 +4,7 @@ import controllers.*;
 import controllers.GameViewController;
 import controllers.InventoryViewController;
 import models.entities.Avatar;
+import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.map.Map;
 import models.skills.CommonSkills.BindWoundsSkill;
@@ -11,6 +12,7 @@ import models.skills.Skill;
 import models.skills.SneakSkills.CreepSkill;
 import models.skills.SneakSkills.DetectRemoveTrapSkill;
 import models.skills.SneakSkills.PickPocketSkill;
+import models.skills.SummonerSkills.FireBallSkill;
 import utilities.TileDetection;
 import models.skills.SummonerSkills.BoonSkill;
 import models.skills.SummonerSkills.EnchantmentSkill;
@@ -89,10 +91,16 @@ public class AvatarController {
             //Technically the Smasher class has no actives
 
         } else if (avatar.getOccupation().contains("Summoner")) {
+            //Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.CREEP);
+            //System.out.println(firstSkill);
+            //CreepSkill creepSkill = (CreepSkill) firstSkill;
+            //creepSkill.onActivate(avatar);
             //first skill should be enchantment here
-            Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.STAFF);
+            Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.FIREBALL);
             System.out.println(secondSkill);
-            StaffSkill staffSkill = (StaffSkill) secondSkill;
+            FireBallSkill fireBallSkill = (FireBallSkill) secondSkill;
+            //Entity entity = (Entity) avatar;
+            fireBallSkill.onActivate(avatar);
 
         } else if (avatar.getOccupation().contains("Sneak")) {
             //first skill should be something..

@@ -1,5 +1,6 @@
 package models.skills.SummonerSkills;
 
+import models.Attack;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
@@ -30,7 +31,8 @@ public class GroundDasherSkill extends ActiveSkill{
         Stats stats = entity.getStats();
         int delta = 5;
         stats.modifyStat(Stats.Type.HEALTH,delta);
-
+        //This attack is in the models
+        //new Attack(entity);
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override

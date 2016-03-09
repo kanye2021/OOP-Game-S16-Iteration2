@@ -30,6 +30,12 @@ public abstract class Skill {
 
     }
 
+    public enum AttackType{
+        LINEAR,
+        RADIAL,
+        AREA
+    }
+
     private SkillDictionary ID;
     protected ConditionList conditionsToActivate = new ConditionList();
     private int level;
@@ -57,6 +63,7 @@ public abstract class Skill {
         return this.level;
 
     }
+
 
 
     public abstract SkillDictionary initID();
