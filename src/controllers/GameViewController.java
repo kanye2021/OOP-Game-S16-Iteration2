@@ -5,13 +5,11 @@ import controllers.entityControllers.AvatarController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.map.Map;
-import models.skills.SneakSkills.TileDetection;
+import utilities.TileDetection;
 import utilities.StateManager;
 import utilities.SubState;
 import utilities.Task;
-import views.GameView;
-import views.NPCMenuView;
-import views.View;
+import views.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -26,7 +24,6 @@ public class GameViewController extends ViewController{
 
     private ArrayList<NPC> npcList;
     private AvatarController avatarController;
-    private ViewController activeSubController;
 
     // Both of these are used to handle dragging the viewport around.
     private boolean mousePressed;
@@ -37,7 +34,6 @@ public class GameViewController extends ViewController{
     public GameViewController(View view, StateManager stateManager){
         super(view, stateManager);
         npcList = new ArrayList<>();
-        activeSubController = null;
         mouseStartLocation = new Point(0, 0);
         mousePressed = false;
         offset = new Point(0, 0);
@@ -48,37 +44,40 @@ public class GameViewController extends ViewController{
     public void setAvatarController(AvatarController controller){
         avatarController = controller;
     }
-    public void setNpcControllers(NPC npc){
-        npcList.add(npc);
-    }
     public void initViewports(Map map, Avatar avatar, ArrayList<NPC> npcList){
         ((GameView)view).initAreaViewport(map, avatar);
         ((GameView)view).initStatusViewport(avatar.getStats());
     }
 
+
     public void addSubState(SubState s) {
         ((GameView)view).addSubState(s);
+    }
+    public void addToastWithDefaultCloseKeyBindOfX(SubState s) {
+        addSubState(s);
+        // Dismiss the toast with "X" Toast
+        Task dismissTask = new Task() {
+            @Override
+            public void run() {
+                s.dismiss();
+            }
+
+            @Override
+            public void stop() {}
+        };
+        // Default to close a Toast is "X"
+        this.addKeyPressMapping(dismissTask, KeyEvent.VK_X);
     }
     public void insertSubState(SubState s, int index) {
         ((GameView)view).insertSubState(s, index);
     }
-    public void setSubController(ViewController vc){
-        activeSubController = vc;
-    }
     @Override
     public final void handleKeyPress(KeyEvent e) {
-        super.handleKeyPress(e);
 
-        //try to pass input to GameView's substate:
-        boolean hasSubstateThatWantsToTakeInput = ((GameView)view).passInputToSubstate(e);
-
-        // If no substate(s) (Result of false) ->Give the keypress to the avatar controller
-        if(!hasSubstateThatWantsToTakeInput && avatarController!=null){
-            avatarController.handleKeyPress(e);
-        }
-        if (activeSubController != null) {
-            activeSubController.handleKeyPress(e);
-        }
+        if(((GameView)view).hasSubState() == true)
+            ((GameView)view).passInputToSubstate(e);
+        else
+            super.handleKeyPress(e);
     }
 
     @Override
@@ -91,11 +90,12 @@ public class GameViewController extends ViewController{
     }
 
     @Override
+
     protected void initKeyPressMapping() {
         Task task = new Task() {
             @Override
             public void run() {
-                ((GameView) view).toggleDetailedStats();
+                ((GameView)view).toggleDetailedStats();
             }
 
             @Override
@@ -104,7 +104,7 @@ public class GameViewController extends ViewController{
             }
         };
 
-        addKeyPressMapping(task, KeyEvent.VK_P);
+        addKeyPressMapping(task, KeyEvent.VK_T);
 
         task = new Task() {
             @Override
@@ -173,6 +173,186 @@ public class GameViewController extends ViewController{
 
         addKeyPressMapping(task, KeyEvent.VK_E);
         addKeyPressMapping(task, KeyEvent.VK_NUMPAD9);
+
+        //BindWounds
+        Task bindWounds = new Task() {
+            @Override
+            public void run() {
+                avatarController.useBindWounds();
+            }
+            @Override
+            public void stop() {}
+        };
+
+        //FirstSkill
+        Task firstSkill = new Task() {
+            @Override
+            public void run(){
+                avatarController.useFirstSkill();
+            }
+            @Override
+            public void stop(){}
+        };
+
+
+        //Second Skill
+        Task secondSkill = new Task() {
+            @Override
+            public void run(){
+                avatarController.useSecondSkill();
+            }
+            @Override
+            public void stop(){}
+        };
+
+
+
+        //Third Skill
+        Task thirdSkill = new Task() {
+            @Override
+            public void run(){
+                avatarController.useThirdSkill();
+            }
+            @Override
+            public void stop(){}
+        };
+
+
+        //Fourth Skill
+        Task fourthSkill = new Task() {
+            @Override
+            public void run(){
+                avatarController.useFourthSkill();
+            }
+            @Override
+            public void stop(){}
+        };
+
+
+        //Open equip menu
+        Task openEquipment = new Task() {
+            @Override
+            public void run() {
+                EquipmentView equipmentView = new EquipmentView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
+                EquipmentViewController equipmentViewController = new EquipmentViewController(equipmentView, getStateManager(), avatarController.getAvatar());
+                SubState equipmentSubState = new SubState(equipmentViewController, equipmentView);
+                // Add closing task.
+                equipmentViewController.setCloseEquipmentTask(new Task() {
+                    @Override
+                    public void run() { equipmentSubState.dismiss(); }
+
+                    @Override
+                    public void stop() { }
+                });
+                // Add the substate
+                addSubState(equipmentSubState);
+            }
+            @Override
+            public void stop() {}
+        };
+
+        //Open Pause
+        Task openPause = new Task() {
+            public void run(){
+                System.out.println("1:Am I in");
+                PauseView pauseView = new PauseView(getScreenWidth(), getScreenHeight(), getDisplay());
+                PauseViewController pauseViewController = new PauseViewController(pauseView, getStateManager());
+                SubState pauseSubstate = new SubState(pauseViewController, pauseView);
+                // Add closing task.
+                pauseViewController.setClosePause(new Task() {
+                    @Override
+                    public void run() {
+                        System.out.println("2:Did I close ");
+                        pauseSubstate.dismiss();
+                    }
+
+                    @Override
+                    public void stop() {}
+                });
+                // Add the substate
+                addSubState(pauseSubstate);
+            }
+            @Override
+            public void stop(){}
+        };
+
+//        Task openToastTestView = new Task() {
+//            @Override
+//            public void run() {
+//                ToastView toast = new ToastView(getScreenWidth(), getScreenWidth(), getDisplay(), "Press 'L' to dismiss this toast");
+//                // For a "Toast Message" the Game View controller will still be handling input, so pass in null.
+//                SubState toastSubState = new SubState(null, toast);
+//                // Pass a new inputMapping to the current VC, to handle our interaction within this new SubState:
+//                // In this cass the current VC is the GameVC, which passes input to the AvatarVC, so i'm adding this
+//                // input mapping to the Avatar Controller.
+//                // These input mappings for the new SubState dont need to be created here, if the new substate is the inventory
+//                // for example. the inventory VC would handle the new input appings
+//                Task openToast = this;
+//                GameViewController.this.addKeyPressMapping(new Task() {
+//                    @Override
+//                    public void run() {
+//                        toastSubState.dismiss();
+//                        // Re-map the "I" key to open the toast view again
+//                        GameViewController.this.addKeyPressMapping(openToast, KeyEvent.VK_L);
+//                    }
+//                    @Override
+//                    public void stop() {}
+//                }, KeyEvent.VK_I);
+//                // Add the substate
+//                addSubState(toastSubState);
+//            }
+//            @Override
+//            public void stop() {}
+//        };
+
+        Task openInventory = new Task() {
+            @Override
+            public void run() {
+                InventoryView inventoryView = new InventoryView(getScreenWidth(), getScreenHeight(), getDisplay());
+                InventoryViewController inventoryViewController = new InventoryViewController(inventoryView, getStateManager(), avatarController.getAvatar());
+                SubState inventorySubState = new SubState(inventoryViewController, inventoryView);
+                // Add closing task.
+                inventoryViewController.setCloseInventory(new Task() {
+                    @Override
+                    public void run() { inventorySubState.dismiss(); }
+
+                    @Override
+                    public void stop() { }
+                });
+                addSubState(inventorySubState);
+            }
+            @Override
+            public void stop() {}
+        };
+
+
+        //BINDINGS:
+        //--------
+
+        //Bind Wounds
+        addKeyPressMapping(bindWounds, KeyEvent.VK_1);
+
+        //1st Skill
+        addKeyPressMapping(firstSkill, KeyEvent.VK_2);
+
+        //2nd Skill
+        addKeyPressMapping(secondSkill, KeyEvent.VK_3);
+
+        //3rd Skill
+        addKeyPressMapping(thirdSkill, KeyEvent.VK_4);
+
+        //4th Skill
+        addKeyPressMapping(fourthSkill, KeyEvent.VK_5);
+
+        //InventoryView
+        addKeyPressMapping(openInventory, KeyEvent.VK_I);
+
+        //EquipmentView
+        addKeyPressMapping(openEquipment, KeyEvent.VK_Y);
+
+        //PauseView
+        addKeyPressMapping(openPause,KeyEvent.VK_P);
+
     }
     @Override
     public void handleMouseDragged(java.awt.event.MouseEvent e){
@@ -181,7 +361,7 @@ public class GameViewController extends ViewController{
             mouseStartLocation = new Point(e.getXOnScreen(), e.getYOnScreen());
         }
 
-        System.out.println("MouseDragged");
+        //System.out.println("MouseDragged");
         offset = new Point(e.getXOnScreen(), e.getYOnScreen());
         offset.translate((int)(-mouseStartLocation.getX()), (int)(-mouseStartLocation.getY()));
         offset.translate((int)lastOffset.getX(), (int)lastOffset.getY());
@@ -194,7 +374,20 @@ public class GameViewController extends ViewController{
         lastOffset = offset;
     }
 
-    //Method is called whenever entity moves. Basically checks what is in the tile through
+    //Wrappers shits for things that have handles to GameVC and need screen dimensions + Display to create otha views
+    public int getScreenWidth() {
+        return view.getScreenWidth();
+    }
+
+    public int getScreenHeight() {
+        return view.getScreenHeight();
+    }
+
+    public Display getDisplay() {
+        return view.getDisplay();
+    }
+
+    //Method is called whenever avatar moves. Basically checks what is in the tile through
     //Tile detection and then whether an NPC is detected, it'll paint the interaction
     public void moveAndDetect(Map.Direction direction){
 
@@ -205,26 +398,32 @@ public class GameViewController extends ViewController{
 
         TileDetection td;
         td = avatarController.move(direction);
-        NPC npc = td.getNpc();
+        if (td != null) {
+            if (td.npcDetected()) {
+                NPC npc = (NPC) td.getEntity();
 
-        if (td.npcDetected()){
-            System.out.println("Action is true");
+                //Changes the AvatarController in gameview controller to NPCInteractionController
+                NPCMenuView npcView = new NPCMenuView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), npc);
+                NPCMenuController npcIC = new NPCMenuController(npcView, getStateManager(), this, npc, avatarController);
 
-            //Changes the AvatarController in gameview controller to NPCInteractionController
-            NPCMenuView npcView = new NPCMenuView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), td.getNpc());
-            NPCMenuController npcIC = new NPCMenuController(npcView, getStateManager(), this, npc, avatarController);
-            setSubController(npcIC);
-            ((GameView)view).initNPCActionView(npcView);
-            ((GameView)view).renderNPCAction(true);
-            avatarController.startInteraction(npc);
-        }else {
-            turnOffSubState();
+                SubState npcActionSubState = new SubState(npcIC, npcView);
+                // Add closing task.
+                npcIC.setClose(new Task() {
+                    @Override
+                    public void run() { npcActionSubState.dismiss(); }
+
+                    @Override
+                    public void stop() { }
+                });
+                // Add the substate
+                addSubState(npcActionSubState);
+//                ((GameView) view).initNPCActionView(npcView);
+//                ((GameView) view).renderNPCAction(true);
+                avatarController.startInteraction(npc);
+            }
         }
     }
 
-    public void turnOffSubState(){//Turns off the view and controller (used from other controllers)
-        ((GameView)view).renderNPCAction(false);
-        setSubController(null);
-    }
 
 }
+

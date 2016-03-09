@@ -3,16 +3,12 @@ package utilities;
 import controllers.GameViewController;
 import controllers.entityControllers.AvatarController;
 import controllers.entityControllers.MountController;
-import controllers.entityControllers.NPCController;
-import controllers.entityControllers.PetController;
 import models.entities.Avatar;
-import models.entities.Pet;
 
 import models.entities.npc.Horse;
 import models.entities.npc.NPC;
 
 import models.map.Map;
-import views.GameView;
 import views.View;
 
 import java.util.ArrayList;
@@ -46,10 +42,6 @@ public class GameState extends State {
 
         //viewController.setAvatarController(new AvatarController(avatar, (GameView)view));
 
-        for (NPC npc : npcList){
-            //n.addObserver((GameView)view);
-            viewController.setNpcControllers(npc);
-        }
         // Int the viewports
         viewController.initViewports(map, avatar, npcList);
     }
@@ -63,12 +55,6 @@ public class GameState extends State {
         this.avatar = avatar;
     }
 
-    // TODO: Method may not belong here, just for developing/testing.
-    public void setAvatarsPet(Pet pet, PetController petController) {
-        this.avatar.setPet(pet);
-        this.avatar.addObserver(petController);
-    }
-
     //TODO: I don't think it should be here
     public void setMount(Horse horse, MountController mountController){
         this.avatar.setMount(horse);
@@ -79,5 +65,12 @@ public class GameState extends State {
         this.npcList = npcList;
     }
 
+    @Override
+    public void update(){
+        for(NPC npc: npcList){
+            npc.update();
+        }
+        avatar.update();
+    }
 }
 

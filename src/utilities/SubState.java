@@ -48,7 +48,16 @@ public class SubState {
     public void dismiss() {
         this.parent.removeSubState(this);
     }
+
+    public void setView(View view) {
+        this.view = view;
+    }
+
     public void scaleView(){
         view.scaleView();
+    }
+
+    public void setNewController(ViewController vc){
+        viewController = vc;
     }
 }

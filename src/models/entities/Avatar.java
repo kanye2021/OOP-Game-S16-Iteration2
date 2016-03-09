@@ -1,8 +1,6 @@
 package models.entities;
 
-import controllers.GameViewController;
 import controllers.entityControllers.AvatarController;
-import controllers.entityControllers.EntityController;
 import models.entities.npc.NPC;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
@@ -43,8 +41,7 @@ public abstract class Avatar extends Entity {
 
     //overiding function for skills mapping
 
-    @Override
-    protected final EntityController initController() {
+    protected final AvatarController initController() {
 
         return null; // Keyboard controller!
 
@@ -55,6 +52,7 @@ public abstract class Avatar extends Entity {
 
         return;
     }
+
     public int getAmountofMoney(){
         return money;
     }

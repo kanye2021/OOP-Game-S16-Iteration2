@@ -2,7 +2,7 @@ package models.map;
 
 import models.entities.Entity;
 import models.items.Item;
-import models.skills.SneakSkills.TileDetection;
+import utilities.TileDetection;
 import models.entities.npc.NPC;
 import java.awt.*;
 import java.util.HashMap;
@@ -86,8 +86,41 @@ public class Map {
             //return currentLocation;
             return new TileDetection(null, currentLocation, false, false);
         }
-        if (desiredTile.hasNPC()){
-            return new TileDetection((NPC)desiredTile.getEntity(), currentLocation, false, false);
+        if (desiredTile.hasEntity()){
+            return new TileDetection(desiredTile.getEntity(), currentLocation, false, false);
+        }
+        // Tell the tile that the entity wants to move to it. If it is successful, the tile will return true and carry
+        // out any actions that result from the move. If not, it will return false.
+        TileDetection resultOfMovement = desiredTile.insertEntity(entity);
+
+        if (resultOfMovement.isTeleported()) {
+            // return the new teleported loc.
+            return new TileDetection(null, entity.getLocation(), false, true);
+        }
+        else if(resultOfMovement.isMoved()){
+            Tile oldLocation = tiles.get(currentLocation);
+            oldLocation.removeEntity();
+            return new TileDetection(null, desiredLocation, true, false);
+        }else{
+            // return currentLocation;
+            return new TileDetection(null,currentLocation, false, false);
+        }
+    }
+
+    // the entity should be (may be its existing location if the move was not successful).
+    public TileDetection moveEntity(Entity entity, Direction direction){
+        // Determine the location of the tile the entity wants to move to.
+        Point currentLocation = entity.getLocation();
+        Point desiredLocation = direction.neighbor(currentLocation);
+
+        // Get the tile at that location. Exit if it is not on the map.
+        Tile desiredTile = tiles.get(desiredLocation);
+        if(desiredTile == null) {
+            //return currentLocation;
+            return new TileDetection(null, currentLocation, false, false);
+        }
+        if (desiredTile.hasEntity()){
+            return new TileDetection(desiredTile.getEntity(), currentLocation, false, false);
         }
         // Tell the tile that the entity wants to move to it. If it is successful, the tile will return true and carry
         // out any actions that result from the move. If not, it will return false.
@@ -109,5 +142,18 @@ public class Map {
 
     public Tile getTileAt(Point p){
         return tiles.get(p);
+    }
+
+    // Useful wrapper functions to avoid violating demeters law
+    public Entity getEntityAt(Point p){
+        return tiles.get(p).getEntity();
+    }
+
+    public Item getItemAt(Point p){
+        return tiles.get(p).getItem();
+    }
+
+    public Terrain getTerrainAt(Point p){
+        return tiles.get(p).getTerrain();
     }
 }

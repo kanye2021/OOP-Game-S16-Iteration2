@@ -1,5 +1,6 @@
 package models.skills.CommonSkills;
 
+import models.entities.Avatar;
 import models.entities.Entity;
 import models.skills.PassiveSkill;
 
@@ -44,4 +45,5 @@ public class ObservationSkill extends PassiveSkill {
         Random random = new Random();
         return (random.nextInt(upperBoundError-lowerBoundError+1)+lowerBoundError);
     }
+
 }
