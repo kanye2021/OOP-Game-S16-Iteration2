@@ -68,4 +68,11 @@ public abstract class Avatar extends Entity {
         inventory.removeItem(item);
         money += price;
     }
+
+    public String getType() {
+
+        return "Avatar" + "-" + super.getType();
+
+    }
+
 }

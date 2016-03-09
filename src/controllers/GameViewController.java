@@ -110,6 +110,20 @@ public class GameViewController extends ViewController{
         task = new Task() {
             @Override
             public void run() {
+                ((GameView)view).toggleDebugInformation();
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_M);
+
+        task = new Task() {
+            @Override
+            public void run() {
                 moveAndDetect(Map.Direction.NORTH);
             }
 
@@ -399,6 +413,7 @@ public class GameViewController extends ViewController{
 
         TileDetection td;
         td = avatarController.move(direction);
+
         if (td != null) {
             if (td.npcDetected()) {
                 NPC npc = (NPC) td.getEntity();

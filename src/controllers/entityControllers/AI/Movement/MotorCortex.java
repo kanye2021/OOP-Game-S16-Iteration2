@@ -30,7 +30,7 @@ public class MotorCortex {
             case ATTACK:
                 // Get the entity to attack
                 entity = (Entity) decision.getAttachment();
-                System.out.println("ATTACK!!!!");
+                System.out.println(npc.getType() + ": I WILL KILL YOU!!!!");
                 // TODO: Implement the attack (How to know if I can do a ranged attack, melee attack ,etc.)
 
                 // Walk towards the entity
@@ -39,20 +39,20 @@ public class MotorCortex {
             case TRADE:
                 // Announce (make a toast) that I would like to trade.
                 entity = (Entity) decision.getAttachment();
-                System.out.println("TRADEEEE");
+                System.out.println(npc.getType() + ": SEE MY WARES LITTLE BOY");
                 directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), entity.getLocation());
                 // Make a toast that says "Hey I would like to trade with you!"
                 break;
             case GET_ITEM:
                 // Walk to the item;
                 itemLocation = (Point) decision.getAttachment();
-                System.out.println("GET ITEM!!!!");
+                System.out.println(npc.getType() + ": OOOH SHINY!!!!");
 
                 // Determine which direction to walk.
                 directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), itemLocation);
                 break;
             case FOLLOW:
-                System.out.println("Follow");
+                System.out.println(npc.getType() + ": I WANT TO SMELL YOUR BUTT");
                 entity = (Entity) decision.getAttachment();
                 directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), entity.getLocation());
             case DEFAULT:
@@ -63,7 +63,7 @@ public class MotorCortex {
 
         // Move
         if(directionToMove!= null){
-            System.out.println("MOVING: " + directionToMove);
+//            System.out.println("MOVING: " + directionToMove);
             npc.move(directionToMove);
         }
     }

@@ -45,5 +45,10 @@ public class SneakAvatar extends Avatar {
 
     }
 
+    public final String getType() {
+
+        return "Sneak" + "-" + super.getType();
+
+    }
 
 }
