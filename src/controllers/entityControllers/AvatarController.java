@@ -3,7 +3,6 @@ package controllers.entityControllers;
 import controllers.*;
 import controllers.GameViewController;
 import controllers.InventoryViewController;
-import controllers.NPCInteractions.NPCMenuController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.map.Map;
@@ -12,7 +11,7 @@ import models.skills.Skill;
 import models.skills.SneakSkills.CreepSkill;
 import models.skills.SneakSkills.DetectRemoveTrapSkill;
 import models.skills.SneakSkills.PickPocketSkill;
-import models.skills.SneakSkills.TileDetection;
+import utilities.TileDetection;
 import models.skills.SummonerSkills.BoonSkill;
 import models.skills.SummonerSkills.EnchantmentSkill;
 import models.skills.SummonerSkills.StaffSkill;
@@ -22,7 +21,6 @@ import utilities.Task;
 import views.*;
 import views.GameView;
 import views.InventoryView;
-import views.NPCMenuView;
 import views.ToastView;
 
 import java.awt.event.KeyEvent;
@@ -153,89 +151,7 @@ public class AvatarController {
     }
 
 
-    protected void initKeyPressMapping(){
-        Task openInventory = new Task() {
-            @Override
-            public void run() {
-                InventoryView inventoryView = new InventoryView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay());
-                InventoryViewController inventoryViewController = new InventoryViewController(inventoryView, gameViewController.getStateManager(), avatar);
-                SubState inventorySubState = new SubState(inventoryViewController, inventoryView);
-                // Add closing task.
-                inventoryViewController.setCloseInventory(new Task() {
-                    @Override
-                    public void run() { inventorySubState.dismiss(); }
-
-                    @Override
-                    public void stop() { }
-                });
-                // Add the substate
-                gameViewController.addSubState(inventorySubState);
-
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
-
-
-
-        Task openToastTestView = new Task() {
-            @Override
-            public void run() {
-                ToastView toast = new ToastView(gameView.getScreenWidth(), gameView.getScreenWidth(), gameView.getDisplay(), "Press 'L' to dismiss this toast");
-                // For a "Toast Message" the Game View controller will still be handling input, so pass in null.
-                SubState toastSubState = new SubState(null, toast);
-                // Pass a new inputMapping to the current VC, to handle our interaction within this new SubState:
-                // In this cass the current VC is the GameVC, which passes input to the AvatarVC, so i'm adding this
-                // input mapping to the Avatar Controller.
-                // These input mappings for the new SubState dont need to be created here, if the new substate is the inventory
-                // for example. the inventory VC would handle the new input appings
-                Task openToast = this;
-                AvatarController.this.addKeyPressMapping(new Task() {
-                    @Override
-                    public void run() {
-                        toastSubState.dismiss();
-                        // Re-map the "I" key to open the toast view again
-                        AvatarController.this.addKeyPressMapping(openToast, KeyEvent.VK_L);
-                    }
-                    @Override
-                    public void stop() {}
-                }, KeyEvent.VK_I);
-                // Add the substate
-                gameViewController.addSubState(toastSubState);
-            }
-            @Override
-            public void stop() {}
-        };
-
-
-
-        Task clearSubStates= new Task() {
-            @Override
-            public void run() {
-                gameView.clearSubStates();
-            }
-            @Override
-            public void stop() {}
-        };
-
-        //skills keymapping for avatars
-        //addKeyPressMapping(bindWoundSkill,KeyEvent.VK_1);
-        //addKeyPressMapping(firstSkill,KeyEvent.VK_2);
-        //addKeyPressMapping(secondSkill,KeyEvent.VK_3);
-        //addKeyPressMapping(thirdSkill,KeyEvent.VK_4);
-        //addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
-        addKeyPressMapping(openInventory, KeyEvent.VK_I);
-    }
-    //Method is called whenever entity moves. Basically checks what is in the tile through
-    //Tile detection and then whether an NPC is detected, it'll paint the interaction
-
-    protected final void addKeyPressMapping(Task task, int... key) {
-
-        keyPressMapping.put(getKeyIntMapping(key), task);
-    }
+    protected void initKeyPressMapping(){}
 
     private final int getKeyIntMapping(KeyEvent e) {
 
