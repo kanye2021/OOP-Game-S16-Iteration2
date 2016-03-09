@@ -2,9 +2,14 @@ package models.items;
 
 import models.entities.Entity;
 import models.items.decorations.smasherDecorations.*;
+import models.items.decorations.sneakDecorations.*;
+import models.items.decorations.summonerDecorations.*;
 import models.items.interactive.*;
 import models.items.obstacle.*;
 import models.items.takeable.equippable.chestplate.*;
+import models.items.takeable.equippable.chestplate.bow;
+import models.items.takeable.equippable.chestplate.chaps;
+import models.items.takeable.equippable.chestplate.staff;
 import models.items.takeable.equippable.helmets.*;
 import models.items.takeable.equippable.greaves.*;
 import models.items.takeable.equippable.boots.*;
@@ -15,7 +20,6 @@ import models.items.takeable.equippable.weapons.twoHanded.*;
 
 import models.items.takeable.quest.KeyOfKanye;
 import views.sprites.Drawable;
-import views.sprites.Sprite;
 
 import java.awt.*;
 
@@ -34,19 +38,21 @@ public abstract class Item {
         GOLD_HELMET(1004) {public Item createInstance() {return new helmet(new goldDecoration());}},
         RUNITE_HELMET(1005) {public Item createInstance() {return new helmet(new runiteDecoration());}},
 
-        WOOD_COIF(1006) {public Item createInstance() {return new WoodCoif();}},
-        IRON_COIF(1007) {public Item createInstance() {return new IronCoif();}},
-        STEEL_COIF(1008) {public Item createInstance() {return new SteelCoif();}},
-        MITHRIL_COIF(1009) {public Item createInstance() {return new MithrilCoif();}},
-        GOLD_COIF(1010) {public Item createInstance() {return new GoldCoif();}},
-        RUNITE_COIF(1011) {public Item createInstance() {return new RuniteCoif();}},
+        SOFT_LEATHER_COIF(1006) {public Item createInstance() {return new coif(new softLeatherDecoration());}},
+        HARD_LEATHER_COIF(1007) {public Item createInstance() {return new coif(new hardLeatherDecoration());}},
+        STUDDED_LEATHER_COIF(1008) {public Item createInstance() {return new coif(new studdedLeatherDecoration());}},
+        GREEN_D_COIF(1009) {public Item createInstance() {return new coif(new greenDragonhideDecoration());}},
+        BLUE_D_COIF(1010) {public Item createInstance() {return new coif(new blueDragonhideDecoration());}},
+        RED_D_COIF(1011) {public Item createInstance() {return new coif(new redDragonhideDecoration());}},
+        BLACK_D_COIF(1012) {public Item createInstance() {return new coif(new blackDragonhideDecoration());}},
 
-        WOOD_HAT(1012) {public Item createInstance() {return new WoodHat();}},
-        IRON_HAT(1013) {public Item createInstance() {return new IronHat();}},
-        STEEL_HAT(1014) {public Item createInstance() {return new SteelHat();}},
-        MITHRIL_HAT(1015) {public Item createInstance() {return new MithrilHat();}},
-        GOLD_HAT(1016) {public Item createInstance() {return new GoldHat();}},
-        RUNITE_HAT(1017) {public Item createInstance() {return new RuniteHat();}},
+        BODY_HAT(1013) {public Item createInstance() {return new hat(new bodyDecoration());}},
+        MIND_HAT(1014) {public Item createInstance() {return new hat(new mindDecoration());}},
+        COSMIC_HAT(1015) {public Item createInstance() {return new hat(new cosmicDecoration());}},
+        CHAOS_HAT(1016) {public Item createInstance() {return new hat(new chaosDecoration());}},
+        NATURE_HAT(1017) {public Item createInstance() {return new hat(new natureDecoration());}},
+        DEATH_HAT(1018) {public Item createInstance() {return new hat(new deathDecoration());}},
+        LAW_HAT(1019) {public Item createInstance() {return new hat(new lawDecoration());}},
 
         WOOD_CHESTPLATE(1100) {public Item createInstance() {return new chestplate(new woodDecoration());}},
         IRON_CHESTPLATE(1101) {public Item createInstance() {return new chestplate(new ironDecoration());}},
@@ -55,19 +61,21 @@ public abstract class Item {
         GOLD_CHESTPLATE(1104) {public Item createInstance() {return new chestplate(new goldDecoration());}},
         RUNITE_CHESTPLATE(1105) {public Item createInstance() {return new chestplate(new runiteDecoration());}},
 
-        WOOD_HIDE(1106) {public Item createInstance() {return new WoodHide();}},
-        IRON_HIDE(1107) {public Item createInstance() {return new IronHide();}},
-        STEEL_HIDE(1108) {public Item createInstance() {return new SteelHide();}},
-        MITHRIL_HIDE(1109) {public Item createInstance() {return new MithrilHide();}},
-        GOLD_HIDE(1110) {public Item createInstance() {return new GoldHide();}},
-        RUNITE_HIDE(1111) {public Item createInstance() {return new RuniteHide();}},
+        SOFT_LEATHER_HIDE(1106) {public Item createInstance() {return new hide(new softLeatherDecoration());}},
+        HARD_LEATHER_HIDE(1107) {public Item createInstance() {return new hide(new hardLeatherDecoration());}},
+        STUDDED_LEATHER_HIDE(1108) {public Item createInstance() {return new hide(new studdedLeatherDecoration());}},
+        GREEN_D_HIDE(1109) {public Item createInstance() {return new hide(new greenDragonhideDecoration());}},
+        BLUE_D_HIDE(1110) {public Item createInstance() {return new hide(new blueDragonhideDecoration());}},
+        RED_D_HIDE(1111) {public Item createInstance() {return new hide(new redDragonhideDecoration());}},
+        BLACK_D_HIDE(1112) {public Item createInstance() {return new hide(new blackDragonhideDecoration());}},
 
-        WOOD_ROBE(1112) {public Item createInstance() {return new WoodRobe();}},
-        IRON_ROBE(1113) {public Item createInstance() {return new IronRobe();}},
-        STEEL_ROBE(1114) {public Item createInstance() {return new SteelRobe();}},
-        MITHRIL_ROBE(1115) {public Item createInstance() {return new MithrilRobe();}},
-        GOLD_ROBE(1116) {public Item createInstance() {return new GoldRobe();}},
-        RUNITE_ROBE(1117) {public Item createInstance() {return new RuniteRobe();}},
+        BODY_ROBE(1113) {public Item createInstance() {return new robe(new bodyDecoration());}},
+        MIND_ROBE(1114) {public Item createInstance() {return new robe(new mindDecoration());}},
+        COSMIC_ROBE(1115) {public Item createInstance() {return new robe(new cosmicDecoration());}},
+        CHAOS_ROBE(1116) {public Item createInstance() {return new robe(new chaosDecoration());}},
+        NATURE_ROBE(1117) {public Item createInstance() {return new robe(new natureDecoration());}},
+        DEATH_ROBE(1118) {public Item createInstance() {return new robe(new deathDecoration());}},
+        LAW_ROBE(1119) {public Item createInstance() {return new robe(new lawDecoration());}},
 
         WOOD_GREAVES(1200) {public Item createInstance() {return new greaves(new woodDecoration());}},
         IRON_GREAVES(1201) {public Item createInstance() {return new greaves(new ironDecoration());}},
@@ -76,19 +84,20 @@ public abstract class Item {
         GOLD_GREAVES(1204) {public Item createInstance() {return new greaves(new goldDecoration());}},
         RUNITE_GREAVES(1205) {public Item createInstance() {return new greaves(new runiteDecoration());}},
 
-        WOOD_CHAPS(1206) {public Item createInstance() {return new WoodChaps();}},
-        IRON_CHAPS(1207) {public Item createInstance() {return new IronChaps();}},
-        STEEL_CHAPS(1208) {public Item createInstance() {return new SteelChaps();}},
-        MITHRIL_CHAPS(1209) {public Item createInstance() {return new MithrilChaps();}},
-        GOLD_CHAPS(1210) {public Item createInstance() {return new GoldChaps();}},
-        RUNITE_CHAPS(1211) {public Item createInstance() {return new RuniteChaps();}},
+        SOFT_LEATHER_CHAPS(1206) {public Item createInstance() {return new chaps(new softLeatherDecoration());}},
+        HARD_LEATHER_CHAPS(1207) {public Item createInstance() {return new chaps(new hardLeatherDecoration());}},
+        STUDDED_LEATHER_CHAPS(1208) {public Item createInstance() {return new chaps(new studdedLeatherDecoration());}},
+        GREEN_D_CHAPS(1209) {public Item createInstance() {return new chaps(new greenDragonhideDecoration());}},
+        BLUE_D_CHAPS(1210) {public Item createInstance() {return new chaps(new blueDragonhideDecoration());}},
+        RED_D_CHAPS(1211) {public Item createInstance() {return new chaps(new redDragonhideDecoration());}},
+        BLACK_D_CHAPS(1212) {public Item createInstance() {return new chaps(new blackDragonhideDecoration());}},
 
-        WOOD_SKIRT(1212) {public Item createInstance() {return new skirtTemplate(new woodDecoration());}},
-        IRON_SKIRT(1213) {public Item createInstance() {return new skirtTemplate(new ironDecoration());}},
-        STEEL_SKIRT(1214) {public Item createInstance() {return new skirtTemplate(new steelDecoration());}},
-        MITHRIL_SKIRT(1215) {public Item createInstance() {return new skirtTemplate(new mithrilDecoration());}},
-        GOLD_SKIRT(1216) {public Item createInstance() {return new skirtTemplate(new goldDecoration());}},
-        RUNITE_SKIRT(1217) {public Item createInstance() {return new skirtTemplate(new runiteDecoration());}},
+        WOOD_SKIRT(1212) {public Item createInstance() {return new skirt(new woodDecoration());}},
+        IRON_SKIRT(1213) {public Item createInstance() {return new skirt(new ironDecoration());}},
+        STEEL_SKIRT(1214) {public Item createInstance() {return new skirt(new steelDecoration());}},
+        MITHRIL_SKIRT(1215) {public Item createInstance() {return new skirt(new mithrilDecoration());}},
+        GOLD_SKIRT(1216) {public Item createInstance() {return new skirt(new goldDecoration());}},
+        RUNITE_SKIRT(1217) {public Item createInstance() {return new skirt(new runiteDecoration());}},
 
         WOOD_BOOTS(1300) {public Item createInstance() {return new boots(new woodDecoration());}},
         IRON_BOOTS(1301) {public Item createInstance() {return new boots(new ironDecoration());}},
@@ -130,19 +139,20 @@ public abstract class Item {
         RUNITE_TWO_HAND_SWORD(1705) {public Item createInstance() {return new twoHandedSword(new runiteDecoration());}},
 
         // Bows
-        WOOD_BOW(1706) {public Item createInstance() {return new WoodBow();}},
-        IRON_BOW(1707) {public Item createInstance() {return new IronBow();}},
-        STEEL_BOW(1708) {public Item createInstance() {return new SteelBow();}},
-        MITHRIL_BOW(1709) {public Item createInstance() {return new MithrilBow();}},
-        GOLD_BOW(1710) {public Item createInstance() {return new GoldBow();}},
-        RUNITE_BOW(1711) {public Item createInstance() {return new RuniteBow();}},
+        WOOD_BOW(1706) {public Item createInstance() {return new bow(new woodDecoration());}},
+        IRON_BOW(1707) {public Item createInstance() {return new bow(new ironDecoration());}},
+        STEEL_BOW(1708) {public Item createInstance() {return new bow(new steelDecoration());}},
+        MITHRIL_BOW(1709) {public Item createInstance() {return new bow(new mithrilDecoration());}},
+        GOLD_BOW(1710) {public Item createInstance() {return new bow(new goldDecoration());}},
+        RUNITE_BOW(1711) {public Item createInstance() {return new bow(new runiteDecoration());}},
 
-        WOOD_STAFF(1712) {public Item createInstance() {return new WoodStaff();}},
-        IRON_STAFF(1713) {public Item createInstance() {return new IronStaff();}},
-        STEEL_STAFF(1714) {public Item createInstance() {return new SteelStaff();}},
-        MITHRIL_STAFF(1715) {public Item createInstance() {return new MithrilStaff();}},
-        GOLD_STAFF(1716) {public Item createInstance() {return new GoldStaff();}},
-        RUNITE_STAFF(1717) {public Item createInstance() {return new RuniteStaff();}},
+        BODY_STAFF(1712) {public Item createInstance() {return new staff(new bodyDecoration());}},
+        MIND_STAFF(1713) {public Item createInstance() {return new staff(new mindDecoration());}},
+        COSMIC_STAFF(1714) {public Item createInstance() {return new staff(new cosmicDecoration());}},
+        CHAOS_STAFF(1715) {public Item createInstance() {return new staff(new chaosDecoration());}},
+        NATURE_STAFF(1716) {public Item createInstance() {return new staff(new natureDecoration());}},
+        DEATH_STAFF(1717) {public Item createInstance() {return new staff(new deathDecoration());}},
+        LAW_STAFF(1718) {public Item createInstance() {return new staff(new lawDecoration());}},
 
 
         SWAMPHACKS_SHIRT(1800){public Item createInstance(){return new Special_SwampHacksShirt();}},
