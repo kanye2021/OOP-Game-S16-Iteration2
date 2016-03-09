@@ -21,6 +21,10 @@ public class StaffSkill extends PassiveSkill {
         return Skill.SkillDictionary.STAFF;
 
     }
+    @Override
+    public String getName() {
+        return "Staff Mastery";
+    }
 
     @Override
     public void onUpdate(Entity entity) {

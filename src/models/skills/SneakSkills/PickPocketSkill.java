@@ -25,14 +25,22 @@ import java.util.Random;
 public class PickPocketSkill extends ActiveSkill {
 
     public PickPocketSkill(){
+        // Shud call call super in ea. subclass of a skill
+        super();
         cooldown = false;
-        cooldownTime = 3*SECONDS;
+        cooldownTime = 5*SECONDS;
+        currentCooldownRemaining = 0;
     }
+
     @Override
     public SkillDictionary initID() {
 
         return SkillDictionary.PICK_POCKET;
 
+    }
+    @Override
+    public String getName() {
+        return "Pickpocket";
     }
 
     @Override
@@ -61,18 +69,7 @@ public class PickPocketSkill extends ActiveSkill {
             entityInventory.addItem(stolenItem);
 
             // Cool-down that skill
-            cooldown = true;
-
-            System.out.println("I am pick pocket skill");
-            new java.util.Timer().schedule(
-                    new java.util.TimerTask() {
-                        @Override
-                        public void run() {
-                            cooldown = false;
-                        }
-                    },
-                    cooldownTime
-            );
+            doTheCoolDown();
         }
 
     }

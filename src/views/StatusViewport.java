@@ -36,7 +36,7 @@ public class StatusViewport extends View {
     public StatusViewport(int width, int height, Display display, Stats stats) {
         super(width, height ,display);
         this.stats = stats;
-        showDetails = true;
+        showDetails = false;
         borderRadius = 40;
         heartSize = 20;
         marginBtwnHearts = 5;

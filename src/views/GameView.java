@@ -2,6 +2,7 @@ package views;
 
 import models.entities.Avatar;
 import models.map.Map;
+import models.skills.SkillList;
 import models.stats.Stats;
 import utilities.SubState;
 
@@ -18,6 +19,7 @@ public class GameView extends View implements Observer{
 
     private AreaViewport areaViewport;
     private StatusViewport statusViewport;
+    private SkillViewport skillViewport;
     private ArrayList<SubState> substates;
     //Container of views that will turn on or off
     private NPCMenuView npcActionView;
@@ -37,12 +39,22 @@ public class GameView extends View implements Observer{
         this.statusViewport = new StatusViewport(getScreenWidth(), getScreenHeight(), getDisplay(), stats);
     }
 
+    public void initSkillViewport(SkillList skills){
+        this.skillViewport = new SkillViewport(getScreenWidth(), getScreenHeight(), getDisplay(), skills);
+    }
+
     @Override
     public void render(Graphics g) {
-        if(areaViewport!=null && statusViewport!= null){
+        if(areaViewport!=null ){
             areaViewport.render(g);
+        }
+        if (skillViewport != null) {
+            skillViewport.render(g);
+        }
+        if (statusViewport!= null) {
             statusViewport.render(g);
         }
+
 
         // Render all subviews on top of the AreaViewPort.
         for (SubState subview : this.substates) {
@@ -60,6 +72,7 @@ public class GameView extends View implements Observer{
         super.onWindowResize(component);
         areaViewport.onWindowResize(component);
         statusViewport.onWindowResize(component);
+        skillViewport.onWindowResize(component);
 //        if (hasNPCAction) {
 //            npcActionView.onWindowResize(component);
 //        }
