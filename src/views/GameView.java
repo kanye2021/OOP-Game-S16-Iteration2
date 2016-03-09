@@ -123,6 +123,14 @@ public class GameView extends View implements Observer{
     public void update(Observable o, Object arg) {
     }
 
+    public boolean hasSubState(){
+        if(substates.size() > 0)
+            return true;
+        else
+            return false;
+
+    }
+
     public void renderNPCAction(boolean shouldRender){
         if (shouldRender) {
             hasNPCAction = true;
