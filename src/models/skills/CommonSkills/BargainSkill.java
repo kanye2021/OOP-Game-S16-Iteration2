@@ -25,6 +25,11 @@ public class BargainSkill extends PassiveSkill {
     }
 
     @Override
+    public String getName() {
+        return "Bargain";
+    }
+
+    @Override
     public void onUpdate(Entity entity) {
         SkillList skillList = entity.getSkills();
         //skillList.

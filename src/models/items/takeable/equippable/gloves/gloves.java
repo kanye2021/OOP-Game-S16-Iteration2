@@ -12,8 +12,8 @@ import views.sprites.Sprite;
 /**
  * Created by ben on 2/27/16.
  */
-public class gloveTemplate extends EquippableItem{
-    public gloveTemplate(equippableItemDecoration decoration) {
+public class gloves extends EquippableItem{
+    public gloves(equippableItemDecoration decoration) {
         ID = Item.ItemDictionary.getDictionaryItemFromID(1400 + decoration.IDModifier);
         name = "{NAME} Gloves".replace("{NAME}", decoration.nameModifier);
         description = "Gloves made of {NAME}".replace("{NAME}", decoration.descriptionModifier);

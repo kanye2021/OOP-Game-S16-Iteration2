@@ -20,6 +20,12 @@ public class FireBallSkill extends ActiveSkill{
     }
 
     @Override
+    public String getName() {
+        return "Fireball";
+    }
+
+
+    @Override
     public void onActivate(Entity entity) {
         if(cooldown){
             System.out.println("ANOTHA ONE");

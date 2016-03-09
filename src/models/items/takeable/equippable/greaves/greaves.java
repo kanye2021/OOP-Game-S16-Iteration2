@@ -1,4 +1,4 @@
-package models.items.takeable.equippable.weapons.twoHanded;
+package models.items.takeable.equippable.greaves;
 
 import models.Equipment;
 import models.conditions.Condition;
@@ -13,23 +13,27 @@ import views.sprites.DecoratedSprite;
 import views.sprites.Sprite;
 
 /**
- * Created by aseber on 3/2/16.
+ * Created by aseber on 3/7/16.
  */
-public class twoHandedSwordTemplate extends EquippableItem{
-    public twoHandedSwordTemplate(equippableItemDecoration decoration){
-        ID = ItemDictionary.getDictionaryItemFromID(1700 + decoration.IDModifier);
-        name = "{NAME} 2h Sword".replace("{NAME}", decoration.nameModifier);
-        description = "2h sword made of gold".replace("{NAME}", decoration.descriptionModifier);
-        component = Equipment.Component.TWO_HANDED_WEAPON;
-        sprite = new DecoratedSprite("./src/res/items/takeable/weapons/twoHanded/smasher-template-2h.png", decoration.colorMap);
+public class greaves extends EquippableItem {
+
+    public greaves(equippableItemDecoration decoration) {
+
+        ID = ItemDictionary.getDictionaryItemFromID(1200 + decoration.IDModifier);
+        name = "{NAME} Greaves".replace("{NAME}", decoration.nameModifier);
+        description = "Greaves made of {NAME}".replace("{NAME}", decoration.descriptionModifier);
+        component = Equipment.Component.GREAVES;
+        sprite = new DecoratedSprite("./src/res/items/takeable/armor/legs/smasher-template-greaves.png", decoration.colorMap);
         monetaryValue = decoration.monetaryModifier;
         onEquipModifications = new StatModificationList(
-                new StatModification(Stats.Type.WEAPON_MODIFIER, decoration.attackModifier*2)
+                new StatModification(Stats.Type.ARMOR_MODIFIER, decoration.defenseModifier)
         );
         equipConditions = new ConditionList(
                 new StatCondition(null, decoration.levelRequiredModifier, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = decoration.weightModifier;
-        range = SMASHERRANGE;
+        range = RANGE;
+
     }
+
 }

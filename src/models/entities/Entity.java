@@ -237,6 +237,12 @@ public abstract class Entity extends Observable{
     // TODO: Implement occupation stuff. i.e. potentially
 
 
+    public String getType() {
+
+        return "Entity";
+
+    }
+
     // Used to go to a new map
     public final void setMap(Map map){
         this.map = map;

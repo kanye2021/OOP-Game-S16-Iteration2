@@ -20,5 +20,10 @@ public abstract class Mount extends NPC {
     protected abstract void setTerrain(String terrain);
     protected abstract void setMovement(int movement);
 
+    public String getType() {
+
+        return "Mount" + "-" + super.getType();
+
+    }
 
 }

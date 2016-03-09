@@ -41,6 +41,9 @@ public class AreaViewport extends View implements Observer {
     //Some other food
     public HashMap<Point, Tile> seenTiles = new HashMap<>();
 
+    //Debug stuff
+    private boolean displayDebugInformation = false;
+
     //G
     private Graphics regularGraphicsNotEffedUpWithTransparency;
 
@@ -89,9 +92,6 @@ public class AreaViewport extends View implements Observer {
 
         breadthFirstRender(logicalPoint, pixelPoint, g2);
 
-        g.setColor(Color.WHITE);
-        g.drawString(logicalPoint.toString(), viewportWidth - g.getFontMetrics().stringWidth(logicalPoint.toString()) - 50, 25);
-
         // Once finish rendering all tiles with appropiate FoW transparencies, draw stuff that ignores transparencies
         // Like health bars.
         for (EntityLocationTuple et : this.entityLocationTuples) {
@@ -100,6 +100,14 @@ public class AreaViewport extends View implements Observer {
         }
         // Delete all so they dont get redrawn every time the instance of this class draws..
         this.entityLocationTuples.clear();
+
+        if (displayDebugInformation) {
+
+            g.setColor(Color.WHITE);
+            g.drawString(logicalPoint.toString(), viewportWidth - g.getFontMetrics().stringWidth(logicalPoint.toString()) - 50, 25);
+
+        }
+
     }
 
     // This will traverse through all the tiles using a breadth first search. It will then render that tile.
@@ -395,6 +403,12 @@ public class AreaViewport extends View implements Observer {
             hex.addPoint(x, y);
         }
         return hex;
+    }
+
+    public void toggleDebugInformation() {
+
+        displayDebugInformation = !displayDebugInformation;
+
     }
 
     @Override

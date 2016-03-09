@@ -57,4 +57,11 @@ public class Pet extends NPC {
     public void talk(){
 
     }
+
+    public final String getType() {
+
+        return "Pet" + "-" + super.getType();
+
+    }
+
 }

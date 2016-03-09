@@ -44,4 +44,11 @@ public class SmasherAvatar extends Avatar {
         return new Smasher();
 
     }
+
+    public final String getType() {
+
+        return "Smasher" + "-" + super.getType();
+
+    }
+
 }

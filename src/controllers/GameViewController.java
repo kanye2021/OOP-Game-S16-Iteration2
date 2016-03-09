@@ -47,6 +47,7 @@ public class GameViewController extends ViewController{
     public void initViewports(Map map, Avatar avatar, ArrayList<NPC> npcList){
         ((GameView)view).initAreaViewport(map, avatar);
         ((GameView)view).initStatusViewport(avatar.getStats());
+        ((GameView)view).initSkillViewport(avatar.getSkills());
     }
 
 
@@ -105,6 +106,20 @@ public class GameViewController extends ViewController{
         };
 
         addKeyPressMapping(task, KeyEvent.VK_T);
+
+        task = new Task() {
+            @Override
+            public void run() {
+                ((GameView)view).toggleDebugInformation();
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+
+        addKeyPressMapping(task, KeyEvent.VK_M);
 
         task = new Task() {
             @Override
@@ -398,6 +413,7 @@ public class GameViewController extends ViewController{
 
         TileDetection td;
         td = avatarController.move(direction);
+
         if (td != null) {
             if (td.npcDetected()) {
                 NPC npc = (NPC) td.getEntity();
