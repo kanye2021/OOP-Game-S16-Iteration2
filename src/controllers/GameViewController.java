@@ -9,10 +9,7 @@ import models.skills.SneakSkills.TileDetection;
 import utilities.StateManager;
 import utilities.SubState;
 import utilities.Task;
-import views.Display;
-import views.GameView;
-import views.NPCMenuView;
-import views.View;
+import views.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -27,6 +24,7 @@ public class GameViewController extends ViewController{
 
     private ArrayList<NPC> npcList;
     private AvatarController avatarController;
+    private MenuController menuController;
     private ViewController activeSubController;
 
     // Both of these are used to handle dragging the viewport around.
@@ -39,6 +37,7 @@ public class GameViewController extends ViewController{
         super(view, stateManager);
         npcList = new ArrayList<>();
         activeSubController = null;
+        menuController = new MenuController(null, stateManager, this);
         mouseStartLocation = new Point(0, 0);
         mousePressed = false;
         offset = new Point(0, 0);
@@ -53,6 +52,7 @@ public class GameViewController extends ViewController{
         ((GameView)view).initAreaViewport(map, avatar);
         ((GameView)view).initStatusViewport(avatar.getStats());
     }
+
 
     public void addSubState(SubState s) {
         ((GameView)view).addSubState(s);
@@ -80,24 +80,18 @@ public class GameViewController extends ViewController{
     }
     @Override
     public final void handleKeyPress(KeyEvent e) {
-        super.handleKeyPress(e);
 
         //try to pass input to GameView's substate:
-        boolean hasSubstateThatWantsToTakeInput = ((GameView)view).passInputToSubstate(e);
+        ((GameView)view).passInputToSubstate(e);
 
-        // If no substate(s) (Result of false) ->Give the keypress to the avatar controller
-        if(!hasSubstateThatWantsToTakeInput && avatarController!=null){
-            avatarController.handleKeyPress(e);
+        if(activeSubController == null){
+            System.out.println("GameView Handle");
+            super.handleKeyPress(e);
         }
-        if (activeSubController != null){
+        else{
+            System.out.println("SubController Handle");
             activeSubController.handleKeyPress(e);
         }
-        // GameVC shud always handle keypress if no substate will handle. David P, will be covering this.
-        // AvatarControlller will never handle keypress. -> David P's got this
-        // Just putting this here to work in my case
-        if (e.getKeyCode() == KeyEvent.VK_X) {
-    }
-
     }
 
     @Override
@@ -123,7 +117,7 @@ public class GameViewController extends ViewController{
             }
         };
 
-        addKeyPressMapping(task, KeyEvent.VK_P);
+        addKeyPressMapping(task, KeyEvent.VK_T);
 
         task = new Task() {
             @Override
@@ -192,6 +186,118 @@ public class GameViewController extends ViewController{
 
         addKeyPressMapping(task, KeyEvent.VK_E);
         addKeyPressMapping(task, KeyEvent.VK_NUMPAD9);
+
+        //BindWounds
+        Task bindWounds = new Task() {
+            @Override
+            public void run() {
+                avatarController.useBindWounds();
+            }
+            @Override
+            public void stop() {}
+        };
+
+        //FirstSkill
+        Task firstSkill = new Task() {
+            @Override
+            public void run(){
+                avatarController.useFirstSkill();
+            }
+            @Override
+            public void stop(){}
+        };
+
+
+        //Second Skill
+        Task secondSkill = new Task() {
+            @Override
+            public void run(){
+                avatarController.useSecondSkill();
+            }
+            @Override
+            public void stop(){}
+        };
+
+
+
+        //Third Skill
+        Task thirdSkill = new Task() {
+            @Override
+            public void run(){
+                avatarController.useThirdSkill();
+            }
+            @Override
+            public void stop(){}
+        };
+
+
+        //Fourth Skill
+        Task fourthSkill = new Task() {
+            @Override
+            public void run(){
+                avatarController.useFourthSkill();
+            }
+            @Override
+            public void stop(){}
+        };
+
+
+        //Open equip menu
+        Task openEquipment = new Task() {
+            @Override
+            public void run() {
+                EquipmentView equipmentView = new EquipmentView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
+                EquipmentViewController equipmentViewController = new EquipmentViewController(equipmentView, getStateManager(), avatarController.getAvatar());
+                SubState equipmentSubState = new SubState(equipmentViewController, equipmentView);
+                // Add closing task.
+                equipmentViewController.setCloseEquipmentTask(new Task() {
+                    @Override
+                    public void run() { equipmentSubState.dismiss(); }
+
+                    @Override
+                    public void stop() { }
+                });
+                // Add the substate
+                addSubState(equipmentSubState);
+            }
+            @Override
+            public void stop() {}
+        };
+
+        //Open Pause
+        Task openPause = new Task() {
+            @Override
+            public void run() {
+                menuController.openPauseMenu();
+            }
+
+            @Override
+            public void stop() {}
+        };
+
+        //BINDINGS:
+        //--------
+
+        //Bind Wounds
+        addKeyPressMapping(bindWounds, KeyEvent.VK_1);
+
+        //1st Skill
+        addKeyPressMapping(firstSkill, KeyEvent.VK_2);
+
+        //2nd Skill
+        addKeyPressMapping(secondSkill, KeyEvent.VK_3);
+
+        //3rd Skill
+        addKeyPressMapping(thirdSkill, KeyEvent.VK_4);
+
+        //4th Skill
+        addKeyPressMapping(fourthSkill, KeyEvent.VK_5);
+
+        //EquipmentView
+        addKeyPressMapping(openEquipment, KeyEvent.VK_Y);
+
+        //Pause
+        addKeyPressMapping(openPause,KeyEvent.VK_P);
 
     }
     @Override

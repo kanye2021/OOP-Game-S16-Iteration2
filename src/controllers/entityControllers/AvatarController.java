@@ -56,90 +56,104 @@ public class AvatarController {
         keyPressMapping.keyReleased(getKeyIntMapping(e));
     }
 
+    public void useBindWounds(){
+        Skill firstSkill = avatar.getSkills().get(1);
+        BindWoundsSkill bindWoundsSkill = (BindWoundsSkill) firstSkill;
+        bindWoundsSkill.onActivate(avatar);
+    }
+
+    public void useFirstSkill(){
+        //if smasher, get first skill
+        if(avatar.getOccupation().contains("Smasher")){
+            //Technically the Smasher class has no actives
+
+        }else if(avatar.getOccupation().contains("Summoner")){
+            //first skill should be enchantment here
+            Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.ENCHANTMENT);
+            System.out.println(firstSkill);
+            EnchantmentSkill enchantmentSkill = (EnchantmentSkill) firstSkill;
+            enchantmentSkill.onActivate(avatar);
+
+        }else if(avatar.getOccupation().contains("Sneak")){
+            //first skill should be enchantment here
+            Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.CREEP);
+            System.out.println(firstSkill);
+            CreepSkill creepSkill = (CreepSkill) firstSkill;
+            creepSkill.onActivate(avatar);
+        }else{
+            System.out.println("What are you");
+        }
+    }
+
+    public void useSecondSkill(){
+        //if smasher, get first skill
+        if (avatar.getOccupation().contains("Smasher")) {
+            //Technically the Smasher class has no actives
+
+        } else if (avatar.getOccupation().contains("Summoner")) {
+            //first skill should be enchantment here
+            Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.STAFF);
+            System.out.println(secondSkill);
+            StaffSkill staffSkill = (StaffSkill) secondSkill;
+
+        } else if (avatar.getOccupation().contains("Sneak")) {
+            //first skill should be something..
+            Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
+            System.out.println(secondSkill);
+            DetectRemoveTrapSkill detectSkill = (DetectRemoveTrapSkill) secondSkill;
+            detectSkill.onActivate(avatar);
+
+        } else {
+            System.out.println("What are you");
+        }
+    }
+
+    public void useThirdSkill() {
+        //if smasher, get first skill
+        if (avatar.getOccupation().contains("Smasher")) {
+            //Technically the Smasher class has no actives
+
+        } else if (avatar.getOccupation().contains("Summoner")) {
+            //first skill should be enchantment here
+            Skill thirdSkill = avatar.getSpecificSkill(Skill.SkillDictionary.BOON);
+            System.out.println(thirdSkill);
+            BoonSkill boonSkill = (BoonSkill) thirdSkill;
+            boonSkill.onActivate(avatar);
+        } else if (avatar.getOccupation().contains("Sneak")) {
+            //first skill should be something..
+            //first skill should be something..
+            Skill thirdSkill = avatar.getSpecificSkill(Skill.SkillDictionary.PICK_POCKET);
+            System.out.println(thirdSkill);
+            PickPocketSkill pickPocketSkill = (PickPocketSkill) thirdSkill;
+            pickPocketSkill.onActivate(avatar);
+
+        } else {
+            System.out.println("What are you");
+        }
+    }
+
+    public void useFourthSkill(){
+        //if smasher, get first skill
+        if(avatar.getOccupation().contains("Smasher")){
+            //Technically the Smasher class has no actives
+
+        }else if(avatar.getOccupation().contains("Summoner")){
+            //No more skills
+        }else if(avatar.getOccupation().contains("Sneak")){
+            //first skill should be something..
+            //first skill should be something..
+            Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
+            System.out.println(fourthSkill);
+            DetectRemoveTrapSkill detectRemoveTrapSkill = (DetectRemoveTrapSkill) fourthSkill;
+            detectRemoveTrapSkill.removeTrap(avatar);
+
+        }else{
+            System.out.println("What are you");
+        }
+    }
+
+
     protected void initKeyPressMapping(){
-
-        //task for bindWoundSkill
-        Task bindWoundSkill = new Task(){
-
-            Skill firstSkill = avatar.getSkills().get(1);
-            BindWoundsSkill bindWoundsSkill = (BindWoundsSkill) firstSkill;
-
-
-            @Override
-            public void run() {
-                bindWoundsSkill.onActivate(avatar);
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
-
-
-        //Task for the first specific skill
-        Task firstSkill = new Task(){
-            @Override
-            public void run() {
-                //if smasher, get first skill
-                if(avatar.getOccupation().contains("Smasher")){
-                    //Technically the Smasher class has no actives
-
-                }else if(avatar.getOccupation().contains("Summoner")){
-                    //first skill should be enchantment here
-                    Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.ENCHANTMENT);
-                    System.out.println(firstSkill);
-                    EnchantmentSkill enchantmentSkill = (EnchantmentSkill) firstSkill;
-                    enchantmentSkill.onActivate(avatar);
-
-                }else if(avatar.getOccupation().contains("Sneak")){
-                    //first skill should be enchantment here
-                    Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.CREEP);
-                    System.out.println(firstSkill);
-                    CreepSkill creepSkill = (CreepSkill) firstSkill;
-                    creepSkill.onActivate(avatar);
-                }else{
-                    System.out.println("What are you");
-                }
-
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
-
-        //Task for the first specific skill
-        Task secondSkill = new Task() {
-            @Override
-            public void run() {
-                //if smasher, get first skill
-                if (avatar.getOccupation().contains("Smasher")) {
-                    //Technically the Smasher class has no actives
-
-                } else if (avatar.getOccupation().contains("Summoner")) {
-                    //first skill should be enchantment here
-
-
-                } else if (avatar.getOccupation().contains("Sneak")) {
-                    //first skill should be something..
-                    Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
-                    System.out.println(secondSkill);
-                    DetectRemoveTrapSkill detectSkill = (DetectRemoveTrapSkill) secondSkill;
-                    detectSkill.onActivate(avatar);
-
-                } else {
-                    System.out.println("What are you");
-                }
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
-
         Task openInventory = new Task() {
             @Override
             public void run() {
@@ -165,118 +179,39 @@ public class AvatarController {
             }
         };
 
-        Task openEquipment = new Task() {
+
+
+        Task openToastTestView = new Task() {
             @Override
             public void run() {
-                EquipmentView equipmentView = new EquipmentView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay());
-                EquipmentViewController equipmentViewController = new EquipmentViewController(equipmentView, gameViewController.getStateManager(), avatar);
-                SubState equipmentSubState = new SubState(equipmentViewController, equipmentView);
-                // Add closing task.
-                equipmentViewController.setCloseEquipmentTask(new Task() {
+                ToastView toast = new ToastView(gameView.getScreenWidth(), gameView.getScreenWidth(), gameView.getDisplay(), "Press 'L' to dismiss this toast");
+                // For a "Toast Message" the Game View controller will still be handling input, so pass in null.
+                SubState toastSubState = new SubState(null, toast);
+                // Pass a new inputMapping to the current VC, to handle our interaction within this new SubState:
+                // In this cass the current VC is the GameVC, which passes input to the AvatarVC, so i'm adding this
+                // input mapping to the Avatar Controller.
+                // These input mappings for the new SubState dont need to be created here, if the new substate is the inventory
+                // for example. the inventory VC would handle the new input appings
+                Task openToast = this;
+                AvatarController.this.addKeyPressMapping(new Task() {
                     @Override
-                    public void run() { equipmentSubState.dismiss(); }
-
+                    public void run() {
+                        toastSubState.dismiss();
+                        // Re-map the "I" key to open the toast view again
+                        AvatarController.this.addKeyPressMapping(openToast, KeyEvent.VK_L);
+                    }
                     @Override
-                    public void stop() { }
-                });
+                    public void stop() {}
+                }, KeyEvent.VK_I);
                 // Add the substate
-                gameViewController.addSubState(equipmentSubState);
+                gameViewController.addSubState(toastSubState);
             }
-
             @Override
-            public void stop() {
-
-            }
+            public void stop() {}
         };
 
 
-        //Task for the first specific skill
-        Task thirdSkill = new Task(){
-            @Override
-            public void run() {
-                //if smasher, get first skill
-                if(avatar.getOccupation().contains("Smasher")){
-                    //Technically the Smasher class has no actives
 
-                }else if(avatar.getOccupation().contains("Summoner")){
-                    //first skill should be enchantment here
-                    Skill thirdSkill= avatar.getSpecificSkill(Skill.SkillDictionary.BOON);
-                    System.out.println(thirdSkill);
-                    BoonSkill boonSkill = (BoonSkill) thirdSkill;
-                    boonSkill.onActivate(avatar);
-                }else if(avatar.getOccupation().contains("Sneak")){
-                    //first skill should be something..
-                    //first skill should be something..
-                    Skill thirdSkill = avatar.getSpecificSkill(Skill.SkillDictionary.PICK_POCKET);
-                    System.out.println(thirdSkill);
-                    PickPocketSkill pickPocketSkill = (PickPocketSkill) thirdSkill;
-                    pickPocketSkill.onActivate(avatar);
-
-                }else{
-                    System.out.println("What are you");
-                }
-
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
-
-        Task fourthSkill = new Task(){
-            @Override
-            public void run() {
-                //if smasher, get first skill
-                if(avatar.getOccupation().contains("Smasher")){
-                    //Technically the Smasher class has no actives
-
-                }else if(avatar.getOccupation().contains("Summoner")){
-                    //No more skills
-                }else if(avatar.getOccupation().contains("Sneak")){
-                    //first skill should be something..
-                    //first skill should be something..
-                    Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
-                    System.out.println(fourthSkill);
-                    DetectRemoveTrapSkill detectRemoveTrapSkill = (DetectRemoveTrapSkill) fourthSkill;
-                    detectRemoveTrapSkill.removeTrap(avatar);
-
-                }else{
-                    System.out.println("What are you");
-                }
-
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
-
-
-        Task openPause = new Task() {
-            @Override
-            public void run() {
-                PauseView pauseView = new PauseView(gameView.getScreenWidth(), gameView.getScreenHeight(), gameView.getDisplay());
-                PauseViewController pauseViewController = new PauseViewController(pauseView, gameViewController.getStateManager());
-                SubState pauseSubstate = new SubState(pauseViewController, pauseView);
-                // Add closing task.
-                pauseViewController.setClosePause(new Task() {
-                    @Override
-                    public void run() { pauseSubstate.dismiss(); }
-
-                    @Override
-                    public void stop() { }
-                });
-                // Add the substate
-                gameViewController.addSubState(pauseSubstate);
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
         Task clearSubStates= new Task() {
             @Override
             public void run() {
@@ -287,20 +222,12 @@ public class AvatarController {
         };
 
         //skills keymapping for avatars
-        addKeyPressMapping(bindWoundSkill,KeyEvent.VK_1);
-        addKeyPressMapping(firstSkill,KeyEvent.VK_2);
-        addKeyPressMapping(secondSkill,KeyEvent.VK_3);
-        addKeyPressMapping(thirdSkill,KeyEvent.VK_4);
-        addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
-
-        // Open Inventory
+        //addKeyPressMapping(bindWoundSkill,KeyEvent.VK_1);
+        //addKeyPressMapping(firstSkill,KeyEvent.VK_2);
+        //addKeyPressMapping(secondSkill,KeyEvent.VK_3);
+        //addKeyPressMapping(thirdSkill,KeyEvent.VK_4);
+        //addKeyPressMapping(fourthSkill,KeyEvent.VK_5);
         addKeyPressMapping(openInventory, KeyEvent.VK_I);
-
-        // Open Equipment
-        addKeyPressMapping(openEquipment, KeyEvent.VK_Y);
-
-        //Open Pause Menu
-        addKeyPressMapping(openPause, KeyEvent.VK_P);
     }
     //Method is called whenever entity moves. Basically checks what is in the tile through
     //Tile detection and then whether an NPC is detected, it'll paint the interaction
