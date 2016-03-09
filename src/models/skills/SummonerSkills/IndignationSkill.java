@@ -20,6 +20,12 @@ public class IndignationSkill extends ActiveSkill{
         return SkillDictionary.INDIGNATION;
 
     }
+
+    @Override
+    public String getName() {
+        return "Indigniation";
+    }
+
     @Override
     public void onActivate(Entity entity) {
         if(cooldown){

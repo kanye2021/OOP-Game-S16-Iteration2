@@ -88,6 +88,7 @@ public class PauseViewController extends ViewController {
     public void setClosePause(Task task) {
         closePause = task;
         addKeyPressMapping(closePause, KeyEvent.VK_ESCAPE);
+        addKeyPressMapping(closePause, KeyEvent.VK_M);
         addKeyPressMapping(closePause, KeyEvent.VK_P);
     }
 }

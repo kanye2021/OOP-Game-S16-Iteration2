@@ -27,6 +27,10 @@ public class BrawlingSkill extends PassiveSkill {
         return SkillDictionary.BRAWLING;
 
     }
+    @Override
+    public String getName() {
+        return "Brawling Mastery";
+    }
 
     @Override
     public void onUpdate(Entity entity) {
