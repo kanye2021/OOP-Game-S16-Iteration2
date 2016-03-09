@@ -56,10 +56,10 @@ public class GameState extends State {
     }
 
     //TODO: I don't think it should be here
-    public void setMount(Horse horse, MountController mountController){
-        this.avatar.setMount(horse);
-        this.avatar.addObserver(mountController);
-    }
+//    public void setMount(Horse horse, MountController mountController){
+//        this.avatar.setMount(horse);
+//        this.avatar.addObserver(mountController);
+//    }
 
     public void setNpcList(ArrayList<NPC> npcList){
         this.npcList = npcList;

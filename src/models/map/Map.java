@@ -156,4 +156,8 @@ public class Map {
     public Terrain getTerrainAt(Point p){
         return tiles.get(p).getTerrain();
     }
+
+    public void removeEntityAt(Point p) {
+        tiles.get(p).removeEntity();
+    }
 }

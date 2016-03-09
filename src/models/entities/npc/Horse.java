@@ -1,12 +1,15 @@
 package models.entities.npc;
 
 import controllers.entityControllers.MountController;
+import models.entities.npc.actions.Ride;
+import models.entities.npc.actions.Talk;
 import models.map.Map;
 import models.occupation.Occupation;
 import models.occupation.Sneak;
 import utilities.IOUtilities;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -16,23 +19,27 @@ public class Horse extends Mount {
 
     //movement and terrain
     private int movement;
-    private String terrain;
+    private ArrayList<String> terrainTypes;
 
+    public Horse(Point location,Map map) {
+        super(location, map);
+        passableTerrain.add("grass");
+        terrainTypes = new ArrayList<>();
 
-    public Horse(Point location,Map map){
-        super(location,map);
-        setTerrain("grass");
-        setMovement(30);
+        movement = 10;
+        terrainTypes.add("mountain");
+        initActions();
+
     }
 
     @Override
-    public void setTerrain(String terrain) {
-        this.terrain = terrain;
+    public ArrayList<String> getTerrain() {
+        return terrainTypes;
     }
 
     @Override
-    public void setMovement(int movement) {
-        this.movement = movement;
+    public int getMovement() {
+        return movement;
     }
 
     @Override
@@ -48,8 +55,7 @@ public class Horse extends Mount {
 
     @Override
     protected HashMap<Map.Direction, String> initSprites() {
-        System.out.println("YOOOOOO");
-        String imageBasePath = IOUtilities.getFileSystemDependentPath("src/res/entitys/pet-samples/raichu/");
+        String imageBasePath = IOUtilities.getFileSystemDependentPath("src/res/entitys/entity-bike-");
 
 
         HashMap<Map.Direction, String> imagePaths = new HashMap<>();
@@ -62,6 +68,11 @@ public class Horse extends Mount {
         imagePaths.put(Map.Direction.NORTH_WEST, imageBasePath + "NW.png");
         return imagePaths;
     }
+    public void initActions(){
+        actionList.add(new Talk(this));
+        actionList.add(new Ride(this));
+    }
+
 
 
 }

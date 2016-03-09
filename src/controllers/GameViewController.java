@@ -55,6 +55,9 @@ public class GameViewController extends ViewController{
     public void addSubState(SubState s) {
         ((GameView)view).addSubState(s);
     }
+    public void popTopSubState() {
+        ((GameView)view).popTopSubState();
+    }
     public void addToastWithDefaultCloseKeyBindOfX(SubState s) {
         addSubState(s);
         // Dismiss the toast with "X" Toast

@@ -79,10 +79,10 @@ public class GameLoader {
 
 
         //TODO: Figure out the mount shit implementation
-        Horse horse = new Horse(new Point(-10,-4),newMap);
-        MountController mountController = new MountController(horse);
+        Horse horse = new Horse(new Point(1,-1),newMap);
         newMap.insertEntity(horse);
-        game.setMount(horse,mountController);
+        //MountController mountController = new MountController(horse);
+        //game.setMount(horse,mountController);
         //System.out.println("I'm in the game loader");
     }
 

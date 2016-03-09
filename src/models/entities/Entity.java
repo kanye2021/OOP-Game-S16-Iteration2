@@ -258,7 +258,6 @@ public abstract class Entity extends Observable{
     public final void setPet(Pet pet) {
         this.pet = pet;
     }
-    public final void setMount(Mount mount){this.mount = mount;}
 
     public void setOrientation(Map.Direction orientation){
         this.orientation = orientation;

@@ -3,6 +3,7 @@ package models.entities.npc;
 import models.map.Map;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 
 /**
@@ -17,8 +18,8 @@ public abstract class Mount extends NPC {
 
 
     //set Terrain and speed for the mount
-    protected abstract void setTerrain(String terrain);
-    protected abstract void setMovement(int movement);
+    public abstract ArrayList<String> getTerrain();
+    public abstract int getMovement();
 
 
 }
