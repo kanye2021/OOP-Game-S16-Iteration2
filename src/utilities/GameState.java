@@ -67,10 +67,13 @@ public class GameState extends State {
 
     @Override
     public void update(){
+
         for(NPC npc: npcList){
             npc.update();
         }
+
         avatar.update();
+
     }
 }
 

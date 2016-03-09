@@ -9,29 +9,32 @@ import java.util.HashMap;
 /**
  * Created by aseber on 2/22/16.
  */
-public class DirectionalSprite {
+public class DirectionalSprite implements Drawable {
 
-    HashMap<Map.Direction, Image> images;
+    private HashMap<Map.Direction, Sprite> images;
+    private Map.Direction direction = Map.Direction.NORTH;
 
     public DirectionalSprite(HashMap<Map.Direction, String> imagePaths) {
 
         images = new HashMap<>();
 
-        Image image;
-
         for (Map.Direction direction : imagePaths.keySet()) {
 
-            String imagePath = IOUtilities.getFileSystemDependentPath(imagePaths.get(direction));
-            image = IOUtilities.getImageIcon(imagePath).getImage();
-            images.put(direction, image);
+            images.put(direction, new Sprite(imagePaths.get(direction)));
 
         }
 
     }
 
-    public Image getImage(Map.Direction direction) {
+    public void setDirection(Map.Direction direction) {
 
-        return images.get(direction);
+        this.direction = direction;
+
+    }
+
+    public Image getImage() {
+
+        return images.get(direction).getImage();
 
     }
 

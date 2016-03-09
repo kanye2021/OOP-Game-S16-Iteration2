@@ -49,6 +49,7 @@ public class StateManager implements ActionListener{
 
         stateStack.peek().update();
         display.repaint();
+
     }
 }
 

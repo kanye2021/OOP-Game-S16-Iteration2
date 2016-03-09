@@ -14,6 +14,7 @@ import models.items.takeable.equippable.weapons.oneHanded.*;
 import models.items.takeable.equippable.weapons.twoHanded.*;
 
 import models.items.takeable.quest.KeyOfKanye;
+import views.sprites.Drawable;
 import views.sprites.Sprite;
 
 import java.awt.*;
@@ -206,21 +207,13 @@ public abstract class Item {
     }
 
     protected ItemDictionary ID;
-    protected Sprite sprite;
+    protected Drawable sprite;
     public abstract boolean onTouch(Entity entity); // Method to describe what happens when an item is touched
 
     public ItemDictionary getID() {
 
         return ID;
 
-    }
-
-    public final Sprite getSprite() {
-        return sprite;
-    }
-
-    public final void setSprite(Sprite sprite) {
-        this.sprite = sprite;
     }
 
     public final boolean equals(Object o) {

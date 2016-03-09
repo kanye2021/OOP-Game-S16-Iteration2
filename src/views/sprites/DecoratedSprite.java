@@ -8,15 +8,15 @@ import java.util.HashSet;
 /**
  * Created by aseber on 3/7/16.
  */
-public class DecoratedSprite extends Sprite {
+public class DecoratedSprite implements Drawable {
 
-    private BufferedImage newImage;
-    HashSet<Color> colors = new HashSet<>();
+    private BufferedImage image;
 
     public DecoratedSprite(String imagePath, HashMap<Color, Color> colorMap) {
 
-        super(imagePath);
-        getColors();
+        Image temporaryImage = new Sprite(imagePath).getImage();
+        image = new BufferedImage(temporaryImage.getWidth(null), temporaryImage.getHeight(null), BufferedImage.TYPE_4BYTE_ABGR);
+        image.getGraphics().drawImage(temporaryImage, 0, 0, null);
 
         for (java.util.Map.Entry<Color, Color> entry : colorMap.entrySet()) {
 
@@ -26,27 +26,17 @@ public class DecoratedSprite extends Sprite {
 
     }
 
-    public void printColors() {
-
-        for (Color color : colors) {
-
-            System.out.println(color);
-
-        }
-
-    }
-
     private void setColor(Color oldColor, Color newColor) {
 
-        for (int i = 0; i < newImage.getWidth(); ++i) {
+        for (int i = 0; i < image.getWidth(); ++i) {
 
-            for (int j = 0; j < newImage.getHeight(); ++j) {
+            for (int j = 0; j < image.getHeight(); ++j) {
 
-                Color currentColor = new Color(newImage.getRGB(i, j));
+                Color currentColor = new Color(image.getRGB(i, j));
 
                 if (currentColor.equals(oldColor)) {
 
-                    newImage.setRGB(i, j, newColor.getRGB());
+                    image.setRGB(i, j, newColor.getRGB());
 
                 }
 
@@ -56,27 +46,9 @@ public class DecoratedSprite extends Sprite {
 
     }
 
-    private void getColors() {
-
-        newImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_4BYTE_ABGR);
-        newImage.getGraphics().drawImage(image, 0, 0, null);
-
-        for (int i = 0; i < newImage.getWidth(); ++i) {
-
-            for (int j = 0; j < newImage.getHeight(); ++j) {
-
-                colors.add(new Color(newImage.getRGB(i, j)));
-
-            }
-
-        }
-
-    }
-
-    @Override
     public Image getImage() {
 
-        return newImage;
+        return image;
 
     }
 

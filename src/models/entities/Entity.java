@@ -43,7 +43,7 @@ public abstract class Entity extends Observable{
     protected Mount mount;
 
 
-    protected ArrayList<String> passableTerrain;
+    protected ArrayList<String> passableTerrain = new ArrayList<>();
 
     // Stuff for movement
     private Timer movementTimer;
@@ -63,7 +63,6 @@ public abstract class Entity extends Observable{
         this.skills = occupation.getSkills();
         this.inventory = new Inventory(30);
         this.equipment = new Equipment(this);
-        passableTerrain = new ArrayList<>();
         //occupation.initStats(this.stats); // This will setup the stats and skills particular to this occupation.
         //occupation.initSkills(this.skills);
 
@@ -254,7 +253,9 @@ public abstract class Entity extends Observable{
     public abstract void startInteraction(NPC npc);
     public final Image getImage(){
 
-        return sprite.getImage(orientation);
+        sprite.setDirection(orientation);
+        return sprite.getImage();
+
     }
     // TODO: Pet methods may not belong here? just getting stuff 2 work.
     // They could belong here tho.
