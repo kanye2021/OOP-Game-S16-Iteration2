@@ -20,6 +20,10 @@ public class IndignationSkill extends ActiveSkill{
     private int damage;
     private int range;
     public IndignationSkill(){
+        cooldown = false;
+        cooldownTime = 0;
+        damage = 1;
+        range = 3;
         projectile = new Projectile(damage,range);
     }
     @Override
@@ -44,7 +48,7 @@ public class IndignationSkill extends ActiveSkill{
                     @Override
                     public void run() {
 
-                        System.out.println("Times Up");
+                        //System.out.println("Times Up");
                         cooldown = false;
                     }
                 },

@@ -51,7 +51,7 @@ public class MotorCortex {
                 directionToMove = directionToMove(npc.getLocation(), itemLocation);
                 break;
             case FOLLOW:
-                System.out.println("Follow");
+                //System.out.println("Follow");
                 entity = (Entity) decision.getAttachment();
                 directionToMove = directionToMove(npc.getLocation(), entity.getLocation());
             case DEFAULT:
@@ -62,7 +62,7 @@ public class MotorCortex {
 
         // Move
         if(directionToMove!= null){
-            System.out.println("MOVING: " + directionToMove);
+            //System.out.println("MOVING: " + directionToMove);
             npc.move(directionToMove);
         }
     }

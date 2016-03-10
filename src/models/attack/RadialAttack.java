@@ -20,20 +20,46 @@ public class RadialAttack extends Attack{
         this.range = projectile.range;
         this.orientation = entity.getOrientation();
         this.map = entity.getMap();
+        findBreadthFirstTile();
     }
 
     public void findBreadthFirstTile(){
     Queue<PointNode> pointQueue = new LinkedList<>();
      //pointQueue.add(new PointNode(origin));
+        Tile originTile = map.getTileAt(origin);
+        PointNode root = new PointNode(originTile,origin,0);
 
-        PointNode root = new PointNode(map.getTileAt(origin),origin);
         pointQueue.add(root);
         while(!pointQueue.isEmpty()){
-            PointNode currentPointNode = pointQueue.poll();
-            for(PointNode pointNode: getAdjacentTiles(currentPointNode)){
-                pointNode.range = currentPointNode.range + 1;
-                pointQueue.offer(pointNode);
+            PointNode current = pointQueue.poll();
+            Point attackPoint = new Point();
+
+            attackPoint.x=current.target.x;
+            attackPoint.y=current.target.y;
+            System.out.println(attackPoint.x);
+            System.out.println(attackPoint.y);
+            Tile desiredTile = map.getTileAt(attackPoint);
+
+            System.out.println("How many times does this appear?");
+
+            if(desiredTile.hasEntity()&&originTile!=desiredTile){
+                Entity target = desiredTile.getEntity();
+                target.takeDamage(-damage);
+                System.out.println("Has Entity yo");
             }
+            for(PointNode pointNode: getAdjacentTiles(current)){
+                pointNode.range = current.range + 1;
+                pointQueue.offer(pointNode);
+                System.out.println("CURRENT.RANGE IS "+ pointNode.range);
+                System.out.println("RANGE IS "+ range);
+                /*if(pointNode.range>range){
+                    return;
+                }*/
+            }
+            if(current.range>range){
+                return;
+            }
+
         }
     }
     private ArrayList<PointNode> getAdjacentTiles(PointNode pointNode){
@@ -46,7 +72,7 @@ public class RadialAttack extends Attack{
 
         Tile northTile = map.getTileAt(northLogicalPoint);
         if(northTile != null){
-            adjacentTiles.add(new PointNode(northTile, northLogicalPoint));
+            adjacentTiles.add(new PointNode(northTile, northLogicalPoint,pointNode.range+1));
         }
 
         // Get the tile to the south of the current position.
@@ -56,7 +82,7 @@ public class RadialAttack extends Attack{
 
         Tile southTile = map.getTileAt(southLogicalPoint);
         if(southTile != null){
-            adjacentTiles.add(new PointNode(southTile, southLogicalPoint));
+            adjacentTiles.add(new PointNode(southTile, southLogicalPoint,pointNode.range+1));
         }
 
 
@@ -66,7 +92,7 @@ public class RadialAttack extends Attack{
 
         Tile northWestTile = map.getTileAt(northWestLogicalPoint);
         if(northWestTile != null){
-            adjacentTiles.add(new PointNode(northWestTile, northWestLogicalPoint));
+            adjacentTiles.add(new PointNode(northWestTile, northWestLogicalPoint,pointNode.range+1));
         }
 
 
@@ -76,7 +102,7 @@ public class RadialAttack extends Attack{
 
         Tile southEastTile = map.getTileAt(southEastLogicalPoint);
         if(southEastTile != null){
-            adjacentTiles.add(new PointNode(southEastTile, southEastLogicalPoint));
+            adjacentTiles.add(new PointNode(southEastTile, southEastLogicalPoint,pointNode.range+1));
         }
 
 
@@ -86,7 +112,7 @@ public class RadialAttack extends Attack{
 
         Tile northEastTile = map.getTileAt(northEastLogicaPoint);
         if(northEastTile != null){
-            adjacentTiles.add(new PointNode(northEastTile, northEastLogicaPoint));
+            adjacentTiles.add(new PointNode(northEastTile, northEastLogicaPoint,pointNode.range+1));
         }
 
 
@@ -96,7 +122,7 @@ public class RadialAttack extends Attack{
 
         Tile southWestTile = map.getTileAt(southWestLogicalPoint);
         if(southWestTile != null){
-            adjacentTiles.add(new PointNode(southWestTile,southWestLogicalPoint));
+            adjacentTiles.add(new PointNode(southWestTile,southWestLogicalPoint,pointNode.range+1));
         }
 
         return adjacentTiles;
@@ -105,12 +131,13 @@ public class RadialAttack extends Attack{
         public Point target;
         public Tile tile;
         public int range;
-        public PointNode(Tile tile, Point point){
+        public PointNode(Tile tile, Point point, int range){
             target = new Point();
             this.target.x=point.x;
             this.target.y = point.y;
             this.tile = tile;
-            this.range = -1;
+            this.range = range;
+            //this.range = -1;
         }
     }
     @Override
