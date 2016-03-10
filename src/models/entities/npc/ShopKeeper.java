@@ -19,7 +19,7 @@ import java.util.HashMap;
 /**
  * Created by dyeung on 2/28/16.
  */
-public class ShopKeeper extends NPC{
+public class ShopKeeper extends NPC {
 
     public ShopKeeper(Point location, Map map) {
 
@@ -27,7 +27,7 @@ public class ShopKeeper extends NPC{
         passableTerrain.add("grass");
         initActions();
         initInventory(); //Adds items to the inventory
-        brain = new Brain(this, Personalities.KIND); // Agnostic is the default personailty.
+        brain = new Brain(this, Personalities.KIND);
 
     }
     //---------NPC Stuff------------

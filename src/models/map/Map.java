@@ -73,6 +73,9 @@ public class Map {
     // To insert an item on the map. Used when loading and dropping items
     public void insertItemAtPoint(Item item, Point point) { tiles.get(point).addItem(item); }
 
+    // Checks if a valid tile is at a certain Point
+    public boolean isTileValid(Point point) { return tiles.containsKey(point); }
+
     // This function will attempt to move an entity in the direction it wants to move. Will return the location where
     // the entity should be (may be its existing location if the move was not successful).
     public TileDetection moveEntity(Entity entity, Point desiredLocation){
