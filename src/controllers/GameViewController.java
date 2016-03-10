@@ -228,6 +228,16 @@ public class GameViewController extends ViewController{
             public void stop(){}
         };
 
+        //Fifth Skill
+        Task fifthSkill = new Task() {
+            @Override
+            public void run(){
+                avatarController.useFifthSkill();
+            }
+            @Override
+            public void stop(){}
+        };
+
 
         //Open equip menu
         Task openEquipment = new Task() {
@@ -343,6 +353,9 @@ public class GameViewController extends ViewController{
 
         //4th Skill
         addKeyPressMapping(fourthSkill, KeyEvent.VK_5);
+
+        //5th Skill
+        addKeyPressMapping(fifthSkill,KeyEvent.VK_6);
 
         //InventoryView
         addKeyPressMapping(openInventory, KeyEvent.VK_I);

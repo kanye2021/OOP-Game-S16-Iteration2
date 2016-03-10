@@ -20,6 +20,7 @@ public abstract class Attack {
     protected Map.Direction orientation;
     public abstract void calculateDamage();
     protected Point origin;
+    //protected Map map;
     //protected MapCondition.Location location;
     /*Entity entity;
     Map.Direction orientation;

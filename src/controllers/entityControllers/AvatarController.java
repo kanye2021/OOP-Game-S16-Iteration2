@@ -159,6 +159,30 @@ public class AvatarController {
         }
     }
 
+    public void useFifthSkill(){
+        //if smasher, get first skill
+        if(avatar.getOccupation().contains("Smasher")){
+            //Technically the Smasher class has no actives
+
+        }else if(avatar.getOccupation().contains("Summoner")){
+            //No more skills
+            //Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.INDIGNATION);
+            //System.out.println(fourthSkill);
+            //IndignationSkill indignationSkill = (IndignationSkill) fourthSkill;
+            //indignationSkill.onActivate(avatar);
+            Skill fifthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.GROUND_DASHER);
+            System.out.println(fifthSkill);
+            GroundDasherSkill groundDasherSkill = (GroundDasherSkill) fifthSkill;
+            groundDasherSkill.onActivate(avatar);
+
+        }else if(avatar.getOccupation().contains("Sneak")){
+            //first skill should be something..
+            //first skill should be something..
+
+        }else{
+            System.out.println("What are you");
+        }
+    }
 
 
     protected void initKeyPressMapping(){}
