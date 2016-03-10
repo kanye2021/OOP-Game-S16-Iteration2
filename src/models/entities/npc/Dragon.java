@@ -15,13 +15,13 @@ import java.util.HashMap;
 /**
  * Created by denzel on 3/1/16.
  */
-public class Horse extends Mount {
+public class Dragon extends Mount {
 
     //movement and terrain
     private int movement;
     private ArrayList<String> terrainTypes;
 
-    public Horse(Point location,Map map) {
+    public Dragon(Point location,Map map) {
         super(location, map);
         passableTerrain.add("grass");
         terrainTypes = new ArrayList<>();
@@ -55,7 +55,7 @@ public class Horse extends Mount {
 
     @Override
     protected HashMap<Map.Direction, String> initSprites() {
-        String imageBasePath = IOUtilities.getFileSystemDependentPath("src/res/entitys/entity-bike-");
+        String imageBasePath = IOUtilities.getFileSystemDependentPath("src/res/entitys/entity-reddragon-");
 
 
         HashMap<Map.Direction, String> imagePaths = new HashMap<>();
@@ -72,7 +72,9 @@ public class Horse extends Mount {
         actionList.add(new Talk(this));
         actionList.add(new Ride(this));
     }
-
-
+    @Override
+    public void updateOrientation(Map.Direction direction){
+        orientation = direction;
+    }
 
 }
