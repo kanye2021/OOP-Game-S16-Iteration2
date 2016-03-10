@@ -14,9 +14,10 @@ import java.util.Queue;
  * Created by ben on 3/8/16.
  */
 public class AngularAttack extends Attack{
-    private Map map;
+    //private Map map;
 
     public AngularAttack(Entity entity,Projectile projectile){
+        this.entity=entity;
         this.origin = entity.getLocation();
         this.damage = projectile.damage;
         this.range = projectile.range;
@@ -44,7 +45,7 @@ public class AngularAttack extends Attack{
 
             System.out.println("How many times does this appear?");
 
-            if(desiredTile.hasEntity()&&originTile!=desiredTile){
+            if(desiredTile.hasEntity()&&originTile!=desiredTile&&entity!=desiredTile.getEntity()){
                 Entity target = desiredTile.getEntity();
                 target.takeDamage(-damage);
                 System.out.println("Has Entity yo");

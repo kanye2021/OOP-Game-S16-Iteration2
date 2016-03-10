@@ -13,8 +13,9 @@ import java.util.Queue;
  * Created by ben on 3/8/16.
  */
 public class RadialAttack extends Attack{
-    Map map;
+    //Map map;
     public RadialAttack(Entity entity, Projectile projectile){
+        this.entity = entity;
         this.origin = entity.getLocation();
         this.damage = projectile.damage;
         this.range = projectile.range;
@@ -23,13 +24,13 @@ public class RadialAttack extends Attack{
         findBreadthFirstTile();
     }
 
-    public void findBreadthFirstTile(){
+    public void findBreadthFirstTile(){//BFS algorithm here
     Queue<PointNode> pointQueue = new LinkedList<>();
      //pointQueue.add(new PointNode(origin));
         Tile originTile = map.getTileAt(origin);
         PointNode root = new PointNode(originTile,origin,0);
 
-        pointQueue.add(root);
+        pointQueue.add(root);//Push into the queue the original node
         while(!pointQueue.isEmpty()){
             PointNode current = pointQueue.poll();
             Point attackPoint = new Point();
@@ -40,18 +41,18 @@ public class RadialAttack extends Attack{
             System.out.println(attackPoint.y);
             Tile desiredTile = map.getTileAt(attackPoint);
 
-            System.out.println("How many times does this appear?");
 
-            if(desiredTile.hasEntity()&&originTile!=desiredTile){
+            //Only takes damage if you are not the caster. or the mount of the caster
+
+            if(desiredTile.hasEntity()&&originTile!=desiredTile&&entity!=desiredTile.getEntity()){
                 Entity target = desiredTile.getEntity();
                 target.takeDamage(-damage);
-                System.out.println("Has Entity yo");
+
             }
             for(PointNode pointNode: getAdjacentTiles(current)){
                 pointNode.range = current.range + 1;
                 pointQueue.offer(pointNode);
-                System.out.println("CURRENT.RANGE IS "+ pointNode.range);
-                System.out.println("RANGE IS "+ range);
+
                 /*if(pointNode.range>range){
                     return;
                 }*/

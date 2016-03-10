@@ -2,11 +2,8 @@ package models.attack;
 
 import models.Attack;
 import models.entities.Entity;
-import models.entities.Pet;
 import models.map.Map;
 import models.map.Tile;
-import models.stats.Stats;
-
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -17,8 +14,7 @@ import java.util.Queue;
 //You are only supposed to call the constructor.  I.e new LinearAttack(Entity,Projectile);
 public class LinearAttack extends Attack{
     Point slope;
-    Entity entity;
-    Map map;
+
     public LinearAttack(Entity entity,Projectile projectile){
         this.entity = entity;
         this.map = entity.getMap();
@@ -38,7 +34,7 @@ public class LinearAttack extends Attack{
 
     public void findSlope(Map.Direction orientation){
 
-        System.out.println("Print");
+
         if(orientation == Map.Direction.NORTH){
             slope.x=0;
             slope.y=-1;
@@ -76,7 +72,7 @@ public class LinearAttack extends Attack{
             pointQueue.add(new PointNode(origin,slope,i));//adds in all the nodes
         }
 
-        //Map map = entity.getMap();
+
         while(!pointQueue.isEmpty()){
 
            /* new java.util.Timer().schedule(
@@ -103,6 +99,7 @@ public class LinearAttack extends Attack{
                     },
                     2000//half a second
             );*/
+
             PointNode current = pointQueue.poll();//returns the top
             Point attackPoint = new Point();
 
@@ -116,7 +113,7 @@ public class LinearAttack extends Attack{
             if(desiredTile.hasEntity()){
                 Entity target = desiredTile.getEntity();
                 target.takeDamage(-damage);
-                System.out.println("Has Entity yo");
+
             }
             //TODO:Implement a timer that does run into a out of memory exception
         }
