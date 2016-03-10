@@ -52,7 +52,9 @@ public class MotorCortex {
                 directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), itemLocation);
                 break;
             case FOLLOW:
+
                 System.out.println(npc.getType() + ": I WANT TO SMELL YOUR BUTT");
+
                 entity = (Entity) decision.getAttachment();
                 directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), entity.getLocation());
             case DEFAULT:
@@ -63,7 +65,7 @@ public class MotorCortex {
 
         // Move
         if(directionToMove!= null){
-//            System.out.println("MOVING: " + directionToMove);
+
             npc.move(directionToMove);
         }
     }

@@ -1,10 +1,7 @@
 package models.occupation;
 
 import models.skills.SkillList;
-import models.skills.SummonerSkills.BaneSkill;
-import models.skills.SummonerSkills.BoonSkill;
-import models.skills.SummonerSkills.EnchantmentSkill;
-import models.skills.SummonerSkills.StaffSkill;
+import models.skills.SummonerSkills.*;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
 import models.stats.Stats;
@@ -21,7 +18,10 @@ public class Summoner extends Occupation {
             new EnchantmentSkill(),
             new BoonSkill(),
             new BaneSkill(),
-            new StaffSkill()
+            new StaffSkill(),
+                new FireBallSkill(),
+                new GroundDasherSkill(),
+                new IndignationSkill()
         );
 
     }
@@ -40,7 +40,7 @@ public class Summoner extends Occupation {
                 new StatModification(Stats.Type.AGILITY, 10),
                 new StatModification(Stats.Type.INTELLECT, 20),
                 new StatModification(Stats.Type.MOVEMENT,5),
-                new StatModification(Stats.Type.HARDINESS, 10),
+                new StatModification(Stats.Type.HARDINESS, 50),
                 new StatModification(Stats.Type.RADIUS_OF_VISIBILITY, 4),
                 new StatModification(Stats.Type.HEALTH,Integer.MAX_VALUE),
                 new StatModification(Stats.Type.MANA,Integer.MAX_VALUE)
