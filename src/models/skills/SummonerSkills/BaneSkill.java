@@ -19,6 +19,12 @@ public class BaneSkill extends PassiveSkill {
     }
 
     @Override
+    public String getName() {
+        return "Bane";
+    }
+
+
+    @Override
     public void onUpdate(Entity entity) {
 
 

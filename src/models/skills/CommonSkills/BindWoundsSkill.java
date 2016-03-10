@@ -25,6 +25,11 @@ public class BindWoundsSkill extends ActiveSkill {
 
     }
 
+    @Override
+    public String getName() {
+        return "Bind Wounds";
+    }
+
     public BindWoundsSkill() {
 
         conditionsToActivate = new ConditionList(

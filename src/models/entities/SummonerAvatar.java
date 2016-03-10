@@ -44,4 +44,10 @@ public class SummonerAvatar extends Avatar {
 
     }
 
+    public final String getType() {
+
+        return "Summoner" + "-" + super.getType();
+
+    }
+
 }

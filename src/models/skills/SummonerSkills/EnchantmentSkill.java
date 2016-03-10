@@ -22,6 +22,12 @@ public class EnchantmentSkill extends ActiveSkill {
     }
 
     @Override
+    public String getName() {
+        return "Enchantment";
+    }
+
+
+    @Override
     public void onActivate(Entity entity) {
         System.out.println("Enchantment skill is used");
     }

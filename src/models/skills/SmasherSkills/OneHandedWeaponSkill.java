@@ -33,6 +33,11 @@ public class OneHandedWeaponSkill extends PassiveSkill {
     }
 
     @Override
+    public String getName() {
+        return "One Handed Weapon Mastery";
+    }
+
+    @Override
     public void onUpdate(Entity entity) {
         oneHandedWeaponLv=getLevel();
         finalDamage = baseDamage + oneHandedWeaponLv;

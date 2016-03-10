@@ -22,6 +22,12 @@ public class BoonSkill extends ActiveSkill {
         return Skill.SkillDictionary.BOON;
 
     }
+
+    @Override
+    public String getName() {
+        return "Boon";
+    }
+
     public void buff(Stats stats,int delta){
         stats.modifyStat(Stats.Type.HARDINESS,delta);
         stats.modifyStat(Stats.Type.STRENGTH,delta);

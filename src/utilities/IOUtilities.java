@@ -5,7 +5,7 @@ import javax.swing.*;
 /**
  * Created by aseber on 2/17/16.
  */
-public class IOUtilities {
+public final class IOUtilities {
     private static final String placeholderImage = getFileSystemDependentPath("./src/res/placeholder.png");
 
     public static String getFileSystemDependentPath(String string) {

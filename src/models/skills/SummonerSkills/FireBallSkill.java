@@ -31,6 +31,12 @@ public class FireBallSkill extends ActiveSkill{
     }
 
     @Override
+    public String getName() {
+        return "Fireball";
+    }
+
+
+    @Override
     public void onActivate(Entity entity) {
         System.out.println("Can you take this? Fireball!");
         Projectile projectile = new Projectile(damage,range);

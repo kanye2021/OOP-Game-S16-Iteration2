@@ -28,6 +28,11 @@ public class GroundDasherSkill extends ActiveSkill{
         return SkillDictionary.GROUND_DASHER;
 
     }
+    @Override
+    public String getName() {
+        return "Ground Dasher";
+    }
+
 
     @Override
     public void onActivate(Entity entity) {

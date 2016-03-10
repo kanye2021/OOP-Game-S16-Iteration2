@@ -19,6 +19,12 @@ public class RangedAttackSkill extends PassiveSkill {
     }
 
     @Override
+    public String getName() {
+        return "Ranged Attack Mastery";
+    }
+
+
+    @Override
     public void onUpdate(Entity entity) {
 
 

@@ -31,6 +31,11 @@ public class ObservationSkill extends PassiveSkill {
     }
 
     @Override
+    public String getName() {
+        return "Observation";
+    }
+
+    @Override
     public void onUpdate(Entity entity) {
         observationLv = getLevel();//Gets the newly updated level
         percentError = 100 - constant*observationLv;

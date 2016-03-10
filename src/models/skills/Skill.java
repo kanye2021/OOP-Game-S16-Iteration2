@@ -3,6 +3,9 @@ package models.skills;
 import models.conditions.ConditionList;
 import utilities.MathUtilities;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by aseber on 2/24/16.
  */
@@ -41,11 +44,12 @@ public abstract class Skill {
     private int level;
 
     protected boolean cooldown;
-
     protected int cooldownTime;
+    protected double currentCooldownRemaining;
     protected final int SECONDS = 1000;
-    public Skill() {
 
+    public Skill() {
+        this.currentCooldownRemaining = 0;
         this.level = 1;
         this.ID = initID();
 
@@ -59,14 +63,81 @@ public abstract class Skill {
 
 
     public int getLevel() {
-
         return this.level;
+    }
 
+    public void incrementLevel() {
+        level++;
+    }
+
+    public boolean isCooldown() {
+        return cooldown;
+    }
+
+    public final void doTheCoolDown() {
+        // Set "cooldown" to true to indicate the skill is cooling down
+        cooldown = true;
+
+        // Set a task to execute after "X" seconds have passed by.
+        // "X" == cooldownTime of current skill
+        // After the time is up "cooldown" is set to false;
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        cooldown = false;
+
+                    }
+                },
+                cooldownTime
+        );
+
+        // Start tracking the remaining time available
+        countDownAndUpdateRemainingTime();
     }
 
 
+    /***
+     * This function will update the "currentCooldownRemaining" property of the skill
+     * it'll update every MS. This is to get an accurate status of how long of the CD is left.
+     */
+    public void countDownAndUpdateRemainingTime() {
+        Timer timer = new Timer();
+
+        currentCooldownRemaining = cooldownTime;
+        double startTime = System.currentTimeMillis();
+
+        timer.schedule(new TimerTask() {
+            double elapsedTime = 0;
+            @Override
+            public void run() {
+                if (cooldown) {
+                    //Get elapsed time in milli seconds
+                    elapsedTime = (System.currentTimeMillis() - startTime);
+
+                    // Current time remaining is the elapsed time minus total cooldown time
+                    // divide by 1000 to get seconds
+                    currentCooldownRemaining = (cooldownTime - elapsedTime) / SECONDS;
+                }
+                else {
+                    timer.cancel();  // Terminates this timer, discarding any currently scheduled tasks.
+                    timer.purge();   // Removes all cancelled tasks from this timer's task queue.
+                }
+            };
+        }, 0, 1);
+    }
+
+    public int getCooldownTime() {
+        return cooldownTime;
+    }
+
+    public double getCooldownTimeRemaining() {
+        return currentCooldownRemaining;
+    }
+
 
     public abstract SkillDictionary initID();
+    public abstract String getName();
 
     //check to see if the skill is active or not
     public abstract boolean isActive();
