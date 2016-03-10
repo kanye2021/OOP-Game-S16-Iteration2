@@ -132,6 +132,9 @@ public abstract class Entity extends Observable{
 
     public final TileDetection move(Map.Direction direction){
         orientation = direction;
+        if (mount != null) {
+            mount.updateOrientation(direction);
+        }
         currentMovement = direction;
 
         return updateLocation();
@@ -264,7 +267,6 @@ public abstract class Entity extends Observable{
     public final void setPet(Pet pet) {
         this.pet = pet;
     }
-    public final void setMount(Mount mount){this.mount = mount;}
 
     public void setOrientation(Map.Direction orientation){
         this.orientation = orientation;
@@ -291,5 +293,11 @@ public abstract class Entity extends Observable{
     // Wrapper to take damage
     public void takeDamage(int amount) {
         this.stats.modifyStat(Stats.Type.HEALTH, amount);
+    }
+
+    //Weird hacky thing (All entities do not have amount unless otherwise specificed. Avatar will
+    //override and return based on
+    public Mount getMount(){
+        return mount;
     }
 }

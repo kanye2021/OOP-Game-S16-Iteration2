@@ -1,5 +1,6 @@
 package models.entities.npc.actions;
 
+import controllers.GameViewController;
 import controllers.ViewController;
 import models.entities.Avatar;
 import models.stats.StatModification;
@@ -8,6 +9,7 @@ import models.stats.Stats;
 
 import models.entities.npc.NPC;
 import models.entities.npc.actions.Action;
+import views.GameView;
 import views.View;
 
 /**
@@ -37,9 +39,5 @@ public class Attack extends Action {
         return "Attack";
     }
 
-    @Override
-    public void setAvatar(Avatar avatar){
-        this.avatar = avatar;
-    }
 
 }
