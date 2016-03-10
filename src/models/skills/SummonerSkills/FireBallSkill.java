@@ -2,6 +2,7 @@ package models.skills.SummonerSkills;
 
 import models.attack.LinearAttack;
 import models.attack.Projectile;
+import models.attack.RadialAttack;
 import models.entities.Avatar;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
@@ -20,7 +21,7 @@ public class FireBallSkill extends ActiveSkill{
 
     public FireBallSkill(){
         damage = 5;
-        range = 3;
+        range = 1;
     }
 
     @Override
@@ -34,8 +35,7 @@ public class FireBallSkill extends ActiveSkill{
     public void onActivate(Entity entity) {
         System.out.println("Can you take this? Fireball!");
         Projectile projectile = new Projectile(damage,range);
-        new LinearAttack(entity,projectile);//This is the attack
-
+        new RadialAttack(entity,projectile);//This is the attack
 
     }
 

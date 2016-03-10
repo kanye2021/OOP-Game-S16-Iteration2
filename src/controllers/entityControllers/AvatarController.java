@@ -65,14 +65,12 @@ public class AvatarController {
             //Technically the Smasher class has no actives
 
         }else if(avatar.getOccupation().contains("Summoner")){
-            //first skill should be enchantment here
             Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.ENCHANTMENT);
             System.out.println(firstSkill);
             EnchantmentSkill enchantmentSkill = (EnchantmentSkill) firstSkill;
             enchantmentSkill.onActivate(avatar);
 
         }else if(avatar.getOccupation().contains("Sneak")){
-            //first skill should be enchantment here
             Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.CREEP);
             System.out.println(firstSkill);
             CreepSkill creepSkill = (CreepSkill) firstSkill;
@@ -85,22 +83,15 @@ public class AvatarController {
     public void useSecondSkill(){
         //if smasher, get first skill
         if (avatar.getOccupation().contains("Smasher")) {
-            //Technically the Smasher class has no actives
+
 
         } else if (avatar.getOccupation().contains("Summoner")) {
-            //Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.CREEP);
-            //System.out.println(firstSkill);
-            //CreepSkill creepSkill = (CreepSkill) firstSkill;
-            //creepSkill.onActivate(avatar);
-            //first skill should be enchantment here
             Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.FIREBALL);
             System.out.println(secondSkill);
             FireBallSkill fireBallSkill = (FireBallSkill) secondSkill;
-            //Entity entity = (Entity) avatar;
             fireBallSkill.onActivate(avatar);
 
         } else if (avatar.getOccupation().contains("Sneak")) {
-            //first skill should be something..
             Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
             System.out.println(secondSkill);
             DetectRemoveTrapSkill detectSkill = (DetectRemoveTrapSkill) secondSkill;
@@ -117,14 +108,11 @@ public class AvatarController {
             //Technically the Smasher class has no actives
 
         } else if (avatar.getOccupation().contains("Summoner")) {
-            //first skill should be enchantment here
             Skill thirdSkill = avatar.getSpecificSkill(Skill.SkillDictionary.BOON);
             System.out.println(thirdSkill);
             BoonSkill boonSkill = (BoonSkill) thirdSkill;
             boonSkill.onActivate(avatar);
         } else if (avatar.getOccupation().contains("Sneak")) {
-            //first skill should be something..
-            //first skill should be something..
             Skill thirdSkill = avatar.getSpecificSkill(Skill.SkillDictionary.PICK_POCKET);
             System.out.println(thirdSkill);
             PickPocketSkill pickPocketSkill = (PickPocketSkill) thirdSkill;
@@ -147,8 +135,6 @@ public class AvatarController {
             IndignationSkill indignationSkill = (IndignationSkill) fourthSkill;
             indignationSkill.onActivate(avatar);
         }else if(avatar.getOccupation().contains("Sneak")){
-            //first skill should be something..
-            //first skill should be something..
             Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
             System.out.println(fourthSkill);
             DetectRemoveTrapSkill detectRemoveTrapSkill = (DetectRemoveTrapSkill) fourthSkill;

@@ -16,9 +16,11 @@ import java.util.Queue;
 
 //You are only supposed to call the constructor.  I.e new LinearAttack(Entity,Projectile);
 public class LinearAttack extends Attack{
+
     Point slope;
     Entity entity;
     Map map;
+
     public LinearAttack(Entity entity,Projectile projectile){
         this.entity = entity;
         this.map = entity.getMap();
@@ -116,7 +118,6 @@ public class LinearAttack extends Attack{
             if(desiredTile.hasEntity()){
                 Entity target = desiredTile.getEntity();
                 target.takeDamage(-damage);
-                System.out.println("Has Entity yo");
             }
             //TODO:Implement a timer that does run into a out of memory exception
         }

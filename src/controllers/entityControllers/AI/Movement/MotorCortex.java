@@ -29,7 +29,6 @@ public class MotorCortex {
             case ATTACK:
                 // Get the entity to attack
                 entity = (Entity) decision.getAttachment();
-                System.out.println("ATTACK!!!!");
                 // TODO: Implement the attack (How to know if I can do a ranged attack, melee attack ,etc.)
 
                 // Walk towards the entity
@@ -38,20 +37,20 @@ public class MotorCortex {
             case TRADE:
                 // Announce (make a toast) that I would like to trade.
                 entity = (Entity) decision.getAttachment();
-                System.out.println("TRADEEEE");
+
                 directionToMove = directionToMove(npc.getLocation(), entity.getLocation());
                 // Make a toast that says "Hey I would like to trade with you!"
                 break;
             case GET_ITEM:
                 // Walk to the item;
                 itemLocation = (Point) decision.getAttachment();
-                System.out.println("GET ITEM!!!!");
+
 
                 // Determine which direction to walk.
                 directionToMove = directionToMove(npc.getLocation(), itemLocation);
                 break;
             case FOLLOW:
-                System.out.println("Follow");
+
                 entity = (Entity) decision.getAttachment();
                 directionToMove = directionToMove(npc.getLocation(), entity.getLocation());
             case DEFAULT:
@@ -62,7 +61,7 @@ public class MotorCortex {
 
         // Move
         if(directionToMove!= null){
-            System.out.println("MOVING: " + directionToMove);
+
             npc.move(directionToMove);
         }
     }
