@@ -77,24 +77,25 @@ public class AngularAttack extends Attack{
                 adjacentTiles.add(new PointNode(northTile, northLogicalPoint,pointNode.range+1));
             }
 
+            if(pointNode.range%2!=0) {//if range is odd
+                // Get the tile to the north west of the current position.
+                Point northWestLogicalPoint = new Point(pointNode.target);
+                northWestLogicalPoint.translate(-1, 0);
 
-            // Get the tile to the north west of the current position.
-            Point northWestLogicalPoint = new Point(pointNode.target);
-            northWestLogicalPoint.translate(-1, 0);
-
-            Tile northWestTile = map.getTileAt(northWestLogicalPoint);
-            if(northWestTile != null){
-                adjacentTiles.add(new PointNode(northWestTile, northWestLogicalPoint,pointNode.range+1));
-            }
+                Tile northWestTile = map.getTileAt(northWestLogicalPoint);
+                if (northWestTile != null) {
+                    adjacentTiles.add(new PointNode(northWestTile, northWestLogicalPoint, pointNode.range + 1));
+                }
 
 
-            // Get the tile to the north east of the current position.
-            Point northEastLogicaPoint = new Point(pointNode.target);
-            northEastLogicaPoint.translate(1, -1);
+                // Get the tile to the north east of the current position.
+                Point northEastLogicaPoint = new Point(pointNode.target);
+                northEastLogicaPoint.translate(1, -1);
 
-            Tile northEastTile = map.getTileAt(northEastLogicaPoint);
-            if(northEastTile != null){
-                adjacentTiles.add(new PointNode(northEastTile, northEastLogicaPoint,pointNode.range+1));
+                Tile northEastTile = map.getTileAt(northEastLogicaPoint);
+                if (northEastTile != null) {
+                    adjacentTiles.add(new PointNode(northEastTile, northEastLogicaPoint, pointNode.range + 1));
+                }
             }
         }else if(orientation == Map.Direction.NORTH_EAST){
 
@@ -108,25 +109,25 @@ public class AngularAttack extends Attack{
             }
 
 
+            if(pointNode.range%2!=0) {
+                // Get the tile adjacent to the north.
+                Point northLogicalPoint = new Point(pointNode.target); // Get the tiles logical point
+                northLogicalPoint.translate(0, -1);
 
-            // Get the tile adjacent to the north.
-            Point northLogicalPoint = new Point(pointNode.target); // Get the tiles logical point
-            northLogicalPoint.translate(0, -1);
 
+                Tile northTile = map.getTileAt(northLogicalPoint);
+                if (northTile != null) {
+                    adjacentTiles.add(new PointNode(northTile, northLogicalPoint, pointNode.range + 1));
+                }
+                // Get the tile to the south east of the current position.
+                Point southEastLogicalPoint = new Point(pointNode.target);
+                southEastLogicalPoint.translate(1, 0);
 
-            Tile northTile = map.getTileAt(northLogicalPoint);
-            if(northTile != null){
-                adjacentTiles.add(new PointNode(northTile, northLogicalPoint,pointNode.range+1));
+                Tile southEastTile = map.getTileAt(southEastLogicalPoint);
+                if (southEastTile != null) {
+                    adjacentTiles.add(new PointNode(southEastTile, southEastLogicalPoint, pointNode.range + 1));
+                }
             }
-            // Get the tile to the south east of the current position.
-            Point southEastLogicalPoint = new Point(pointNode.target);
-            southEastLogicalPoint.translate(1, 0);
-
-            Tile southEastTile = map.getTileAt(southEastLogicalPoint);
-            if(southEastTile != null){
-                adjacentTiles.add(new PointNode(southEastTile, southEastLogicalPoint,pointNode.range+1));
-            }
-
         }else if(orientation == Map.Direction.SOUTH_EAST){
             // Get the tile to the south east of the current position.
             Point southEastLogicalPoint = new Point(pointNode.target);
@@ -136,24 +137,25 @@ public class AngularAttack extends Attack{
             if(southEastTile != null){
                 adjacentTiles.add(new PointNode(southEastTile, southEastLogicalPoint,pointNode.range+1));
             }
+            if(pointNode.range%2!=0) {
+                // Get the tile to the north east of the current position.
+                Point northEastLogicaPoint = new Point(pointNode.target);
+                northEastLogicaPoint.translate(1, -1);
 
-            // Get the tile to the north east of the current position.
-            Point northEastLogicaPoint = new Point(pointNode.target);
-            northEastLogicaPoint.translate(1, -1);
+                Tile northEastTile = map.getTileAt(northEastLogicaPoint);
+                if (northEastTile != null) {
+                    adjacentTiles.add(new PointNode(northEastTile, northEastLogicaPoint, pointNode.range + 1));
+                }
 
-            Tile northEastTile = map.getTileAt(northEastLogicaPoint);
-            if(northEastTile != null){
-                adjacentTiles.add(new PointNode(northEastTile, northEastLogicaPoint,pointNode.range+1));
-            }
-
-            // Get the tile to the south of the current position.
-            Point southLogicalPoint = new Point(pointNode.target);
-            southLogicalPoint.translate(0, 1);
+                // Get the tile to the south of the current position.
+                Point southLogicalPoint = new Point(pointNode.target);
+                southLogicalPoint.translate(0, 1);
 
 
-            Tile southTile = map.getTileAt(southLogicalPoint);
-            if(southTile != null){
-                adjacentTiles.add(new PointNode(southTile, southLogicalPoint,pointNode.range+1));
+                Tile southTile = map.getTileAt(southLogicalPoint);
+                if (southTile != null) {
+                    adjacentTiles.add(new PointNode(southTile, southLogicalPoint, pointNode.range + 1));
+                }
             }
         }else if(orientation == Map.Direction.SOUTH){
             // Get the tile to the south of the current position.
@@ -166,25 +168,25 @@ public class AngularAttack extends Attack{
             }
 
 
+            if(pointNode.range%2!=0) {
+                // Get the tile to the south east of the current position.
+                Point southEastLogicalPoint = new Point(pointNode.target);
+                southEastLogicalPoint.translate(1, 0);
 
-            // Get the tile to the south east of the current position.
-            Point southEastLogicalPoint = new Point(pointNode.target);
-            southEastLogicalPoint.translate(1, 0);
-
-            Tile southEastTile = map.getTileAt(southEastLogicalPoint);
-            if(southEastTile != null){
-                adjacentTiles.add(new PointNode(southEastTile, southEastLogicalPoint,pointNode.range+1));
-            }
+                Tile southEastTile = map.getTileAt(southEastLogicalPoint);
+                if (southEastTile != null) {
+                    adjacentTiles.add(new PointNode(southEastTile, southEastLogicalPoint, pointNode.range + 1));
+                }
 
 
+                // Get the tile to the south west of the current position.
+                Point southWestLogicalPoint = new Point(pointNode.target);
+                southWestLogicalPoint.translate(-1, 1);
 
-            // Get the tile to the south west of the current position.
-            Point southWestLogicalPoint = new Point(pointNode.target);
-            southWestLogicalPoint.translate(-1, 1);
-
-            Tile southWestTile = map.getTileAt(southWestLogicalPoint);
-            if(southWestTile != null){
-                adjacentTiles.add(new PointNode(southWestTile,southWestLogicalPoint,pointNode.range+1));
+                Tile southWestTile = map.getTileAt(southWestLogicalPoint);
+                if (southWestTile != null) {
+                    adjacentTiles.add(new PointNode(southWestTile, southWestLogicalPoint, pointNode.range + 1));
+                }
             }
         }else if(orientation == Map.Direction.SOUTH_WEST){
             // Get the tile to the south west of the current position.
@@ -195,24 +197,25 @@ public class AngularAttack extends Attack{
             if(southWestTile != null){
                 adjacentTiles.add(new PointNode(southWestTile,southWestLogicalPoint,pointNode.range+1));
             }
+            if(pointNode.range%2!=0) {
+                // Get the tile to the south of the current position.
+                Point southLogicalPoint = new Point(pointNode.target);
+                southLogicalPoint.translate(0, 1);
 
-            // Get the tile to the south of the current position.
-            Point southLogicalPoint = new Point(pointNode.target);
-            southLogicalPoint.translate(0, 1);
 
+                Tile southTile = map.getTileAt(southLogicalPoint);
+                if (southTile != null) {
+                    adjacentTiles.add(new PointNode(southTile, southLogicalPoint, pointNode.range + 1));
+                }
 
-            Tile southTile = map.getTileAt(southLogicalPoint);
-            if(southTile != null){
-                adjacentTiles.add(new PointNode(southTile, southLogicalPoint,pointNode.range+1));
-            }
+                // Get the tile to the north west of the current position.
+                Point northWestLogicalPoint = new Point(pointNode.target);
+                northWestLogicalPoint.translate(-1, 0);
 
-            // Get the tile to the north west of the current position.
-            Point northWestLogicalPoint = new Point(pointNode.target);
-            northWestLogicalPoint.translate(-1, 0);
-
-            Tile northWestTile = map.getTileAt(northWestLogicalPoint);
-            if(northWestTile != null){
-                adjacentTiles.add(new PointNode(northWestTile, northWestLogicalPoint,pointNode.range+1));
+                Tile northWestTile = map.getTileAt(northWestLogicalPoint);
+                if (northWestTile != null) {
+                    adjacentTiles.add(new PointNode(northWestTile, northWestLogicalPoint, pointNode.range + 1));
+                }
             }
         }else if(orientation == Map.Direction.NORTH_WEST){
             // Get the tile to the north west of the current position.
@@ -223,23 +226,24 @@ public class AngularAttack extends Attack{
             if(northWestTile != null){
                 adjacentTiles.add(new PointNode(northWestTile, northWestLogicalPoint,pointNode.range+1));
             }
+            if(pointNode.range%2!=0) {
+                //SW Tile
+                Point southWestLogicalPoint = new Point(pointNode.target);
+                southWestLogicalPoint.translate(-1, 1);
 
-            //SW Tile
-            Point southWestLogicalPoint = new Point(pointNode.target);
-            southWestLogicalPoint.translate(-1, 1);
-
-            Tile southWestTile = map.getTileAt(southWestLogicalPoint);
-            if(southWestTile != null){
-                adjacentTiles.add(new PointNode(southWestTile,southWestLogicalPoint,pointNode.range+1));
-            }
-            // Get the tile adjacent to the north.
-            Point northLogicalPoint = new Point(pointNode.target); // Get the tiles logical point
-            northLogicalPoint.translate(0, -1);
+                Tile southWestTile = map.getTileAt(southWestLogicalPoint);
+                if (southWestTile != null) {
+                    adjacentTiles.add(new PointNode(southWestTile, southWestLogicalPoint, pointNode.range + 1));
+                }
+                // Get the tile adjacent to the north.
+                Point northLogicalPoint = new Point(pointNode.target); // Get the tiles logical point
+                northLogicalPoint.translate(0, -1);
 
 
-            Tile northTile = map.getTileAt(northLogicalPoint);
-            if(northTile != null){
-                adjacentTiles.add(new PointNode(northTile, northLogicalPoint,pointNode.range+1));
+                Tile northTile = map.getTileAt(northLogicalPoint);
+                if (northTile != null) {
+                    adjacentTiles.add(new PointNode(northTile, northLogicalPoint, pointNode.range + 1));
+                }
             }
         }else{
             System.out.println("HOW DID YOU GET HERE");
