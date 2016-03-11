@@ -71,6 +71,8 @@ public class Tile {
 
         }
 
+        // The move was not
+
 
         // Active item on the tile
         if(this.item != null){
@@ -100,8 +102,6 @@ public class Tile {
         // Indicate that the move was successfull.
         result.setMoved(true);
 
-        // Re generate the tile image
-        tileImage.generate(this);
         return result;
     }
 
@@ -130,7 +130,6 @@ public class Tile {
     public void removeItem() {
 
         item = null;
-        tileImage.generate(this);
     }
 
     public void removeAreaEffect() {
@@ -140,19 +139,18 @@ public class Tile {
     public void removeDecal() {
 
         decal = null;
-        tileImage.generate(this);
+
     }
 
     public void removeEntity() {
         entity = null;
-        tileImage.generate(this);
+
     }
 
     // For now putting an item on this tile simply replaces one that was already there.
     // Perhaps in a later iteration multiple items could be on a single tile?
     public void addItem(Item item) {
         this.item = item;
-        tileImage.generate(this);
     }
 
     //Checks if the tile has an Entity
@@ -170,5 +168,9 @@ public class Tile {
 
     public TileImage getTileImage(){
         return this.tileImage;
+    }
+
+    public void refreshImage(){
+        tileImage.generate(this);
     }
 }
