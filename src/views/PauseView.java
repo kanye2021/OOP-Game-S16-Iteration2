@@ -13,8 +13,8 @@ public class PauseView extends View{
     //Enum of menu options to be displayed
     public enum MenuOptions {
         CONTINUE("Continue"),
-        SAVE_GAME("Save Game"),
-        OPTIONS("Options"),
+        OPTIONS("Key Bindings"),
+        SAVE_GAME("Save Game"),q
         LOAD_GAME("Load Game"),
         EXIT_GAME("Exit Game");
 
@@ -142,12 +142,12 @@ public class PauseView extends View{
 
             Rectangle2D rectangle = fm.getStringBounds(option.toString(), g2d);
 
-            int boxX = (int)(getScreenWidth() * .7 - buttonWidth / 2);
+            int boxX = pauseViewXStart + (pauseViewWidth - buttonWidth)/2;
             int boxY = buttonHeight * option.ordinal() + start;
             int boxDX = buttonWidth;
             int boxDY = buttonHeight;
 
-            int stringX = (int)(getScreenWidth() *.52) - (int) (rectangle.getWidth() / 2);
+            int stringX = pauseViewXStart + (pauseViewWidth - (int)rectangle.getWidth())/2;
             int stringY = option.ordinal() * buttonHeight + (int) (rectangle.getHeight() / 2) + fm.getAscent() + start;
 
             Color primaryColor;
@@ -175,17 +175,18 @@ public class PauseView extends View{
     @Override
     public void scaleView(){
         //PAUSE VIEW DIMENSIONS
-        pauseViewXStart = (int) (getScreenWidth() * 0.43
-        );
-        pauseViewYStart = (int) (getScreenHeight() * 0.15);
         pauseViewWidth = (int) (getScreenWidth() * 0.18);
         pauseViewHeight = (int) (getScreenHeight() * 0.3);
+        pauseViewXStart = (getScreenWidth() - pauseViewWidth)/2;
+        pauseViewYStart = (getScreenHeight() - pauseViewHeight)/2;
 
         //PAUSE TITLE
-        titleStartX = (int) (getScreenWidth() * 0.32);
-        titleStartY = (int) (getScreenHeight() * 0.15);
         titleWidth = (int) (getScreenWidth() * 0.4);
         titleHeight = (int) (getScreenHeight() * 0.1);
+
+        titleStartX = pauseViewXStart + (pauseViewWidth - titleWidth)/2;
+        titleStartY = pauseViewYStart;
+
 
         // Scale buttons
         buttonWidth = getScreenWidth() / 8;
@@ -197,7 +198,7 @@ public class PauseView extends View{
         int generalFontSize = getScreenWidth() / 100;
         generalFont = new Font("Helvetica", Font.BOLD, generalFontSize);
 
-        titleButtonMargin = (int) (getScreenHeight() * 0.20);
+        titleButtonMargin = titleStartY + getScreenHeight()/40;
     }
 }
 
