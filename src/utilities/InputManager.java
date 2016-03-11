@@ -49,7 +49,7 @@ public class InputManager extends ComponentAdapter implements KeyEventDispatcher
     // Mouse Listner Methods
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        activeController.handleMouseClicked(e);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package models.attack;
 
-import models.Attack;
 import models.Attackion;
 import models.entities.Entity;
 import models.map.Map;

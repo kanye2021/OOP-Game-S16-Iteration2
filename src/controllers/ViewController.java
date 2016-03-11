@@ -7,6 +7,7 @@ import views.View;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by Bradley on 2/17/16.
@@ -50,6 +51,11 @@ public abstract class ViewController {
     }
 
     public void handleMouseReleased(java.awt.event.MouseEvent e){
+
+    }
+    // The default behavior of a mouse move is to do nothing. If a view controller wishes to do something on a mouse
+    // click it must overrride this function.
+    public void handleMouseClicked(MouseEvent e) {
 
     }
 
