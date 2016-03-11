@@ -69,7 +69,6 @@ public class MotorCortex {
                 directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), entity.getLocation());
             case DEFAULT:
                 // TODO: Implement default behavior (maybe passing back and forth, spinning around, etc.)
-                npc.stopMoving();
                 break;
         }
 

@@ -36,12 +36,10 @@ public abstract class ViewController {
 
     public void handleKeyPress(KeyEvent e) {
         keyPressMapping.inputKey(getKeyIntMapping(e));
-        stateManager.refreshState();
     }
 
     public void handleKeyRelease(KeyEvent e){
         keyPressMapping.keyReleased(getKeyIntMapping(e));
-        stateManager.refreshState();
     }
 
 
@@ -92,7 +90,6 @@ public abstract class ViewController {
 
     public final void onWindowResize(Component component){
         view.onWindowResize(component);
-        stateManager.refreshState();
     }
 
     private final int getKeyIntMapping(KeyEvent e) {
