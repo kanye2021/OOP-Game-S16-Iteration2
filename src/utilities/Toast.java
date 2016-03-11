@@ -33,11 +33,13 @@ public final class Toast {
         // Pass null so that GameVC handles input.
         SubState toastSubState = new SubState(null, toastView);
         gameViewController.addSubState(toastSubState);
+        gameViewController.pushToast();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 toastSubState.dismiss();
+                gameViewController.popToast();
             }
         }, time);
 

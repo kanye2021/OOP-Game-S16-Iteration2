@@ -4,6 +4,7 @@ import controllers.*;
 import controllers.GameViewController;
 import controllers.InventoryViewController;
 import models.entities.Avatar;
+import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.map.Map;
 import models.skills.CommonSkills.BindWoundsSkill;
@@ -11,10 +12,8 @@ import models.skills.Skill;
 import models.skills.SneakSkills.CreepSkill;
 import models.skills.SneakSkills.DetectRemoveTrapSkill;
 import models.skills.SneakSkills.PickPocketSkill;
+import models.skills.SummonerSkills.*;
 import utilities.TileDetection;
-import models.skills.SummonerSkills.BoonSkill;
-import models.skills.SummonerSkills.EnchantmentSkill;
-import models.skills.SummonerSkills.StaffSkill;
 import utilities.InputMapping;
 import utilities.SubState;
 import utilities.Task;
@@ -34,6 +33,7 @@ public class AvatarController {
     // Required to manage SubStates. i.e: Inventory, EquippedItems, Entity Interactions.
     private GameViewController gameViewController;
     private GameView gameView;
+    private Map.Direction movementDirection;
 
     public AvatarController(Avatar avatar, GameViewController gameViewController){
         //TODO: Add gameview
@@ -42,6 +42,7 @@ public class AvatarController {
         keyPressMapping = new InputMapping();
         this.gameView = (GameView)gameViewController.getView();
         initKeyPressMapping();
+        movementDirection = null;
     }
 
     public void handleKeyPress(KeyEvent e) {
@@ -89,10 +90,16 @@ public class AvatarController {
             //Technically the Smasher class has no actives
 
         } else if (avatar.getOccupation().contains("Summoner")) {
+            //Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.CREEP);
+            //System.out.println(firstSkill);
+            //CreepSkill creepSkill = (CreepSkill) firstSkill;
+            //creepSkill.onActivate(avatar);
             //first skill should be enchantment here
-            Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.STAFF);
+            Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.FIREBALL);
             System.out.println(secondSkill);
-            StaffSkill staffSkill = (StaffSkill) secondSkill;
+            FireBallSkill fireBallSkill = (FireBallSkill) secondSkill;
+            //Entity entity = (Entity) avatar;
+            fireBallSkill.onActivate(avatar);
 
         } else if (avatar.getOccupation().contains("Sneak")) {
             //first skill should be something..
@@ -137,6 +144,10 @@ public class AvatarController {
 
         }else if(avatar.getOccupation().contains("Summoner")){
             //No more skills
+            Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.INDIGNATION);
+            System.out.println(fourthSkill);
+            IndignationSkill indignationSkill = (IndignationSkill) fourthSkill;
+            indignationSkill.onActivate(avatar);
         }else if(avatar.getOccupation().contains("Sneak")){
             //first skill should be something..
             //first skill should be something..
@@ -144,6 +155,31 @@ public class AvatarController {
             System.out.println(fourthSkill);
             DetectRemoveTrapSkill detectRemoveTrapSkill = (DetectRemoveTrapSkill) fourthSkill;
             detectRemoveTrapSkill.removeTrap(avatar);
+
+        }else{
+            System.out.println("What are you");
+        }
+    }
+
+    public void useFifthSkill(){
+        //if smasher, get first skill
+        if(avatar.getOccupation().contains("Smasher")){
+            //Technically the Smasher class has no actives
+
+        }else if(avatar.getOccupation().contains("Summoner")){
+            //No more skills
+            //Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.INDIGNATION);
+            //System.out.println(fourthSkill);
+            //IndignationSkill indignationSkill = (IndignationSkill) fourthSkill;
+            //indignationSkill.onActivate(avatar);
+            Skill fifthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.GROUND_DASHER);
+            System.out.println(fifthSkill);
+            GroundDasherSkill groundDasherSkill = (GroundDasherSkill) fifthSkill;
+            groundDasherSkill.onActivate(avatar);
+
+        }else if(avatar.getOccupation().contains("Sneak")){
+            //first skill should be something..
+            //first skill should be something..
 
         }else{
             System.out.println("What are you");
@@ -180,15 +216,22 @@ public class AvatarController {
         }
 
         return number;
-
+    }
+    
+    public TileDetection move(){
+        if(movementDirection == null){
+            return null;
+        }
+        
+        return avatar.move(movementDirection);
+    }
+    
+    public void setMovementDirection(Map.Direction direction){
+        this.movementDirection = direction;
     }
 
     public void stopMoving(){
-        avatar.stopMoving();
-    }
-
-    public TileDetection move(Map.Direction direction){
-        return avatar.move(direction);
+        this.movementDirection = null;
     }
 
     public void startInteraction(NPC npc){

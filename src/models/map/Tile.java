@@ -8,6 +8,7 @@ import models.items.Item;
 import utilities.TileDetection;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * Created by Bradley on 2/25/2016.
@@ -21,7 +22,7 @@ public class Tile {
     private Item item;
     private Entity entity;
     private Trap trap;
-    private boolean seen;
+    private TileImage tileImage;
 
     public Tile(Terrain terrain, Decal decal, Item item, Entity entity, AreaEffect areaEffect) {
         this.terrain = terrain;
@@ -29,15 +30,18 @@ public class Tile {
         this.item = item;
         this.entity = entity;
         this.areaEffect = areaEffect;
+        this.tileImage = new TileImage(50, 50, BufferedImage.TYPE_INT_ARGB); // Size is arbitrary as it will be scaled later anyway.
+        tileImage.generate(this); // Generate the image for the tile.
     }
 
     // Creates a new tile with the same instance vars as the old tile
     public Tile(Tile tile){
-        this.terrain = tile.getTerrain();
-        this.decal = tile.getDecal();
-        this.item = tile.getItem();
-        this.entity = tile.getEntity();
-        this.trap = tile.getTrap();
+        this.terrain = new Terrain(tile.getTerrain());
+        this.decal = (tile.getDecal()!=null) ?  new Decal(tile.getDecal()) : null;
+        this.item = (tile.getItem()!=null) ? Item.ItemDictionary.itemFromID(tile.getItem().getItemId()) : null;
+        this.entity = tile.getEntity(); // This will store the same reference.... this is bad.
+        this.areaEffect = tile.getAreaEffect(); // THis will also store the same reference.
+        this.tileImage = TileImage.copyImage(tile.getTileImage()); // The image will stay the same tho...at least.
     }
 
     // For now if there is already an entity on the tile. adding an entity will replace that
@@ -56,7 +60,6 @@ public class Tile {
         if(this.entity != null){
             // TODO: Implment entity/ entity interaction.
             System.out.println("In tile");
-            //entity.notifyObservers();
             //the NPC will contain all of the interactions
 //            this.entity.startInteraction();
             return result;
@@ -67,6 +70,8 @@ public class Tile {
             return result;
 
         }
+
+        // The move was not
 
 
         // Active item on the tile
@@ -96,34 +101,34 @@ public class Tile {
 
         // Indicate that the move was successfull.
         result.setMoved(true);
+
         return result;
     }
 
     public Terrain getTerrain() {
         return terrain;
     }
+    public Image getTerrainImage(){ return terrain.getImage(); }
 
     public AreaEffect getAreaEffect() {
         return areaEffect;
     }
 
-    public Decal getDecal() {
+    public Decal getDecal() {return decal;}
+    public Image getDecalImage(){ return (decal!=null) ? decal.getImage() : null;}
 
-        return decal;
-    }
-
-    public Item getItem() {
-
-        return item;
-    }
+    public Item getItem() {return item;}
+    public Image getItemImage() {return (item!=null) ? item.getImage() : null;}
 
     public Entity getEntity() {
         return entity;
     }
+    public Image getEntityImage() {return (entity!=null) ? entity.getImage() : null;}
 
     public Trap getTrap(){return trap;}
 
     public void removeItem() {
+
         item = null;
     }
 
@@ -132,11 +137,14 @@ public class Tile {
     }
 
     public void removeDecal() {
+
         decal = null;
+
     }
 
     public void removeEntity() {
         entity = null;
+
     }
 
     // For now putting an item on this tile simply replaces one that was already there.
@@ -144,9 +152,6 @@ public class Tile {
     public void addItem(Item item) {
         this.item = item;
     }
-
-    public void setSeen(){ seen = true; }
-    public boolean getSeen(){ return seen; }
 
     //Checks if the tile has an Entity
     public boolean hasEntity(){
@@ -159,5 +164,13 @@ public class Tile {
         else{
             return false;
         }
+    }
+
+    public TileImage getTileImage(){
+        return this.tileImage;
+    }
+
+    public void refreshImage(){
+        tileImage.generate(this);
     }
 }

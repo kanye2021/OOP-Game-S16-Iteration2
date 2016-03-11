@@ -16,6 +16,8 @@ public class BindWoundsSkill extends ActiveSkill {
     private final int constant = 5;
     //cost = -5;//This is the mana cost it takes to activate this skill
 
+
+
     @Override
     public SkillDictionary initID() {
 

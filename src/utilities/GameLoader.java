@@ -1,9 +1,8 @@
 package utilities;
 
-import controllers.entityControllers.MountController;
 import models.area_effects.*;
 import models.entities.*;
-import models.entities.npc.Horse;
+import models.entities.npc.Dragon;
 import models.entities.npc.NPC;
 import models.entities.npc.ShopKeeper;
 import models.items.Item;
@@ -79,11 +78,8 @@ public class GameLoader {
 
 
         //TODO: Figure out the mount shit implementation
-        Horse horse = new Horse(new Point(-10,-4),newMap);
-        MountController mountController = new MountController(horse);
-        newMap.insertEntity(horse);
-        game.setMount(horse,mountController);
-        //System.out.println("I'm in the game loader");
+        Dragon dragon = new Dragon(new Point(1,-1),newMap);
+        newMap.insertEntity(dragon);
     }
 
     private Map loadMap(String filepath){

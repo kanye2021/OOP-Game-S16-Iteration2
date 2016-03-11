@@ -19,5 +19,7 @@ public abstract class Action {
     }
     public abstract void activate(View view, ViewController viewController);
     public abstract String getName();
-    public abstract void setAvatar(Avatar avatar);
+    public void setAvatar(Avatar avatar){
+        this.avatar = avatar;
+    }
 }

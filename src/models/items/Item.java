@@ -20,6 +20,7 @@ import models.items.takeable.equippable.weapons.twoHanded.*;
 
 import models.items.takeable.quest.KeyOfKanye;
 import views.sprites.Drawable;
+import views.sprites.Sprite;
 
 import java.awt.*;
 
@@ -224,6 +225,16 @@ public abstract class Item {
 
         return ID;
 
+    }
+
+
+    public int getItemId(){
+        return ID.getID();
+    }
+
+
+    public final void setSprite(Sprite sprite) {
+        this.sprite = sprite;
     }
 
     public final boolean equals(Object o) {

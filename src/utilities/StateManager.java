@@ -10,20 +10,16 @@ import java.util.Stack;
 /**
  * Created by Bradley on 2/17/16.
  */
-public class StateManager implements ActionListener{
+public class StateManager{
     private Display display;
     private InputManager inputManager;
     private Stack<State> stateStack;
     private SubState activeTalkState;
-    public Timer gameTimer;
 
-    public StateManager(Display display, InputManager inputManager, int frameRate){
+    public StateManager(Display display, InputManager inputManager){
         this.display = display;
         this.inputManager = inputManager;
         this.stateStack = new Stack<>();
-
-        gameTimer = new Timer(frameRate, this);
-        gameTimer.start();
     }
 
     public void setActiveState(State state){
@@ -39,14 +35,7 @@ public class StateManager implements ActionListener{
         }
     }
 
-
-    public void refreshState() {
-        display.repaint();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
+    public void tick() {
         stateStack.peek().update();
         display.repaint();
 

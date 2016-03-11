@@ -8,14 +8,14 @@ import utilities.SubState;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by Bradley on 2/26/2016.
  */
-public class GameView extends View implements Observer{
+public class GameView extends View{
 
     private AreaViewport areaViewport;
     private StatusViewport statusViewport;
@@ -39,8 +39,11 @@ public class GameView extends View implements Observer{
         this.statusViewport = new StatusViewport(getScreenWidth(), getScreenHeight(), getDisplay(), stats);
     }
 
-    public void initSkillViewport(SkillList skills){
-        this.skillViewport = new SkillViewport(getScreenWidth(), getScreenHeight(), getDisplay(), skills);
+    public void initSkillViewport(Avatar avatar){
+        SkillList skills = avatar.getSkills();
+        Stats stats = avatar.getStats();
+        this.skillViewport = new SkillViewport(getScreenWidth(), getScreenHeight(), getDisplay(), skills, stats);
+
     }
 
     @Override
@@ -137,10 +140,6 @@ public class GameView extends View implements Observer{
         areaViewport.toggleDebugInformation();
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-    }
-
     public boolean hasSubState(){
         if(substates.size() > 0)
             return true;
@@ -159,5 +158,11 @@ public class GameView extends View implements Observer{
 
     public void setAreaViewportOffset(Point offset){
         this.areaViewport.setViewportOffset(offset);
+    }
+
+    public void handleMouseClick(MouseEvent e) {
+        // Pass mouseclick to view ports
+        // Currently only skill viewport cares about mouse clicks
+        this.skillViewport.handleMouseClick(e);
     }
 }

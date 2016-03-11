@@ -11,17 +11,21 @@ import views.StartMenuView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by sergiopuleri on 2/1/16.
  */
-public class RunGame extends JFrame{
+public class RunGame extends JFrame implements ActionListener{
 
     private Display display;
     private InputManager inputManager;
+    private StateManager stateManager;
     private final int INITIAL_WIDTH = 1200;
     private final int INITIAL_HEIGHT = 800;
-    private final int FRAMERATE = 100;
+    private Timer gameTimer;
+    private final int TIMER_DELAY = 100;
 
     @Override
     public void setExtendedState(int state) {
@@ -34,12 +38,12 @@ public class RunGame extends JFrame{
 
     private void init() {
 
-        // Create the display and input manager
+        // Create the display, input manager, StateManager, and timer.
         display = new Display(INITIAL_WIDTH, INITIAL_HEIGHT);
         inputManager = new InputManager();
+        stateManager = new StateManager(display, inputManager);
+        gameTimer = new Timer(TIMER_DELAY, this);
 
-        // Create the state manager.
-        StateManager stateManager = new StateManager(display, inputManager, FRAMERATE);
 
         // Setup the first state (Start Menu).
         StartMenuView startMenuView = new StartMenuView(INITIAL_WIDTH, INITIAL_HEIGHT, display);
@@ -64,6 +68,8 @@ public class RunGame extends JFrame{
         // Load the default state.
         stateManager.setActiveState(startState);
 
+        // Start the timer.
+        gameTimer.start();
     }
 
     public static void main(String[] args) {
@@ -74,5 +80,10 @@ public class RunGame extends JFrame{
                 ex.setVisible(true);
             }
         });
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        stateManager.tick();
     }
 }
