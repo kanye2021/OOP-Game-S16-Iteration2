@@ -12,6 +12,7 @@ import models.map.Terrain;
 import models.occupation.Occupation;
 import models.skills.Skill;
 import models.skills.SkillList;
+import utilities.Animator;
 import utilities.TileDetection;
 import models.stats.StatModificationList;
 import models.stats.Stats;
@@ -19,6 +20,7 @@ import utilities.Toast;
 import views.sprites.DirectionalSprite;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -49,6 +51,9 @@ public abstract class Entity{
     private Timer movementTimer;
     private boolean canMove;
 
+    //Every Entity will an Animator object that does the animation
+    public Animator animator;
+
     // Plans for sprite: Entity will have a getImage() method to return the image
     // to render on the AreaViewport. It will call sprite.getCurrentImage(orientation)
     // which will return the appropriate image.
@@ -66,6 +71,8 @@ public abstract class Entity{
 
 
         this.sprite = new DirectionalSprite(initSprites());
+        this.animator = new Animator(getAnimatorImages());
+        animator.setSpeed(150);
         this.map = map;
 
 
@@ -127,7 +134,6 @@ public abstract class Entity{
     }
 
     public final TileDetection move(Map.Direction direction){
-        orientation = direction;
         if(canMove){
             TileDetection td = map.moveEntity(Entity.this, direction);
             location = td.getLocation();
@@ -237,13 +243,17 @@ public abstract class Entity{
     protected abstract StatModificationList initInitialStats();
     protected abstract Occupation initOccupation();
     protected abstract HashMap<Map.Direction, String> initSprites();
+    protected abstract ArrayList<Image> getAnimatorImages();
+
     public abstract void startInteraction(NPC npc);
+
     public final Image getImage(){
-
-        sprite.setDirection(orientation);
-        return sprite.getImage();
-
+//        sprite.setDirection(orientation);
+//        return sprite.getImage();
+        return animator.update(System.currentTimeMillis());
     }
+
+
     // TODO: Pet methods may not belong here? just getting stuff 2 work.
     // They could belong here tho.
     public final Pet getPet() {

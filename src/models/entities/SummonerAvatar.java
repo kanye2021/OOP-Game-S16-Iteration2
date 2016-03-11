@@ -6,6 +6,7 @@ import models.occupation.Summoner;
 import utilities.IOUtilities;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -50,4 +51,8 @@ public class SummonerAvatar extends Avatar {
 
     }
 
+    @Override
+    protected ArrayList<Image> getAnimatorImages() {
+        return null;
+    }
 }

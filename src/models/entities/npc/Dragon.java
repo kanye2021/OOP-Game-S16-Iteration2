@@ -80,4 +80,8 @@ public class Dragon extends Mount {
         orientation = direction;
     }
 
+    @Override
+    protected ArrayList<Image> getAnimatorImages() {
+        return null;
+    }
 }

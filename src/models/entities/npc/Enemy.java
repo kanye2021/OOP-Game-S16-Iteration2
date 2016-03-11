@@ -7,6 +7,7 @@ import models.stats.StatModificationList;
 import utilities.IOUtilities;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -55,4 +56,8 @@ public class Enemy extends NPC{
 
     }
 
+    @Override
+    protected ArrayList<Image> getAnimatorImages() {
+        return null;
+    }
 }

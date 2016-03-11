@@ -93,4 +93,8 @@ public class ShopKeeper extends NPC {
 
     }
 
+    @Override
+    protected ArrayList<Image> getAnimatorImages() {
+        return null;
+    }
 }

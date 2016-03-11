@@ -6,6 +6,7 @@ import models.occupation.Sneak;
 import utilities.IOUtilities;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -51,4 +52,8 @@ public class SneakAvatar extends Avatar {
 
     }
 
+    @Override
+    protected ArrayList<Image> getAnimatorImages() {
+        return null;
+    }
 }
