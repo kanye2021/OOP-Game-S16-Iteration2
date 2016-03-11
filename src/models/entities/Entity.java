@@ -24,7 +24,7 @@ import java.util.*;
 /**
  * Created by Bradley on 2/18/16.
  */
-public abstract class Entity extends Observable{
+public abstract class Entity{
 
     protected Point location;
     protected Map.Direction orientation;
@@ -78,6 +78,15 @@ public abstract class Entity extends Observable{
         movementTimer = new Timer();
         canMove = true;
     }
+
+//    public Entity(Entity entity){
+////        this.location = new Point(entity.location);
+////        this.orientation = entity.orientation;
+////        this.stats = entity.getStats();
+////        this.orientation = entity.getOrientation();
+////        this.skills = entity.getSkills();
+////        this.inventory =
+//    }
 
     private int getMovementDelay(){
         int movementTimerDelay = 300 - (stats.getStat(Stats.Type.MOVEMENT) / 5);
@@ -133,9 +142,6 @@ public abstract class Entity extends Observable{
         if(canMove){
             TileDetection td = map.moveEntity(Entity.this, direction);
             location = td.getLocation();
-            setChanged();
-            notifyObservers();
-
             canMove = false;
             movementTimer.schedule(new TimerTask() {
                 @Override
