@@ -1,6 +1,7 @@
 package models.attack;
 
 import models.Attack;
+import models.Attackion;
 import models.entities.Entity;
 import models.map.Map;
 import models.map.Tile;
@@ -13,7 +14,7 @@ import java.util.Queue;
 /**
  * Created by ben on 3/8/16.
  */
-public class AngularAttack extends Attack{
+public class AngularAttack extends Attackion {
     //private Map map;
 
     public AngularAttack(Entity entity,Projectile projectile){
@@ -39,22 +40,22 @@ public class AngularAttack extends Attack{
 
             attackPoint.x=current.target.x;
             attackPoint.y=current.target.y;
-            System.out.println(attackPoint.x);
-            System.out.println(attackPoint.y);
+            //System.out.println(attackPoint.x);
+            //System.out.println(attackPoint.y);
             Tile desiredTile = map.getTileAt(attackPoint);
 
-            System.out.println("How many times does this appear?");
+            //System.out.println("How many times does this appear?");
 
             if(desiredTile.hasEntity()&&originTile!=desiredTile&&entity!=desiredTile.getEntity()){
                 Entity target = desiredTile.getEntity();
                 target.takeDamage(-damage);
-                System.out.println("Has Entity yo");
+                //System.out.println("Has Entity yo");
             }
             for(PointNode pointNode: getAdjacentTiles(current,orientation)){
                 pointNode.range = current.range + 1;
                 pointQueue.offer(pointNode);
-                System.out.println("CURRENT.RANGE IS "+ pointNode.range);
-                System.out.println("RANGE IS "+ range);
+                //System.out.println("CURRENT.RANGE IS "+ pointNode.range);
+                //System.out.println("RANGE IS "+ range);
                 /*if(pointNode.range>range){
                     return;
                 }*/
