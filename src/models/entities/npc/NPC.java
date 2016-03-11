@@ -4,6 +4,8 @@ import controllers.entityControllers.AI.Brain;
 import controllers.entityControllers.AI.Thought.Personalities;
 import models.entities.Entity;
 import models.entities.npc.actions.Action;
+import models.entities.npc.actions.Attack;
+import models.entities.npc.actions.Talk;
 import models.map.Map;
 import models.stats.StatModificationList;
 
@@ -13,24 +15,33 @@ import java.util.ArrayList;
 /**
  * Created by aseber on 2/22/16.
  */
-public abstract class NPC extends Entity {
+public abstract class  NPC extends Entity {
     protected ArrayList<Action> actionList;
 
     protected ArrayList<String> dialogue;
     protected int dialogueLocation;
     protected Brain brain;
 
-    public NPC(Point location, Map map, String ... dialogue) {
+    public NPC(Point location, Map map) {
         super(location, map);
         brain = new Brain(this, Personalities.AGNOSTIC); // Agnostic is the default personailty.
-        actionList = new ArrayList<>();
+        this.actionList = new ArrayList<>();
         this.dialogue = new ArrayList<>();
-        for(String text: dialogue){
-            this.dialogue.add(text);
-        }
         dialogueLocation = 0;
+        initNPC();
     }
-
+    protected void initNPC(){
+        initActions();
+        initDialogue();
+    }
+    //Override this method if you want it to say something
+    protected void initDialogue(){
+        this.dialogue.add("....I have nothing to say");
+    }
+    protected void initActions(){
+        actionList.add(new Talk(this));
+        actionList.add(new Attack(this));
+    }
     @Override
     protected final StatModificationList initInitialStats() {
 

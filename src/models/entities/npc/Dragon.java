@@ -27,8 +27,6 @@ public class Dragon extends Mount {
 
         movement = 10;
         terrainTypes.add("mountain");
-        initActions();
-
     }
 
     @Override
