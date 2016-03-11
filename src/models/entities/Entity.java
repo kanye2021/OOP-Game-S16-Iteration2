@@ -24,7 +24,7 @@ import java.util.*;
 /**
  * Created by Bradley on 2/18/16.
  */
-public abstract class Entity extends Observable{
+public abstract class Entity{
 
     protected Point location;
     protected Map.Direction orientation;
@@ -42,13 +42,11 @@ public abstract class Entity extends Observable{
     //Entity may have mount
     protected Mount mount;
 
-
     protected ArrayList<String> passableTerrain;
 
     // Stuff for movement
     private Timer movementTimer;
     private boolean canMove;
-    private Map.Direction currentMovement;
 
     // Plans for sprite: Entity will have a getImage() method to return the image
     // to render on the AreaViewport. It will call sprite.getCurrentImage(orientation)
@@ -64,20 +62,16 @@ public abstract class Entity extends Observable{
         this.inventory = new Inventory(30);
         this.equipment = new Equipment(this);
         passableTerrain = new ArrayList<>();
-        //occupation.initStats(this.stats); // This will setup the stats and skills particular to this occupation.
-        //occupation.initSkills(this.skills);
 
         this.sprite = new DirectionalSprite(initSprites());
         this.map = map;
 
 
         initInitialStats().applyStats(stats);
-        skills.addAll(occupation.getSkills());
         occupation.getStats().applyStats(stats);
 
         // Setup the movement timer.
         movementTimer = new Timer();
-        currentMovement = null;
         canMove = true;
     }
 
@@ -132,29 +126,9 @@ public abstract class Entity extends Observable{
 
     public final TileDetection move(Map.Direction direction){
         orientation = direction;
-        currentMovement = direction;
-
-        return updateLocation();
-    }
-
-    public final TileDetection teleport(Point point) {
-        Toast.createToastWithTimer("Just teleported lol", 500);
-        TileDetection td =  map.moveEntity(Entity.this, point);
-        location = td.getLocation();
-        return td;
-    }
-
-    public final void stopMoving(){
-        currentMovement = null;
-    }
-
-    public TileDetection updateLocation(){
-        if(canMove && currentMovement!=null){
-            TileDetection td = map.moveEntity(Entity.this, currentMovement);
+        if(canMove){
+            TileDetection td = map.moveEntity(Entity.this, direction);
             location = td.getLocation();
-            setChanged();
-            notifyObservers();
-
             canMove = false;
             movementTimer.schedule(new TimerTask() {
                 @Override
@@ -162,9 +136,19 @@ public abstract class Entity extends Observable{
                     canMove = true;
                 }
             }, getMovementDelay());
+            map.updateTile(location);
             return td;
         }
+
+        map.updateTile(location);
         return null;
+    }
+
+    public final TileDetection teleport(Point point) {
+        Toast.createToastWithTimer("Just teleported lol", 500);
+        TileDetection td =  map.moveEntity(Entity.this, point);
+        location = td.getLocation();
+        return td;
     }
 
     // Wrapper functions for Stats
@@ -264,18 +248,16 @@ public abstract class Entity extends Observable{
     public final void setPet(Pet pet) {
         this.pet = pet;
     }
-    public final void setMount(Mount mount){this.mount = mount;}
 
     public void setOrientation(Map.Direction orientation){
         this.orientation = orientation;
     }
 
-    public void update(){
-        updateLocation();
-	}
     // Wrapper to levelup an entity
     public void levelUp() {
+        // Upon level-up, notifies skillviewport to allow for level-ing up a skill
         this.stats.levelUp();
+        Toast.createToastWithTimer("You've leveled up! Click a skill to increase", 1500);
     }
 
     // Wrapper to die (lose a life)
@@ -291,5 +273,11 @@ public abstract class Entity extends Observable{
     // Wrapper to take damage
     public void takeDamage(int amount) {
         this.stats.modifyStat(Stats.Type.HEALTH, amount);
+    }
+
+    //Weird hacky thing (All entities do not have amount unless otherwise specificed. Avatar will
+    //override and return based on
+    public Mount getMount(){
+        return mount;
     }
 }

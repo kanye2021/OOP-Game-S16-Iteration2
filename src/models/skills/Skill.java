@@ -33,6 +33,12 @@ public abstract class Skill {
 
     }
 
+    public enum AttackType{
+        LINEAR,
+        RADIAL,
+        AREA
+    }
+
     private SkillDictionary ID;
     protected ConditionList conditionsToActivate = new ConditionList();
     private int level;
@@ -128,6 +134,7 @@ public abstract class Skill {
     public double getCooldownTimeRemaining() {
         return currentCooldownRemaining;
     }
+
 
     public abstract SkillDictionary initID();
     public abstract String getName();

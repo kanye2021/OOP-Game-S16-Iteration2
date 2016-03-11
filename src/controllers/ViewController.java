@@ -7,6 +7,7 @@ import views.View;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by Bradley on 2/17/16.
@@ -36,12 +37,10 @@ public abstract class ViewController {
 
     public void handleKeyPress(KeyEvent e) {
         keyPressMapping.inputKey(getKeyIntMapping(e));
-        stateManager.refreshState();
     }
 
     public void handleKeyRelease(KeyEvent e){
         keyPressMapping.keyReleased(getKeyIntMapping(e));
-        stateManager.refreshState();
     }
 
 
@@ -52,6 +51,11 @@ public abstract class ViewController {
     }
 
     public void handleMouseReleased(java.awt.event.MouseEvent e){
+
+    }
+    // The default behavior of a mouse move is to do nothing. If a view controller wishes to do something on a mouse
+    // click it must overrride this function.
+    public void handleMouseClicked(MouseEvent e) {
 
     }
 
@@ -79,7 +83,7 @@ public abstract class ViewController {
             public void stop(){}
         };
 
-        addKeyPressMapping(escapeTask, KeyEvent.VK_ESCAPE);
+        addKeyPressMapping(escapeTask, KeyEvent.VK_BACK_SPACE);
         addKeyPressMapping(altF4Task, KeyEvent.VK_F4, KeyEvent.ALT_MASK);
 
     }
@@ -92,7 +96,6 @@ public abstract class ViewController {
 
     public final void onWindowResize(Component component){
         view.onWindowResize(component);
-        stateManager.refreshState();
     }
 
     private final int getKeyIntMapping(KeyEvent e) {

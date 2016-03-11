@@ -1,5 +1,8 @@
 package models.skills.SummonerSkills;
 
+import models.attack.LinearAttack;
+import models.attack.Projectile;
+import models.entities.Avatar;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
@@ -12,6 +15,14 @@ import java.awt.event.KeyEvent;
 //From Tales of symphonia is a linear path of a fire ball
     //Kinda like fireball jutsu if you want to think of it like that
 public class FireBallSkill extends ActiveSkill{
+    private int damage;
+    private int range;
+
+    public FireBallSkill(){
+        damage = 5;
+        range = 3;
+    }
+
     @Override
     public SkillDictionary initID() {
 
@@ -27,30 +38,14 @@ public class FireBallSkill extends ActiveSkill{
 
     @Override
     public void onActivate(Entity entity) {
-        if(cooldown){
-            System.out.println("ANOTHA ONE");
-            return;
-        }
-        cooldown = true;
-        System.out.println("Kratos Used Fireball!");
-        Stats stats = entity.getStats();
-        int delta = 5;
-        stats.modifyStat(Stats.Type.HEALTH,delta);
-
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-
-                        System.out.println("Time up");
-                        cooldown = false;
-                    }
-                },
-                cooldownTime
-        );
+        System.out.println("Can you take this? Fireball!");
+        Projectile projectile = new Projectile(damage,range);
+        new LinearAttack(entity,projectile);//This is the attack
 
 
     }
+
+
 
     @Override
     public KeyEvent[] initActivatorKeys() {

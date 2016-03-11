@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * Created by Bradley on 2/17/16.
