@@ -25,6 +25,9 @@ public class GameViewController extends ViewController{
     private ArrayList<NPC> npcList;
     private AvatarController avatarController;
 
+    //Checks if the view has a toast
+    private boolean hasToast;
+
     // Both of these are used to handle dragging the viewport around.
     private boolean mousePressed;
     private Point mouseStartLocation;
@@ -58,11 +61,13 @@ public class GameViewController extends ViewController{
     }
     public void addToastWithDefaultCloseKeyBindOfX(SubState s) {
         addSubState(s);
+        pushToast();
         // Dismiss the toast with "X" Toast
         Task dismissTask = new Task() {
             @Override
             public void run() {
                 s.dismiss();
+                popToast();
             }
 
             @Override
@@ -71,6 +76,10 @@ public class GameViewController extends ViewController{
         // Default to close a Toast is "X"
         this.addKeyPressMapping(dismissTask, KeyEvent.VK_X);
     }
+
+    public void pushToast(){ hasToast = true; }
+    public void popToast(){ hasToast = false; }
+
     public void insertSubState(SubState s, int index) {
         ((GameView)view).insertSubState(s, index);
     }
@@ -78,7 +87,7 @@ public class GameViewController extends ViewController{
     @Override
     public final void handleKeyPress(KeyEvent e) {
 
-        if(((GameView)view).hasSubState() == true)
+        if(((GameView)view).hasSubState() == true && hasToast != true)
             ((GameView)view).passInputToSubstate(e);
         else
             super.handleKeyPress(e);

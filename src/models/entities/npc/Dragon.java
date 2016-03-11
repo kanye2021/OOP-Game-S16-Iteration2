@@ -21,7 +21,7 @@ public class Dragon extends Mount {
     private ArrayList<String> terrainTypes;
 
     public Dragon(Point location,Map map) {
-        super(location, map);
+        super(location, map, "Yo, I'm a dragon.", "Shut up and get on!");
         passableTerrain.add("grass");
         terrainTypes = new ArrayList<>();
 
