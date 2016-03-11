@@ -12,6 +12,7 @@ import models.stats.Stats;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.Queue;
 
@@ -38,14 +39,13 @@ public class AreaViewport extends View {
     private int vertDistanceBtwnTiles; // This is derived from hexSize
     private Point viewportOffset; // This is used to drag the viewport around.
 
-    //Some other food
+    // Some stuff for caching
     public HashMap<Point, Tile> seenTiles = new HashMap<>();
+    private boolean reRender;
+    private BufferedImage cachedViewport;
 
     //Debug stuff
     private boolean displayDebugInformation = false;
-
-    //G
-    private Graphics regularGraphicsNotEffedUpWithTransparency;
 
     // Just a container to hold an entity and a location in order to draw the health bars w/o opacity messed up
     private class EntityLocationTuple {
@@ -71,6 +71,8 @@ public class AreaViewport extends View {
         hexHeight = Math.round((float)(Math.sqrt(3) /2 * hexWidth));
         horizDistanceBtwnTiles = hexSize * 3 /2;
         vertDistanceBtwnTiles = Math.round((float)(hexSize * Math.sqrt(3)));
+        cachedViewport = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        reRender = true;
     }
 
     public void setViewportOffset(Point offset){
@@ -80,38 +82,41 @@ public class AreaViewport extends View {
 
     @Override
     public void render(Graphics g){
-        regularGraphicsNotEffedUpWithTransparency = g;
 
-        // Draw a black background
-        g.setColor(Color.BLACK);
-        g.fillRect(0,0,viewportWidth, viewportHeight);
+        if(map.needsToBeRendered() || reRender){
+            Graphics g1 = cachedViewport.getGraphics();
 
+            // Draw a black background
+            g1.setColor(Color.BLACK);
+            g1.fillRect(0,0,viewportWidth, viewportHeight);
 
-        // Get the avatar's location. This location will be shown in the center of the viewport.
-        Point logicalPoint = avatar.getLocation();
-        Point pixelPoint = new Point(viewportWidth/2, viewportHeight/2);
+            // Get the avatar's location. This location will be shown in the center of the viewport.
+            Point logicalPoint = avatar.getLocation();
+            Point pixelPoint = new Point(viewportWidth/2, viewportHeight/2);
 
-        // Create a 2D graphcis obj
-        Graphics2D g2 = (Graphics2D) g.create();
+            // Create a 2D graphcis obj
+            Graphics2D g2 = (Graphics2D) g1.create();
 
-        breadthFirstRender(logicalPoint, pixelPoint, g2);
+            // Clear the existing status bar locations
+            this.entityLocationTuples.clear();
 
-        // Once finish rendering all tiles with appropiate FoW transparencies, draw stuff that ignores transparencies
-        // Like health bars.
-        for (EntityLocationTuple et : this.entityLocationTuples) {
-            drawEntityHealthBar(regularGraphicsNotEffedUpWithTransparency, et.entity, et.point);
+            breadthFirstRender(logicalPoint, pixelPoint, g2);
+
+            map.setNeedsToBeRendered(false);
+            reRender = false;
+            g1.dispose();
 
         }
-        // Delete all so they dont get redrawn every time the instance of this class draws..
-        this.entityLocationTuples.clear();
+        g.drawImage(cachedViewport, 0, 0, viewportWidth, viewportHeight, getDisplay());
+
+        for (EntityLocationTuple et : this.entityLocationTuples) {
+            drawEntityHealthBar(g, et.entity, et.point);
+        }
 
         if (displayDebugInformation) {
-
             g.setColor(Color.WHITE);
-            g.drawString(logicalPoint.toString(), viewportWidth - g.getFontMetrics().stringWidth(logicalPoint.toString()) - 50, 25);
-
+            g.drawString(avatar.getLocation().toString(), viewportWidth - g.getFontMetrics().stringWidth(avatar.getLocation().toString()) - 50, 25);
         }
-
     }
 
     // This will traverse through all the tiles using a breadth first search. It will then render that tile.
@@ -189,9 +194,9 @@ public class AreaViewport extends View {
 
         // Render the tile image.
         Image tileImage = tileNode.tile.getTileImage();
-        int terrainX = (int) (tileNode.pixelPoint.getX() - hexWidth / 2);
-        int terrainY = (int) (tileNode.pixelPoint.getY()) - hexHeight / 2;
-        g.drawImage(tileImage, terrainX, terrainY, hexWidth, hexHeight, getDisplay());
+        int tileX = (int) (tileNode.pixelPoint.getX() - hexWidth / 2);
+        int tileY = (int) (tileNode.pixelPoint.getY()) - hexHeight / 2;
+        g.drawImage(tileImage, tileX, tileY, hexWidth, hexHeight, getDisplay());
 
         // Add this entity to list of entities and their locations to render its health later alligator
         if(tileNode.tile.getEntity()!=null){
@@ -459,6 +464,8 @@ public class AreaViewport extends View {
     public void scaleView() {
         viewportHeight = getScreenHeight();
         viewportWidth = getScreenWidth();
+        cachedViewport = new BufferedImage(viewportWidth, viewportHeight, BufferedImage.TYPE_INT_ARGB);
+        reRender = true;
     }
 
     public void setAvatar(Avatar a) {

@@ -42,7 +42,6 @@ public abstract class Entity{
     //Entity may have mount
     protected Mount mount;
 
-
     protected ArrayList<String> passableTerrain;
 
     // Stuff for movement
@@ -63,8 +62,6 @@ public abstract class Entity{
         this.inventory = new Inventory(30);
         this.equipment = new Equipment(this);
         passableTerrain = new ArrayList<>();
-        //occupation.initStats(this.stats); // This will setup the stats and skills particular to this occupation.
-        //occupation.initSkills(this.skills);
 
         this.sprite = new DirectionalSprite(initSprites());
         this.map = map;
@@ -78,15 +75,6 @@ public abstract class Entity{
         movementTimer = new Timer();
         canMove = true;
     }
-
-//    public Entity(Entity entity){
-////        this.location = new Point(entity.location);
-////        this.orientation = entity.orientation;
-////        this.stats = entity.getStats();
-////        this.orientation = entity.getOrientation();
-////        this.skills = entity.getSkills();
-////        this.inventory =
-//    }
 
     private int getMovementDelay(){
         int movementTimerDelay = 300 - (stats.getStat(Stats.Type.MOVEMENT) / 5);
@@ -149,8 +137,11 @@ public abstract class Entity{
                     canMove = true;
                 }
             }, getMovementDelay());
+            map.updateTile(location);
             return td;
         }
+
+        map.updateTile(location);
         return null;
     }
 
