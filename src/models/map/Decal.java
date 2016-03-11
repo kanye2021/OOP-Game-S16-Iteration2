@@ -34,6 +34,12 @@ public class Decal {
         visible = true;
     }
 
+    public Decal(Decal decal){
+        this.id = decal.getID();
+        this.image = IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath(decal.getPathToFile())).getImage();
+        this.visible = decal.isVisible();
+    }
+
     public Image getImage() { return image; }
     public int getID() { return id; }
 

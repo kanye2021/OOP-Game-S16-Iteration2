@@ -14,6 +14,10 @@ public class Terrain {
         this.type = type;
     }
 
+    public Terrain(Terrain terrain){
+        this.type = terrain.getType();
+    }
+
     public String getType() {
         return type;
     }

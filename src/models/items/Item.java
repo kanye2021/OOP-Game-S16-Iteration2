@@ -215,6 +215,10 @@ public abstract class Item {
 
     }
 
+    public int getItemId(){
+        return ID.getID();
+    }
+
     public final Sprite getSprite() {
         return sprite;
     }

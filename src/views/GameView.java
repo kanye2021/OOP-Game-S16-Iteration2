@@ -11,12 +11,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by Bradley on 2/26/2016.
  */
-public class GameView extends View implements Observer{
+public class GameView extends View{
 
     private AreaViewport areaViewport;
     private StatusViewport statusViewport;
@@ -139,10 +138,6 @@ public class GameView extends View implements Observer{
 
     public void toggleDebugInformation() {
         areaViewport.toggleDebugInformation();
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
     }
 
     public boolean hasSubState(){
