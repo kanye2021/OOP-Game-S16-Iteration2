@@ -1,5 +1,6 @@
 package views;
 
+import models.skills.ActiveSkill;
 import models.skills.Skill;
 import models.skills.SkillList;
 import models.stats.Stats;
@@ -9,8 +10,12 @@ import utilities.MathUtilities;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.font.TextAttribute;
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -112,16 +117,30 @@ public class SkillViewport extends View{
 
             // Draw skill name
             g.setColor(Color.white);
-            g.setFont(keyBindFont);
+            g.setFont(skillLabelFont);
             skillText = currentSkill.getName();
-            fm = g.getFontMetrics(keyBindFont);
+            fm = g.getFontMetrics(skillLabelFont);
             textRect = fm.getStringBounds(skillText, g);
             drawSkillName(g, skillText, textRect, skillBoxY, skillBoxX);
 
             // Draw Keybind in Upper Left Corner
-            keyBind = "3"; //skill.getKeyBind() <-- possibily???
-            textRect = fm.getStringBounds(keyBind, g);
-            g.drawString(keyBind, skillBoxX + (int)textRect.getWidth()/2 + topAndSideMargin, skillBoxY + (int)textRect.getHeight() - 1  + topAndSideMargin);
+            // Only active skils have keybinds
+            if (currentSkill.isActive()) {
+                // Set font
+                g.setFont(keyBindFont);
+                fm = g.getFontMetrics(keyBindFont);
+
+                // Get keybind
+                ActiveSkill currentActiveSkill = (ActiveSkill)currentSkill;
+                int keyCode = currentActiveSkill.getKeyBind();
+                keyBind = KeyEvent.getKeyText(keyCode);
+                textRect = fm.getStringBounds(keyBind, g);
+                g.drawString(keyBind, skillBoxX + (int)textRect.getWidth()/2 + topAndSideMargin, skillBoxY + (int)textRect.getHeight() - 1  + topAndSideMargin);
+            }
+
+            // Set font
+            g.setFont(skillLabelFont);
+            fm = g.getFontMetrics(skillLabelFont);
 
             // Draw Skill level in Upper Right Corner
             String skillLvl = "Lvl " + Integer.toString(currentSkill.getLevel());
@@ -138,7 +157,6 @@ public class SkillViewport extends View{
             // Draw option to level up this skill if have skill points
             if (stats.getStat(Stats.Type.SKILL_POINTS) > 0) {
                 drawSkillLevelUpBox(g, skillBoxX, skillBoxY);
-
             }
 
             // Increment x position
@@ -316,12 +334,20 @@ public class SkillViewport extends View{
 
 
         // Font
-        skillLabelFontSize = getScreenWidth()/130;
         keyBindFontSize = getScreenWidth()/100;
+        skillLabelFontSize = keyBindFontSize;
         CDFontSize = getScreenWidth()/50;
 
         skillLabelFont = new Font("Helvetica", Font.PLAIN, skillLabelFontSize);
-        keyBindFont = new Font("Helvetica", Font.PLAIN, keyBindFontSize);
+
+        // Setup keybind font
+        keyBindFont = new Font("Helvetica", Font.BOLD, keyBindFontSize);
+        Map<TextAttribute, Object> attributes = new HashMap<>();
+        attributes.put(TextAttribute.FAMILY, keyBindFont.getFamily());
+        attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD);
+        attributes.put(TextAttribute.SIZE, (int) (keyBindFont.getSize() * 1.2));
+        keyBindFont = Font.getFont(attributes);
+
         CDFont = new Font("Helvetica", Font.PLAIN, CDFontSize);
     }
 

@@ -5,6 +5,9 @@ import controllers.entityControllers.AvatarController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.map.Map;
+import models.skills.ActiveSkill;
+import models.skills.Skill;
+import models.skills.SkillList;
 import utilities.TileDetection;
 import utilities.StateManager;
 import utilities.SubState;
@@ -314,35 +317,6 @@ public class GameViewController extends ViewController{
             public void stop(){}
         };
 
-//        Task openToastTestView = new Task() {
-//            @Override
-//            public void run() {
-//                ToastView toast = new ToastView(getScreenWidth(), getScreenWidth(), getDisplay(), "Press 'L' to dismiss this toast");
-//                // For a "Toast Message" the Game View controller will still be handling input, so pass in null.
-//                SubState toastSubState = new SubState(null, toast);
-//                // Pass a new inputMapping to the current VC, to handle our interaction within this new SubState:
-//                // In this cass the current VC is the GameVC, which passes input to the AvatarVC, so i'm adding this
-//                // input mapping to the Avatar Controller.
-//                // These input mappings for the new SubState dont need to be created here, if the new substate is the inventory
-//                // for example. the inventory VC would handle the new input appings
-//                Task openToast = this;
-//                GameViewController.this.addKeyPressMapping(new Task() {
-//                    @Override
-//                    public void run() {
-//                        toastSubState.dismiss();
-//                        // Re-map the "I" key to open the toast view again
-//                        GameViewController.this.addKeyPressMapping(openToast, KeyEvent.VK_L);
-//                    }
-//                    @Override
-//                    public void stop() {}
-//                }, KeyEvent.VK_I);
-//                // Add the substate
-//                addSubState(toastSubState);
-//            }
-//            @Override
-//            public void stop() {}
-//        };
-
         Task openInventory = new Task() {
             @Override
             public void run() {
@@ -363,27 +337,27 @@ public class GameViewController extends ViewController{
             public void stop() {}
         };
 
-
-        //BINDINGS:
-        //--------
-
-        //Bind Wounds
-        addKeyPressMapping(bindWounds, KeyEvent.VK_1);
-
-        //1st Skill
-        addKeyPressMapping(firstSkill, KeyEvent.VK_2);
-
-        //2nd Skill
-        addKeyPressMapping(secondSkill, KeyEvent.VK_3);
-
-        //3rd Skill
-        addKeyPressMapping(thirdSkill, KeyEvent.VK_4);
-
-        //4th Skill
-        addKeyPressMapping(fourthSkill, KeyEvent.VK_5);
-
-        //5th Skill
-        addKeyPressMapping(fifthSkill,KeyEvent.VK_6);
+//
+//        //BINDINGS:
+//        //--------
+//
+//        //Bind Wounds
+//        addKeyPressMapping(bindWounds, KeyEvent.VK_1);
+//
+//        //1st Skill
+//        addKeyPressMapping(firstSkill, KeyEvent.VK_2);
+//
+//        //2nd Skill
+//        addKeyPressMapping(secondSkill, KeyEvent.VK_3);
+//
+//        //3rd Skill
+//        addKeyPressMapping(thirdSkill, KeyEvent.VK_4);
+//
+//        //4th Skill
+//        addKeyPressMapping(fourthSkill, KeyEvent.VK_5);
+//
+//        //5th Skill
+//        addKeyPressMapping(fifthSkill,KeyEvent.VK_6);
 
         //InventoryView
         addKeyPressMapping(openInventory, KeyEvent.VK_I);
@@ -393,6 +367,44 @@ public class GameViewController extends ViewController{
 
         //PauseView
         addKeyPressMapping(openPause,KeyEvent.VK_P);
+
+    }
+
+    public void initSkillKeyBindMappings() {
+        // Get the avatar
+        Avatar avatar = avatarController.getAvatar();
+
+        // Get his skills
+        SkillList skills = avatarController.getAvatarsSkills();
+
+        // Available default key bindings.
+        // Most skills an occupation has is 6.
+        // We will assign each key to each skill incrementally, while looping over the avatar's skills.
+        int skillKeys[] = {KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5, KeyEvent.VK_6 };
+
+        int i = 0;
+        for (Skill skill : skills) {
+
+            // Only ActiveSkills need to have a Task.
+            if (skill.isActive()) {
+                ActiveSkill activeSkill = (ActiveSkill)skill;
+                Task skillActivate = new Task() {
+                    @Override
+                    public void run() {
+                        // Call on activate upon executing
+                        activeSkill.onActivate(avatar);
+                    }
+                    @Override
+                    public void stop() {}
+                };
+                // Set the default keybind on the skill
+                activeSkill.setKeyBind( skillKeys[i] );
+                // Add the mapping to game VC
+                addKeyPressMapping(skillActivate, activeSkill.getKeyBind());
+                i++;
+            }
+
+        }
 
     }
     @Override
