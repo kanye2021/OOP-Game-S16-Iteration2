@@ -7,6 +7,7 @@ import org.w3c.dom.css.Rect;
 import utilities.IOUtilities;
 import utilities.MathUtilities;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -22,13 +23,12 @@ import java.util.TimerTask;
  */
 public class SkillViewport extends View{
 
-    private final String SKILL_RESOURCE_BASE_PATH = IOUtilities.getFileSystemDependentPath("./src/res/skills/");
+    private final String RESOURCE_BASE_PATH = IOUtilities.getFileSystemDependentPath("./src/res/etc/");
 
     // Model attributes
     private SkillList skills;
     private Stats stats;
     private int skillCount;
-//    private int skillPointsAvailable;
 
     // Font
     private int skillLabelFontSize;
@@ -52,6 +52,7 @@ public class SkillViewport extends View{
     private int levelUpBoxBottomY;
     private int levelUpBoxRightX;
     private int levelUpBoxLeftXDistanceGap;
+    private int plusIconSize;
     private int imgSize;
 
     // Font attributes
@@ -199,8 +200,17 @@ public class SkillViewport extends View{
     }
 
     private void drawSkillLevelUpBox(Graphics g, int x, int y) {
+        // Draw rect
         g.setColor(goldTrim);
-        g.drawRect(x + (skillBoxSize - levelUpBoxSize)/2, y - levelUpBoxSize, levelUpBoxSize, levelUpBoxSize);
+        int rect_x = x + (skillBoxSize - levelUpBoxSize)/2;
+        int rect_y = y - levelUpBoxSize;
+        g.drawRect(rect_x, rect_y , levelUpBoxSize, levelUpBoxSize);
+
+        // Draw plus icon
+        // Load the heart image
+        ImageIcon plusIcon = IOUtilities.getImageIcon(RESOURCE_BASE_PATH + "plus_icon.png");
+        Image plusIconImg = plusIcon.getImage();
+        g.drawImage(plusIconImg, rect_x + (levelUpBoxSize - plusIconSize)/2, rect_y + (levelUpBoxSize - plusIconSize)/2, plusIconSize, plusIconSize, null);
 
     }
 
@@ -287,6 +297,8 @@ public class SkillViewport extends View{
         skillBoxSize = (int) (((double) getScreenWidth() / 15));
         imgSize = (int) ((double) skillBoxSize * .80);
         levelUpBoxSize = (int) ((double) skillBoxSize * .60);
+        plusIconSize = (int) ((double) skillBoxSize * .45);
+
         // Rect size
         skillRectWidth = skillCount * skillBoxSize;
         skillRectHeight = skillBoxSize;
