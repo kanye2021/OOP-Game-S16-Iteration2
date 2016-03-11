@@ -9,6 +9,7 @@ import models.entities.npc.Horse;
 import models.entities.npc.NPC;
 
 import models.map.Map;
+import views.GameView;
 import views.View;
 
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class GameState extends State {
         for(NPC npc: npcList){
             npc.update();
         }
-        avatar.update();
+        ((GameViewController) viewController).update();
     }
 }
 

@@ -45,42 +45,42 @@ public class MountController implements Observer {
             public void run() { mount.move(Map.Direction.NORTH);}
 
             @Override
-            public void stop() { mount.stopMoving(); }
+            public void stop() {   }
         };
         moveNorthWest = new Task() {
             @Override
             public void run() { mount.move(Map.Direction.NORTH_WEST);}
 
             @Override
-            public void stop() { mount.stopMoving(); }
+            public void stop() {   }
         };
         moveSouthWest = new Task() {
             @Override
             public void run() { mount.move(Map.Direction.SOUTH_WEST);}
 
             @Override
-            public void stop() { mount.stopMoving(); }
+            public void stop() {   }
         };
         moveSouth = new Task() {
             @Override
             public void run() { mount.move(Map.Direction.SOUTH);}
 
             @Override
-            public void stop() { mount.stopMoving(); }
+            public void stop() {   }
         };
         moveSouthEast = new Task() {
             @Override
             public void run() { mount.move(Map.Direction.SOUTH_EAST);}
 
             @Override
-            public void stop() { mount.stopMoving(); }
+            public void stop() {   }
         };
         moveNorthEast = new Task() {
             @Override
             public void run() { mount.move(Map.Direction.NORTH_EAST);}
 
             @Override
-            public void stop() { mount.stopMoving(); }
+            public void stop() {   }
         };
 
     }

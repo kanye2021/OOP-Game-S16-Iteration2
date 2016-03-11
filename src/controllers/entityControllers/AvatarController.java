@@ -33,6 +33,7 @@ public class AvatarController {
     // Required to manage SubStates. i.e: Inventory, EquippedItems, Entity Interactions.
     private GameViewController gameViewController;
     private GameView gameView;
+    private Map.Direction movementDirection;
 
     public AvatarController(Avatar avatar, GameViewController gameViewController){
         //TODO: Add gameview
@@ -41,6 +42,7 @@ public class AvatarController {
         keyPressMapping = new InputMapping();
         this.gameView = (GameView)gameViewController.getView();
         initKeyPressMapping();
+        movementDirection = null;
     }
 
     public void handleKeyPress(KeyEvent e) {
@@ -214,15 +216,22 @@ public class AvatarController {
         }
 
         return number;
-
+    }
+    
+    public TileDetection move(){
+        if(movementDirection == null){
+            return null;
+        }
+        
+        return avatar.move(movementDirection);
+    }
+    
+    public void setMovementDirection(Map.Direction direction){
+        this.movementDirection = direction;
     }
 
     public void stopMoving(){
-        avatar.stopMoving();
-    }
-
-    public TileDetection move(Map.Direction direction){
-        return avatar.move(direction);
+        this.movementDirection = null;
     }
 
     public void startInteraction(NPC npc){
