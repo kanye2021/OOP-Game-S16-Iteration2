@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public abstract class Mount extends NPC {
 
     //Constructor for the mount with location on a map
-    public Mount(Point location, Map map){
-        super(location,map);
+    public Mount(Point location, Map map, String ... dialogue){
+        super(location,map,dialogue);
     }
 
 

@@ -77,7 +77,7 @@ public abstract class ViewController {
             public void stop(){}
         };
 
-        addKeyPressMapping(escapeTask, KeyEvent.VK_ESCAPE);
+        addKeyPressMapping(escapeTask, KeyEvent.VK_BACK_SPACE);
         addKeyPressMapping(altF4Task, KeyEvent.VK_F4, KeyEvent.ALT_MASK);
 
     }
