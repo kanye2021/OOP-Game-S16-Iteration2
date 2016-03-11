@@ -14,7 +14,7 @@ public class PauseView extends View{
     public enum MenuOptions {
         CONTINUE("Continue"),
         OPTIONS("Key Bindings"),
-        SAVE_GAME("Save Game"),q
+        SAVE_GAME("Save Game"),
         LOAD_GAME("Load Game"),
         EXIT_GAME("Exit Game");
 
