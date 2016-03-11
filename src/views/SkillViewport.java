@@ -2,13 +2,17 @@ package views;
 
 import models.skills.Skill;
 import models.skills.SkillList;
+import models.stats.Stats;
 import org.w3c.dom.css.Rect;
 import utilities.IOUtilities;
 import utilities.MathUtilities;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -16,13 +20,15 @@ import java.util.TimerTask;
 /**
  * Created by sergiopuleri on 3/8/16.
  */
-public class SkillViewport extends View {
+public class SkillViewport extends View{
 
     private final String SKILL_RESOURCE_BASE_PATH = IOUtilities.getFileSystemDependentPath("./src/res/skills/");
 
     // Model attributes
     private SkillList skills;
+    private Stats stats;
     private int skillCount;
+//    private int skillPointsAvailable;
 
     // Font
     private int skillLabelFontSize;
@@ -32,11 +38,20 @@ public class SkillViewport extends View {
     private Font skillLabelFont;
     private Font keyBindFont;
 
+    private Color goldTrim;
 
     // Scalable Viewport Attributes
     private int skillRectWidth;
     private int skillRectHeight;
     private int skillBoxSize;
+    private int skillBoxStartX;
+    private int skillBoxStartY;
+    private int levelUpBoxSize;
+    private int levelUpBoxLeftX;
+    private int levelUpBoxTopY;
+    private int levelUpBoxBottomY;
+    private int levelUpBoxRightX;
+    private int levelUpBoxLeftXDistanceGap;
     private int imgSize;
 
     // Font attributes
@@ -44,10 +59,13 @@ public class SkillViewport extends View {
 
 
 
-    public SkillViewport(int width, int height, Display display, SkillList skills) {
+    public SkillViewport(int width, int height, Display display, SkillList skills, Stats stats) {
         super(width, height, display);
         this.skills = skills;
+        this.stats = stats;
         this.skillCount = skills.size();
+//        this.skillPointsAvailable = 0;
+        this.goldTrim = new Color(223, 196, 99);
         scaleView();
     }
 
@@ -55,25 +73,25 @@ public class SkillViewport extends View {
     public void render(Graphics g) {
         // Draw erre-thang
         drawSkillRectAndBoxes(g);
+
+
     }
 
     private void drawSkillRectAndBoxes(Graphics g) {
 
         // Draw outline
-        Color goldTrim = new Color(223, 196, 99);
         g.setColor(goldTrim);
-        int rect_x = (getScreenWidth() - skillRectWidth)/2;
-        int rect_y = getScreenHeight() - skillRectHeight - 25;
+
 
         // Fill
-        g.drawRect(rect_x, rect_y, skillRectWidth, skillRectHeight);
+        g.drawRect(skillBoxStartX, skillBoxStartY, skillRectWidth, skillRectHeight);
         g.setColor(Color.darkGray);
-        g.fillRect(rect_x, rect_y, skillRectWidth, skillRectHeight);
+        g.fillRect(skillBoxStartX, skillBoxStartY, skillRectWidth, skillRectHeight);
 
 
         // Values needed to draw
-        int skillBoxX = rect_x;
-        int skillBoxY = rect_y;
+        int skillBoxX = skillBoxStartX;
+        int skillBoxY = skillBoxStartY;
         int topAndSideMargin = skillBoxSize/28;
         Color coolDownFontColor = Color.RED;
         Rectangle2D skillRect;
@@ -116,6 +134,13 @@ public class SkillViewport extends View {
             if (currentSkill.isCooldown()) {
                 double currentTime = currentSkill.getCooldownTimeRemaining();
                 drawAndUpdateCoolDown(g, skillBoxX, skillBoxY, currentTime, currentSkill);
+            }
+
+
+            // Draw option to level up this skill if have skill points
+            if (stats.getStat(Stats.Type.SKILL_POINTS) > 0) {
+                drawSkillLevelUpBox(g, skillBoxX, skillBoxY);
+
             }
 
             // Increment x position
@@ -173,6 +198,12 @@ public class SkillViewport extends View {
 
     }
 
+    private void drawSkillLevelUpBox(Graphics g, int x, int y) {
+        g.setColor(goldTrim);
+        g.drawRect(x + (skillBoxSize - levelUpBoxSize)/2, y - levelUpBoxSize, levelUpBoxSize, levelUpBoxSize);
+
+    }
+
     private void drawAndUpdateCoolDown(Graphics g, int x, int y, double time, Skill skill) {
         // configure shit
         Graphics gg = g.create();
@@ -209,15 +240,71 @@ public class SkillViewport extends View {
         }, 0, 500);
     }
 
+    public void handleMouseClick(MouseEvent e) {
+        int mouseX = e.getX();
+        // For somee reason screen is 25 pixels shorter?
+        int mouseY = e.getY() - 25;
+
+        System.out.println("CLICKED X: " + mouseX + " Y: " + mouseY);
+
+        int targetSkillNumber;
+
+        // If within the Y range
+        if (mouseY <= levelUpBoxBottomY && mouseY >= levelUpBoxTopY) {
+            // Check which index of skill they selected
+            if (mouseX >= levelUpBoxLeftX && mouseX <= levelUpBoxRightX) {
+                int distanceFromStart = mouseX - levelUpBoxLeftX;
+
+                int approximateBoxNumber = (distanceFromStart/skillBoxSize) + 1;
+                System.out.println("Approximately clicked box #: " + approximateBoxNumber);
+                int gapWidth = levelUpBoxLeftX + levelUpBoxLeftXDistanceGap - (levelUpBoxLeftX + levelUpBoxSize);
+
+                int rightEdgeOfDesiredBox = levelUpBoxLeftX + (approximateBoxNumber*levelUpBoxSize) + ((approximateBoxNumber-1)*gapWidth);
+                // Means we're in a gap! didnt hit a box.
+                if ( levelUpBoxLeftX + distanceFromStart > rightEdgeOfDesiredBox ) {
+                    System.out.println("hit a gap");
+                    return;
+                }
+
+                // Get the skill (arrays are indexed by 0 (; )
+                targetSkillNumber = approximateBoxNumber-1;
+                Skill desiredSkill = skills.get(targetSkillNumber);
+
+                // level up
+                levelUpSkill(desiredSkill);
+            }
+        }
+    }
+
+    private void levelUpSkill(Skill skill) {
+        skill.incrementLevel();
+        stats.decrementSkillPoints();
+    }
+
     @Override
     public void scaleView() {
         // Slot sizes
         skillBoxSize = (int) (((double) getScreenWidth() / 15));
         imgSize = (int) ((double) skillBoxSize * .80);
-
+        levelUpBoxSize = (int) ((double) skillBoxSize * .60);
         // Rect size
         skillRectWidth = skillCount * skillBoxSize;
         skillRectHeight = skillBoxSize;
+
+        // Coordinates for skill box
+        skillBoxStartX = (getScreenWidth() - skillRectWidth)/2;
+        skillBoxStartY = getScreenHeight() - skillRectHeight - 25;
+
+
+        // Coordinates for level up boxes
+        levelUpBoxLeftX = skillBoxStartX + (skillBoxSize - levelUpBoxSize)/2;
+        int skillBoxRight = skillBoxStartX + skillBoxSize;
+        levelUpBoxLeftXDistanceGap = skillBoxRight + (skillBoxSize - levelUpBoxSize)/2 - levelUpBoxLeftX;
+        levelUpBoxRightX = levelUpBoxLeftX + ((skillCount-1) * levelUpBoxLeftXDistanceGap) + levelUpBoxSize;
+        levelUpBoxBottomY = skillBoxStartY;
+        levelUpBoxTopY = levelUpBoxBottomY - levelUpBoxSize;
+
+
 
         // Font
         skillLabelFontSize = getScreenWidth()/130;
@@ -228,7 +315,6 @@ public class SkillViewport extends View {
         keyBindFont = new Font("Helvetica", Font.PLAIN, keyBindFontSize);
         CDFont = new Font("Helvetica", Font.PLAIN, CDFontSize);
     }
-
 
 
 }

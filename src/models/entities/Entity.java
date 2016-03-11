@@ -72,7 +72,6 @@ public abstract class Entity extends Observable{
 
 
         initInitialStats().applyStats(stats);
-        skills.addAll(occupation.getSkills());
         occupation.getStats().applyStats(stats);
 
         // Setup the movement timer.
@@ -275,7 +274,11 @@ public abstract class Entity extends Observable{
 	}
     // Wrapper to levelup an entity
     public void levelUp() {
+        // Upon level-up, notifies skillviewport to allow for level-ing up a skill
+        setChanged();
+        notifyObservers();
         this.stats.levelUp();
+        Toast.createToastWithTimer("You've leveled up! Click a skill to increase", 1500);
     }
 
     // Wrapper to die (lose a life)

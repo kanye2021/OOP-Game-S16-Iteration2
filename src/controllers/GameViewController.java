@@ -13,6 +13,7 @@ import views.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
@@ -47,7 +48,7 @@ public class GameViewController extends ViewController{
     public void initViewports(Map map, Avatar avatar, ArrayList<NPC> npcList){
         ((GameView)view).initAreaViewport(map, avatar);
         ((GameView)view).initStatusViewport(avatar.getStats());
-        ((GameView)view).initSkillViewport(avatar.getSkills());
+        ((GameView)view).initSkillViewport(avatar);
     }
 
 
@@ -400,6 +401,11 @@ public class GameViewController extends ViewController{
     public void handleMouseReleased(java.awt.event.MouseEvent e){
         mousePressed = false;
         lastOffset = offset;
+    }
+
+    @Override
+    public void handleMouseClicked(MouseEvent e) {
+        ((GameView)view).handleMouseClick(e);
     }
 
     //Wrappers shits for things that have handles to GameVC and need screen dimensions + Display to create otha views

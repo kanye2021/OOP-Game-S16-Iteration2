@@ -34,6 +34,7 @@ public class Stats {
         OFFSENSIVE_RATING("Offense"),
         DEFENSIVE_RATING("Defense"),
         ARMOR_RATING("Armor"),
+        SKILL_POINTS("Skill Points"),
         TOTAL_WEIGHT("Weight");
 
         private String descriptor;
@@ -62,6 +63,7 @@ public class Stats {
 
     // Other useful parameters
     private int level;
+    private int skillPointsAvailabile;
     private int health;
     private int mana;
     private int expReqLvUp;
@@ -78,8 +80,11 @@ public class Stats {
     private EnumMap<Type, StatsSetTask> statSetMap = new EnumMap<>(Type.class);
 
     public Stats() {
+        this.level = 0;
+        this.skillPointsAvailabile = 0;
 
         statGetMap.put(Type.LEVEL, () -> getLevel());
+        statGetMap.put(Type.SKILL_POINTS, () -> getSkillPointsAvailabile());
         statGetMap.put(Type.LIVES, () -> getLives());
         statGetMap.put(Type.STRENGTH, () -> getStrength());
         statGetMap.put(Type.AGILITY, () -> getAgility());
@@ -102,6 +107,7 @@ public class Stats {
         statGetMap.put(Type.TOTAL_WEIGHT, () -> getTotalWeight());
 
         statSetMap.put(Type.LIVES, (delta) -> modifyLives(delta));
+        statSetMap.put(Type.SKILL_POINTS, (delta) -> modifySkillPoints(delta));
         statSetMap.put(Type.STRENGTH, (delta) -> modifyStrength(delta));
         statSetMap.put(Type.AGILITY, (delta) -> modifyAgility(delta));
         statSetMap.put(Type.INTELLECT, (delta) -> modifyIntellect(delta));
@@ -178,9 +184,18 @@ public class Stats {
         updateDerivedStats();
     }
 
+    private void modifySkillPoints(int delta) {
+        this.skillPointsAvailabile = MathUtilities.putInRange(0, this.skillPointsAvailabile + delta, Integer.MAX_VALUE);
+    }
+
     // Wrapper for modify level
     public void levelUp() {
         modifyExperience(expReqLvUp);
+    }
+
+    // Wrapper to decrement skill points
+    public void decrementSkillPoints() {
+        modifySkillPoints(-1);
     }
 
     // Wrapper to animate loosing a life (health bar slides down)
@@ -195,6 +210,7 @@ public class Stats {
 
             this.level++;
             this.experience -= expReqLvUp;
+            this.skillPointsAvailabile++;
 
         }
 
@@ -289,6 +305,7 @@ public class Stats {
     private int getLevel() {
         return this.level;
     }
+    private int getSkillPointsAvailabile() {return this.skillPointsAvailabile;}
 
     private int getMaxHealth() { return maxHealth; }
 
