@@ -256,8 +256,6 @@ public abstract class Entity{
     // Wrapper to levelup an entity
     public void levelUp() {
         // Upon level-up, notifies skillviewport to allow for level-ing up a skill
-        setChanged();
-        notifyObservers();
         this.stats.levelUp();
         Toast.createToastWithTimer("You've leveled up! Click a skill to increase", 1500);
     }
