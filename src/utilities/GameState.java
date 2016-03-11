@@ -2,13 +2,12 @@ package utilities;
 
 import controllers.GameViewController;
 import controllers.entityControllers.AvatarController;
-import controllers.entityControllers.MountController;
 import models.entities.Avatar;
 
-import models.entities.npc.Horse;
 import models.entities.npc.NPC;
 
 import models.map.Map;
+import views.GameView;
 import views.View;
 
 import java.util.ArrayList;
@@ -56,10 +55,10 @@ public class GameState extends State {
     }
 
     //TODO: I don't think it should be here
-    public void setMount(Horse horse, MountController mountController){
-        this.avatar.setMount(horse);
-        this.avatar.addObserver(mountController);
-    }
+//    public void setMount(Horse horse, MountController mountController){
+//        this.avatar.setMount(horse);
+//        this.avatar.addObserver(mountController);
+//    }
 
     public void setNpcList(ArrayList<NPC> npcList){
         this.npcList = npcList;
@@ -70,7 +69,7 @@ public class GameState extends State {
         for(NPC npc: npcList){
             npc.update();
         }
-        avatar.update();
+        ((GameViewController) viewController).update();
     }
 }
 

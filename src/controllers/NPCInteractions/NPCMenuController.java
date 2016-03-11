@@ -75,14 +75,6 @@ public class NPCMenuController extends ViewController {
                     a.setAvatar(avatar);
                     a.activate(view, gvController);
 
-//                    if (a.getName() == "Talk"){
-//                        //Display Dialogue
-//                        TalkView talkView = new TalkView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), npc);
-//                        SubState talkState = new SubState(null, talkView);
-//                        ((NPCMenuView) view).addSubState(talkState);
-//                        TalkViewController talkViewController = new TalkViewController(talkView, gvController.getStateManager(), gvController, npc);
-//                        gvController.setSubController(talkViewController);
-//                    }
                 }
             }
 

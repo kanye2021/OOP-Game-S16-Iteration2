@@ -146,14 +146,29 @@ public class Map {
 
     // Useful wrapper functions to avoid violating demeters law
     public Entity getEntityAt(Point p){
-        return tiles.get(p).getEntity();
+        if (tiles.containsKey(p)) {
+            return tiles.get(p).getEntity();
+        }
+        return null;
     }
 
     public Item getItemAt(Point p){
-        return tiles.get(p).getItem();
+        if(tiles.containsKey(p)){
+            return tiles.get(p).getItem();
+        }
+        return null;
     }
 
     public Terrain getTerrainAt(Point p){
-        return tiles.get(p).getTerrain();
+        if(tiles.containsKey(p)){
+            return tiles.get(p).getTerrain();
+        }
+        return null;
+    }
+
+    public void removeEntityAt(Point p) {
+        if(tiles.containsKey(p)){
+            tiles.get(p).removeEntity();
+        }
     }
 }

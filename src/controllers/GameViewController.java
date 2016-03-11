@@ -26,6 +26,9 @@ public class GameViewController extends ViewController{
     private ArrayList<NPC> npcList;
     private AvatarController avatarController;
 
+    //Checks if the view has a toast
+    private boolean hasToast;
+
     // Both of these are used to handle dragging the viewport around.
     private boolean mousePressed;
     private Point mouseStartLocation;
@@ -41,7 +44,6 @@ public class GameViewController extends ViewController{
         lastOffset = new Point(0, 0);
     }
 
-
     public void setAvatarController(AvatarController controller){
         avatarController = controller;
     }
@@ -55,13 +57,18 @@ public class GameViewController extends ViewController{
     public void addSubState(SubState s) {
         ((GameView)view).addSubState(s);
     }
+    public void popTopSubState() {
+        ((GameView)view).popTopSubState();
+    }
     public void addToastWithDefaultCloseKeyBindOfX(SubState s) {
         addSubState(s);
+        pushToast();
         // Dismiss the toast with "X" Toast
         Task dismissTask = new Task() {
             @Override
             public void run() {
                 s.dismiss();
+                popToast();
             }
 
             @Override
@@ -70,13 +77,18 @@ public class GameViewController extends ViewController{
         // Default to close a Toast is "X"
         this.addKeyPressMapping(dismissTask, KeyEvent.VK_X);
     }
+
+    public void pushToast(){ hasToast = true; }
+    public void popToast(){ hasToast = false; }
+
     public void insertSubState(SubState s, int index) {
         ((GameView)view).insertSubState(s, index);
     }
+
     @Override
     public final void handleKeyPress(KeyEvent e) {
 
-        if(((GameView)view).hasSubState() == true)
+        if(((GameView)view).hasSubState() == true && hasToast != true)
             ((GameView)view).passInputToSubstate(e);
         else
             super.handleKeyPress(e);
@@ -125,7 +137,7 @@ public class GameViewController extends ViewController{
         task = new Task() {
             @Override
             public void run() {
-                moveAndDetect(Map.Direction.NORTH);
+                avatarController.setMovementDirection(Map.Direction.NORTH);
             }
 
             @Override
@@ -137,7 +149,7 @@ public class GameViewController extends ViewController{
 
         task = new Task() {
             @Override
-            public void run() { moveAndDetect(Map.Direction.NORTH_WEST);}
+            public void run() { avatarController.setMovementDirection(Map.Direction.NORTH_WEST);}
 
             @Override
             public void stop() { avatarController.stopMoving(); }
@@ -148,7 +160,7 @@ public class GameViewController extends ViewController{
 
         task = new Task() {
             @Override
-            public void run() { moveAndDetect(Map.Direction.SOUTH_WEST);}
+            public void run() { avatarController.setMovementDirection(Map.Direction.SOUTH_WEST);}
 
             @Override
             public void stop() { avatarController.stopMoving(); }
@@ -159,7 +171,7 @@ public class GameViewController extends ViewController{
 
         task = new Task() {
             @Override
-            public void run() { moveAndDetect(Map.Direction.SOUTH);}
+            public void run() { avatarController.setMovementDirection(Map.Direction.SOUTH);}
 
             @Override
             public void stop() { avatarController.stopMoving(); }
@@ -170,7 +182,7 @@ public class GameViewController extends ViewController{
 
         task = new Task() {
             @Override
-            public void run() { moveAndDetect(Map.Direction.SOUTH_EAST);}
+            public void run() { avatarController.setMovementDirection(Map.Direction.SOUTH_EAST);}
 
             @Override
             public void stop() { avatarController.stopMoving(); }
@@ -181,7 +193,7 @@ public class GameViewController extends ViewController{
 
         task = new Task() {
             @Override
-            public void run() { moveAndDetect(Map.Direction.NORTH_EAST);}
+            public void run() { avatarController.setMovementDirection(Map.Direction.NORTH_EAST);}
 
             @Override
             public void stop() { avatarController.stopMoving(); }
@@ -423,15 +435,21 @@ public class GameViewController extends ViewController{
 
     //Method is called whenever avatar moves. Basically checks what is in the tile through
     //Tile detection and then whether an NPC is detected, it'll paint the interaction
-    public void moveAndDetect(Map.Direction direction){
 
-        // Return the viepowrt back to center
+    public void update(){
+        moveAndDetect();
+    }
+
+    public void moveAndDetect(){
+
+        // Return the viewport back to center
         mousePressed = false;
         lastOffset.setLocation(0, 0);
         ((GameView)view).setAreaViewportOffset(new Point(0, 0));
 
+        // Tell the avatar controller to move the avatar.
         TileDetection td;
-        td = avatarController.move(direction);
+        td = avatarController.move();
 
         if (td != null) {
             if (td.npcDetected()) {

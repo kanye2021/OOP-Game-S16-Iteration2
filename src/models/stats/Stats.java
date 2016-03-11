@@ -212,10 +212,17 @@ public class Stats {
             this.experience -= expReqLvUp;
             this.skillPointsAvailabile++;
 
+            updateDerivedStats();
+            fillHealth();
+            fillMana();
+
         }
 
-        updateDerivedStats();
+
     }
+
+    private void fillHealth(){ health = maxHealth; }
+    private void fillMana(){ mana = maxMana; }
 
     private void modifyMovement(int delta) {
         this.movement = MathUtilities.putInRange(0, this.movement + delta, Integer.MAX_VALUE);

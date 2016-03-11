@@ -224,6 +224,7 @@ public class AreaViewport extends View implements Observer {
         // Display entities on the map
         Entity entity = tileNode.tile.getEntity();
         if (entity != null) {
+
             Image entityImage = entity.getImage();
 
             // Resize the entity image
@@ -233,7 +234,15 @@ public class AreaViewport extends View implements Observer {
             int entityX = (int) (tileNode.pixelPoint.getX() - scaledWidth / 2);
             int entityY = (int) (tileNode.pixelPoint.getY() - scaledHeight / 2);
 
-            g.drawImage(entityImage, entityX, entityY, scaledWidth, scaledHeight, getDisplay());
+            if (entity.getMount() != null){
+                Image mountImage = entity.getMount().getImage();
+                g.drawImage(mountImage, entityX, entityY + scaledHeight/3, scaledWidth, scaledHeight, getDisplay());
+                g.drawImage(entityImage, entityX, entityY, scaledWidth, scaledHeight/2, getDisplay());
+            }else{
+                g.drawImage(entityImage, entityX, entityY, scaledWidth, scaledHeight, getDisplay());
+
+            }
+
 
             // Add this entity to list of entities and their locations to render its health later alligator
             this.entityLocationTuples.add(new EntityLocationTuple(entity, new Point(entityX, entityY)));
