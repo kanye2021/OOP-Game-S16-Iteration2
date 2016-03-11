@@ -1,6 +1,6 @@
 package models.attack;
 
-import models.Attack;
+import models.Attackion;
 import models.entities.Entity;
 import models.map.Map;
 import models.map.Tile;
@@ -12,7 +12,7 @@ import java.util.Queue;
 /**
  * Created by ben on 3/8/16.
  */
-public class RadialAttack extends Attack{
+public class RadialAttack extends Attackion{
     //Map map;
     public RadialAttack(Entity entity, Projectile projectile){
         this.entity = entity;
@@ -37,8 +37,8 @@ public class RadialAttack extends Attack{
 
             attackPoint.x=current.target.x;
             attackPoint.y=current.target.y;
-            System.out.println(attackPoint.x);
-            System.out.println(attackPoint.y);
+            //System.out.println(attackPoint.x);
+            //System.out.println(attackPoint.y);
             Tile desiredTile = map.getTileAt(attackPoint);
 
 

@@ -1,6 +1,5 @@
 package models.skills.SummonerSkills;
 
-import models.Attack;
 import models.attack.AngularAttack;
 import models.attack.Projectile;
 import models.entities.Entity;

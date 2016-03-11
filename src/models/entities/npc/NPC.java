@@ -75,7 +75,6 @@ public abstract class  NPC extends Entity {
 
 
     public void update(){
-        super.update();
         brain.think();
     }
 

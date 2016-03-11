@@ -60,18 +60,29 @@ public class Map {
         public abstract Point neighbor(Point p);
     }
     public HashMap<Point, Tile> tiles;
+    private boolean changeSinceLastRender;
 
     public Map(HashMap<Point, Tile> tiles){
+
         this.tiles = tiles;
+        this.changeSinceLastRender = true;
     }
 
     // This function is really only called in initialization. Any other insertions/ deletions should be done via movement.
     public void insertEntity(Entity entity){
         tiles.get(entity.getLocation()).insertEntity(entity);
+        updateTile(entity.getLocation());
     }
 
     // To insert an item on the map. Used when loading and dropping items
-    public void insertItemAtPoint(Item item, Point point) { tiles.get(point).addItem(item); }
+    public void insertItemAtPoint(Item item, Point point) {
+        if(tiles.containsKey(point)){
+            tiles.get(point).addItem(item);
+            updateTile(point);
+        }
+
+    }
+
 
     // This function will attempt to move an entity in the direction it wants to move. Will return the location where
     // the entity should be (may be its existing location if the move was not successful).
@@ -99,7 +110,7 @@ public class Map {
         }
         else if(resultOfMovement.isMoved()){
             Tile oldLocation = tiles.get(currentLocation);
-            oldLocation.removeEntity();
+            removeEntityAt(currentLocation);
             return new TileDetection(null, desiredLocation, true, false);
         }else{
             // return currentLocation;
@@ -132,7 +143,7 @@ public class Map {
         }
         else if(resultOfMovement.isMoved()){
             Tile oldLocation = tiles.get(currentLocation);
-            oldLocation.removeEntity();
+            removeEntityAt(currentLocation);
             return new TileDetection(null, desiredLocation, true, false);
         }else{
             // return currentLocation;
@@ -146,18 +157,61 @@ public class Map {
 
     // Useful wrapper functions to avoid violating demeters law
     public Entity getEntityAt(Point p){
-        return tiles.get(p).getEntity();
+        if (tiles.containsKey(p)) {
+            return tiles.get(p).getEntity();
+        }
+        return null;
     }
 
     public Item getItemAt(Point p){
-        return tiles.get(p).getItem();
+        if(tiles.containsKey(p)){
+            return tiles.get(p).getItem();
+        }
+        return null;
+    }
+
+    public void removeItemAt(Point p){
+        if (tiles.containsKey(p)) {
+            tiles.get(p).removeItem();
+            updateTile(p);
+        }
+    }
+
+    public void removeAreaEffectAt(Point p){
+        if (tiles.containsKey(p)){
+            tiles.get(p).removeAreaEffect();
+            tiles.get(p).removeDecal();
+            updateTile(p);
+        }
     }
 
     public Terrain getTerrainAt(Point p){
-        return tiles.get(p).getTerrain();
+        if(tiles.containsKey(p)){
+            return tiles.get(p).getTerrain();
+        }
+        return null;
     }
 
     public void removeEntityAt(Point p) {
-        tiles.get(p).removeEntity();
+        if(tiles.containsKey(p)){
+            tiles.get(p).removeEntity();
+            updateTile(p);
+        }
+    }
+
+    public void updateTile(Point p){
+        if(tiles.containsKey(p)){
+            tiles.get(p).refreshImage();
+        }
+        this.changeSinceLastRender = true;
+    }
+
+
+    public boolean needsToBeRendered(){
+        return changeSinceLastRender;
+    }
+
+    public void setNeedsToBeRendered(boolean b){
+        changeSinceLastRender = b;
     }
 }

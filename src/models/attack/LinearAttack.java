@@ -1,6 +1,6 @@
 package models.attack;
 
-import models.Attack;
+import models.Attackion;
 import models.entities.Entity;
 import models.map.Map;
 import models.map.Tile;
@@ -12,7 +12,7 @@ import java.util.Queue;
  */
 
 //You are only supposed to call the constructor.  I.e new LinearAttack(Entity,Projectile);
-public class LinearAttack extends Attack{
+public class LinearAttack extends Attackion{
     Point slope;
 
     public LinearAttack(Entity entity,Projectile projectile){
@@ -105,8 +105,8 @@ public class LinearAttack extends Attack{
 
             attackPoint.x=current.target.x;
             attackPoint.y=current.target.y;
-            System.out.println(attackPoint.x);
-            System.out.println(attackPoint.y);
+            //System.out.println(attackPoint.x);
+            //System.out.println(attackPoint.y);
             Tile desiredTile = map.getTileAt(attackPoint);
 
 
