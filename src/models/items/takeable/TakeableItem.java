@@ -53,4 +53,6 @@ public abstract class TakeableItem extends Item {
     public boolean isEquipable() {
         return false;
     }
+
+    public boolean isConsumable(){ return false; }
 }

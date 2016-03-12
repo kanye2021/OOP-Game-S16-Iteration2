@@ -18,4 +18,5 @@ public class ConsumableItem extends TakeableItem {
 
     }
 
+    public boolean isConsumable(){ return true; }
 }
