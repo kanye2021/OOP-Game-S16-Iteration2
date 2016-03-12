@@ -60,7 +60,7 @@ public class TalkView extends View {
         String subString = null;
 
         //String Locations
-        int stringX = (int) (getScreenWidth() * 0.31);
+        int stringX = (int)(talkViewXStart*1.035);
         int stringY = (int) (getScreenHeight() * 0.18);
 
         while(stringLocation <= npc.getDialogue().get(npc.getDialogueLocation()).length()){
@@ -83,11 +83,11 @@ public class TalkView extends View {
     @Override
     public void scaleView(){
         //PAUSE VIEW DIMENSIONS
-        talkViewXStart = (int) (getScreenWidth() * 0.3);
-        talkViewYStart = (int) (getScreenHeight() * 0.15);
+
         talkViewWidth = (int) (getScreenWidth() * 0.3);
         talkViewHeight = (int) (getScreenHeight() * 0.15);
-
+        talkViewXStart = (getScreenWidth() - talkViewWidth)/2;
+        talkViewYStart = (int) (getScreenHeight() * 0.15);
 
         // Scale font
         int generalFontSize = getScreenWidth() / 100;
