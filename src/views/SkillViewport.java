@@ -129,18 +129,20 @@ public class SkillViewport extends View{
                 // Set font
                 g.setFont(keyBindFont);
                 fm = g.getFontMetrics(keyBindFont);
+                g.setColor(goldTrim);
 
                 // Get keybind
                 ActiveSkill currentActiveSkill = (ActiveSkill)currentSkill;
                 int keyCode = currentActiveSkill.getKeyBind();
                 keyBind = KeyEvent.getKeyText(keyCode);
                 textRect = fm.getStringBounds(keyBind, g);
-                g.drawString(keyBind, skillBoxX + (int)textRect.getWidth()/2 + topAndSideMargin, skillBoxY + (int)textRect.getHeight() - 1  + topAndSideMargin);
+                g.drawString(keyBind, skillBoxX + (int)textRect.getWidth()/2 + topAndSideMargin, skillBoxY + (int)textRect.getHeight() - 1  );
             }
 
             // Set font
             g.setFont(skillLabelFont);
             fm = g.getFontMetrics(skillLabelFont);
+            g.setColor(Color.WHITE);
 
             // Draw Skill level in Upper Right Corner
             String skillLvl = "Lvl " + Integer.toString(currentSkill.getLevel());
@@ -338,17 +340,17 @@ public class SkillViewport extends View{
         skillLabelFontSize = keyBindFontSize;
         CDFontSize = getScreenWidth()/50;
 
-        skillLabelFont = new Font("Helvetica", Font.PLAIN, skillLabelFontSize);
+        skillLabelFont = new Font("Courier New", Font.PLAIN, skillLabelFontSize);
 
         // Setup keybind font
-        keyBindFont = new Font("Helvetica", Font.BOLD, keyBindFontSize);
+        keyBindFont = new Font("Courier New", Font.BOLD, keyBindFontSize);
         Map<TextAttribute, Object> attributes = new HashMap<>();
         attributes.put(TextAttribute.FAMILY, keyBindFont.getFamily());
-        attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD);
-        attributes.put(TextAttribute.SIZE, (int) (keyBindFont.getSize() * 1.2));
+        attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_EXTRABOLD);
+        attributes.put(TextAttribute.SIZE, (int) (keyBindFont.getSize() * 1.5));
         keyBindFont = Font.getFont(attributes);
 
-        CDFont = new Font("Helvetica", Font.PLAIN, CDFontSize);
+        CDFont = new Font("Courier New", Font.PLAIN, CDFontSize);
     }
 
 
