@@ -20,6 +20,9 @@ public abstract class ActiveSkill extends Skill  {
 
     public abstract void onActivate(Entity entity);
 
+    // All active skills have a keybinding
+    protected int keyBind;
+
     protected int cost;
 
     //activeSkills return true for activeSkill check
@@ -31,6 +34,15 @@ public abstract class ActiveSkill extends Skill  {
     public abstract KeyEvent[] initActivatorKeys();
 
     public abstract ArrayList<Image> initSprite();
+
+
+    public int getKeyBind() {
+        return keyBind;
+    }
+
+    public void setKeyBind(int keyBind) {
+        this.keyBind = keyBind;
+    }
 
 
 }

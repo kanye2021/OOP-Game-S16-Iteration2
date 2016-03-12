@@ -201,6 +201,7 @@ public abstract class Entity{
         } else return true;
     }
 
+
     public final void equipItem(EquippableItem item){
 
         item.onUse(this);

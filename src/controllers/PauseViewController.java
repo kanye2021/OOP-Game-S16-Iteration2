@@ -1,14 +1,14 @@
 package controllers;
 
+import models.entities.Avatar;
 import utilities.State;
 import utilities.StateManager;
+import utilities.SubState;
 import utilities.Task;
-import views.LoadGameView;
-import views.PauseView;
-import views.StartMenuView;
-import views.View;
+import views.*;
 
 import java.awt.event.KeyEvent;
+import java.lang.reflect.AnnotatedTypeVariable;
 
 /**
  * Created by david on 3/1/16.
@@ -22,8 +22,17 @@ public class PauseViewController extends ViewController {
 
     private Task closePause;
 
-    public PauseViewController(View view, StateManager stateManager){
+    // Needs handle to current avatar due to getting to other views from the Pause Menu.
+    // e.g. Save Game and Options.
+    private Avatar avatar;
+
+    // Also necessary to add more substates n shit
+    private GameViewController gameViewController;
+
+    public PauseViewController(View view, StateManager stateManager, Avatar avatar, GameViewController gameVC){
         super(view, stateManager);
+        this.avatar = avatar;
+        this.gameViewController = gameVC;
     }
 
     @Override
@@ -61,6 +70,22 @@ public class PauseViewController extends ViewController {
                     case SAVE_GAME:
                         break;
                     case OPTIONS:
+                        OptionsView optionsView = new OptionsView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), avatar.getSkills());
+                        OptionsViewController optionsViewController = new OptionsViewController(optionsView, stateManager, gameViewController);
+                        SubState sub = new SubState(optionsViewController, optionsView);
+                        // Add closing task.
+                        optionsViewController.setClose(new Task() {
+                            @Override
+                            public void run() {
+                                System.out.println("2:Did I close ");
+                                sub.dismiss();
+                            }
+
+                            @Override
+                            public void stop() {}
+                        });
+                        // Add the substate
+                        gameViewController.addSubState(sub);
                         break;
                     case LOAD_GAME:
                         LoadGameView loadGameView = new LoadGameView(view.getScreenWidth()/ 2, view.getScreenHeight()/ 2, view.getDisplay());

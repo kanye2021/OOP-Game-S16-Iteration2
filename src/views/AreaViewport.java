@@ -71,13 +71,13 @@ public class AreaViewport extends View {
         hexHeight = Math.round((float)(Math.sqrt(3) /2 * hexWidth));
         horizDistanceBtwnTiles = hexSize * 3 /2;
         vertDistanceBtwnTiles = Math.round((float)(hexSize * Math.sqrt(3)));
-        cachedViewport = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        cachedViewport = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         reRender = true;
     }
 
     public void setViewportOffset(Point offset){
         viewportOffset = offset;
-        getDisplay().repaint();
+        reRender = true;
     }
 
     @Override
@@ -85,6 +85,7 @@ public class AreaViewport extends View {
 
         if(map.needsToBeRendered() || reRender){
             Graphics g1 = cachedViewport.getGraphics();
+
 
             // Draw a black background
             g1.setColor(Color.BLACK);
@@ -294,6 +295,7 @@ public class AreaViewport extends View {
 //
 //        g.setClip(oldClip);
 //    }
+
 
 
     private void drawEntityHealthBar(Graphics g, Entity entity, Point p) {

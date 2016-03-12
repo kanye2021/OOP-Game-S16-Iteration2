@@ -30,7 +30,7 @@ public class Tile {
         this.item = item;
         this.entity = entity;
         this.areaEffect = areaEffect;
-        this.tileImage = new TileImage(50, 50, BufferedImage.TYPE_INT_ARGB); // Size is arbitrary as it will be scaled later anyway.
+        this.tileImage = new TileImage(75, 75, BufferedImage.TYPE_INT_RGB); // Size is arbitrary as it will be scaled later anyway.
         tileImage.generate(this); // Generate the image for the tile.
     }
 
@@ -58,7 +58,6 @@ public class Tile {
 
         // Check if there is another entity on this tile.
         if(this.entity != null){
-            // TODO: Implment entity/ entity interaction.
             System.out.println("In tile");
             //the NPC will contain all of the interactions
 //            this.entity.startInteraction();
@@ -66,8 +65,17 @@ public class Tile {
         }
 
         // Check to see if there is an obstacle.
-        if(this.item!= null && this.item.getType().equals("obstacle")){
-            return result;
+        if(this.item!= null){
+            if(this.item.getType().equals("obstacle")){
+                return result;
+            }
+            if(this.item.getType().equals("interactive")){
+                if(!item.onTouch(entity)){
+                    return result;
+                }else{
+                    this.item = null;
+                }
+            }
 
         }
 
