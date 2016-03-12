@@ -90,4 +90,12 @@ public abstract class Avatar extends Entity {
         Point p = mount.getLocation();
         map.removeEntityAt(p);
     }
+    public void removeMount(){
+        if (mount != null) {
+            mount.location = getLocation();
+            map.insertEntity(mount);
+            this.mount = null;
+        }
+    }
+
 }

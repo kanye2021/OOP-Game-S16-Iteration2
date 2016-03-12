@@ -243,4 +243,8 @@ public class AvatarController {
         return avatar;
     }
 
+    public void unMount(){
+        avatar.removeMount();
+    }
+
 }

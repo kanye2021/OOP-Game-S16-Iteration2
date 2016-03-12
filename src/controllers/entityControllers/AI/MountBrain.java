@@ -11,7 +11,7 @@ import models.entities.npc.NPC;
 public class MountBrain extends Brain {
     public MountBrain(NPC npc, Personalities personality) {
         super(npc, personality);
-        this.frontalLobe = new MountFrontalLobe(npc, personality); // Swap out the default frontal lobe for a pet one.
+        this.frontalLobe = new MountFrontalLobe(npc, personality); // Swap out the default frontal lobe for a mount one.
 
     }
 

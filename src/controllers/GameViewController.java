@@ -313,6 +313,16 @@ public class GameViewController extends ViewController{
             @Override
             public void stop(){}
         };
+        //Open equip menu
+        Task unMount = new Task() {
+            @Override
+            public void run() {
+                avatarController.unMount();
+            }
+            @Override
+            public void stop() {}
+        };
+        addKeyPressMapping(unMount, KeyEvent.VK_K);
 
 //        Task openToastTestView = new Task() {
 //            @Override

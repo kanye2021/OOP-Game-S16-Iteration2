@@ -1,5 +1,7 @@
 package models.entities.npc;
 
+import controllers.entityControllers.AI.MountBrain;
+import controllers.entityControllers.AI.Thought.Personalities;
 import models.entities.npc.actions.Ride;
 import models.entities.npc.actions.Talk;
 import models.map.Map;
@@ -21,12 +23,13 @@ public class Dragon extends Mount {
     private ArrayList<String> terrainTypes;
 
     public Dragon(Point location,Map map) {
-        super(location, map, "Yo, I'm a dragon.", "Shut up and get on!");
+        super(location, map);
         passableTerrain.add("grass");
         terrainTypes = new ArrayList<>();
 
         movement = 10;
         terrainTypes.add("mountain");
+
     }
 
     @Override
@@ -43,7 +46,11 @@ public class Dragon extends Mount {
     public void startInteraction(NPC npc) {
 
     }
-
+    @Override
+    public void initDialogue(){
+        dialogue.add("Yo, I'm a dragon.");
+        dialogue.add("Shut up and get on!");
+    }
     //Horse has no occuptation
     @Override
     protected Occupation initOccupation() {

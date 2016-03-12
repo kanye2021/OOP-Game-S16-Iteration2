@@ -22,28 +22,20 @@ public class MountFrontalLobe extends FrontalLobe {
 
         Decision decision = super.process(visualInfo); // Get the decision that was made from the super class.
 
-        // If the mount does not have an owner, set the
-        if(owner == null){
-            return decision;
-        }
-
-        // If the pet does have an owner, make sure it is within range.
+        // If the mount does have an owner, make sure it moves when the owner moves
         if(owner != null){
-            // Make sure the pet is not trying to attack its owner
-            if(decision == Decision.ATTACK){
-                Entity entity = (Entity) decision.getAttachment();
-                if(entity.equals(owner)){
-                    decision = Decision.DEFAULT;
-                }
-            }
-            double distanceFromOwner = npc.getLocation().distance(owner.getLocation());
-
-//            if(distanceFromOwner > maximumDistanceFromOwner){
-//                decision = Decision.FOLLOW;
-//                decision.addAttachment(owner);
+//            // Make sure the pet is not trying to attack its owner
+//            if(decision == Decision.ATTACK){
+//                Entity entity = (Entity) decision.getAttachment();
+//                if(entity.equals(owner)){
+//                    decision = Decision.DEFAULT;
+//                }
 //            }
+//            double distanceFromOwner = npc.getLocation().distance(owner.getLocation());
+            decision = Decision.FOLLOW;
+            decision.addAttachment(owner);
         }
-
+        //else if the mount does not have an owner, return the original decision
         return decision;
     }
 

@@ -38,7 +38,7 @@ public class MotorCortex {
                 directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), entity.getLocation());
                 if (previousDecision != decision){
                     previousDecision = decision;
-                    Toast.createToastWithTimer("ATTACK!!!",5);
+                    //Toast.createToast("ATTACK!!!");
                 }
                 break;
             case TRADE:
@@ -48,7 +48,7 @@ public class MotorCortex {
                 // Make a toast that says "Hey I would like to trade with you!"
                 if (previousDecision != decision){
                     previousDecision = decision;
-                    Toast.createToastWithTimer("Plz Trade??",5);
+                    //Toast.createToast("Plz Trade??");
                 }
                 break;
             case GET_ITEM:

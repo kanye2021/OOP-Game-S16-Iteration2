@@ -78,7 +78,7 @@ public class GameLoader {
 
 
         //TODO: Figure out the mount shit implementation
-        Dragon dragon = new Dragon(new Point(1,-1),newMap);
+        Dragon dragon = new Dragon(new Point(-3,-2),newMap);
         newMap.insertEntity(dragon);
     }
 
