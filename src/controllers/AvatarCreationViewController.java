@@ -54,7 +54,7 @@ public class AvatarCreationViewController extends ViewController {
                         nextState = new GameState(gameViewController, gameView, "smasher");
                         stateManager.setActiveState(nextState);
                         // Set the gameViewController, initially here.
-                        Toast.setGameViewController(gameViewController);
+                        Toast.initWithGameViewController(gameViewController);
                         break;
                     case SUMMONER:
                         gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
@@ -62,7 +62,7 @@ public class AvatarCreationViewController extends ViewController {
                         nextState = new GameState(gameViewController, gameView, "summoner");
                         stateManager.setActiveState(nextState);
                         // Set the gameViewController, initially here.
-                        Toast.setGameViewController(gameViewController);
+                        Toast.initWithGameViewController(gameViewController);
                         break;
                     case SNEAK:
                         gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(),view.getDisplay());
@@ -70,7 +70,7 @@ public class AvatarCreationViewController extends ViewController {
                         nextState = new GameState(gameViewController, gameView, "sneak");
                         stateManager.setActiveState(nextState);
                         // Set the gameViewController, initially here.
-                        Toast.setGameViewController(gameViewController);
+                        Toast.initWithGameViewController(gameViewController);
                         break;
                 }
 

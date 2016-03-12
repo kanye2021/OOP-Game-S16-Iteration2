@@ -8,10 +8,7 @@ import models.map.Map;
 import models.skills.ActiveSkill;
 import models.skills.Skill;
 import models.skills.SkillList;
-import utilities.TileDetection;
-import utilities.StateManager;
-import utilities.SubState;
-import utilities.Task;
+import utilities.*;
 import views.*;
 
 import java.awt.*;
@@ -29,8 +26,6 @@ public class GameViewController extends ViewController{
     private ArrayList<NPC> npcList;
     private AvatarController avatarController;
 
-    //Checks if the view has a toast
-    private boolean hasToast;
 
     // Both of these are used to handle dragging the viewport around.
     private boolean mousePressed;
@@ -65,13 +60,11 @@ public class GameViewController extends ViewController{
     }
     public void addToastWithDefaultCloseKeyBindOfX(SubState s) {
         addSubState(s);
-        pushToast();
         // Dismiss the toast with "X" Toast
         Task dismissTask = new Task() {
             @Override
             public void run() {
-                s.dismiss();
-                popToast();
+                Toast.popToast();
             }
 
             @Override
@@ -81,9 +74,9 @@ public class GameViewController extends ViewController{
         this.addKeyPressMapping(dismissTask, KeyEvent.VK_X);
     }
 
-    public void pushToast(){ hasToast = true; }
-    public void popToast(){ hasToast = false; }
-
+//    public void popSubState() {
+//        ((GameView)view).popTopSubState();
+//    }
     public void insertSubState(SubState s, int index) {
         ((GameView)view).insertSubState(s, index);
     }
@@ -91,10 +84,9 @@ public class GameViewController extends ViewController{
     @Override
     public final void handleKeyPress(KeyEvent e) {
 
-        if(((GameView)view).hasSubState() == true && hasToast != true)
-            ((GameView)view).passInputToSubstate(e);
-        else
+        if (!((GameView)view).passInputToSubstate(e))
             super.handleKeyPress(e);
+
     }
 
     @Override

@@ -237,7 +237,7 @@ public class Stats {
             this.lives--;
             this.health += maxHealth;
             System.out.println("Teleport me to spawn!");
-            Toast.createToast("OUCH I AM DED");
+            Toast.createToast("Ouch i died");
 
         }
 
