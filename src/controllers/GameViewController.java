@@ -297,7 +297,7 @@ public class GameViewController extends ViewController{
             public void run(){
                 System.out.println("1:Am I in");
                 PauseView pauseView = new PauseView(getScreenWidth(), getScreenHeight(), getDisplay());
-                PauseViewController pauseViewController = new PauseViewController(pauseView, getStateManager());
+                PauseViewController pauseViewController = new PauseViewController(pauseView, getStateManager(), avatarController.getAvatar(), GameViewController.this);
                 SubState pauseSubstate = new SubState(pauseViewController, pauseView);
                 // Add closing task.
                 pauseViewController.setClosePause(new Task() {
@@ -336,28 +336,6 @@ public class GameViewController extends ViewController{
             @Override
             public void stop() {}
         };
-
-//
-//        //BINDINGS:
-//        //--------
-//
-//        //Bind Wounds
-//        addKeyPressMapping(bindWounds, KeyEvent.VK_1);
-//
-//        //1st Skill
-//        addKeyPressMapping(firstSkill, KeyEvent.VK_2);
-//
-//        //2nd Skill
-//        addKeyPressMapping(secondSkill, KeyEvent.VK_3);
-//
-//        //3rd Skill
-//        addKeyPressMapping(thirdSkill, KeyEvent.VK_4);
-//
-//        //4th Skill
-//        addKeyPressMapping(fourthSkill, KeyEvent.VK_5);
-//
-//        //5th Skill
-//        addKeyPressMapping(fifthSkill,KeyEvent.VK_6);
 
         //InventoryView
         addKeyPressMapping(openInventory, KeyEvent.VK_I);
@@ -487,6 +465,13 @@ public class GameViewController extends ViewController{
                 avatarController.startInteraction(npc);
             }
         }
+    }
+
+
+    //I am so sorry for doing this...
+    // lol i did it too :)) ^^
+    public Avatar getAvatar() {
+        return avatarController.getAvatar();
     }
 
 
