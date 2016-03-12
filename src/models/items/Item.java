@@ -6,6 +6,7 @@ import models.items.decorations.smasherDecorations.*;
 import models.items.interactive.*;
 import models.items.obstacle.*;
 import models.items.takeable.consumable.Potions.SmallHealthPotion;
+import models.items.takeable.consumable.Potions.SmallManaPotion;
 import models.items.takeable.equippable.chestplate.*;
 import models.items.takeable.equippable.helmets.*;
 import models.items.takeable.equippable.greaves.*;
@@ -163,7 +164,8 @@ public abstract class Item {
         KEY_OF_KANYE(6000) {public Item createInstance() {return new KeyOfKanye();}},
 
         //Potions
-        SMALL_HEALTH_POTION(7001) {public Item createInstance() {return new SmallHealthPotion(new smallDecoration());}};
+        SMALL_HEALTH_POTION(7001) {public Item createInstance() {return new SmallHealthPotion(new smallDecoration());}},
+        SMALL_MANA_POTION(7011){public Item createInstance() {return new SmallManaPotion(new smallDecoration());}};
 
 
 

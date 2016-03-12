@@ -11,15 +11,15 @@ import views.sprites.Sprite;
 /**
  * Created by David on 3/12/2016.
  */
-public class SmallHealthPotion extends ConsumableItem {
-    public SmallHealthPotion(consumableItemDecoration decoration){
+public class SmallManaPotion extends ConsumableItem {
+    public SmallManaPotion(consumableItemDecoration decoration){
         ID = Item.ItemDictionary.getDictionaryItemFromID(7000 + decoration.IDModifier);
-        name = "{NAME} Health Potion".replace("{NAME}" ,decoration.nameModifier);
-        description = "A cool {NAME} health potion". replace("{NAME}", decoration.descriptionModifier);
-        sprite = new Sprite("./src/res/items/takeable/recovery_items/HealthPotion.png");
+        name = "{NAME} Mana Potion".replace("{NAME}",decoration.nameModifier);
+        description = "A rad {NAME} mana potion". replace("{NAME}", decoration.descriptionModifier);
+        sprite = new Sprite("./src/res/items/takeable/recovery_items/ManaPotion.png");
         monetaryValue = decoration.monetaryModifier;
         onConsumeModifications = new StatModificationList(
-                new StatModification(Stats.Type.HEALTH, decoration.onUseModifier)
+                new StatModification(Stats.Type.MANA, decoration.onUseModifier)
         );
         itemWeight = decoration.weightModifier;
     }
