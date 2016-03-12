@@ -14,6 +14,12 @@ public final class MathUtilities {
 
     }
 
+    public static double putInRange(double min, double current, double max) {
+
+        return Math.min(Math.max(min, current), max); /// This function returns  a number between [min, max] given a current number
+
+    }
+
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 

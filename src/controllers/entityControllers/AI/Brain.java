@@ -1,11 +1,10 @@
 package controllers.entityControllers.AI;
 
+import controllers.entityControllers.AI.Memory.Memory;
 import controllers.entityControllers.AI.Movement.MotorCortex;
-import controllers.entityControllers.AI.Thought.Decision;
+import controllers.entityControllers.AI.Personality.Personality;
 import controllers.entityControllers.AI.Thought.FrontalLobe;
-import controllers.entityControllers.AI.Thought.Personalities;
 import controllers.entityControllers.AI.Vision.VisualCortex;
-import controllers.entityControllers.AI.Vision.VisualInformation;
 import models.entities.npc.NPC;
 
 /**
@@ -19,19 +18,22 @@ public class Brain {
     protected VisualCortex visualCortex;
     protected FrontalLobe frontalLobe;
     protected MotorCortex motorCortex;
+    protected Memory memory;
 
-    public Brain(NPC npc, Personalities personality){
+    public Brain(NPC npc, Personality personality){
         this.npc = npc;
-        visualCortex = new VisualCortex(npc);
-        frontalLobe = new FrontalLobe(npc, personality);
-        motorCortex = new MotorCortex(npc);
+        memory = new Memory(personality);
+        visualCortex = new VisualCortex(npc, memory);
+        frontalLobe = new FrontalLobe(npc, memory);
+        motorCortex = new MotorCortex(npc, memory);
     }
 
     // This is called once per cycle to determine what the AI should do.
     public void think(){
-        VisualInformation visualInfo = visualCortex.process(); // What do you see in your surroundings.
-        Decision decision = frontalLobe.process(visualInfo); // What should you do based off of what you saw.
-        motorCortex.process(decision); // Carry out the actions.
+        visualCortex.process(); // What do you see in your surroundings.
+        frontalLobe.process(); // What should you do based off of what you saw.
+        motorCortex.process(); // Carry out the actions.
+        memory.process();
     }
 
     public void processAttack(){

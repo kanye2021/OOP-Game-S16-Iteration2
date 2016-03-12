@@ -1,75 +1,59 @@
 package controllers.entityControllers.AI.Movement;
 
-import controllers.entityControllers.AI.Thought.Decision;
-import models.entities.Entity;
+import controllers.entityControllers.AI.Memory.MotorInterface;
 import models.entities.npc.NPC;
 import models.map.Map;
 import utilities.NavigationUtilities;
-import utilities.Toast;
 
-import java.awt.*;
-import java.awt.geom.Arc2D;
+import java.util.Random;
 
 /**
  * Created by Bradley on 3/5/16.
  */
 public class MotorCortex {
     //Needed so the toast doesn't constantly pop up
-    private Decision previousDecision;
+    private Random rng = new Random();
+    double rand;
     private NPC npc;
+    private MotorInterface memory;
 
-    public MotorCortex(NPC npc){
+    public MotorCortex(NPC npc, MotorInterface memory){
         this.npc = npc;
+        this.memory = memory;
     }
 
-    public void process(Decision decision){
+    public void process() {
 
-        Entity entity;
-        Point itemLocation;
-        Map.Direction directionToMove = null;
+        rand = rng.nextDouble();
 
-        switch(decision){
-            case ATTACK:
-                // Get the entity to attack
-                entity = (Entity) decision.getAttachment();
-                // TODO: Implement the attack (How to know if I can do a ranged attack, melee attack ,etc.)
+        // If we're lazy, don't do anything for this update.
+        if (memory.getPersonality().getLaziness() < rand) {
 
-                // Walk towards the entity
-                directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), entity.getLocation());
-                if (previousDecision != decision){
-                    previousDecision = decision;
-                    Toast.createToastWithTimer("ATTACK!!!",5);
-                }
-                break;
-            case TRADE:
-                // Announce (make a toast) that I would like to trade.
-                entity = (Entity) decision.getAttachment();
-                directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), entity.getLocation());
-                // Make a toast that says "Hey I would like to trade with you!"
-                if (previousDecision != decision){
-                    previousDecision = decision;
-                    Toast.createToastWithTimer("Plz Trade??",5);
-                }
-                break;
-            case GET_ITEM:
-                // Walk to the item;
-                itemLocation = (Point) decision.getAttachment();
+            //System.out.println(npc.getType() + ": I'm lazy!");
+            return;
 
-                // Determine which direction to walk.
-                directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), itemLocation);
-                break;
-            case FOLLOW:
-                entity = (Entity) decision.getAttachment();
-                directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), entity.getLocation());
-            case DEFAULT:
-                // TODO: Implement default behavior (maybe passing back and forth, spinning around, etc.)
-                break;
         }
 
-        // Move
-        if(directionToMove!= null){
+        moveTowardsInterest();
 
-            npc.move(directionToMove);
-        }
     }
+
+    // Move towards our interest
+    private void moveTowardsInterest() {
+
+        Map.Direction directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), memory.getDecision().getPointOfInterest());
+        System.out.println(npc.getType() + ": I moved: " + directionToMove.toString());
+        npc.move(directionToMove);
+
+        UpdateInterest();
+
+    }
+
+    // and see if it is close enough to interact with?
+    private void UpdateInterest() {
+
+
+
+    }
+
 }

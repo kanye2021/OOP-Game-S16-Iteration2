@@ -1,8 +1,8 @@
 package models.entities;
 
 
-import controllers.entityControllers.AI.PetBrain;
-import controllers.entityControllers.AI.Thought.Personalities;
+import controllers.entityControllers.AI.Brain;
+import controllers.entityControllers.AI.Personality.Personality;
 import models.entities.npc.NPC;
 import models.map.Map;
 import models.occupation.Occupation;
@@ -22,7 +22,7 @@ public class Pet extends NPC {
     public Pet(Point location, Map map) {
         super(location, map);
         passableTerrain.add("grass");
-        brain = new PetBrain(this, Personalities.PET); // Agnostic is the default personailty.
+        brain = new Brain(this, Personality.DOG); // Agnostic is the default personailty.
         this.orientation = Map.Direction.NORTH;
     }
 

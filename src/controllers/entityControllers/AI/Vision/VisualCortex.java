@@ -1,5 +1,6 @@
 package controllers.entityControllers.AI.Vision;
 
+import controllers.entityControllers.AI.Memory.VisualInterface;
 import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.items.Item;
@@ -14,17 +15,17 @@ public class VisualCortex {
 
     private NPC npc;
     private Map map;
+    private VisualInterface memory;
 
-    public VisualCortex(NPC npc){
+    public VisualCortex(NPC npc, VisualInterface memory){
         this.npc = npc;
         this.map = npc.getMap();
+        this.memory = memory;
     }
 
     // Process what is going on around you and add all of that stuff to a VisualInfo objec
     // For now, all visual info is processed 120 degrees in the direction of the orientation.
-    public VisualInformation process(){
-
-        VisualInformation visualInfo = new VisualInformation(); // Create an empty visualInfoObject;
+    public void process() {
 
         Map.Direction orientation = npc.getOrientation();
         Point startLocation = orientation.neighbor(npc.getLocation());
@@ -32,46 +33,42 @@ public class VisualCortex {
         // Determine which directions the entity can see.
         switch(orientation){
             case NORTH:
-                processRecursively(visualInfo, Map.Direction.NORTH, startLocation);
-                processRecursively(visualInfo, Map.Direction.NORTH_EAST, startLocation);
-                processRecursively(visualInfo, Map.Direction.NORTH_WEST, startLocation);
+                processRecursively(Map.Direction.NORTH, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
                 break;
             case NORTH_EAST:
-                processRecursively(visualInfo, Map.Direction.NORTH, startLocation);
-                processRecursively(visualInfo, Map.Direction.NORTH_EAST, startLocation);
-                processRecursively(visualInfo, Map.Direction.SOUTH_EAST, startLocation);
+                processRecursively(Map.Direction.NORTH, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
                 break;
             case SOUTH_EAST:
-                processRecursively(visualInfo, Map.Direction.SOUTH_EAST, startLocation);
-                processRecursively(visualInfo, Map.Direction.NORTH_EAST, startLocation);
-                processRecursively(visualInfo, Map.Direction.SOUTH, startLocation);
+                processRecursively(Map.Direction.SOUTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH, npc.getRadiusOfVisiblility(), startLocation);
                 break;
             case SOUTH:
-                processRecursively(visualInfo, Map.Direction.SOUTH_EAST, startLocation);
-                processRecursively(visualInfo, Map.Direction.SOUTH, startLocation);
-                processRecursively(visualInfo, Map.Direction.SOUTH_WEST, startLocation);
+                processRecursively(Map.Direction.SOUTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
                 break;
             case SOUTH_WEST:
-                processRecursively(visualInfo, Map.Direction.SOUTH_WEST, startLocation);
-                processRecursively(visualInfo, Map.Direction.SOUTH, startLocation);
-                processRecursively(visualInfo, Map.Direction.NORTH_WEST, startLocation);
+                processRecursively(Map.Direction.SOUTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
                 break;
             case NORTH_WEST:
-                processRecursively(visualInfo, Map.Direction.NORTH_WEST, startLocation);
-                processRecursively(visualInfo, Map.Direction.SOUTH_WEST, startLocation);
-                processRecursively(visualInfo, Map.Direction.NORTH, startLocation);
+                processRecursively(Map.Direction.NORTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH, npc.getRadiusOfVisiblility(), startLocation);
                 break;
         }
 
-        return visualInfo;
     }
 
-    // For now, the visual cortex only cares about seeing other entities or items. TODO: Make it so the npcs are aware of area effects and terrain.
-    private void processRecursively(VisualInformation visualInfo, Map.Direction orientation, Point currentLocation){
+    private void processRecursively(Map.Direction orientation, int visualRange, Point currentLocation){
 
-        int visualRange = 1;
-
-        if(visualRange == npc.getRadiusOfVisiblility()){
+        if(visualRange == 0){
             return;
         }
 
@@ -82,49 +79,20 @@ public class VisualCortex {
         // Get entities here.
         Entity entity = map.getEntityAt(currentLocation);
         if(entity!=null){
-            visualInfo.addEntity(entity);
+            memory.addVisualInput(entity, currentLocation);
         }
 
         // Get items here.
         Item item = map.getItemAt(currentLocation);
         if(item!=null){
-            visualInfo.addItem(new Point(currentLocation));
+            memory.addVisualInput(item, currentLocation);
         }
 
         // Update the currentLocation and visual range;
-        visualRange++;
+        visualRange--;
         currentLocation = orientation.neighbor(currentLocation);
 
-        processRecursively(visualInfo, orientation, visualRange, currentLocation);
-    }
-
-    private void processRecursively(VisualInformation visualInfo, Map.Direction orientation, int visualRange, Point currentLocation){
-
-        if(visualRange == npc.getRadiusOfVisiblility()){
-            return;
-        }
-
-        if (!map.isTileValid(currentLocation)) {
-            return;
-        }
-
-        // Get entities here.
-        Entity entity = map.getEntityAt(currentLocation);
-        if(entity!=null){
-            visualInfo.addEntity(entity);
-        }
-
-        // Get items here.
-        Item item = map.getItemAt(currentLocation);
-        if(item!=null){
-            visualInfo.addItem(new Point(currentLocation));
-        }
-
-        // Update the currentLocation and visual range;
-        visualRange++;
-        currentLocation = orientation.neighbor(currentLocation);
-
-        processRecursively(visualInfo, orientation, visualRange, currentLocation);
+        processRecursively(orientation, visualRange, currentLocation);
     }
 
 }

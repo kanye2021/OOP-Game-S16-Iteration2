@@ -1,7 +1,5 @@
 package models.entities.npc;
 
-import controllers.entityControllers.AI.Brain;
-import controllers.entityControllers.AI.Thought.Personalities;
 import models.entities.npc.actions.Attack;
 import models.entities.npc.actions.Trade;
 import models.entities.npc.actions.Talk;
@@ -28,10 +26,7 @@ public class ShopKeeper extends NPC {
         passableTerrain.add("grass");
         initActions();
         initInventory(); //Adds items to the inventory
-
-        brain = new Brain(this, Personalities.KIND);
-
-
+        //brain = new Brain(this, Personality.DEFAULT);
 
     }
     //---------NPC Stuff------------

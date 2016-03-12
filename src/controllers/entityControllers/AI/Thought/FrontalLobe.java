@@ -1,57 +1,155 @@
 package controllers.entityControllers.AI.Thought;
 
-import controllers.entityControllers.AI.Vision.VisualInformation;
+import controllers.entityControllers.AI.Memory.Decision;
+import controllers.entityControllers.AI.Memory.DecisionPicker;
+import controllers.entityControllers.AI.Memory.ThoughtInterface;
+import controllers.entityControllers.AI.Personality.Interests.Interest;
+import controllers.entityControllers.AI.Personality.Interests.InterestList;
 import models.entities.Entity;
 import models.entities.npc.NPC;
+import models.items.Item;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Random;
 
 /**
  * Created by Bradley on 3/5/16.
  */
 public class FrontalLobe {
 
-    protected NPC npc;
-    private Personalities personality;
-    private ArrayList<Entity> friends;
+    private Random rng = new Random();
+    double rand;
 
-    public FrontalLobe(NPC npc, Personalities personality){
+    protected NPC npc;
+    private ThoughtInterface memory;
+
+    public FrontalLobe(NPC npc, ThoughtInterface memory){
         this.npc = npc;
-        this.personality = personality;
-        this.friends = new ArrayList<>();
+        this.memory = memory;
     }
 
-    public Decision process(VisualInformation visualInfo){
+    public void process() {
 
-        // Declare the decision in this outer scope
-        Decision decision = Decision.DEFAULT;
+        findNewEntities();
 
-        // Entities take priority over items. If an entity was found, determine whether or not to pursue it.
-        if(visualInfo.foundEntities()){
-            // For now, intereract with the first entity in the list.
-//            Entity entity = visualInfo.getEntities().get(0);
-            double rand = Math.random();
+        rand = rng.nextDouble();
+        Decision currentDecision = memory.getDecision();
 
-            // Attacking takes priority over trading. But make sure the entity found is not a friend.
-            for(Entity ent : visualInfo.getEntities()){
-                if(!friends.contains(ent) && personality.getAttackOnSightProbability() >= rand){
-                    decision = Decision.ATTACK;
-                    decision.addAttachment(ent);
-                }else if(personality.getTradeProbability() >= rand){
-                    decision = Decision.TRADE;
-                    decision.addAttachment(ent);
-                }
+        //First check if our current decision is valid
+        if (currentDecision.isInterestValid(memory)) {
+
+            System.out.println("scatter?");
+
+            // Then check if we should get a new Interest based on scatter_brainedness
+            if (memory.getPersonality().getScatter_Brainedness() > rand) {
+
+                System.out.println(npc.getType() + "I kept my same decision");
+                return;
+
             }
-        }else if(visualInfo.foundItems()){
-            Point itemLocation = visualInfo.getitemLocations().get(0);
 
-            decision = Decision.GET_ITEM;
-            decision.addAttachment(itemLocation);
         }
 
-        return decision;
+        //System.out.println(npc.getType() + "I got a new decision");
+        // Otherwise select a new decision
+        selectNewDecision();
+
     }
 
+    private void findNewEntities() {
+
+        for (Entity entity : memory.getSeenEntities().keySet()) {
+
+            if (!memory.relationshipExists(entity)) {
+
+                // friendly Faction should add some good weight
+                //      especially those part of the same faction
+                // enemy faction should add some bad weight
+                double aggressiveFactor = memory.getPersonality().getAggressiveness();
+                double scatter_brainedNess = memory.getPersonality().getScatter_Brainedness();
+                double scatterBrainFactor = scatter_brainedNess * rng.nextGaussian() - (scatter_brainedNess / 2);
+                double relationalValue = aggressiveFactor + scatterBrainFactor;
+                System.out.println(npc.getType() + " FrontalLobe: Added " + entity.getType() + " as a new relationship: " + relationalValue);
+                memory.addEntityRelationship(entity, relationalValue);
+
+            }
+
+        }
+
+    }
+
+    private Decision selectNewDecision() {
+
+        DecisionPicker validDecisions = new DecisionPicker();
+
+        ////// Get all valid decisions //////
+
+        // Each Interest should evaluate the weight based on stuff it takes in. Need to find out
+        // how to pass the correct info to take in.
+
+        Interest interestToAdd;
+        Point pointOfInterest;
+        InterestList interests = memory.getPersonality().getInterests();
+        HashSet<Interest> subsetInterests = interests.getInterests(Interest.Type.ENTITY);
+        double weight;
+
+        // Find all entity interests and add them
+        for (java.util.AbstractMap.Entry<Entity, Point> pair : memory.getSeenEntities().entrySet()) {
+            Entity entityOfInterest = pair.getKey();
+            pointOfInterest = pair.getValue();
+
+            for (Interest interest : subsetInterests) {
+
+                weight = interest.getInterestWeight(entityOfInterest, memory);
+
+                if (weight > 0) {
+
+                    interestToAdd = interest.createRuntimeInterest(entityOfInterest);
+                    validDecisions.addDecision(new Decision(interestToAdd, pointOfInterest), weight);
+
+                }
+
+            }
+
+        }
+
+        // Find all item interests and add them
+        subsetInterests = interests.getInterests(Interest.Type.ITEM);
+        for (java.util.AbstractMap.Entry<Item, Point> pair : memory.getSeenItems().entrySet()) {
+            Item itemOfInterest = pair.getKey();
+            pointOfInterest = pair.getValue();
+
+            for (Interest interest : subsetInterests) {
+
+                weight = interest.getInterestWeight(itemOfInterest, memory);
+
+                if (weight > 0) {
+
+                    interestToAdd = interest.createRuntimeInterest(itemOfInterest);
+                    validDecisions.addDecision(new Decision(interestToAdd, pointOfInterest), weight);
+
+                }
+
+            }
+
+        }
+
+        ////// And pick one //////
+
+        if (validDecisions.validDecisionsToPick()) {
+
+            Decision newDecision = validDecisions.pickDecision();
+            System.out.println(newDecision.getInterestType());
+            return newDecision;
+
+        } else {
+
+            // Return a default decision
+            return null;
+
+        }
+
+    }
 
 }

@@ -1,7 +1,7 @@
 package models.entities.npc;
 
 import controllers.entityControllers.AI.Brain;
-import controllers.entityControllers.AI.Thought.Personalities;
+import controllers.entityControllers.AI.Personality.Personality;
 import models.entities.Entity;
 import models.entities.npc.actions.Action;
 import models.map.Map;
@@ -22,7 +22,7 @@ public abstract class NPC extends Entity {
 
     public NPC(Point location, Map map, String ... dialogue) {
         super(location, map);
-        brain = new Brain(this, Personalities.AGNOSTIC); // Agnostic is the default personailty.
+        brain = new Brain(this, Personality.DEFAULT); // Agnostic is the default personailty.
         actionList = new ArrayList<>();
         this.dialogue = new ArrayList<>();
         for(String text: dialogue){
