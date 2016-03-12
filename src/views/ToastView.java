@@ -59,7 +59,7 @@ public class ToastView extends View {
         fontSize = getScreenHeight() * 1/50;
         toastY = (int)(getScreenHeight()*.80);
 
-        toastFont = new Font("Helvetica", Font.PLAIN, fontSize);
+        toastFont = new Font("Courier New", Font.PLAIN, fontSize);
 
     }
 

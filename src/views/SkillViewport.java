@@ -264,7 +264,7 @@ public class SkillViewport extends View{
                     CDTimer.purge();   // Removes all cancelled tasks from this timer's task queue.
                 }
             };
-        }, 0, 500);
+        }, 0, 30);
     }
 
     public void handleMouseClick(MouseEvent e) {
