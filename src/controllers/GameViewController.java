@@ -8,10 +8,7 @@ import models.map.Map;
 import models.skills.ActiveSkill;
 import models.skills.Skill;
 import models.skills.SkillList;
-import utilities.TileDetection;
-import utilities.StateManager;
-import utilities.SubState;
-import utilities.Task;
+import utilities.*;
 import views.*;
 
 import java.awt.*;
@@ -428,6 +425,16 @@ public class GameViewController extends ViewController{
 
     public void update(){
         moveAndDetect();
+    }
+
+    public boolean avatarDied(){
+        return !avatarController.avatarIsAlive();
+    }
+
+    public void gameOver(){
+        GameOverView gameOverView = new GameOverView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
+        GameOverViewController gameOverViewController = new GameOverViewController(gameOverView, stateManager);
+        stateManager.setActiveState(new State(gameOverViewController, gameOverView));
     }
 
     public void moveAndDetect(){

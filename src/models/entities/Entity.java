@@ -27,6 +27,7 @@ import java.util.*;
 public abstract class Entity{
 
     protected Point location;
+    protected Point startLocation;
     protected Map.Direction orientation;
     protected Stats stats;
     protected SkillList skills;
@@ -54,7 +55,8 @@ public abstract class Entity{
     protected DirectionalSprite sprite;
 
     public Entity(Point location, Map map) {
-        this.location = location;
+        this.location = new Point(location);
+        this.startLocation = new Point(location);
         this.orientation = Map.Direction.SOUTH;
         this.stats = new Stats();
         this.occupation = initOccupation();
@@ -137,6 +139,11 @@ public abstract class Entity{
                 }
             }, getMovementDelay());
             map.updateTile(location);
+
+            // Include this so that the entity will be removed from the map.
+//            if(isDead()){
+//                map.removeEntityAt(location);
+//            }
             return td;
         }
 
@@ -201,8 +208,7 @@ public abstract class Entity{
     }
 
     public final void dropItem(TakeableItem item){
-        inventory.removeItem(item);
-        map.insertItemAtPoint(item, location);
+        inventory.dropItem(item, map, location);
     }
 
     // Wrapper functions for equpped items interaction
@@ -213,9 +219,7 @@ public abstract class Entity{
 
     public final void unequipItem(EquippableItem item){
         // Unequip (Which will remove stat mods)
-        equipment.unEquipItem(item);
-        // Add to inventory
-        inventory.addItem(item);
+        equipment.unEquipItem(item, inventory);
     }
 
     // Wrappers for occupation
@@ -241,6 +245,14 @@ public abstract class Entity{
 
         return sprite.getImage(orientation);
     }
+    public int getLives(){
+        return stats.getLives();
+    }
+
+    public boolean isDead(){
+        return stats.getLives() < 1;
+    }
+
     // TODO: Pet methods may not belong here? just getting stuff 2 work.
     // They could belong here tho.
     public final Pet getPet() {
@@ -262,8 +274,26 @@ public abstract class Entity{
     }
 
     // Wrapper to die (lose a life)
-    public void die() {
+    public void loseALife() {
         this.stats.loseALife();
+
+        handleDeath();
+    }
+
+    private void handleDeath(){
+
+        // Drop all items
+        equipment.unEquipAll(inventory);
+        inventory.dropAll(map, location);
+
+        // Check to see if this was the last life.
+        if(isDead()){
+            System.out.println("AN ENTITY HAS LOST ALL ITS LIVES");
+            map.removeEntityAt(location);
+        }else{
+            System.out.println("GOTO START");
+            teleport(startLocation);
+        }
     }
 
     // Wrapper to heal life
@@ -273,7 +303,12 @@ public abstract class Entity{
 
     // Wrapper to take damage
     public void takeDamage(int amount) {
+
+        int livesBefore = getLives();
         this.stats.modifyStat(Stats.Type.HEALTH, amount);
+        if(getLives()!=livesBefore){
+            handleDeath();
+        }
     }
 
     //Weird hacky thing (All entities do not have amount unless otherwise specificed. Avatar will
