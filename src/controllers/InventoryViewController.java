@@ -91,8 +91,7 @@ public class InventoryViewController extends ViewController {
                 if (currentItem.isEquipable()) {
                     entity.equipItem((EquippableItem) currentItem);
                 } else {
-                    // weird to tell them item to use itself then pass the entity o_O ?
-//                    currentItem.onUse();
+                    currentItem.onUse(entity);
                 }
                 selectedItemIndex--;
                 if (selectedItemIndex < 0) selectedItemIndex = 0;

@@ -79,6 +79,17 @@ public class AvatarCreationViewController extends ViewController {
             public void stop() {}
         };
 
+        Task escapeTask = new Task() {
+            @Override
+            public void run() {
+                stateManager.goToPreviousState();
+            }
+
+            @Override
+            public void stop() {}
+        };
+
+        addKeyPressMapping(escapeTask, KeyEvent.VK_ESCAPE);
         addKeyPressMapping(previousOption, KeyEvent.VK_UP);
         addKeyPressMapping(nextOption, KeyEvent.VK_DOWN);
         addKeyPressMapping(selectOption, KeyEvent.VK_ENTER);
