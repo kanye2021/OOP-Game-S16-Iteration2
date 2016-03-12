@@ -232,6 +232,10 @@ public class AvatarController {
         
         return avatar.move(movementDirection);
     }
+
+    public boolean avatarIsAlive(){
+        return avatar.getLives() > 0;
+    }
     
     public void setMovementDirection(Map.Direction direction){
         this.movementDirection = direction;

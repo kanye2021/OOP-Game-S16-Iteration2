@@ -14,6 +14,7 @@ public class TileDetection {
     private Point location;
     private boolean moved;
     private boolean teleported;
+
     public TileDetection(Entity npc, Point location, boolean moved, boolean teleported) {
         this.entity = npc;
         this.location = location;

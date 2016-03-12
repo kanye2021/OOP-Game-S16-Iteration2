@@ -49,6 +49,8 @@ public class Tile {
     // in the logic that consumes this function (and it has been).
     public TileDetection insertEntity(Entity entity) {
         TileDetection result = new TileDetection(null, null, false, false);
+        int entityLivesBeforeInteraciton = entity.getLives();
+
         // Check to see if this entity can pass here.
 
         // Check if the entity can pass through this terrain.
@@ -76,11 +78,7 @@ public class Tile {
                     this.item = null;
                 }
             }
-
         }
-
-        // The move was not
-
 
         // Active item on the tile
         if(this.item != null){
@@ -104,11 +102,11 @@ public class Tile {
             }
         }
 
-        // Add the entity to this location
-        this.entity = entity;
-
-        // Indicate that the move was successfull.
-        result.setMoved(true);
+        // Indicate that the move was successful only if it didnt result in the entity dieing.
+        if(entity.getLives() == entityLivesBeforeInteraciton){
+            this.entity = entity;
+            result.setMoved(true);
+        }
 
         return result;
     }
@@ -152,7 +150,6 @@ public class Tile {
 
     public void removeEntity() {
         entity = null;
-
     }
 
     // For now putting an item on this tile simply replaces one that was already there.

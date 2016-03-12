@@ -422,6 +422,16 @@ public class GameViewController extends ViewController{
         moveAndDetect();
     }
 
+    public boolean avatarDied(){
+        return !avatarController.avatarIsAlive();
+    }
+
+    public void gameOver(){
+        GameOverView gameOverView = new GameOverView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
+        GameOverViewController gameOverViewController = new GameOverViewController(gameOverView, stateManager);
+        stateManager.setActiveState(new State(gameOverViewController, gameOverView));
+    }
+
     public void moveAndDetect(){
 
         // Tell the avatar controller to move the avatar.
