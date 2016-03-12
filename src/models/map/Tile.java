@@ -58,7 +58,6 @@ public class Tile {
 
         // Check if there is another entity on this tile.
         if(this.entity != null){
-            // TODO: Implment entity/ entity interaction.
             System.out.println("In tile");
             //the NPC will contain all of the interactions
 //            this.entity.startInteraction();
@@ -66,8 +65,17 @@ public class Tile {
         }
 
         // Check to see if there is an obstacle.
-        if(this.item!= null && this.item.getType().equals("obstacle")){
-            return result;
+        if(this.item!= null){
+            if(this.item.getType().equals("obstacle")){
+                return result;
+            }
+            if(this.item.getType().equals("interactive")){
+                if(!item.onTouch(entity)){
+                    return result;
+                }else{
+                    this.item = null;
+                }
+            }
 
         }
 
