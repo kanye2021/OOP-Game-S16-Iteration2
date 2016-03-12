@@ -23,6 +23,7 @@ public class OptionsViewController extends ViewController {
 
     private Task closeOptions;
     private KeyEvent lastHeardKeyPress;
+    private int oldKeyBind;
 
     // Necessary to re-map skill keybindings. cuz thats where they live.
     private GameViewController gameViewController;
@@ -67,6 +68,12 @@ public class OptionsViewController extends ViewController {
 
                     // Set the remapping state of super class.
                     inRemappingKeysState = true;
+
+                    // Get the skill we are re-mapping
+                    ActiveSkill skillWeAreReMapping = optionsView.getCurrentSelectedSkill();
+
+                    // Get and remember its old keybind
+                    oldKeyBind = skillWeAreReMapping.getKeyBind();
 
                     // Re route all key presses for the new keybind
                     clearDefaultMappings();
@@ -114,8 +121,19 @@ public class OptionsViewController extends ViewController {
             public void stop() {}
         };
 
+        Task emptyTask = new Task() {
+            @Override
+            public void run() {}
+
+            @Override
+            public void stop() {}
+        };
+
         // Set the keybind on the skill
         skillWeAreReMapping.setKeyBind( lastHeardKeyPress.getKeyCode() );
+
+        // Remove old keybind
+        gameViewController.addKeyPressMapping(emptyTask, oldKeyBind);
 
         // Set the keybind for realz with the game vc
         gameViewController.addKeyPressMapping(activateSkill, lastHeardKeyPress.getKeyCode());
