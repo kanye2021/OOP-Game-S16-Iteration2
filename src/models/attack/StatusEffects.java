@@ -22,6 +22,7 @@ public class StatusEffects {
 
     public enum StatusEffect{
         SLEEP,
+        INVISIBLE,
         NONE
     }
 

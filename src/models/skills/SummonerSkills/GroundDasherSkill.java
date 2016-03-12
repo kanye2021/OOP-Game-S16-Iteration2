@@ -20,6 +20,7 @@ public class GroundDasherSkill extends ActiveSkill{
     public GroundDasherSkill(){
         damage = 1;
         range = 3;
+        cooldownTime = 2*SECONDS;
         projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);
     }
     @Override

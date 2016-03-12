@@ -181,7 +181,10 @@ public class AvatarController {
         }else if(avatar.getOccupation().contains("Sneak")){
             //first skill should be something..
             //first skill should be something..
-
+            Skill fifthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.CREEP);
+            System.out.println(fifthSkill);
+            CreepSkill creepSkill = (CreepSkill) fifthSkill;
+            creepSkill.sneakBehind(avatar);
         }else{
             System.out.println("What are you");
         }

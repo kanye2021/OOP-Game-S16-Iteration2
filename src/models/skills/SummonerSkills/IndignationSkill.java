@@ -22,7 +22,7 @@ public class IndignationSkill extends ActiveSkill{
     private int range;
     public IndignationSkill(){
         cooldown = false;
-        cooldownTime = 0;
+        cooldownTime = 3*SECONDS;
         damage = 1;
         range = 3;
         projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);

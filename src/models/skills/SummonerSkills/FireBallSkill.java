@@ -22,6 +22,7 @@ public class FireBallSkill extends ActiveSkill{
     public FireBallSkill(){
         damage = 5;
         range = 3;
+        cooldownTime = 1*SECONDS;
     }
 
     @Override

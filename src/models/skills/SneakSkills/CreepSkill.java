@@ -1,7 +1,11 @@
 package models.skills.SneakSkills;
 
+import models.attack.LinearAttack;
+import models.attack.Projectile;
+import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.map.Map;
+import models.map.Tile;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
 
@@ -16,9 +20,11 @@ public class CreepSkill extends ActiveSkill {
     private int debuffTimerDelay;
     private boolean isNotRunning;
     private final double constant = 0.5;//reduces speed by half
+    private int damage;
     public CreepSkill(){
         cooldown = false;
         cooldownTime = 5*SECONDS;
+        damage = 10;
     }
     @Override
     public SkillDictionary initID() {
@@ -44,6 +50,7 @@ public class CreepSkill extends ActiveSkill {
         int mana = entity.getStats().getStat(Stats.Type.MANA);
         if(mana > cost){
             Stats stats = entity.getStats();
+            entity.setStatusEffect(StatusEffects.StatusEffect.INVISIBLE);
             //int originalSpeed = stats.getMovement();
             //double entityFinalSpeed = stats.getMovement() * constant;
             //need a timer here
@@ -54,9 +61,7 @@ public class CreepSkill extends ActiveSkill {
 
             //TODO:implement back attack to cause extra damaage
 
-            //This timer means after 5 seconds it will revert movement back to the old speedS
-            System.out.println("Do you fail here?");
-            System.out.println(init);
+
 
             new java.util.Timer().schedule(
                     new java.util.TimerTask() {
@@ -68,6 +73,7 @@ public class CreepSkill extends ActiveSkill {
                             int fina = stats.getStat(Stats.Type.MOVEMENT);
                             System.out.println(fina);
                             cooldown=false;
+                            entity.setStatusEffect(StatusEffects.StatusEffect.NONE);
                         }
                     },
                     cooldownTime
@@ -84,17 +90,18 @@ public class CreepSkill extends ActiveSkill {
 
     }
 
-    public boolean sneakBehind(Entity entity, Entity target){
+    public void sneakBehind(Entity entity){
         Map.Direction entityOrientation = entity.getOrientation();
-        Map.Direction targetOrientation = target.getOrientation();
-
+        //Map.Direction targetOrientation = target.getOrientation();
+        //Map.Direction targetOrientation = entity.getOrientation();
         Point entityLoc = entity.getLocation();
-        Point targetLoc = target.getLocation();
+
+        //Point targetLoc = target.getLocation();
         //need to consider offset
 
-        if(entityOrientation!=targetOrientation){
+        /*if(entityOrientation!=targetOrientation){
             return false;
-        }
+        }*/
 
         //offSet is assuming the same direction as the cartesian plane posted on slack
 
@@ -107,6 +114,7 @@ public class CreepSkill extends ActiveSkill {
         else if(entityOrientation == Map.Direction.NORTH_EAST){
             offset.x=1;
             offset.y=-1;
+
         }
         else if(entityOrientation == Map.Direction.SOUTH_EAST){
             offset.x=1;
@@ -129,9 +137,33 @@ public class CreepSkill extends ActiveSkill {
             offset.y=0;
             System.out.println("Really? You put in that much work to break the program?");
         }
-        if(entityLoc.x+offset.x==targetLoc.x&&entityLoc.y+offset.y==targetLoc.y){
-            return true;
+
+
+
+        Point targetPoint = new Point(entityLoc.x+offset.x,entityLoc.y+offset.y);
+
+        Tile targetTile = entity.getMap().getTileAt(targetPoint);
+
+        if(!targetTile.hasEntity()){
+            System.out.println("nothing here");
+            return;
         }
-        return false;
+        Entity target = targetTile.getEntity();
+
+        if(entity.getStatusEffect() == StatusEffects.StatusEffect.INVISIBLE&&entityOrientation==target.getOrientation()){
+            Projectile projectile = new Projectile(2*damage,1, StatusEffects.StatusEffect.NONE);
+            new LinearAttack(entity,projectile);
+            System.out.println("Double Trouble!");
+            entity.setStatusEffect(StatusEffects.StatusEffect.NONE);
+        }else if(targetTile.hasEntity()){
+            Projectile projectile = new Projectile(damage,1, StatusEffects.StatusEffect.NONE);
+            new LinearAttack(entity,projectile);
+            entity.setStatusEffect(StatusEffects.StatusEffect.NONE);
+        }
+        else{
+            System.out.println("How did you get here?");
+        }
+
+
     }
 }
