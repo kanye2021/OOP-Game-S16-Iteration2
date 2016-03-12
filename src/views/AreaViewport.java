@@ -107,6 +107,7 @@ public class AreaViewport extends View {
             g1.dispose();
 
         }
+
         g.drawImage(cachedViewport, 0, 0, viewportWidth, viewportHeight, getDisplay());
 
         for (EntityLocationTuple et : this.entityLocationTuples) {
@@ -293,6 +294,7 @@ public class AreaViewport extends View {
 //
 //        g.setClip(oldClip);
 //    }
+
 
     private void drawEntityHealthBar(Graphics g, Entity entity, Point p) {
         int entityX = (int) p.getX() - hexWidth*3/8;

@@ -4,6 +4,7 @@ import models.Attackion;
 import models.entities.Entity;
 import models.map.Map;
 import models.map.Tile;
+import utilities.Animator;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class AngularAttack extends Attackion {
         this.orientation = entity.getOrientation();
         this.map = entity.getMap();
         findBreadthFirstTile();
+
     }
 
     public void findBreadthFirstTile(){

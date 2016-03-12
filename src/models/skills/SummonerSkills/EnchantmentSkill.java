@@ -4,7 +4,9 @@ import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.skills.PassiveSkill;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * Created by aseber on 2/24/16.
@@ -35,5 +37,10 @@ public class EnchantmentSkill extends ActiveSkill {
     @Override
     public KeyEvent[] initActivatorKeys() {
         return new KeyEvent[0];
+    }
+
+    @Override
+    public ArrayList<Image> initSprite() {
+        return null;
     }
 }

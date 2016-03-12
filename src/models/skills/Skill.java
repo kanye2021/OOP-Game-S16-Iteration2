@@ -142,6 +142,7 @@ public abstract class Skill {
     //check to see if the skill is active or not
     public abstract boolean isActive();
 
+
     @Override
     public boolean equals(Object o) {
 

@@ -167,4 +167,8 @@ public class PickPocketSkill extends ActiveSkill {
 
     }
 
+    @Override
+    public ArrayList<Image> initSprite() {
+        return null;
+    }
 }

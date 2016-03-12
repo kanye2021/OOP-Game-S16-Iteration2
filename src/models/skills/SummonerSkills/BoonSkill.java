@@ -6,7 +6,9 @@ import models.skills.PassiveSkill;
 import models.skills.Skill;
 import models.stats.Stats;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * Created by aseber on 2/24/16.
@@ -65,4 +67,8 @@ public class BoonSkill extends ActiveSkill {
         return null;
     }
 
+    @Override
+    public ArrayList<Image> initSprite() {
+        return null;
+    }
 }

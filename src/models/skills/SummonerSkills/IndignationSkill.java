@@ -6,7 +6,9 @@ import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * Created by ben on 3/8/16.
@@ -24,7 +26,7 @@ public class IndignationSkill extends ActiveSkill{
         cooldownTime = 0;
         damage = 1;
         range = 3;
-        projectile = new Projectile(damage,range);
+        projectile = new Projectile(damage,range,5);
     }
     @Override
     public SkillDictionary initID() {
@@ -71,5 +73,10 @@ public class IndignationSkill extends ActiveSkill{
         // use the skill
         return null;
 
+    }
+
+    @Override
+    public ArrayList<Image> initSprite() {
+        return null;
     }
 }

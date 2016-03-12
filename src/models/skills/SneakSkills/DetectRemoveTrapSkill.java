@@ -10,6 +10,7 @@ import models.skills.ActiveSkill;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * Created by aseber on 2/25/16.
@@ -200,4 +201,8 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
         return false;
     }
 
+    @Override
+    public ArrayList<Image> initSprite() {
+        return null;
+    }
 }

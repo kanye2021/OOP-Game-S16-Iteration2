@@ -438,6 +438,11 @@ public class GameViewController extends ViewController{
 
     public void update(){
         moveAndDetect();
+        //projectile updates
+    }
+
+    public void projectileDetect(){
+
     }
 
     public void moveAndDetect(){

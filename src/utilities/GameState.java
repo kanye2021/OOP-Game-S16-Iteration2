@@ -62,6 +62,7 @@ public class GameState extends State {
     public void update(){
 
         avatar.animator.update(System.currentTimeMillis());
+
         for(NPC npc: npcList){
             npc.update();
         }

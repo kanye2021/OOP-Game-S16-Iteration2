@@ -5,7 +5,9 @@ import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * Created by aseber on 2/24/16.
@@ -70,4 +72,8 @@ public class BindWoundsSkill extends ActiveSkill {
 
     }
 
+    @Override
+    public ArrayList<Image> initSprite() {
+        return null;
+    }
 }

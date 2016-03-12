@@ -7,6 +7,7 @@ import models.map.Map;
 import models.skills.Skill;
 import models.skills.SkillList;
 import models.stats.Stats;
+import utilities.Animator;
 
 import java.awt.*;
 

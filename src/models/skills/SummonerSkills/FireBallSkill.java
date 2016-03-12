@@ -6,8 +6,13 @@ import models.entities.Avatar;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
+import utilities.Animator;
+import utilities.IOUtilities;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * Created by ben on 3/8/16.
@@ -17,10 +22,14 @@ import java.awt.event.KeyEvent;
 public class FireBallSkill extends ActiveSkill{
     private int damage;
     private int range;
+    private int speed;
 
     public FireBallSkill(){
         damage = 5;
         range = 3;
+        speed = 200;
+        this.animator = new Animator(initSprite());
+        animator.setSpeed(speed);
     }
 
     @Override
@@ -39,7 +48,7 @@ public class FireBallSkill extends ActiveSkill{
     @Override
     public void onActivate(Entity entity) {
         System.out.println("Can you take this? Fireball!");
-        Projectile projectile = new Projectile(damage,range);
+        Projectile projectile = new Projectile(damage,range,5);
         new LinearAttack(entity,projectile);//This is the attack
 
 
@@ -54,5 +63,17 @@ public class FireBallSkill extends ActiveSkill{
         // use the skill
         return null;
 
+    }
+
+    @Override
+    public ArrayList<Image> initSprite() {
+        String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/skills/summoner-fireball.png");
+
+
+        ArrayList<Image> imagePaths = new ArrayList<>();
+
+        imagePaths.add(new ImageIcon(imageBasePath).getImage());
+
+        return imagePaths;
     }
 }

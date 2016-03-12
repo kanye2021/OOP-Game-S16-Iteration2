@@ -2,13 +2,19 @@ package models.skills;
 
 import models.conditions.StatCondition;
 import models.entities.Entity;
+import utilities.Animator;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * Created by aseber on 2/24/16.
  */
 public abstract class ActiveSkill extends Skill  {
+    //Each projectile with an animator object
+    public Animator animator;
+
 
     protected StatCondition statsCondition;//all active skills cost something
 
@@ -23,5 +29,8 @@ public abstract class ActiveSkill extends Skill  {
     }
 
     public abstract KeyEvent[] initActivatorKeys();
+
+    public abstract ArrayList<Image> initSprite();
+
 
 }

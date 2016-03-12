@@ -137,7 +137,7 @@ public abstract class Entity{
         if(canMove){
             TileDetection td = map.moveEntity(Entity.this, direction);
             location = td.getLocation();
-            canMove = false;
+//            canMove = false;
             movementTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
