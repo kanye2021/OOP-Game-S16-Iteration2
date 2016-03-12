@@ -2,6 +2,7 @@ package models.skills.SummonerSkills;
 
 import models.attack.AngularAttack;
 import models.attack.Projectile;
+import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
@@ -19,7 +20,7 @@ public class GroundDasherSkill extends ActiveSkill{
     public GroundDasherSkill(){
         damage = 1;
         range = 3;
-        projectile = new Projectile(damage,range);
+        projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);
     }
     @Override
     public SkillDictionary initID() {

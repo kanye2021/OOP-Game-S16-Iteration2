@@ -3,6 +3,7 @@ package controllers.entityControllers;
 import controllers.*;
 import controllers.GameViewController;
 import controllers.InventoryViewController;
+import models.Equipment;
 import models.entities.Avatar;
 import models.entities.Entity;
 import models.entities.npc.NPC;
@@ -181,6 +182,27 @@ public class AvatarController {
             //first skill should be something..
             //first skill should be something..
 
+        }else{
+            System.out.println("What are you");
+        }
+    }
+    public void useBasicAttack(){
+        if(avatar.getOccupation().contains("Smasher")){
+
+            avatar.basicAttack();
+
+        }else if(avatar.getOccupation().contains("Summoner")){
+            //No more skills
+            //Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.INDIGNATION);
+            //System.out.println(fourthSkill);
+            //IndignationSkill indignationSkill = (IndignationSkill) fourthSkill;
+            //indignationSkill.onActivate(avatar);
+            avatar.basicAttack();
+
+        }else if(avatar.getOccupation().contains("Sneak")){
+            //first skill should be something..
+            //first skill should be something..
+            avatar.basicAttack();
         }else{
             System.out.println("What are you");
         }

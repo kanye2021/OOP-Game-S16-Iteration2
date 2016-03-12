@@ -266,6 +266,15 @@ public class GameViewController extends ViewController{
             public void stop(){}
         };
 
+        //Basic Attack
+        Task basicAttack = new Task() {
+            @Override
+            public void run(){
+                avatarController.useBasicAttack();
+            }
+            @Override
+            public void stop(){}
+        };
 
         //Open equip menu
         Task openEquipment = new Task() {
@@ -393,6 +402,9 @@ public class GameViewController extends ViewController{
 
         //PauseView
         addKeyPressMapping(openPause,KeyEvent.VK_P);
+
+        //BasicAttack
+        addKeyPressMapping(basicAttack,KeyEvent.VK_G);
 
     }
     @Override

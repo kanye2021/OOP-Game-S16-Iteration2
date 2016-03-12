@@ -56,6 +56,7 @@ public class Tile {
             return result;
         }
 
+        //if(entity.get)
         // Check if there is another entity on this tile.
         if(this.entity != null){
             // TODO: Implment entity/ entity interaction.

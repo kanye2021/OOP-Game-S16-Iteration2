@@ -1,6 +1,7 @@
 package models;
 
 import models.entities.Entity;
+import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 
 import java.util.*;
@@ -115,6 +116,10 @@ public class Equipment {
         return locationMap.get(location).get().getSlotContents();
 
     }
+//TODO:Make onehandedweapon work
+   /* public boolean isOneHandedWeapon(){
+        if(rightArm = get)
+    }*/
 
     // If we call the above function and there is no equipment at the specified location,
     // Will get a null ptr exception. Use this method to verify if there is something first before.

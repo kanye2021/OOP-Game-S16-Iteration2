@@ -2,6 +2,7 @@ package models.skills.SummonerSkills;
 
 import models.attack.Projectile;
 import models.attack.RadialAttack;
+import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
@@ -24,7 +25,7 @@ public class IndignationSkill extends ActiveSkill{
         cooldownTime = 0;
         damage = 1;
         range = 3;
-        projectile = new Projectile(damage,range);
+        projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);
     }
     @Override
     public SkillDictionary initID() {
