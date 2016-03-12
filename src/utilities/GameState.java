@@ -43,6 +43,9 @@ public class GameState extends State {
 
         // Int the viewports
         viewController.initViewports(map, avatar, npcList);
+
+        // Init the default skill key bindings
+        viewController.initSkillKeyBindMappings();
     }
 
     public void setMap(Map map){
