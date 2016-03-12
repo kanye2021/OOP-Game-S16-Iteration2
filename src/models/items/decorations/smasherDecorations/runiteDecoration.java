@@ -18,7 +18,7 @@ public class runiteDecoration extends equippableItemDecoration {
         descriptionModifier = "runite";
 
         colorMap = new HashMap<>();
-        colorMap.put(new Color(255, 255, 255), new Color(0, 0, 255));
+        colorMap.put(new Color(255, 255, 255), new Color(85, 113, 125));
 
         monetaryModifier = 800;
         defenseModifier = 60;

@@ -38,7 +38,7 @@ public class Summoner extends Occupation {
                 new StatModification(Stats.Type.LIVES, 3),
                 new StatModification(Stats.Type.STRENGTH,5),
                 new StatModification(Stats.Type.AGILITY, 10),
-                new StatModification(Stats.Type.INTELLECT, 20),
+                new StatModification(Stats.Type.INTELLECT, 2000),
                 new StatModification(Stats.Type.MOVEMENT,5),
                 new StatModification(Stats.Type.HARDINESS, 50),
                 new StatModification(Stats.Type.RADIUS_OF_VISIBILITY, 4),

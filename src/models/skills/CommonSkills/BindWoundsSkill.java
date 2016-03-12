@@ -36,28 +36,25 @@ public class BindWoundsSkill extends ActiveSkill {
 //            new StatCondition(Avatar, 3, Stats.Type.LIVES, Condition.Comparison.EXACTLY);
         );
 
+        cost = 5;
     }
 
     @Override
     public void onActivate(Entity entity) {
     //This is used to heal.
-        cost = 5;
-        int mana = entity.getStats().getStat(Stats.Type.MANA);
 
-        if (conditionsToActivate.checkCondition()) {
+        System.out.println("Checkpoint 2");
 
-            if (mana >= cost) {
 
+
+            if(!payMana(entity,cost)) {
+                System.out.println("Returns");
+                return;
+            }
                 int healAmt = constant * getLevel();
                 Stats stats = entity.getStats();//gets the instance of the stats
-                stats.modifyStat(Stats.Type.MANA, cost);
                 stats.modifyStat(Stats.Type.HEALTH, healAmt);
 
-            }
-
-
-
-        }
 
     }
 

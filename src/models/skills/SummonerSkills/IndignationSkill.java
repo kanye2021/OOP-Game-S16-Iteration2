@@ -26,6 +26,7 @@ public class IndignationSkill extends ActiveSkill{
         damage = 1;
         range = 3;
         projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);
+        cost = 10;
     }
     @Override
     public SkillDictionary initID() {
@@ -45,10 +46,12 @@ public class IndignationSkill extends ActiveSkill{
 
             return;
         }
+        if(!payMana(entity,cost)){
+            return;
+        }
         cooldown = true;
         System.out.println("Can you take this? INDIGNATION!");
-        Stats stats = entity.getStats();
-        int delta = 5;
+
         new RadialAttack(entity,projectile);
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {

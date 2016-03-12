@@ -39,6 +39,9 @@ public class BoonSkill extends ActiveSkill {
             System.out.println("ANOTHA ONE");
             return;
         }
+        if(!payMana(entity,cost)){
+            return;
+        }
         cooldown = true;
         System.out.println("Boon Skill Used");
         Stats stats = entity.getStats();

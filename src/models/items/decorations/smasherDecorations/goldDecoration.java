@@ -18,7 +18,7 @@ public class goldDecoration extends equippableItemDecoration {
         descriptionModifier = "gold";
 
         colorMap = new HashMap<>();
-        colorMap.put(new Color(255, 255, 255), new Color(0, 0, 255));
+        colorMap.put(new Color(255, 255, 255), new Color(255, 223, 0));
 
         monetaryModifier = 400;
         defenseModifier = 40;

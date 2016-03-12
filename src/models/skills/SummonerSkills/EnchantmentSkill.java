@@ -22,6 +22,7 @@ public class EnchantmentSkill extends ActiveSkill {
         damage = 0;
         range = 4;
         projectile = new Projectile(damage,range, StatusEffects.StatusEffect.SLEEP);
+        cost = 10;
     }
     @Override
     public SkillDictionary initID() {
@@ -39,6 +40,9 @@ public class EnchantmentSkill extends ActiveSkill {
     @Override
     public void onActivate(Entity entity) {
         System.out.println("Enchantment skill is used");
+        if(!payMana(entity,cost)){
+            return;
+        }
         new RadialAttack(entity,projectile);
     }
 

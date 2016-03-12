@@ -18,7 +18,7 @@ public class ironDecoration extends equippableItemDecoration {
         descriptionModifier = "iron";
 
         colorMap = new HashMap<>();
-        colorMap.put(new Color(255, 255, 255), new Color(0, 255, 255));
+        colorMap.put(new Color(255, 255, 255), new Color(230, 231, 232));
 
         monetaryModifier = 50;
         defenseModifier = 10;

@@ -122,13 +122,27 @@ public abstract class Entity{
         if(found != null) {
             return found;
         }else{
-            System.out.println("hahahah couldn't find it bitch");
+
             return null;
         }
     }
 
-    public void basicAttack(){
-        Projectile projectile = new Projectile(43,1, StatusEffects.StatusEffect.NONE);
+    public void basicAttack(Entity entity, Equipment.Component component){
+
+        int cooldowntime = 0;
+        int damage = entity.getStats().getStat(Stats.Type.STRENGTH);
+        if(component== Equipment.Component.ONE_HANDED_WEAPON){
+            damage *= 1;
+            cooldowntime=2000;
+        }else if(component == Equipment.Component.TWO_HANDED_WEAPON){
+            damage *= 2;
+            cooldowntime=3000;
+        }else{
+            cooldowntime=1000;
+            damage /= 2;
+        }
+
+        Projectile projectile = new Projectile(damage,1, StatusEffects.StatusEffect.NONE);
         new LinearAttack(this,projectile);
     }
 

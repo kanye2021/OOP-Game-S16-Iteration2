@@ -18,7 +18,7 @@ public class mithrilDecoration extends equippableItemDecoration {
         descriptionModifier = "mithril";
 
         colorMap = new HashMap<>();
-        colorMap.put(new Color(255, 255, 255), new Color(0, 0, 255));
+        colorMap.put(new Color(255, 255, 255), new Color(185, 187, 219));
 
         monetaryModifier = 200;
         defenseModifier = 30;

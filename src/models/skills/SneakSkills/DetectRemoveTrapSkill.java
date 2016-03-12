@@ -21,6 +21,7 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
     public DetectRemoveTrapSkill(){
         cooldownTime = 3*SECONDS;
         cooldown = false;
+        cost = 5;
     }
 
     @Override
@@ -47,9 +48,11 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
             System.out.println("Could not find trap");
             return;
         }
+        if(!payMana(entity,cost)){
+            return;
+        }
+
         cooldown = true;
-
-
 
         System.out.println("I am detect and remove trap skill");
 
@@ -77,9 +80,9 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
         Point currentLocation = entity.getLocation();
         Point offset = new Point();
         Map.Direction entityOrientation = entity.getOrientation();
-        //How to find target based off of location.
+
         Point desiredLocation = new Point();
-//TODO:Refractor else if cascade into a function in Skills Class
+
         if(entityOrientation== Map.Direction.NORTH){
             offset.x=0;
             offset.y=-1;
@@ -116,6 +119,9 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
         Tile desiredTile = map.getTileAt(desiredLocation);
 
         if(desiredTile.getAreaEffect().getDecal().isVisible()){
+            if(!payMana(entity,cost)){
+                return;
+            }
 
             AreaEffect areaEffect = desiredTile.getAreaEffect();
             desiredTile.getAreaEffect().getDecal().setVisible(false);//"Deletes it visibilitywise"
@@ -124,7 +130,7 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
 
             areaEffect1.setRemoved(true);//Makes it "Removed" So when onTouch is called nothing happens
             //TODO:Figure out if it is possible to delete the object
-            cost = 10;
+
         }
 
     }

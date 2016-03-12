@@ -22,6 +22,7 @@ public class GroundDasherSkill extends ActiveSkill{
         range = 3;
         cooldownTime = 2*SECONDS;
         projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);
+        cost = 10;
     }
     @Override
     public SkillDictionary initID() {
@@ -39,6 +40,9 @@ public class GroundDasherSkill extends ActiveSkill{
     public void onActivate(Entity entity) {
         if(cooldown){
             System.out.println("ANOTHA ONE");
+            return;
+        }
+        if(!payMana(entity,cost)){
             return;
         }
         cooldown = true;

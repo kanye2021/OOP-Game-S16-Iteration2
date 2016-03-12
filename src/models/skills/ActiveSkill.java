@@ -2,6 +2,7 @@ package models.skills;
 
 import models.conditions.StatCondition;
 import models.entities.Entity;
+import models.stats.Stats;
 
 import java.awt.event.KeyEvent;
 
@@ -24,4 +25,13 @@ public abstract class ActiveSkill extends Skill  {
 
     public abstract KeyEvent[] initActivatorKeys();
 
+    public boolean payMana(Entity entity,int delta){
+        int mana = entity.getStats().getStat(Stats.Type.MANA);
+        if(mana>=cost){
+            //takes away mana and allows action to happen
+            entity.getStats().modifyStat(Stats.Type.MANA,-delta);
+            return true;
+        }
+        return false;
+    }
 }

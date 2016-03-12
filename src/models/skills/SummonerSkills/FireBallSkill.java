@@ -23,6 +23,7 @@ public class FireBallSkill extends ActiveSkill{
         damage = 5;
         range = 3;
         cooldownTime = 1*SECONDS;
+        cost = 10;
     }
 
     @Override
@@ -40,10 +41,28 @@ public class FireBallSkill extends ActiveSkill{
 
     @Override
     public void onActivate(Entity entity) {
+        if(cooldown){
+            return;
+        }
+
         System.out.println("Can you take this? Fireball!");
         Projectile projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);
+        if(!payMana(entity,cost)){
+            return;
+        }
+        cooldown=true;
         new LinearAttack(entity,projectile);//This is the attack
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
 
+                        System.out.println("Times up");
+                        cooldown = false;
+                    }
+                },
+                cooldownTime
+        );
 
     }
 

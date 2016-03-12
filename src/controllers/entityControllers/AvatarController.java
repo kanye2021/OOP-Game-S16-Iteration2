@@ -7,6 +7,7 @@ import models.Equipment;
 import models.entities.Avatar;
 import models.entities.Entity;
 import models.entities.npc.NPC;
+import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
 import models.skills.CommonSkills.BindWoundsSkill;
 import models.skills.Skill;
@@ -60,6 +61,7 @@ public class AvatarController {
         Skill firstSkill = avatar.getSkills().get(1);
         BindWoundsSkill bindWoundsSkill = (BindWoundsSkill) firstSkill;
         bindWoundsSkill.onActivate(avatar);
+        System.out.println("Checkpoint 1");
     }
 
     public void useFirstSkill(){
@@ -191,21 +193,27 @@ public class AvatarController {
     }
     public void useBasicAttack(){
         if(avatar.getOccupation().contains("Smasher")){
+            EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
+            Equipment.Component component= item.getComponent();
 
-            avatar.basicAttack();
+                avatar.basicAttack(avatar,component);
+
+
 
         }else if(avatar.getOccupation().contains("Summoner")){
             //No more skills
-            //Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.INDIGNATION);
-            //System.out.println(fourthSkill);
-            //IndignationSkill indignationSkill = (IndignationSkill) fourthSkill;
-            //indignationSkill.onActivate(avatar);
-            avatar.basicAttack();
+            EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
+            Equipment.Component component= item.getComponent();
+                avatar.basicAttack(avatar,component);
+
 
         }else if(avatar.getOccupation().contains("Sneak")){
-            //first skill should be something..
-            //first skill should be something..
-            avatar.basicAttack();
+            EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
+            Equipment.Component component= item.getComponent();
+            if(component == Equipment.Component.TWO_HANDED_WEAPON){
+                avatar.basicAttack(avatar,component);
+            }
+
         }else{
             System.out.println("What are you");
         }

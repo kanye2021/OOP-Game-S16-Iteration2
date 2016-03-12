@@ -119,7 +119,7 @@ public class PickPocketSkill extends ActiveSkill {
         if(desiredTile == null){
             return null;
         }
-        if(desiredTile.hasEntity()){
+        if(desiredTile.hasEntity()&&!payMana(entity,cost)){
             return desiredTile.getEntity();
         }
 

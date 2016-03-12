@@ -25,6 +25,7 @@ public class CreepSkill extends ActiveSkill {
         cooldown = false;
         cooldownTime = 5*SECONDS;
         damage = 10;
+        cost = 5;
     }
     @Override
     public SkillDictionary initID() {
@@ -45,22 +46,17 @@ public class CreepSkill extends ActiveSkill {
             return;
         }
         cooldown=true;
-        cost = 10;
-    //need to use alphacomposite on entity here
-        int mana = entity.getStats().getStat(Stats.Type.MANA);
-        if(mana > cost){
+
+        if(!payMana(entity,cost)){
+            return;
+        }
             Stats stats = entity.getStats();
             entity.setStatusEffect(StatusEffects.StatusEffect.INVISIBLE);
-            //int originalSpeed = stats.getMovement();
-            //double entityFinalSpeed = stats.getMovement() * constant;
-            //need a timer here
+
             int delta = 3;
             stats.modifyStat(Stats.Type.MOVEMENT, -delta);//decreases speed by a constant
             int init =stats.getStat(Stats.Type.MOVEMENT);
-                    //TODO:show that the avatar looks invisible
-
-            //TODO:implement back attack to cause extra damaage
-
+        //TODO:show that the avatar looks invisible
 
 
             new java.util.Timer().schedule(
@@ -69,16 +65,14 @@ public class CreepSkill extends ActiveSkill {
                         public void run() {
                             stats.modifyStat(Stats.Type.MOVEMENT, delta);
                             //TODO:make avatar look visible again
-                            System.out.println("IT WORKED!");
-                            int fina = stats.getStat(Stats.Type.MOVEMENT);
-                            System.out.println(fina);
+
                             cooldown=false;
                             entity.setStatusEffect(StatusEffects.StatusEffect.NONE);
                         }
                     },
                     cooldownTime
             );
-        }
+
 
     }
 
@@ -91,19 +85,15 @@ public class CreepSkill extends ActiveSkill {
     }
 
     public void sneakBehind(Entity entity){
+        if(cooldown&&entity.getStatusEffect() != StatusEffects.StatusEffect.INVISIBLE){
+            return;
+        }
+        if(!payMana(entity,cost)){
+            return;
+        }
         Map.Direction entityOrientation = entity.getOrientation();
-        //Map.Direction targetOrientation = target.getOrientation();
-        //Map.Direction targetOrientation = entity.getOrientation();
+
         Point entityLoc = entity.getLocation();
-
-        //Point targetLoc = target.getLocation();
-        //need to consider offset
-
-        /*if(entityOrientation!=targetOrientation){
-            return false;
-        }*/
-
-        //offSet is assuming the same direction as the cartesian plane posted on slack
 
         Point offset = new Point();
 
