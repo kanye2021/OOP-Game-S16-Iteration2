@@ -30,7 +30,7 @@ public class Tile {
         this.item = item;
         this.entity = entity;
         this.areaEffect = areaEffect;
-        this.tileImage = new TileImage(50, 50, BufferedImage.TYPE_INT_ARGB); // Size is arbitrary as it will be scaled later anyway.
+        this.tileImage = new TileImage(75, 75, BufferedImage.TYPE_INT_RGB); // Size is arbitrary as it will be scaled later anyway.
         tileImage.generate(this); // Generate the image for the tile.
     }
 

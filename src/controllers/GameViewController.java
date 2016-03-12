@@ -442,16 +442,17 @@ public class GameViewController extends ViewController{
 
     public void moveAndDetect(){
 
-        // Return the viewport back to center
-        mousePressed = false;
-        lastOffset.setLocation(0, 0);
-        ((GameView)view).setAreaViewportOffset(new Point(0, 0));
-
         // Tell the avatar controller to move the avatar.
         TileDetection td;
         td = avatarController.move();
 
         if (td != null) {
+
+            // Return the viewport back to center
+            mousePressed = false;
+            lastOffset.setLocation(0, 0);
+            ((GameView)view).setAreaViewportOffset(new Point(0, 0));
+
             if (td.npcDetected()) {
                 NPC npc = (NPC) td.getEntity();
 
