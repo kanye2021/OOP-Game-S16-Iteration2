@@ -66,7 +66,9 @@ public class MotorCortex {
     private void UpdateInterest() {
 
         //TODO: just me fucking around
+        System.out.println(npc.getType() + "'s interest is: " + interest);
         interest += 2.0;
+
         memory.setDecision(new Decision(new FollowInterest(interest),new Point(-5,-2)));
     }
 
