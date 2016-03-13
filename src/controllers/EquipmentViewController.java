@@ -7,6 +7,7 @@ import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
 import utilities.StateManager;
 import utilities.Task;
+import utilities.TaskWrapper;
 import views.EquipmentView;
 import views.InventoryView;
 import views.View;
@@ -78,17 +79,17 @@ public class EquipmentViewController extends ViewController {
 
 
 
-        addKeyPressMapping(previousItem, KeyEvent.VK_UP);
-        addKeyPressMapping(nextItem, KeyEvent.VK_DOWN);
-        addKeyPressMapping(previousItem, KeyEvent.VK_LEFT);
-        addKeyPressMapping(nextItem, KeyEvent.VK_RIGHT);
-        addKeyPressMapping(useItem, KeyEvent.VK_ENTER);
+        addKeyPressMapping(new TaskWrapper(previousItem, "Previous"), KeyEvent.VK_UP);
+        addKeyPressMapping(new TaskWrapper(nextItem, "Next"), KeyEvent.VK_DOWN);
+        addKeyPressMapping(new TaskWrapper(previousItem, "Previous"), KeyEvent.VK_LEFT);
+        addKeyPressMapping(new TaskWrapper(nextItem, "Next"), KeyEvent.VK_RIGHT);
+        addKeyPressMapping(new TaskWrapper(useItem, "Use item"), KeyEvent.VK_ENTER);
 
     }
 
     public void setCloseEquipmentTask(Task task) {
         this.closeEquipment = task;
-        addKeyPressMapping(closeEquipment, KeyEvent.VK_ESCAPE);
-        addKeyPressMapping(closeEquipment, KeyEvent.VK_Y);
+        addKeyPressMapping(new TaskWrapper(closeEquipment, "Close equipment"), KeyEvent.VK_ESCAPE);
+        addKeyPressMapping(new TaskWrapper(closeEquipment, "Close equipment"), KeyEvent.VK_Y);
     }
 }

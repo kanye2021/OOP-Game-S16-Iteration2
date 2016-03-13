@@ -1,10 +1,6 @@
 package controllers;
 
-import utilities.IOUtilities;
-import utilities.Load;
-import utilities.State;
-import utilities.StateManager;
-import utilities.Task;
+import utilities.*;
 import views.LoadGameView;
 import views.SaveGameView;
 import views.View;
@@ -69,9 +65,9 @@ public class LoadGameViewController extends ViewController {
             public void stop() {}
         };
 
-        addKeyPressMapping(previousOption, KeyEvent.VK_UP);
-        addKeyPressMapping(nextOption, KeyEvent.VK_DOWN);
-        addKeyPressMapping(selectOption, KeyEvent.VK_ENTER);
+        addKeyPressMapping(new TaskWrapper(previousOption, "Previous"), KeyEvent.VK_UP);
+        addKeyPressMapping(new TaskWrapper(nextOption, "Next"), KeyEvent.VK_DOWN);
+        addKeyPressMapping(new TaskWrapper(selectOption, "Select"), KeyEvent.VK_ENTER);
 
     }
 

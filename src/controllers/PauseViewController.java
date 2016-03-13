@@ -1,10 +1,7 @@
 package controllers;
 
 import models.entities.Avatar;
-import utilities.State;
-import utilities.StateManager;
-import utilities.SubState;
-import utilities.Task;
+import utilities.*;
 import views.*;
 
 import java.awt.event.KeyEvent;
@@ -70,7 +67,7 @@ public class PauseViewController extends ViewController {
                     case SAVE_GAME:
                         break;
                     case OPTIONS:
-                        OptionsView optionsView = new OptionsView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), avatar.getSkills());
+                        OptionsView optionsView = new OptionsView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), avatar.getSkills(), gameViewController.getKeyPressMappings());
                         OptionsViewController optionsViewController = new OptionsViewController(optionsView, stateManager, gameViewController);
                         SubState sub = new SubState(optionsViewController, optionsView);
                         // Add closing task.
@@ -104,17 +101,17 @@ public class PauseViewController extends ViewController {
 
         };
 
-        addKeyPressMapping(previousOption, KeyEvent.VK_UP);
-        addKeyPressMapping(nextOption, KeyEvent.VK_DOWN);
-        addKeyPressMapping(selectOption, KeyEvent.VK_ENTER);
+        addKeyPressMapping(new TaskWrapper(previousOption, "Previous"), KeyEvent.VK_UP);
+        addKeyPressMapping(new TaskWrapper(nextOption, "Next"), KeyEvent.VK_DOWN);
+        addKeyPressMapping(new TaskWrapper(selectOption, "Select"), KeyEvent.VK_ENTER);
 
     }
 
     public void setClosePause(Task task) {
         closePause = task;
-        addKeyPressMapping(closePause, KeyEvent.VK_ESCAPE);
-        addKeyPressMapping(closePause, KeyEvent.VK_M);
-        addKeyPressMapping(closePause, KeyEvent.VK_P);
+        addKeyPressMapping(new TaskWrapper(closePause, "Close"), KeyEvent.VK_ESCAPE);
+        addKeyPressMapping(new TaskWrapper(closePause, "Close"), KeyEvent.VK_M);
+        addKeyPressMapping(new TaskWrapper(closePause, "Close"), KeyEvent.VK_P);
     }
 }
 

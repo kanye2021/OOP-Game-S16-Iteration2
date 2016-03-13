@@ -71,7 +71,7 @@ public class GameViewController extends ViewController{
             public void stop() {}
         };
         // Default to close a Toast is "X"
-        this.addKeyPressMapping(dismissTask, KeyEvent.VK_X);
+        this.addKeyPressMapping(new TaskWrapper(dismissTask, "Dismiss Toast"), KeyEvent.VK_X);
     }
 
 //    public void popSubState() {
@@ -113,7 +113,7 @@ public class GameViewController extends ViewController{
             }
         };
 
-        addKeyPressMapping(task, KeyEvent.VK_T);
+        addKeyPressMapping(new TaskWrapper(task, "Toggle Detailed Stats"), KeyEvent.VK_T);
 
         task = new Task() {
             @Override
@@ -127,7 +127,7 @@ public class GameViewController extends ViewController{
             }
         };
 
-        addKeyPressMapping(task, KeyEvent.VK_M);
+        addKeyPressMapping(new TaskWrapper(task, "Toggle Debug info"), KeyEvent.VK_M);
 
         task = new Task() {
             @Override
@@ -139,8 +139,8 @@ public class GameViewController extends ViewController{
             public void stop() { avatarController.stopMoving(); }
         };
 
-        addKeyPressMapping(task, KeyEvent.VK_W);
-        addKeyPressMapping(task, KeyEvent.VK_NUMPAD8);
+        addKeyPressMapping(new TaskWrapper(task, "Move North"), KeyEvent.VK_W);
+        addKeyPressMapping(new TaskWrapper(task, "Move North"), KeyEvent.VK_NUMPAD8);
 
         task = new Task() {
             @Override
@@ -150,8 +150,8 @@ public class GameViewController extends ViewController{
             public void stop() { avatarController.stopMoving(); }
         };
 
-        addKeyPressMapping(task, KeyEvent.VK_Q);
-        addKeyPressMapping(task, KeyEvent.VK_NUMPAD7);
+        addKeyPressMapping(new TaskWrapper(task, "Move Northwest"), KeyEvent.VK_Q);
+        addKeyPressMapping(new TaskWrapper(task, "Move Northwest"), KeyEvent.VK_NUMPAD7);
 
         task = new Task() {
             @Override
@@ -161,8 +161,8 @@ public class GameViewController extends ViewController{
             public void stop() { avatarController.stopMoving(); }
         };
 
-        addKeyPressMapping(task, KeyEvent.VK_Z);
-        addKeyPressMapping(task, KeyEvent.VK_NUMPAD1);
+        addKeyPressMapping(new TaskWrapper(task, "Move Southwest"), KeyEvent.VK_Z);
+        addKeyPressMapping(new TaskWrapper(task, "Move Southwest"), KeyEvent.VK_NUMPAD1);
 
         task = new Task() {
             @Override
@@ -172,8 +172,8 @@ public class GameViewController extends ViewController{
             public void stop() { avatarController.stopMoving(); }
         };
 
-        addKeyPressMapping(task, KeyEvent.VK_S);
-        addKeyPressMapping(task, KeyEvent.VK_NUMPAD2);
+        addKeyPressMapping(new TaskWrapper(task, "Move South"), KeyEvent.VK_S);
+        addKeyPressMapping(new TaskWrapper(task, "Move South"), KeyEvent.VK_NUMPAD2);
 
         task = new Task() {
             @Override
@@ -183,8 +183,8 @@ public class GameViewController extends ViewController{
             public void stop() { avatarController.stopMoving(); }
         };
 
-        addKeyPressMapping(task, KeyEvent.VK_C);
-        addKeyPressMapping(task, KeyEvent.VK_NUMPAD3);
+        addKeyPressMapping(new TaskWrapper(task, "Move Southeast"), KeyEvent.VK_C);
+        addKeyPressMapping(new TaskWrapper(task, "Move Southeast"), KeyEvent.VK_NUMPAD3);
 
         task = new Task() {
             @Override
@@ -194,73 +194,8 @@ public class GameViewController extends ViewController{
             public void stop() { avatarController.stopMoving(); }
         };
 
-        addKeyPressMapping(task, KeyEvent.VK_E);
-        addKeyPressMapping(task, KeyEvent.VK_NUMPAD9);
-
-        //BindWounds
-        Task bindWounds = new Task() {
-            @Override
-            public void run() {
-                avatarController.useBindWounds();
-            }
-            @Override
-            public void stop() {}
-        };
-
-        //FirstSkill
-        Task firstSkill = new Task() {
-            @Override
-            public void run(){
-                avatarController.useFirstSkill();
-            }
-            @Override
-            public void stop(){}
-        };
-
-
-        //Second Skill
-        Task secondSkill = new Task() {
-            @Override
-            public void run(){
-                avatarController.useSecondSkill();
-            }
-            @Override
-            public void stop(){}
-        };
-
-
-
-        //Third Skill
-        Task thirdSkill = new Task() {
-            @Override
-            public void run(){
-                avatarController.useThirdSkill();
-            }
-            @Override
-            public void stop(){}
-        };
-
-
-        //Fourth Skill
-        Task fourthSkill = new Task() {
-            @Override
-            public void run(){
-                avatarController.useFourthSkill();
-            }
-            @Override
-            public void stop(){}
-        };
-
-        //Fifth Skill
-        Task fifthSkill = new Task() {
-            @Override
-            public void run(){
-                avatarController.useFifthSkill();
-            }
-            @Override
-            public void stop(){}
-        };
-
+        addKeyPressMapping(new TaskWrapper(task, "Move NorthEast"), KeyEvent.VK_E);
+        addKeyPressMapping(new TaskWrapper(task, "Move NorthEast"), KeyEvent.VK_NUMPAD9);
 
         //Open equip menu
         Task openEquipment = new Task() {
@@ -330,13 +265,13 @@ public class GameViewController extends ViewController{
         };
 
         //InventoryView
-        addKeyPressMapping(openInventory, KeyEvent.VK_I);
+        addKeyPressMapping(new TaskWrapper(openInventory, "Open Inventory"), KeyEvent.VK_I);
 
         //EquipmentView
-        addKeyPressMapping(openEquipment, KeyEvent.VK_Y);
+        addKeyPressMapping(new TaskWrapper(openEquipment, "Open Equipment"), KeyEvent.VK_Y);
 
         //PauseView
-        addKeyPressMapping(openPause,KeyEvent.VK_P);
+        addKeyPressMapping(new TaskWrapper(openPause, "Pause"),KeyEvent.VK_P);
 
     }
 
@@ -370,7 +305,7 @@ public class GameViewController extends ViewController{
                 // Set the default keybind on the skill
                 activeSkill.setKeyBind( skillKeys[i] );
                 // Add the mapping to game VC
-                addKeyPressMapping(skillActivate, activeSkill.getKeyBind());
+                addKeyPressMapping(new TaskWrapper(skillActivate, "skill"), activeSkill.getKeyBind());
                 i++;
             }
 

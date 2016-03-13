@@ -8,6 +8,7 @@ import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
 import utilities.StateManager;
 import utilities.Task;
+import utilities.TaskWrapper;
 import utilities.Toast;
 import views.InventoryView;
 import views.View;
@@ -98,17 +99,17 @@ public class NPCItemUseController extends ViewController {
         };
 
 
-        addKeyPressMapping(previousItem, KeyEvent.VK_UP);
-        addKeyPressMapping(nextItem, KeyEvent.VK_DOWN);
-        addKeyPressMapping(previousItem, KeyEvent.VK_LEFT);
-        addKeyPressMapping(nextItem, KeyEvent.VK_RIGHT);
-        addKeyPressMapping(useItem, KeyEvent.VK_ENTER);
+        addKeyPressMapping(new TaskWrapper(previousItem, "Previous"), KeyEvent.VK_UP);
+        addKeyPressMapping(new TaskWrapper(nextItem, "Next"), KeyEvent.VK_DOWN);
+        addKeyPressMapping(new TaskWrapper(previousItem, "Previous"), KeyEvent.VK_LEFT);
+        addKeyPressMapping(new TaskWrapper(nextItem, "Next"), KeyEvent.VK_RIGHT);
+        addKeyPressMapping(new TaskWrapper(useItem, "Use"), KeyEvent.VK_ENTER);
 
     }
 
     public void setClose(Task task) {
         this.closeMenu = task;
-        addKeyPressMapping(closeMenu, KeyEvent.VK_ESCAPE);
-        addKeyPressMapping(closeMenu, KeyEvent.VK_I);
+        addKeyPressMapping(new TaskWrapper(closeMenu, "Close"), KeyEvent.VK_ESCAPE);
+        addKeyPressMapping(new TaskWrapper(closeMenu, "Close"), KeyEvent.VK_I);
     }
 }

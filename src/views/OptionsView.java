@@ -3,17 +3,50 @@ package views;
 import models.skills.ActiveSkill;
 import models.skills.Skill;
 import models.skills.SkillList;
+import utilities.InputMapping;
+import utilities.Task;
+import utilities.TaskWrapper;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by sergiopuleri on 3/11/16.
  */
 public class OptionsView extends View {
 
+
+    // Necessary to render generic task keybindings on view
+    // Dont want to actually mess with the actual inputMapping object.
+    public class KeyCodeTaskObject {
+
+        Integer keyCode;
+        TaskWrapper taskWrapper;
+
+        public KeyCodeTaskObject(Integer keyCode, TaskWrapper taskWrapper) {
+            this.keyCode = keyCode;
+            this.taskWrapper = taskWrapper;
+        }
+
+        public Integer getKeyCode() {
+            return keyCode;
+        }
+
+        public TaskWrapper getTaskWrapper() {
+            return taskWrapper;
+        }
+
+        public void setKeyCode(Integer keyCode) {
+            this.keyCode = keyCode;
+        }
+
+        public void setTaskWrapper(TaskWrapper taskWrapper) {
+            this.taskWrapper = taskWrapper;
+        }
+    }
 
     // Constants
     private final String TITLE = "Set KeyBindings";
@@ -39,20 +72,27 @@ public class OptionsView extends View {
     private Font generalFont;
     private Font instructionFont;
     private int titleButtonMargin;
+    private int sidePadding;
 
     // Data properties
     private ArrayList<ActiveSkill> skills;
+    private ArrayList<KeyCodeTaskObject> listOfGenericKeybindings;
+    private InputMapping inputMappingHashmap;
     private int selected;
     private boolean listeningForNewKeyBind;
     private int indexForNewKeyBind;
     String selectInstructions;
     String keyBindInstructions;
     String leaveInstructions;
+    private int skillCount;
+    private int taskCount;
 
-    public OptionsView(int width, int height, Display display, SkillList theSkills){
+    public OptionsView(int width, int height, Display display, SkillList theSkills, InputMapping inputMapping){
         super(width, height, display);
         selected = 0;
         skills = new ArrayList<ActiveSkill>();
+        listOfGenericKeybindings = new ArrayList<KeyCodeTaskObject>();
+        this.inputMappingHashmap = inputMapping;
         listeningForNewKeyBind = false;
         indexForNewKeyBind = 0;
         selectInstructions = "Hit [ENTER] on your selected skill to begin keybinding";
@@ -68,6 +108,21 @@ public class OptionsView extends View {
                 skills.add(activeSkill);
             }
         }
+        skillCount = skills.size();
+
+        // init array of general keybindings
+        // Only wanan display if it is not a skill
+        for (Map.Entry<Integer, TaskWrapper> entry : inputMappingHashmap.entrySet()) {
+            Integer key = entry.getKey();
+            TaskWrapper wrapper = entry.getValue();
+            String descriptor = wrapper.getDescriptor();
+
+            if (descriptor.contains("Move") || descriptor.contains("Open") || descriptor.contains("Pause")) {
+                listOfGenericKeybindings.add(new KeyCodeTaskObject(key, wrapper));
+
+            }
+        }
+        taskCount = listOfGenericKeybindings.size();
     }
 
     public int getSelected() {
@@ -76,13 +131,13 @@ public class OptionsView extends View {
 
     public void previousOption() {
         if (selected == 0) {
-            selected = skills.size() - 1;
+            selected = skillCount + taskCount - 1;
         } else {
             selected--;
         }
     }
     public void nextOption() {
-        if (selected == skills.size() - 1) {
+        if (selected == skillCount + taskCount - 1) {
             selected = 0;
         } else {
             selected++;
@@ -143,101 +198,117 @@ public class OptionsView extends View {
 
         int start = g2d.getFontMetrics(titleFont).getHeight() + titleButtonMargin;
 
-        FontMetrics fm;
+        // Iterate through all skills
         ActiveSkill skill;
-        int sidePadding =  optionsViewWidth/20;
-        for (int i = 0; i < skills.size(); i++) {
-            // Setup basic font
-            g2d.setFont(generalFont);
-            fm = g2d.getFontMetrics(generalFont);
+        int i = 0;
+        for (; i < skills.size(); i++) {
 
             // Get dat skill
             skill = skills.get(i);
+            String currentKeyBind = KeyEvent.getKeyText(skill.getKeyBind());
+            renderTaskNameAndKeyBind(g2d, skill.getName(), start, i, currentKeyBind, opaque, reset);
+        }
 
-            // Rectangles r cool 2
-            Rectangle2D rectangle = fm.getStringBounds(skill.getName(), g2d);
+        // Now iterate of inputhappings hasmap
+        for (KeyCodeTaskObject keyCodeTask : listOfGenericKeybindings) {
+            TaskWrapper wrapper = keyCodeTask.taskWrapper;
+            Integer key = keyCodeTask.keyCode;
 
-            // So are boxes
-            int boxX = optionsViewXStart + (optionsViewWidth - buttonWidth)/2;
-            int boxY = buttonHeight * i + start;
-            int boxDX = buttonWidth;
-            int boxDY = buttonHeight;
+            String descriptor = wrapper.getDescriptor();
+            String currentKeyBind = KeyEvent.getKeyText(key);
+            // Render
+            renderTaskNameAndKeyBind(g2d, descriptor, start, i,currentKeyBind, opaque, reset );
+            i++;
+        }
 
-            int stringX = optionsViewXStart + sidePadding;
-            int stringY = i * buttonHeight + (int) (rectangle.getHeight() / 2) + fm.getAscent() + start;
+        // Write instructions :~)
 
-            Color primaryColor;
-            Color secondaryColor;
-            Color keyBindHighLight;
+        // Setup font
+        g2d.setFont(instructionFont);
+        FontMetrics fm = g2d.getFontMetrics(instructionFont);
 
-            if (i == selected) {
-                primaryColor = Color.WHITE;
-                secondaryColor = Color.RED;
+        // Set appropiate instructions based on state
+        String currentInstructions;
+        if (isListeningForNewKeyBind()) {
+            currentInstructions = keyBindInstructions;
+        } else currentInstructions = selectInstructions;
 
-            } else {
-                primaryColor = Color.BLACK;
-                secondaryColor = Color.WHITE;
+        // Get some rectzzzzzz
+        Rectangle2D rectangle = fm.getStringBounds(currentInstructions, g2d);
+        Rectangle2D exitRect = fm.getStringBounds(leaveInstructions, g2d);
 
-            }
+        // Get some coordinates & write some strings
+        int instructionsStartY = optionsViewYStart + optionsViewHeight - (int)(rectangle.getHeight()*2.5);
+//        int instructionsStartY = i * buttonHeight + (int) (rectangle.getHeight() / 2) + fm.getAscent() + start;
+        int instructionsX =  optionsViewXStart + (optionsViewWidth - (int)rectangle.getWidth())/2;
+        g2d.drawString(currentInstructions, instructionsX, instructionsStartY);
 
-            g2d.setColor(primaryColor);
-            g2d.setComposite(opaque);
-            g2d.fillRect(boxX, boxY, boxDX, boxDY);
-            g2d.setColor(secondaryColor);
-            g2d.setComposite(reset);
-            g2d.drawString(skill.getName(), stringX, stringY);
+        // Do it agen pls
+        int exitX = optionsViewXStart + (optionsViewWidth - (int)exitRect.getWidth())/2;
+        int exitY = instructionsStartY + (int)exitRect.getHeight() + fm.getAscent();
+        g2d.drawString(leaveInstructions, exitX, exitY);
+    }
 
-            if (listeningForNewKeyBind && indexForNewKeyBind == i) {
-                keyBindHighLight = Color.yellow;
-            } else {
-                keyBindHighLight = Color.black;
-            }
+    private void renderTaskNameAndKeyBind(Graphics2D g2d, String descriptor, int startY, int index, String keyBind, AlphaComposite opaque, Composite reset) {
+        // Setup basic font
+        g2d.setFont(generalFont);
+        FontMetrics fm = g2d.getFontMetrics(generalFont);
 
-            // Draw KeyBind Box on the Right
-            int keyBindBoxW = (int)(buttonHeight*0.8);
-            int keyBindBoxH = (int)(buttonHeight*0.8);
-            int keyBindX = optionsViewXStart + optionsViewWidth - sidePadding*2;
-            int keyBindY = stringY -keyBindBoxH/2;
-            g2d.setColor(keyBindHighLight);
-            g2d.drawRect(keyBindX, keyBindY , keyBindBoxW, keyBindBoxH);
+        // Rectangles r cool 2
+        Rectangle2D rectangle = fm.getStringBounds(descriptor, g2d);
 
-            // Draw current KeyBind in dat Box
-            g2d.getFont().deriveFont(Font.BOLD);
-            fm = g2d.getFontMetrics(generalFont);
-            int keyCode = skill.getKeyBind();
-            String keyBind = KeyEvent.getKeyText(keyCode);
-            rectangle = fm.getStringBounds(keyBind, g);
-            keyBindX = keyBindX + (keyBindBoxW - (int)rectangle.getWidth())/2;
-            keyBindY = keyBindY + (keyBindBoxH - (int)rectangle.getHeight())/2 + fm.getAscent();
-            g2d.drawString(keyBind, keyBindX, keyBindY);
+        // So are boxes
+        int boxX = optionsViewXStart + (optionsViewWidth - buttonWidth)/2;
+        int boxY = buttonHeight * index + startY;
+        int boxDX = buttonWidth;
+        int boxDY = buttonHeight;
 
-            // Write instructions :~)
+        int stringX = optionsViewXStart + sidePadding;
+        int stringY = index * buttonHeight + (int) (rectangle.getHeight() / 2) + fm.getAscent() + startY;
 
-            // Setup font
-            g2d.setFont(instructionFont);
-            fm = g2d.getFontMetrics(instructionFont);
+        Color primaryColor;
+        Color secondaryColor;
+        Color keyBindHighLight;
 
-            // Set appropiate instructions based on state
-            String currentInstructions;
-            if (isListeningForNewKeyBind()) {
-                currentInstructions = keyBindInstructions;
-            } else currentInstructions = selectInstructions;
+        if (index == selected) {
+            primaryColor = Color.WHITE;
+            secondaryColor = Color.RED;
 
-            // Get some rectzzzzzz
-            rectangle = fm.getStringBounds(currentInstructions, g2d);
-            Rectangle2D exitRect = fm.getStringBounds(leaveInstructions, g2d);
-
-            // Get some coordinates & write some strings
-            int instructionsStartY = optionsViewYStart + optionsViewHeight - (int)(rectangle.getHeight()*2.5);
-            int instructionsX =  optionsViewXStart + (optionsViewWidth - (int)rectangle.getWidth())/2;
-            g2d.drawString(currentInstructions, instructionsX, instructionsStartY);
-
-            // Do it agen pls
-            int exitX = optionsViewXStart + (optionsViewWidth - (int)exitRect.getWidth())/2;
-            int exitY = instructionsStartY + (int)exitRect.getHeight() + fm.getAscent();
-            g2d.drawString(leaveInstructions, exitX, exitY);
+        } else {
+            primaryColor = Color.BLACK;
+            secondaryColor = Color.WHITE;
 
         }
+
+        g2d.setColor(primaryColor);
+        g2d.setComposite(opaque);
+        g2d.fillRect(boxX, boxY, boxDX, boxDY);
+        g2d.setColor(secondaryColor);
+        g2d.setComposite(reset);
+        g2d.drawString(descriptor, stringX, stringY);
+
+        if (listeningForNewKeyBind && indexForNewKeyBind == index) {
+            keyBindHighLight = Color.yellow;
+        } else {
+            keyBindHighLight = Color.black;
+        }
+
+        // Draw KeyBind Box on the Right
+        int keyBindBoxW = (int)(buttonHeight*0.8);
+        int keyBindBoxH = (int)(buttonHeight*0.8);
+        int keyBindX = optionsViewXStart + optionsViewWidth - sidePadding*2;
+        int keyBindY = stringY -keyBindBoxH/2;
+        g2d.setColor(keyBindHighLight);
+        g2d.drawRect(keyBindX, keyBindY , keyBindBoxW, keyBindBoxH);
+
+        // Draw current KeyBind in dat Box
+        g2d.getFont().deriveFont(Font.BOLD);
+        fm = g2d.getFontMetrics(generalFont);
+
+        rectangle = fm.getStringBounds(keyBind, g2d);
+        keyBindX = keyBindX + (keyBindBoxW - (int)rectangle.getWidth())/2;
+        keyBindY = keyBindY + (keyBindBoxH - (int)rectangle.getHeight())/2 + fm.getAscent();
+        g2d.drawString(keyBind, keyBindX, keyBindY);
     }
 
     public int getIndexForNewKeyBind() {
@@ -256,18 +327,40 @@ public class OptionsView extends View {
         this.listeningForNewKeyBind = listeningForNewKeyBind;
     }
 
+    public ArrayList<KeyCodeTaskObject> getListOfGenericKeybindings() {
+        return listOfGenericKeybindings;
+    }
+
     public ActiveSkill getCurrentSelectedSkill() {
         return skills.get(selected);
     }
 
+    public KeyCodeTaskObject getCurrentSelectedTask() {
+        return listOfGenericKeybindings.get(selected - skillCount);
+    }
+
+    public int getTaskCount() {
+        return taskCount;
+    }
+
+    public int getSkillCount() {
+        return skillCount;
+    }
+
+    public InputMapping getInputMappingHashmap() {
+        return inputMappingHashmap;
+    }
 
     @Override
     public void scaleView(){
         //PAUSE VIEW DIMENSIONS
         optionsViewWidth = (int) (getScreenWidth() * 0.5);
-        optionsViewHeight = (int) (getScreenHeight() * 0.6);
+//        optionsViewHeight = (int) (getScreenHeight() * 0.6);
+        optionsViewHeight =  (int) (getScreenHeight() * 0.90);
+
         optionsViewXStart = (getScreenWidth() - optionsViewWidth)/2;
-        optionsViewYStart = (getScreenHeight() - optionsViewHeight)/2;
+//        optionsViewYStart = (getScreenHeight() - optionsViewHeight)/4;
+        optionsViewYStart = 0;
 
         //PAUSE TITLE
         titleWidth = (int) (getScreenWidth() * 0.4);
@@ -279,7 +372,8 @@ public class OptionsView extends View {
 
         // Scale buttons
         buttonWidth = getScreenWidth() / 8;
-        buttonHeight = getScreenHeight() / 15;
+        buttonHeight = getScreenHeight() / 30;
+
 
         // Scale font
         int titleFontSize = getScreenWidth() / 30;
@@ -291,5 +385,6 @@ public class OptionsView extends View {
 
 
         titleButtonMargin = titleStartY + getScreenHeight()/40;
+        sidePadding =  optionsViewWidth/20;
     }
 }

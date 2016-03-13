@@ -4,6 +4,7 @@ import models.entities.Avatar;
 import utilities.InputMapping;
 import utilities.StateManager;
 import utilities.Task;
+import utilities.TaskWrapper;
 import views.View;
 
 import java.awt.*;
@@ -101,15 +102,20 @@ public abstract class ViewController {
             public void stop(){}
         };
 
-        addKeyPressMapping(escapeTask, KeyEvent.VK_BACK_SPACE);
-        addKeyPressMapping(altF4Task, KeyEvent.VK_F4, KeyEvent.ALT_MASK);
+        addKeyPressMapping(new TaskWrapper(escapeTask, "Go back"), KeyEvent.VK_BACK_SPACE);
+        addKeyPressMapping(new TaskWrapper(altF4Task, "Quit Game"), KeyEvent.VK_F4, KeyEvent.ALT_MASK);
 
     }
 
-    protected final void addKeyPressMapping(Task task, int... key) {
+    protected final void addKeyPressMapping(TaskWrapper task, int... key) {
 
         keyPressMapping.put(getKeyIntMapping(key), task);
 
+    }
+
+    // get the mappings
+    protected final InputMapping getKeyPressMappings() {
+        return keyPressMapping;
     }
 
     public final void onWindowResize(Component component){
