@@ -82,15 +82,7 @@ public abstract class ViewController {
 
     private final void initDefaultEscapeMapping() {
 
-        Task escapeTask = new Task() {
-            @Override
-            public void run() {
-                stateManager.goToPreviousState();
-            }
 
-            @Override
-            public void stop() {}
-        };
 
         Task altF4Task = new Task() {
             @Override
@@ -102,8 +94,8 @@ public abstract class ViewController {
             public void stop(){}
         };
 
-        addKeyPressMapping(new TaskWrapper(escapeTask, "Go back"), KeyEvent.VK_BACK_SPACE);
         addKeyPressMapping(new TaskWrapper(altF4Task, "Quit Game"), KeyEvent.VK_F4, KeyEvent.ALT_MASK);
+
 
     }
 

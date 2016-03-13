@@ -15,6 +15,7 @@ public class BoonSkill extends ActiveSkill {
     public BoonSkill(){
         cooldown = false;
         cooldownTime = 5000;//5000 milliseconds
+        level = 1;
     }
     @Override
     public SkillDictionary initID() {
@@ -35,11 +36,14 @@ public class BoonSkill extends ActiveSkill {
     }
     @Override
     public void onActivate(Entity entity) {
-        if(cooldown){
+        if(isCooldown()){
             System.out.println("ANOTHA ONE");
             return;
         }
-        cooldown = true;
+        if(!payMana(entity,cost)){
+            return;
+        }
+        doTheCoolDown();
         System.out.println("Boon Skill Used");
         Stats stats = entity.getStats();
         int delta = 5;

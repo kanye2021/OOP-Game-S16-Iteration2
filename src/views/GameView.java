@@ -165,4 +165,8 @@ public class GameView extends View{
         // Currently only skill viewport cares about mouse clicks
         this.skillViewport.handleMouseClick(e);
     }
+
+    public AreaViewport getAreaViewport(){
+        return areaViewport;
+    }
 }

@@ -21,6 +21,8 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
     public DetectRemoveTrapSkill(){
         cooldownTime = 3*SECONDS;
         cooldown = false;
+        cost = 5;
+        level = 1;
     }
 
     @Override
@@ -32,13 +34,13 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
 
     @Override
     public String getName() {
-        return "Detect & Remove Trap";
+        return "Detect-Remove-Trap";
     }
 
 
     @Override
     public void onActivate(Entity entity) {
-        if(cooldown){
+        if(isCooldown()){
             System.out.println("Cooldown time is not over!");
             return;
         }
@@ -47,23 +49,14 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
             System.out.println("Could not find trap");
             return;
         }
-        cooldown = true;
+        if(!payMana(entity,cost)){
+            return;
+        }
 
-
+        doTheCoolDown();
 
         System.out.println("I am detect and remove trap skill");
 
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-
-
-                        cooldown = false;
-                    }
-                },
-                cooldownTime
-        );
 
     }
     //TODO:Map a key press to here for sneak
@@ -77,9 +70,9 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
         Point currentLocation = entity.getLocation();
         Point offset = new Point();
         Map.Direction entityOrientation = entity.getOrientation();
-        //How to find target based off of location.
+
         Point desiredLocation = new Point();
-//TODO:Refractor else if cascade into a function in Skills Class
+
         if(entityOrientation== Map.Direction.NORTH){
             offset.x=0;
             offset.y=-1;
@@ -116,6 +109,9 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
         Tile desiredTile = map.getTileAt(desiredLocation);
 
         if(desiredTile.getAreaEffect().getDecal().isVisible()){
+            if(!payMana(entity,cost)){
+                return;
+            }
 
             AreaEffect areaEffect = desiredTile.getAreaEffect();
             desiredTile.getAreaEffect().getDecal().setVisible(false);//"Deletes it visibilitywise"
@@ -124,7 +120,7 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
 
             areaEffect1.setRemoved(true);//Makes it "Removed" So when onTouch is called nothing happens
             //TODO:Figure out if it is possible to delete the object
-            cost = 10;
+
         }
 
     }

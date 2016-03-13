@@ -5,6 +5,7 @@ import models.Inventory;
 import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.items.takeable.TakeableItem;
+import models.items.takeable.consumable.ConsumableItem;
 import models.items.takeable.equippable.EquippableItem;
 import utilities.StateManager;
 import utilities.Task;
@@ -79,11 +80,8 @@ public class NPCItemUseController extends ViewController {
                     Toast.createToastWithTimer("Can't use that on the NPC", 500);
                 }
                 else if(currentItem.isConsumable()){
-                    entity.dropItem(currentItem);
-                    npc.addItemToInventory(itemNodeArrayList.get(selectedItemIndex).getItem());
-                    npc.getInventory().getItemAtIndex(npc.getInventory().getIndexOfItem(currentItem)).onUse(npc);
-                    // weird to tell them item to use itself then pass the entity o_O ?
-//                    currentItem.onUse();
+                    currentItem.onUse(npc);
+                    entity.getInventory().removeItem(currentItem);
                 }
                 else{
                     Toast.createToastWithTimer("Nothing happened...", 1000);

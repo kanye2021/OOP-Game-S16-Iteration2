@@ -1,6 +1,7 @@
 package models;
 
 import models.entities.Entity;
+import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 
 import java.util.*;
@@ -115,6 +116,10 @@ public class Equipment {
         return locationMap.get(location).get().getSlotContents();
 
     }
+//TODO:Make onehandedweapon work
+   /* public boolean isOneHandedWeapon(){
+        if(rightArm = get)
+    }*/
 
     // If we call the above function and there is no equipment at the specified location,
     // Will get a null ptr exception. Use this method to verify if there is something first before.
@@ -142,10 +147,20 @@ public class Equipment {
 
     }
 
-    public void unEquipItem(EquippableItem item) {
 
-        removeEquipmentFromAffectedLocations(item.getComponent());
+    public void unEquipAll(Inventory inventory){
+        for(Location loc : Location.values()){
+            if(isEquipmentAtLocation(loc)){
+                unEquipItem(getEquipmentLocation(loc), inventory);
+            }
+        }
+    }
 
+    public void unEquipItem(EquippableItem item, Inventory inventory) {
+        if(item!=null){
+            removeEquipmentFromAffectedLocations(item.getComponent());
+            inventory.addItem(item);
+        }
     }
 
     public void removeEquipmentFromAffectedLocations(Component component) {

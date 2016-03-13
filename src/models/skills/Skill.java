@@ -41,7 +41,7 @@ public abstract class Skill {
 
     private SkillDictionary ID;
     protected ConditionList conditionsToActivate = new ConditionList();
-    private int level;
+    protected int level;
 
     protected boolean cooldown;
     protected int cooldownTime;

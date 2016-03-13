@@ -1,11 +1,14 @@
 package controllers;
 
 import models.entities.Avatar;
+import utilities.State;
+import utilities.StateManager;
+import utilities.SubState;
+import utilities.Task;
 import utilities.*;
 import views.*;
 
 import java.awt.event.KeyEvent;
-import java.lang.reflect.AnnotatedTypeVariable;
 
 /**
  * Created by david on 3/1/16.
@@ -65,6 +68,11 @@ public class PauseViewController extends ViewController {
                         closePause.run();
                         break;
                     case SAVE_GAME:
+                        SaveGameView saveGameView = new SaveGameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
+                        GameState gS = (GameState)stateManager.getTop();
+                        SaveGameViewController sGv = new SaveGameViewController(saveGameView, stateManager, gS);
+                        nextState = new State(sGv, saveGameView);
+                        stateManager.setActiveState(nextState);
                         break;
                     case OPTIONS:
                         OptionsView optionsView = new OptionsView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), avatar.getSkills(), gameViewController.getKeyPressMappings());
@@ -85,7 +93,7 @@ public class PauseViewController extends ViewController {
                         gameViewController.addSubState(sub);
                         break;
                     case LOAD_GAME:
-                        LoadGameView loadGameView = new LoadGameView(view.getScreenWidth()/ 2, view.getScreenHeight()/ 2, view.getDisplay());
+                        LoadGameView loadGameView = new LoadGameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         LoadGameViewController loadGameViewController = new LoadGameViewController(loadGameView, stateManager);
                         nextState = new State(loadGameViewController, loadGameView);
                         stateManager.setActiveState(nextState);
@@ -113,5 +121,6 @@ public class PauseViewController extends ViewController {
         addKeyPressMapping(new TaskWrapper(closePause, "Close"), KeyEvent.VK_M);
         addKeyPressMapping(new TaskWrapper(closePause, "Close"), KeyEvent.VK_P);
     }
+
 }
 

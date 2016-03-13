@@ -23,18 +23,18 @@ public class Stats {
         EXPERIENCE("EXP"),
         MOVEMENT("Movement"),
         HEALTH("Health"),
-        MAX_HEALTH("Max Health"),
+        MAX_HEALTH("Max-Health"),
         MANA("Mana"),
-        MAX_MANA("Max Mana"),
-        WEAPON_MODIFIER("Weapon Damage"),
-        ARMOR_MODIFIER("Armor Modifier"),
-        RADIUS_OF_VISIBILITY("Radius of Vis."),
-        EXP_TO_LEVEL("EXP To Level"),
-        LAST_EXP_TO_LEVEL("Last EXP To Level"),
+        MAX_MANA("Max-Mana"),
+        WEAPON_MODIFIER("Weapon-Damage"),
+        ARMOR_MODIFIER("Armor-Modifier"),
+        RADIUS_OF_VISIBILITY("Radius-of-Vis"),
+        EXP_TO_LEVEL("EXP-To-Level"),
+        LAST_EXP_TO_LEVEL("Last-EXP-To-Level"),
         OFFSENSIVE_RATING("Offense"),
         DEFENSIVE_RATING("Defense"),
         ARMOR_RATING("Armor"),
-        SKILL_POINTS("Skill Points"),
+        SKILL_POINTS("Skill-Points"),
         TOTAL_WEIGHT("Weight");
 
         private String descriptor;
@@ -237,7 +237,7 @@ public class Stats {
             this.lives--;
             this.health += maxHealth;
             System.out.println("Teleport me to spawn!");
-            Toast.createToast("Ouch i died");
+//            Toast.createToast("OUCH I AM DED");
 
         }
 
@@ -265,7 +265,7 @@ public class Stats {
         this.totalWeight = MathUtilities.putInRange(0, this.totalWeight + delta, Integer.MAX_VALUE);
     }
 
-    private int getLives() {
+    public int getLives() {
         return this.lives;
     }
 

@@ -6,6 +6,7 @@ import models.items.Item;
 import models.map.Map;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by Bradley on 3/5/16.
@@ -83,8 +84,8 @@ public class VisualCortex {
         }
 
         // Get items here.
-        Item item = map.getItemAt(currentLocation);
-        if(item!=null){
+        ArrayList<Item> items = map.getItemAt(currentLocation);
+        if(!items.isEmpty()){
             visualInfo.addItem(new Point(currentLocation));
         }
 

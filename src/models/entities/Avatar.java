@@ -72,22 +72,12 @@ public abstract class Avatar extends Entity {
         inventory.removeItem(item);
         money += price;
     }
-
+    @Override
     public String getType() {
-
-        return "Avatar" + "-" + super.getType();
-
+        //Why are we doing it this way?
+        //return "Avatar" + "-" + super.getType();
+        return "Avatar";
     }
 
-    public void setMount(Mount mount){
-        this.mount = mount;
-        for(String s : mount.getTerrain()){
-            passableTerrain.add(s);
-        }
-        StatModification moveSpeed = new StatModification(Stats.Type.MOVEMENT, 10);
-        StatModificationList list = new StatModificationList(moveSpeed);
-        applyStatMod(list);
-        Point p = mount.getLocation();
-        map.removeEntityAt(p);
-    }
+
 }

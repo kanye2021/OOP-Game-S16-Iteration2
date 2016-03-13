@@ -1,9 +1,12 @@
 package models.items;
 
 import models.entities.Entity;
+import models.items.decorations.potionDecorations.smallDecoration;
 import models.items.decorations.smasherDecorations.*;
 import models.items.interactive.*;
 import models.items.obstacle.*;
+import models.items.takeable.consumable.Potions.SmallHealthPotion;
+import models.items.takeable.consumable.Potions.SmallManaPotion;
 import models.items.takeable.equippable.chestplate.*;
 import models.items.takeable.equippable.helmets.*;
 import models.items.takeable.equippable.greaves.*;
@@ -14,6 +17,7 @@ import models.items.takeable.equippable.weapons.oneHanded.*;
 import models.items.takeable.equippable.weapons.twoHanded.*;
 
 import models.items.takeable.quest.KeyOfKanye;
+import utilities.IOUtilities;
 import views.sprites.Sprite;
 
 import java.awt.*;
@@ -158,7 +162,13 @@ public abstract class Item {
         GATE_OF_KANYE(5000) {public Item createInstance() {return new GateOfKanye();}},
 
         // Quest items
-        KEY_OF_KANYE(6000) {public Item createInstance() {return new KeyOfKanye();}};
+        KEY_OF_KANYE(6000) {public Item createInstance() {return new KeyOfKanye();}},
+
+        //Potions
+        SMALL_HEALTH_POTION(7001) {public Item createInstance() {return new SmallHealthPotion(new smallDecoration());}},
+        SMALL_MANA_POTION(7011){public Item createInstance() {return new SmallManaPotion(new smallDecoration());}};
+
+
 
         private int ID;
         public abstract Item createInstance();
@@ -203,6 +213,10 @@ public abstract class Item {
 
         }
 
+    }
+
+    public static Image getBagImage(){
+        return IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath("./src/res/items/bag.png")).getImage();
     }
 
     protected ItemDictionary ID;
