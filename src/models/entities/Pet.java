@@ -1,8 +1,8 @@
 package models.entities;
 
 
-import controllers.entityControllers.AI.Brain;
-import controllers.entityControllers.AI.Personality.Personality;
+import AI.Brain;
+import AI.Personality.Personality;
 import models.entities.npc.NPC;
 import models.map.Map;
 import models.occupation.Occupation;

@@ -1,16 +1,16 @@
-package controllers.entityControllers.AI.Personality;
+package AI.Personality;
 
-import controllers.entityControllers.AI.Personality.Interests.ExploreInterest;
-import controllers.entityControllers.AI.Personality.Interests.FollowInterest;
-import controllers.entityControllers.AI.Personality.Interests.InterestList;
-import controllers.entityControllers.AI.Personality.Interests.ItemPickupInterest;
+import AI.Personality.Interests.*;
+import AI.Personality.Interests.EntityInterest.FollowInterest;
+import AI.Personality.Interests.ItemInterest.ItemPickupInterest;
+import AI.Personality.Interests.PointInterest.ExploreInterest;
 
 /**
  * Created by Bradley on 3/5/16.
  */
 public enum Personality {
 
-    DOG(0.0, 0.3, 0.2, new InterestList(new FollowInterest(1.0), new ItemPickupInterest(0.4), new ExploreInterest(0.2))),
+    DOG(0.25, 0.3, 0.2, new InterestList(new FollowInterest(1.0), new ItemPickupInterest(0.4), new ExploreInterest(0.2))),
     DEFAULT(0.25, 0.3, 0.2, new InterestList(new ExploreInterest(1.0)));
     /*HITLER(1.0, 0.0, 0.0, 1.0, 1.0), // Will attack no matter what
     HOSTILE(0.9, 0.1, 0.1, 0.9, 1.0), // Will almost definitely attack

@@ -1,8 +1,7 @@
-package controllers.entityControllers.AI.Personality.Interests;
+package AI.Personality.Interests.EntityInterest;
 
-import controllers.entityControllers.AI.Memory.ThoughtInterface;
+import AI.Memory.ThoughtInterface;
 import models.entities.Entity;
-import models.items.takeable.TakeableItem;
 
 import java.awt.*;
 
@@ -17,14 +16,14 @@ public class AttackInterest extends EntityInterest {
 
     }
 
-    private AttackInterest(Interest interest, Entity entityOfInterest, Point pointOfInterest) {
+    private AttackInterest(AttackInterest interest, Entity entityOfInterest, Point pointOfInterest) {
 
         super(interest.getInterestLevel(), entityOfInterest);
         setPointOfInterest(pointOfInterest);
 
     }
 
-    public Interest createRuntimeInterest(Entity entityOfInterest, Point pointOfInterest) {
+    public AttackInterest createRuntimeInterest(Entity entityOfInterest, Point pointOfInterest) {
 
         return new AttackInterest(this, entityOfInterest, pointOfInterest);
 

@@ -1,16 +1,12 @@
-package controllers.entityControllers.AI.Movement;
+package AI.Movement;
 
-import controllers.entityControllers.AI.Memory.Decision;
-import controllers.entityControllers.AI.Memory.Memory;
-import controllers.entityControllers.AI.Memory.MotorInterface;
-import controllers.entityControllers.AI.Personality.Interests.FollowInterest;
-import controllers.entityControllers.AI.Personality.Interests.Interest;
+import AI.Memory.Memory;
+import AI.Memory.MotorInterface;
 import models.entities.npc.NPC;
 import models.map.Map;
 import utilities.NavigationUtilities;
 
 import java.util.Random;
-
 /**
  * Created by Bradley on 3/5/16.
  */
@@ -33,6 +29,7 @@ public class MotorCortex {
             return;
         }
 
+        moveTowardsInterest();
 
     }
 

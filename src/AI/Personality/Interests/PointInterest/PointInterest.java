@@ -1,5 +1,6 @@
-package controllers.entityControllers.AI.Personality.Interests;
+package AI.Personality.Interests.PointInterest;
 
+import AI.Personality.Interests.Interest;
 import models.entities.npc.NPC;
 
 /**

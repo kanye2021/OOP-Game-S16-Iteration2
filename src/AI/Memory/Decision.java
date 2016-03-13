@@ -1,6 +1,6 @@
-package controllers.entityControllers.AI.Memory;
+package AI.Memory;
 
-import controllers.entityControllers.AI.Personality.Interests.Interest;
+import AI.Personality.Interests.Interest;
 
 import java.awt.*;
 

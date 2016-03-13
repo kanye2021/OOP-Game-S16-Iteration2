@@ -1,12 +1,16 @@
-package controllers.entityControllers.AI.Thought;
+package AI.Thought;
 
-import controllers.entityControllers.AI.Memory.Decision;
-import controllers.entityControllers.AI.Memory.UniformPicker;
-import controllers.entityControllers.AI.Memory.ThoughtInterface;
-import controllers.entityControllers.AI.Personality.Interests.*;
+import AI.Memory.Decision;
+import AI.Memory.ThoughtInterface;
+import AI.Personality.Interests.*;
+import AI.Personality.Interests.EntityInterest.EntityInterest;
+import AI.Personality.Interests.ItemInterest.ItemInterest;
+import AI.Personality.Interests.PointInterest.ExploreInterest;
+import AI.Personality.Interests.PointInterest.PointInterest;
 import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.items.Item;
+import utilities.UniformPicker;
 
 import java.awt.*;
 import java.util.Random;

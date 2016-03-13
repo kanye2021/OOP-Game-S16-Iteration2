@@ -1,6 +1,6 @@
-package controllers.entityControllers.AI.Personality.Interests;
+package AI.Personality.Interests.ItemInterest;
 
-import controllers.entityControllers.AI.Memory.ThoughtInterface;
+import AI.Memory.ThoughtInterface;
 import models.items.Item;
 import models.items.takeable.TakeableItem;
 
@@ -17,14 +17,14 @@ public class ItemPickupInterest extends ItemInterest {
 
     }
 
-    private ItemPickupInterest(Interest interest, Item itemOfInterest, Point pointOfInterest) {
+    private ItemPickupInterest(ItemInterest interest, Item itemOfInterest, Point pointOfInterest) {
 
         super(interest.getInterestLevel(), itemOfInterest);
         setPointOfInterest(pointOfInterest);
 
     }
 
-    public Interest createRuntimeInterest(Item itemOfInterest, Point pointOfInterest) {
+    public ItemInterest createRuntimeInterest(Item itemOfInterest, Point pointOfInterest) {
 
         return new ItemPickupInterest(this, itemOfInterest, pointOfInterest);
 

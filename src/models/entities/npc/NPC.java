@@ -1,7 +1,7 @@
 package models.entities.npc;
 
-import controllers.entityControllers.AI.Brain;
-import controllers.entityControllers.AI.Personality.Personality;
+import AI.Brain;
+import AI.Personality.Personality;
 import models.entities.Entity;
 import models.entities.npc.actions.Action;
 import models.map.Map;

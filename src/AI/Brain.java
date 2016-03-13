@@ -1,10 +1,10 @@
-package controllers.entityControllers.AI;
+package AI;
 
-import controllers.entityControllers.AI.Memory.Memory;
-import controllers.entityControllers.AI.Movement.MotorCortex;
-import controllers.entityControllers.AI.Personality.Personality;
-import controllers.entityControllers.AI.Thought.FrontalLobe;
-import controllers.entityControllers.AI.Vision.VisualCortex;
+import AI.Memory.Memory;
+import AI.Movement.MotorCortex;
+import AI.Personality.Personality;
+import AI.Thought.FrontalLobe;
+import AI.Vision.VisualCortex;
 import models.entities.npc.NPC;
 
 /**

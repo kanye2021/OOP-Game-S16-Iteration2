@@ -1,6 +1,6 @@
-package controllers.entityControllers.AI.Memory;
+package AI.Memory;
 
-import controllers.entityControllers.AI.Personality.Personality;
+import AI.Personality.Personality;
 
 /**
  * Created by aseber on 3/12/16.

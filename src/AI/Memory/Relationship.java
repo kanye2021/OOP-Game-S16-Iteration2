@@ -1,4 +1,4 @@
-package controllers.entityControllers.AI.Memory;
+package AI.Memory;
 
 import models.entities.Entity;
 import utilities.MathUtilities;

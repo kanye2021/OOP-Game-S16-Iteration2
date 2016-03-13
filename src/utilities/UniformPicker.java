@@ -1,6 +1,4 @@
-package controllers.entityControllers.AI.Memory;
-
-import utilities.MathUtilities;
+package utilities;
 
 import java.util.HashMap;
 import java.util.Random;

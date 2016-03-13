@@ -1,7 +1,7 @@
-package controllers.entityControllers.AI.Personality.Interests;
+package AI.Personality.Interests.EntityInterest;
 
-import controllers.entityControllers.AI.Memory.Relationship;
-import controllers.entityControllers.AI.Memory.ThoughtInterface;
+import AI.Memory.Relationship;
+import AI.Memory.ThoughtInterface;
 import models.entities.Entity;
 
 import java.awt.*;
@@ -15,7 +15,7 @@ public class FollowInterest extends EntityInterest {
         super(interestLevel);
     }
 
-    public FollowInterest(Interest interest, Entity entityOfInterest, Point pointOfInterest) {
+    public FollowInterest(FollowInterest interest, Entity entityOfInterest, Point pointOfInterest) {
 
         super(interest.getInterestLevel(), entityOfInterest);
         setPointOfInterest(pointOfInterest);
@@ -23,7 +23,7 @@ public class FollowInterest extends EntityInterest {
 
     }
 
-    public Interest createRuntimeInterest(Entity entityOfInterest, Point pointOfInterest) {
+    public FollowInterest createRuntimeInterest(Entity entityOfInterest, Point pointOfInterest) {
 
         return new FollowInterest(this, entityOfInterest, pointOfInterest);
 
@@ -53,6 +53,7 @@ public class FollowInterest extends EntityInterest {
 
     public boolean isApplicable(ThoughtInterface memory) {
 
+        System.out.println(memory.entitiesSeen());
         return memory.getSeenEntities().containsKey(entityOfInterest);
 
     }

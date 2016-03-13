@@ -1,9 +1,9 @@
-package controllers.entityControllers.AI.Personality.Interests;
+package AI.Personality.Interests.PointInterest;
 
-import controllers.entityControllers.AI.Memory.ThoughtInterface;
-import controllers.entityControllers.AI.Memory.UniformPicker;
+import AI.Memory.ThoughtInterface;
 import models.entities.npc.NPC;
 import models.map.Map;
+import utilities.UniformPicker;
 
 import java.awt.*;
 
@@ -18,14 +18,14 @@ public class ExploreInterest extends PointInterest {
 
     }
 
-    private ExploreInterest(Interest interest, Point pointOfInterest) {
+    private ExploreInterest(ExploreInterest interest, Point pointOfInterest) {
 
         super(interest.getInterestLevel());
         setPointOfInterest(pointOfInterest);
 
     }
 
-    public Interest createRuntimeInterest(NPC npc) {
+    public ExploreInterest createRuntimeInterest(NPC npc) {
 
         UniformPicker<Map.Direction> directionPicker = new UniformPicker<>();
         Point npcLocation = npc.getLocation();

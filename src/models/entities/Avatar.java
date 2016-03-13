@@ -1,17 +1,14 @@
 package models.entities;
 
-import controllers.entityControllers.AvatarController;
 import models.entities.npc.Mount;
 import models.entities.npc.NPC;
 import models.items.takeable.TakeableItem;
-import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
 import models.stats.Stats;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Created by aseber on 2/22/16.
@@ -43,13 +40,6 @@ public abstract class Avatar extends Entity {
 
     }
 
-    //overiding function for skills mapping
-
-    protected final AvatarController initController() {
-
-        return null; // Keyboard controller!
-
-    }
     @Override
     public void startInteraction(NPC npc){
 

@@ -1,6 +1,5 @@
 package models.entities;
 
-import controllers.entityControllers.AvatarController;
 import models.Equipment;
 import models.Inventory;
 import models.entities.npc.Mount;
@@ -35,7 +34,6 @@ public abstract class Entity{
     protected Inventory inventory;
     protected Equipment equipment;
     protected Occupation occupation;
-    protected AvatarController controller;
     protected Map map;
 
     // All entities should be able to have a pet.
@@ -99,8 +97,13 @@ public abstract class Entity{
 
     public boolean canTraverseTerrain(Point point) {
 
-        return passableTerrain.contains(map.getTileAt(point).getTerrain().getType());
+        if (map.isTileValid(point)) {
 
+            return passableTerrain.contains(map.getTileAt(point).getTerrain().getType());
+
+        }
+
+        return false;
     }
 
     // Location getter/setter

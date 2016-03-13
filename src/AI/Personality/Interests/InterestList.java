@@ -1,6 +1,9 @@
-package controllers.entityControllers.AI.Personality.Interests;
+package AI.Personality.Interests;
 
-import java.lang.reflect.Type;
+import AI.Personality.Interests.EntityInterest.EntityInterest;
+import AI.Personality.Interests.ItemInterest.ItemInterest;
+import AI.Personality.Interests.PointInterest.PointInterest;
+
 import java.util.Arrays;
 import java.util.HashSet;
 

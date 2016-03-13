@@ -1,9 +1,8 @@
-package controllers.entityControllers.AI.Personality.Interests;
+package AI.Personality.Interests;
 
-import controllers.entityControllers.AI.Memory.ThoughtInterface;
+import AI.Memory.ThoughtInterface;
 
 import java.awt.*;
-import java.lang.reflect.Type;
 
 /**
  * Created by aseber on 3/9/16.

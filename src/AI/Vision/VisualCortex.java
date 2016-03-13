@@ -1,6 +1,6 @@
-package controllers.entityControllers.AI.Vision;
+package AI.Vision;
 
-import controllers.entityControllers.AI.Memory.VisualInterface;
+import AI.Memory.VisualInterface;
 import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.items.Item;

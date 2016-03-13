@@ -1,6 +1,6 @@
-package controllers.entityControllers.AI.Memory;
+package AI.Memory;
 
-import controllers.entityControllers.AI.Personality.Personality;
+import AI.Personality.Personality;
 import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.items.Item;
