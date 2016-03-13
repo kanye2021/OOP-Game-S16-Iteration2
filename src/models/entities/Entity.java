@@ -41,6 +41,7 @@ public abstract class Entity{
     protected Occupation occupation;
     protected AvatarController controller;
     protected Map map;
+    protected String type;
 
     protected int level;
 
@@ -181,7 +182,6 @@ public abstract class Entity{
     }
 
     public final TileDetection teleport(Point point) {
-        Toast.createToastWithTimer("Just teleported lol", 500);
         TileDetection td =  map.moveEntity(Entity.this, point);
         location = td.getLocation();
         return td;
@@ -319,6 +319,11 @@ public abstract class Entity{
         // Upon level-up, notifies skillviewport to allow for level-ing up a skill
         level++;
         this.stats.levelUp();
+    }
+
+    public void levelUpToast(){
+        level++;
+        this.stats.levelUp();
         Toast.createToastWithTimer("You've leveled up! Click a skill to increase", 1500);
     }
 
@@ -390,5 +395,6 @@ public abstract class Entity{
 
         }
     }
+
 
 }
