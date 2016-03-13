@@ -84,7 +84,7 @@ public class GameSaver {
             HashMap.Entry pair = (HashMap.Entry)it.next();
             map.appendChild(saveTile(doc, (Point)pair.getKey(), (Tile)pair.getValue()));
             //System.out.println(pair.getKey() + " = " + pair.getValue());
-            it.remove(); // avoids a ConcurrentModificationException
+            //it.remove(); // avoids a ConcurrentModificationException
         }
         return map;
     }

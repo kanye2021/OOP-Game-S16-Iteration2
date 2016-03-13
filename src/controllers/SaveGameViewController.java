@@ -89,6 +89,7 @@ public class SaveGameViewController extends ViewController{
     public void goPrevious(){
         //TODO: Make this nicer somehow...
         view.getDisplay().remove(((SaveGameView)view).getSaveStateName());
+        //stateManager.goToPreviousState();
         stateManager.goToPreviousState();
     }
 
