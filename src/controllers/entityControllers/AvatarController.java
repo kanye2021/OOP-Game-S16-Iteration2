@@ -127,6 +127,7 @@ public class AvatarController {
             System.out.println(secondSkill);
             DetectRemoveTrapSkill detectSkill = (DetectRemoveTrapSkill) secondSkill;
             detectSkill.onActivate(avatar);
+            System.out.println("Hello World!");
 
         } else {
             System.out.println("What are you");
@@ -174,7 +175,7 @@ public class AvatarController {
             Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
             System.out.println(fourthSkill);
             DetectRemoveTrapSkill detectRemoveTrapSkill = (DetectRemoveTrapSkill) fourthSkill;
-            detectRemoveTrapSkill.removeTrap(avatar);
+            detectRemoveTrapSkill.onActivate(avatar);
 
         }else{
             System.out.println("What are you");
