@@ -111,6 +111,7 @@ public class NPCShopView extends View {
         int titleY = titleStartY + (int) titleRect.getHeight() + titleMargin;
 
         // Draw the title
+
         g.setColor(Color.lightGray);
         g.drawString(title, titleX, titleY);
 
@@ -247,7 +248,7 @@ public class NPCShopView extends View {
 
         if (itemNode == null) {
             //draw empty slot
-            g.setColor(Color.LIGHT_GRAY);
+            g.setColor(Color.lightGray);
             g.fillRect(xpos, ypos, itemWidth, itemHeight);
 
             int xMid = (2 * xpos + itemWidth) / 2;
@@ -260,7 +261,7 @@ public class NPCShopView extends View {
         } else {
 
             //draw pic
-            g.setColor(Color.LIGHT_GRAY);
+            g.setColor(new Color(13,123,123));//g.setColor(Color.LIGHT_GRAY);
             g.fillRect(xpos, ypos, itemWidth, itemHeight);
             g.drawImage(itemNode.getImage(), xpos, ypos, this.itemWidth, this.itemHeight, null);
 
