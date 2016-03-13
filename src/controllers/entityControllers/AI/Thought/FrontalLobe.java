@@ -46,7 +46,11 @@ public class FrontalLobe {
 
                 }
 
+            }else{
+//                System.out.println("The decision isn't valid");
             }
+
+
 
         }
 
@@ -61,7 +65,7 @@ public class FrontalLobe {
             if (!memory.relationshipExists(entity)) {
 
                 // friendly Faction should add some good weight
-                //      especially those part of the same faction
+                // especially those part of the same faction
                 // enemy faction should add some bad weight
                 double aggressiveFactor = memory.getPersonality().getAggressiveness();
                 double scatter_brainedNess = memory.getPersonality().getScatter_Brainedness();
