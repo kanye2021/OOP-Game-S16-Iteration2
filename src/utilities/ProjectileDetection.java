@@ -1,5 +1,6 @@
 package utilities;
 
+import models.attack.Projectile;
 import models.entities.Entity;
 
 import java.awt.*;
@@ -8,41 +9,25 @@ import java.awt.*;
  * Created by denzel on 3/11/16.
  */
 public class ProjectileDetection {
-    private Entity entity;
+    private Projectile projectile;
     private Point location;
     private boolean moved;
-    private boolean teleported;
 
-
-
-    public boolean npcDetected(){
-        return entity != null;
+    public ProjectileDetection(Projectile projectile,Point location,boolean moved){
+        this.projectile = projectile;
+        this.location = location;
+        this.moved = moved;
     }
+
     public Point getLocation(){
         return location;
     }
-    public Entity getEntity(){
-        return entity;
+    public Projectile getProjectile(){
+        return projectile;
     }
-
 
     public void setLocation(Point location) {
         this.location = location;
     }
 
-    public boolean isMoved() {
-        return moved;
-    }
-
-    public void setMoved(boolean moved) {
-        this.moved = moved;
-    }
-
-    public boolean isTeleported() {
-        return teleported;
-    }
-
-    public void setTeleported(boolean teleported) {
-        this.teleported = teleported;
-    }
 }

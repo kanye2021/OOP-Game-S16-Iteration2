@@ -25,10 +25,12 @@ public class Decision {
 
     }
 
-    public void updateInterest() {
+    public double getInterestLevel(){
+        return interest.getInterestLevel();
+    }
 
-        interest.Update();
-
+    public void updateInterest(Memory memory) {
+        interest.Update(memory);
     }
 
     public String getInterestType() {
@@ -37,8 +39,8 @@ public class Decision {
 
     }
 
-    public Point getPointOfInterest() {
 
+    public Point getPointOfInterest() {
         return pointOfInterest;
 
     }

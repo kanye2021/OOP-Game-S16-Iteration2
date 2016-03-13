@@ -21,7 +21,6 @@ public class GroundDasherSkill extends ActiveSkill{
     public GroundDasherSkill(){
         damage = 1;
         range = 3;
-        projectile = new Projectile(damage,range,5);
     }
     @Override
     public SkillDictionary initID() {
@@ -37,6 +36,7 @@ public class GroundDasherSkill extends ActiveSkill{
 
     @Override
     public void onActivate(Entity entity) {
+        projectile = new Projectile(damage,range,5,entity.getMap(),initSprite());
         if(cooldown){
             System.out.println("ANOTHA ONE");
             return;

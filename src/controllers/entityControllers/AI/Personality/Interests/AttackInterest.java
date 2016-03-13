@@ -10,17 +10,17 @@ import models.items.takeable.TakeableItem;
 /**
  * Created by aseber on 3/11/16.
  */
-public class ItemPickupInterest extends Interest {
+public class AttackInterest extends Interest {
 
     private Item itemOfInterest;
 
-    public ItemPickupInterest(double interestLevel) {
+    public AttackInterest(double interestLevel) {
 
         super(interestLevel);
 
     }
 
-    private ItemPickupInterest(Interest interest, Object objectOfInterest) {
+    private AttackInterest(Interest interest, Object objectOfInterest) {
 
         super(interest.getInterestLevel());
         addInterestAttachment(objectOfInterest);
@@ -29,7 +29,7 @@ public class ItemPickupInterest extends Interest {
 
     public Interest createRuntimeInterest(Object objectOfInterest) {
 
-        return new ItemPickupInterest(this, objectOfInterest);
+        return new AttackInterest(this, objectOfInterest);
 
     }
 
@@ -55,8 +55,8 @@ public class ItemPickupInterest extends Interest {
 
         if (objectofInterest instanceof TakeableItem) {
 
-            TakeableItem item = (TakeableItem) objectofInterest;
-            weight = item.getMonetaryValue() * 100 * getInterestLevel();
+//            TakeableItem item = (TakeableItem) objectofInterest;
+//            weight = item.getMonetaryValue() * 100 * getInterestLevel();
 
         }
 

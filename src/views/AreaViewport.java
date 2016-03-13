@@ -109,6 +109,7 @@ public class AreaViewport extends View {
 
         }
 
+        //draws the viewport
         g.drawImage(cachedViewport, 0, 0, viewportWidth, viewportHeight, getDisplay());
 
         for (EntityLocationTuple et : this.entityLocationTuples) {
@@ -204,6 +205,7 @@ public class AreaViewport extends View {
         if(tileNode.tile.getEntity()!=null){
             this.entityLocationTuples.add(new EntityLocationTuple(tileNode.tile.getEntity(), new Point((int)tileNode.pixelPoint.getX(), (int)tileNode.pixelPoint.getY())));
         }
+
 
         g.setClip(oldClip);
     }

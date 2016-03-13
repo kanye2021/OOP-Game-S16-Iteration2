@@ -26,7 +26,6 @@ public class IndignationSkill extends ActiveSkill{
         cooldownTime = 0;
         damage = 1;
         range = 3;
-        projectile = new Projectile(damage,range,5);
     }
     @Override
     public SkillDictionary initID() {
@@ -42,6 +41,7 @@ public class IndignationSkill extends ActiveSkill{
 
     @Override
     public void onActivate(Entity entity) {
+        projectile = new Projectile(damage,range,5,entity.getMap(),initSprite());
         if(cooldown){
 
             return;

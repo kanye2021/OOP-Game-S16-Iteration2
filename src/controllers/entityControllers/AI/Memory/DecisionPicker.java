@@ -32,16 +32,12 @@ public class DecisionPicker {
     }
 
     public Decision pickDecision() {
-
         rand = rng.nextDouble();
         normalizeRatios();
 
         for (java.util.AbstractMap.Entry<Range, Decision> pair : interestRatios.entrySet()) {
-
             if (pair.getKey().inRange(rand)) {
-
                 return pair.getValue();
-
             }
 
         }

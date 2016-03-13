@@ -220,7 +220,7 @@ public class GameLoader {
                 }
 
 //                tiles.get(new Point(x, y)) = new Tile(terrain, areaEffect, decal, item, entity);
-                tiles.put(new Point(x, y),  new Tile(terrain, decal, item, entity, areaEffect));
+                tiles.put(new Point(x, y),  new Tile(terrain, decal, item, entity, areaEffect,null));
             }
 
             return new Map(tiles);

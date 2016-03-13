@@ -39,26 +39,24 @@ public class FrontalLobe {
         //First check if our current decision is valid
         if (currentDecision.isInterestValid(memory)) {
 
-            System.out.println("scatter?");
+            //System.out.println("scatter?");
 
             // Then check if we should get a new Interest based on scatter_brainedness
             if (memory.getPersonality().getScatter_Brainedness() > rand) {
 
-                System.out.println(npc.getType() + "I kept my same decision");
+                //System.out.println(npc.getType() + "I kept my same decision");
                 return;
 
             }
 
         }
 
-        //System.out.println(npc.getType() + "I got a new decision");
         // Otherwise select a new decision
         selectNewDecision();
 
     }
 
     private void findNewEntities() {
-
         for (Entity entity : memory.getSeenEntities().keySet()) {
 
             if (!memory.relationshipExists(entity)) {
@@ -90,7 +88,7 @@ public class FrontalLobe {
 
         Interest interestToAdd;
         Point pointOfInterest;
-        InterestList interests = memory.getPersonality().getInterests();
+        InterestList interests = memory.getPersonality().getInterests();;
         HashSet<Interest> subsetInterests = interests.getInterests(Interest.Type.ENTITY);
         double weight;
 
@@ -98,14 +96,14 @@ public class FrontalLobe {
         for (java.util.AbstractMap.Entry<Entity, Point> pair : memory.getSeenEntities().entrySet()) {
             Entity entityOfInterest = pair.getKey();
             pointOfInterest = pair.getValue();
-
             for (Interest interest : subsetInterests) {
-
+//                System.out.println(npc.getType()+ " interest: " + interest.getInterestType());
                 weight = interest.getInterestWeight(entityOfInterest, memory);
 
                 if (weight > 0) {
-
                     interestToAdd = interest.createRuntimeInterest(entityOfInterest);
+
+
                     validDecisions.addDecision(new Decision(interestToAdd, pointOfInterest), weight);
 
                 }
@@ -120,10 +118,9 @@ public class FrontalLobe {
             Item itemOfInterest = pair.getKey();
             pointOfInterest = pair.getValue();
 
-            for (Interest interest : subsetInterests) {
-
+            for (Interest interest : subsetInterests) {;
                 weight = interest.getInterestWeight(itemOfInterest, memory);
-
+//                System.out.println("Item interest: " + interest.getInterestType());
                 if (weight > 0) {
 
                     interestToAdd = interest.createRuntimeInterest(itemOfInterest);
@@ -138,14 +135,14 @@ public class FrontalLobe {
         ////// And pick one //////
 
         if (validDecisions.validDecisionsToPick()) {
-
             Decision newDecision = validDecisions.pickDecision();
-            System.out.println(newDecision.getInterestType());
+            memory.setDecision(newDecision);
             return newDecision;
 
         } else {
 
             // Return a default decision
+//            System.out.println("null");
             return null;
 
         }

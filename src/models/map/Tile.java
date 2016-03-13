@@ -2,9 +2,11 @@ package models.map;
 
 //import javafx.util.Pair;
 import models.area_effects.AreaEffect;
+import models.attack.Projectile;
 import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.items.Item;
+import utilities.ProjectileDetection;
 import utilities.TileDetection;
 
 import java.awt.*;
@@ -21,15 +23,17 @@ public class Tile {
     private Decal decal;
     private Item item;
     private Entity entity;
+    private Projectile projectile;
     private Trap trap;
     private TileImage tileImage;
 
-    public Tile(Terrain terrain, Decal decal, Item item, Entity entity, AreaEffect areaEffect) {
+    public Tile(Terrain terrain, Decal decal, Item item, Entity entity, AreaEffect areaEffect,Projectile projectile) {
         this.terrain = terrain;
         this.decal = decal;
         this.item = item;
         this.entity = entity;
         this.areaEffect = areaEffect;
+        this.projectile = projectile;
         this.tileImage = new TileImage(75, 75, BufferedImage.TYPE_INT_RGB); // Size is arbitrary as it will be scaled later anyway.
         tileImage.generate(this); // Generate the image for the tile.
     }
@@ -40,10 +44,28 @@ public class Tile {
         this.decal = (tile.getDecal()!=null) ?  new Decal(tile.getDecal()) : null;
         this.item = (tile.getItem()!=null) ? Item.ItemDictionary.itemFromID(tile.getItem().getItemId()) : null;
         this.entity = tile.getEntity(); // This will store the same reference.... this is bad.
+        this.projectile = tile.getProjectile();
         this.areaEffect = tile.getAreaEffect(); // THis will also store the same reference.
         this.tileImage = TileImage.copyImage(tile.getTileImage()); // The image will stay the same tho...at least.
     }
 
+    public ProjectileDetection insertProjectile(Projectile projectile){
+        ProjectileDetection result = new ProjectileDetection(null,null,false);
+
+        if(!projectile.canTraverseTerrain(this.terrain)){
+            System.out.println("projectile can't travel here");
+            return result;
+        }
+
+        //check to see if theres an obstacle
+        if(this.item != null){
+            if(this.item.getType().equals("obstacle")){
+                System.out.println("obstacle");
+            }
+        }
+
+        return result;
+    }
     // For now if there is already an entity on the tile. adding an entity will replace that
     // entity with this one. This may or may not be the desired affect so care should be taken
     // in the logic that consumes this function (and it has been).
@@ -131,7 +153,18 @@ public class Tile {
     public Entity getEntity() {
         return entity;
     }
+
+    public Projectile getProjectile(){
+        return projectile;
+    }
     public Image getEntityImage() {return (entity!=null) ? entity.getImage() : null;}
+
+    public Image getProjectileImage(){
+        if(projectile!=null){
+            System.out.println("yo");
+        }
+        return null;
+    }
 
     public Trap getTrap(){return trap;}
 
@@ -152,7 +185,10 @@ public class Tile {
 
     public void removeEntity() {
         entity = null;
+    }
 
+    public void removeProjectile(){
+        projectile = null;
     }
 
     // For now putting an item on this tile simply replaces one that was already there.
