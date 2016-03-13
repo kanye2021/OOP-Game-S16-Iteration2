@@ -35,10 +35,6 @@ public class GameViewController extends ViewController{
     private Point offset;
     private Point lastOffset;
 
-    //Must be able to load and save from the GVC
-    private GameLoader gameLoader;
-    private GameSaver gameSaver;
-
     public GameViewController(View view, StateManager stateManager){
         super(view, stateManager);
         npcList = new ArrayList<>();

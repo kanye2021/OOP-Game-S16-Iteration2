@@ -29,6 +29,8 @@ public class Dragon extends Mount {
 
         movement = 10;
         terrainTypes.add("mountain");
+        terrainTypes.add("grass");
+
 
     }
 
@@ -81,10 +83,6 @@ public class Dragon extends Mount {
     public void initActions(){
         actionList.add(new Talk(this));
         actionList.add(new Ride(this));
-    }
-    @Override
-    public void updateOrientation(Map.Direction direction){
-        orientation = direction;
     }
 
 }

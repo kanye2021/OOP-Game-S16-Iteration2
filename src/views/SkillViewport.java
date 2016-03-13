@@ -155,7 +155,6 @@ public class SkillViewport extends View{
                 drawAndUpdateCoolDown(g, skillBoxX, skillBoxY, currentTime, currentSkill);
             }
 
-
             // Draw option to level up this skill if have skill points
             if (stats.getStat(Stats.Type.SKILL_POINTS) > 0) {
                 drawSkillLevelUpBox(g, skillBoxX, skillBoxY);

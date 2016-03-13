@@ -79,23 +79,5 @@ public abstract class Avatar extends Entity {
         return "Avatar";
     }
 
-    public void setMount(Mount mount){
-        this.mount = mount;
-        for(String s : mount.getTerrain()){
-            passableTerrain.add(s);
-        }
-        StatModification moveSpeed = new StatModification(Stats.Type.MOVEMENT, 10);
-        StatModificationList list = new StatModificationList(moveSpeed);
-        applyStatMod(list);
-        Point p = mount.getLocation();
-        map.removeEntityAt(p);
-    }
-    public void removeMount(){
-        if (mount != null) {
-            mount.location = getLocation();
-            map.insertEntity(mount);
-            this.mount = null;
-        }
-    }
 
 }

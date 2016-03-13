@@ -25,7 +25,6 @@ public abstract class Mount extends NPC {
     //set Terrain and speed for the mount
     public abstract ArrayList<String> getTerrain();
     public abstract int getMovement();
-    public abstract void updateOrientation(Map.Direction direction );
 
     public String getType() {
 
