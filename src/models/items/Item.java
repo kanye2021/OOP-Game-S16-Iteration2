@@ -3,6 +3,13 @@ package models.items;
 import models.entities.Entity;
 import models.items.decorations.potionDecorations.smallDecoration;
 import models.items.decorations.smasherDecorations.*;
+import models.items.decorations.sneakDecorations.dragonHideDecoration;
+import models.items.decorations.sneakDecorations.leatherDecoration;
+import models.items.decorations.sneakDecorations.woolDecoration;
+import models.items.decorations.summonerDecorations.bodyDecoration;
+import models.items.decorations.summonerDecorations.dragonFurDecoration;
+import models.items.decorations.summonerDecorations.cosmicDecoration;
+import models.items.decorations.summonerDecorations.mindDecoration;
 import models.items.interactive.*;
 import models.items.obstacle.*;
 import models.items.takeable.consumable.Potions.SmallHealthPotion;
@@ -65,12 +72,23 @@ public abstract class Item {
         GOLD_HIDE(1110) {public Item createInstance() {return new GoldHide();}},
         RUNITE_HIDE(1111) {public Item createInstance() {return new RuniteHide();}},
 
+
         WOOD_ROBE(1112) {public Item createInstance() {return new WoodRobe();}},
         IRON_ROBE(1113) {public Item createInstance() {return new IronRobe();}},
         STEEL_ROBE(1114) {public Item createInstance() {return new SteelRobe();}},
         MITHRIL_ROBE(1115) {public Item createInstance() {return new MithrilRobe();}},
         GOLD_ROBE(1116) {public Item createInstance() {return new GoldRobe();}},
         RUNITE_ROBE(1117) {public Item createInstance() {return new RuniteRobe();}},
+
+        DRAGON_HIDE(1120) {public Item createInstance() {return new hide(new dragonHideDecoration());}},
+        LEATHER_HIDE(1121) {public Item createInstance() {return new hide(new leatherDecoration());}},
+        WOOL_HIDE(1122) {public Item createInstance() {return new hide(new woolDecoration());}},
+
+        BODY_ROBE(1123) {public Item createInstance() {return new robe(new bodyDecoration());}},
+        COSMIC_ROBE(1124) {public Item createInstance() {return new robe(new cosmicDecoration());}},
+        DRAGON_FUR_ROBE(1125) {public Item createInstance() {return new robe(new dragonFurDecoration());}},
+        MIND_ROBE(1126) {public Item createInstance() {return new robe(new mindDecoration());}},
+
 
         WOOD_GREAVES(1200) {public Item createInstance() {return new greaves(new woodDecoration());}},
         IRON_GREAVES(1201) {public Item createInstance() {return new greaves(new ironDecoration());}},
