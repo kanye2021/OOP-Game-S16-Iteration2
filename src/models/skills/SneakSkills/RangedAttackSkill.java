@@ -6,6 +6,7 @@ import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.skills.PassiveSkill;
+import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 
@@ -28,9 +29,13 @@ public class RangedAttackSkill extends ActiveSkill {
 
     @Override
     public String getName() {
-        return "Ranged-Attack-Mastery";
+        return "Ranged Attack Mastery";
     }
 
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "sneak-rangedAttack.png");
+    }
 
     @Override
     public void onActivate(Entity entity) {

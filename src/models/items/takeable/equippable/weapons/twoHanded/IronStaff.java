@@ -18,7 +18,7 @@ public class IronStaff extends EquippableItem{
     public IronStaff(){
         ID = Item.ItemDictionary.IRON_STAFF;
         name = "Iron staff";
-        description = "A staff made of gold";
+        description = "A staff made of iron";
         component = Equipment.Component.TWO_HANDED_WEAPON;
         sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/StaffOfAir.png");
         monetaryValue = IRONCOST;

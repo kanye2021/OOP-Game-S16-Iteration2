@@ -19,7 +19,7 @@ public class twoHandedSword extends EquippableItem{
     public twoHandedSword(equippableItemDecoration decoration){
         ID = ItemDictionary.getDictionaryItemFromID(1700 + decoration.IDModifier);
         name = "{NAME} 2h Sword".replace("{NAME}", decoration.nameModifier);
-        description = "2h sword made of gold".replace("{NAME}", decoration.descriptionModifier);
+        description = "2h sword made of {NAME}".replace("{NAME}", decoration.descriptionModifier);
         component = Equipment.Component.TWO_HANDED_WEAPON;
         sprite = new DecoratedSprite("./src/res/items/takeable/weapons/twoHanded/smasher-template-2h.png", decoration.colorMap);
         monetaryValue = decoration.monetaryModifier;

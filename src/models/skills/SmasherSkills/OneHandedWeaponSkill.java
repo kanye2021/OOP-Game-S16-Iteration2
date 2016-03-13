@@ -8,6 +8,7 @@ import models.skills.ActiveSkill;
 import models.skills.PassiveSkill;
 import models.skills.SkillList;
 import models.stats.Stats;
+import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 
@@ -35,7 +36,7 @@ public class OneHandedWeaponSkill extends ActiveSkill {
 
     @Override
     public String getName() {
-        return "One-Handed-Weapon-Mastery";
+        return "One Handed Weapon Mastery";
     }
 
     @Override
@@ -52,6 +53,11 @@ public class OneHandedWeaponSkill extends ActiveSkill {
     @Override
     public KeyEvent[] initActivatorKeys() {
         return null;
+    }
+
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "smasher-oneHandedSkill.png");
     }
 
     public int getCombatWeight(Entity entity){return (1*entity.getStats().getStat(Stats.Type.TOTAL_WEIGHT));}

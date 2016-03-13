@@ -2352,12 +2352,18 @@
     </tile>
     <tile x="-10" y="4">
         <terrain type="grass"/>
+        <item id="1700" type="takeable"/>
+
     </tile>
     <tile x="-10" y="5">
         <terrain type="grass"/>
+        <item id="1701" type="takeable"/>
+
     </tile>
     <tile x="-10" y="6">
         <terrain type="grass"/>
+        <item id="1705" type="takeable"/>
+
     </tile>
     <tile x="-10" y="7">
         <terrain type="grass"/>
@@ -2376,10 +2382,15 @@
     </tile>
     <tile x="-10" y="12">
         <terrain type="grass"/>
+        <item id="1705" type="takeable"/>
+
     </tile>
     <tile x="-10" y="13">
         <terrain type="grass"/>
-        <item id="1502" type="takeable"/>
+        <item id="7001" type="takeable"/>
+        <item id="7001" type="takeable"/>
+        <item id="7001" type="takeable"/>
+        <item id="7001" type="takeable"/>
     </tile>
     <tile x="-10" y="14">
         <terrain type="grass"/>
@@ -2653,6 +2664,7 @@
     </tile>
     <tile x="-8" y="1">
         <terrain type="grass"/>
+        <area-effect type="heal-damage" value="5"/>
     </tile>
     <tile x="-8" y="2">
         <terrain type="grass"/>
@@ -2671,6 +2683,8 @@
     </tile>
     <tile x="-8" y="7">
         <terrain type="grass"/>
+        <area-effect type="heal-damage" value="5"/>
+
     </tile>
     <tile x="-8" y="8">
         <terrain type="grass"/>
@@ -2692,9 +2706,11 @@
     </tile>
     <tile x="-8" y="14">
         <terrain type="grass"/>
+        <area-effect type="heal-damage" value="5"/>
     </tile>
     <tile x="-8" y="15">
         <terrain type="grass"/>
+        <area-effect type="heal-damage" value="5"/>
     </tile>
     <tile x="-8" y="16">
         <terrain type="mountain"/>

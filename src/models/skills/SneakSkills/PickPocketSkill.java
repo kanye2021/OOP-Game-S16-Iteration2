@@ -9,6 +9,7 @@ import models.map.Map;
 import models.map.Tile;
 import models.skills.ActiveSkill;
 import utilities.Toast;
+import views.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -39,6 +40,12 @@ public class PickPocketSkill extends ActiveSkill {
     @Override
     public String getName() {
         return "Pickpocket";
+    }
+
+
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "sneak-pickpocketSkill.png");
     }
 
     @Override

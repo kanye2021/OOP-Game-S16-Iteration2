@@ -7,6 +7,7 @@ import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.skills.PassiveSkill;
 import models.stats.Stats;
+import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 
@@ -33,7 +34,7 @@ public class BrawlingSkill extends ActiveSkill {
     }
     @Override
     public String getName() {
-        return "Brawling-Mastery";
+        return "Brawling Mastery";
     }
 
     @Override
@@ -51,6 +52,11 @@ public class BrawlingSkill extends ActiveSkill {
     @Override
     public KeyEvent[] initActivatorKeys() {
         return new KeyEvent[0];
+    }
+
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "smasher-brawlingSkill.png");
     }
 
     public int getCombatWeight(Entity entity){return ((int) 0.5*entity.getStats().getStat(Stats.Type.TOTAL_WEIGHT));}

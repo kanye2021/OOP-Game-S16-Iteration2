@@ -6,6 +6,7 @@ import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
+import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 
@@ -34,6 +35,11 @@ public class GroundDasherSkill extends ActiveSkill{
     @Override
     public String getName() {
         return "Ground Dasher";
+    }
+
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "summoner-groundDasher.png");
     }
 
 
