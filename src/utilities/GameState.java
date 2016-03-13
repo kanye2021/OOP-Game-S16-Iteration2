@@ -45,6 +45,7 @@ public class GameState extends State {
             gameLoader.createNewGame(this, occupation);
         }else{
             gameLoader.loadGame(this,fileName);
+
         }
 
         // Init the entity controllers
@@ -52,8 +53,9 @@ public class GameState extends State {
 
         // Int the viewports
         viewController.initViewports(map, avatar, npcList);
-
-        gameLoader.loadSeenTiles(this,fileName);
+        if (occupation == null){ //only run when the game is being loaded
+            gameLoader.loadSeenTiles(this,fileName);
+        }
         // Init the default skill key bindings
         viewController.initSkillKeyBindMappings();
         gameSaver = new GameSaver(map, avatar, npcList, getAreaViewport() );
