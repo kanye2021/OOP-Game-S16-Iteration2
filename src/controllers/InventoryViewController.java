@@ -41,6 +41,7 @@ public class InventoryViewController extends ViewController {
         this.inventory = entity.getInventory();
         this.itemNodeArrayList = inventory.getItemNodeArrayList();
         ((InventoryView)view).setItemNodeList(this.itemNodeArrayList);
+        ((InventoryView)view).setInventory(inventory);
     }
 
     @Override
