@@ -2342,6 +2342,7 @@
     </tile>
     <tile x="-10" y="1">
         <terrain type="grass"/>
+        <item id="1600" type="takeable"/>
     </tile>
     <tile x="-10" y="2">
         <terrain type="grass"/>
