@@ -6,6 +6,7 @@ import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
+import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 
@@ -35,6 +36,12 @@ public class IndignationSkill extends ActiveSkill{
         return SkillDictionary.INDIGNATION;
 
     }
+
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "summoner-indignation.png");
+    }
+
 
     @Override
     public String getName() {

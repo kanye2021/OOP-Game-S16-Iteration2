@@ -8,6 +8,7 @@ import models.skills.ActiveSkill;
 import models.skills.PassiveSkill;
 import models.skills.Skill;
 import models.stats.Stats;
+import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 
@@ -32,7 +33,13 @@ public class TwoHandedWeaponSkill extends ActiveSkill {
     }
     @Override
     public String getName() {
-        return "Two-Handed-Weapon-Mastery";
+        return "Two Handed Weapon Mastery";
+    }
+
+
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "smasher-twoHandedSkill.png");
     }
 
     @Override

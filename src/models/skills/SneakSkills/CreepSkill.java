@@ -8,6 +8,7 @@ import models.map.Map;
 import models.map.Tile;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
+import views.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -39,6 +40,12 @@ public class CreepSkill extends ActiveSkill {
     public String getName() {
         return "Creep";
     }
+
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "sneak-creepSkill.png");
+    }
+
 
     @Override
     public void onActivate(Entity entity) {

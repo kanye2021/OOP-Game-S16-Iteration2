@@ -7,6 +7,7 @@ import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.skills.PassiveSkill;
 import models.skills.Skill;
+import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 
@@ -26,7 +27,7 @@ public class StaffSkill extends ActiveSkill {
     }
     @Override
     public String getName() {
-        return "Staff-Mastery";
+        return "Staff Mastery";
     }
 
     @Override
@@ -42,6 +43,13 @@ public class StaffSkill extends ActiveSkill {
         new AngularAttack(entity,projectile);
 
     }
+
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "summoner-staffSkill.png");
+    }
+
+
 
     @Override
     public KeyEvent[] initActivatorKeys() {
