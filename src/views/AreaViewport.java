@@ -157,7 +157,7 @@ public class AreaViewport extends View {
                     seenTiles.put(new Point(currentTileNode.logicalPoint), new Tile(currentTileNode.tile));
 
                     // Set the opacity based on the distance from the avatar.
-                    float opacity = 1.0f - (float) (currentTileNode.distanceFromAvatar * 0.15);
+                    float opacity = 1.0f - (1 - MIN_OPACITY)* (currentTileNode.distanceFromAvatar / (float)radiusOfVisibility);
                     opacity = opacity < MIN_OPACITY ? MIN_OPACITY : opacity;
 
                     renderTile(currentTileNode, g, opacity); // Render the tile.
