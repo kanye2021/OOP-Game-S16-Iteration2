@@ -16,6 +16,8 @@ import models.map.Map;
 import models.map.Terrain;
 import models.map.Tile;
 import models.occupation.Occupation;
+import models.skills.Skill;
+import models.skills.SkillList;
 import models.stats.Stats;
 import org.w3c.dom.*;
 import org.xml.sax.SAXParseException;
@@ -398,6 +400,7 @@ public class GameLoader {
         int level = Integer.parseInt( stats.getAttribute("Level") );
         for (int i = 0; i < level; i++){
             entity.getStats().levelUp(); //Solely just levels up the entity
+            entity.getStats().decrementSkillPoints(); //Needs to decrement the amount of skill points though (its just loading)
         }
 
     }
@@ -417,7 +420,18 @@ public class GameLoader {
         }
     }
     public void updateSkills(Element elm, Entity entity){
-
+        NodeList tmp = elm.getElementsByTagName("skills");
+        if (tmp.getLength() > 0) {
+            Element skills = (Element) tmp.item(0);
+            NodeList skillList = skills.getElementsByTagName("skill");
+            for(int i = 0; i < skillList.getLength(); i++) {
+                Element skill = (Element) skillList.item(i);
+                String name = skill.getAttribute("name");
+                int value = Integer.parseInt(skill.getAttribute("value"));
+                SkillList sL = entity.getSkills();
+                sL.loadSkills(name, value);
+            }
+        }
     }
 
 

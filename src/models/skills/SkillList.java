@@ -18,5 +18,12 @@ public class SkillList extends ArrayList<Skill> {
         }
 
     }
+    public void loadSkills(String name, int value){
+        for (Skill skill : this){
+           if (skill.getName().equals(name)){
+               skill.setLevel(value);
+           }
+        }
+    }
 
 }
