@@ -248,7 +248,7 @@ public class NPCShopView extends View {
 
         if (itemNode == null) {
             //draw empty slot
-            g.setColor(new Color(13,123,123));
+            g.setColor(Color.lightGray);
             g.fillRect(xpos, ypos, itemWidth, itemHeight);
 
             int xMid = (2 * xpos + itemWidth) / 2;
