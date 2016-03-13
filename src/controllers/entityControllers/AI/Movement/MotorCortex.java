@@ -1,7 +1,9 @@
 package controllers.entityControllers.AI.Movement;
 
+import controllers.entityControllers.AI.Memory.Decision;
 import controllers.entityControllers.AI.Memory.Memory;
 import controllers.entityControllers.AI.Memory.MotorInterface;
+import controllers.entityControllers.AI.Personality.Interests.FollowInterest;
 import controllers.entityControllers.AI.Personality.Interests.Interest;
 import models.entities.npc.NPC;
 import models.map.Map;
@@ -29,13 +31,6 @@ public class MotorCortex {
         //TODO Need to figure out the laziness factor
         if (memory.getPersonality().getLaziness() > rand) {
             return;
-        }
-
-        if (memory.getDecision() == null) {
-
-            System.err.println("Error! NULL decision in " + npc.getType());
-            return;
-
         }
 
         moveTowardsInterest();

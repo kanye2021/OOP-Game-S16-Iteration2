@@ -10,7 +10,7 @@ import controllers.entityControllers.AI.Personality.Interests.ItemPickupInterest
  */
 public enum Personality {
 
-    DOG(0.25, 0.3, 0.2, new InterestList(new FollowInterest(1.0), new ItemPickupInterest(0.4), new ExploreInterest(0.2))),
+    DOG(0.0, 0.3, 0.2, new InterestList(new FollowInterest(1.0), new ItemPickupInterest(0.4), new ExploreInterest(0.2))),
     DEFAULT(0.25, 0.3, 0.2, new InterestList(new ExploreInterest(1.0)));
     /*HITLER(1.0, 0.0, 0.0, 1.0, 1.0), // Will attack no matter what
     HOSTILE(0.9, 0.1, 0.1, 0.9, 1.0), // Will almost definitely attack

@@ -42,7 +42,6 @@ public class FrontalLobe {
                 // Then check if we should get a new Interest based on scatter_brainedness
                 if (memory.getPersonality().getScatter_Brainedness() > rand) {
 
-                    System.out.println(npc.getType() + " I kept my same decision");
                     return;
 
                 }
@@ -77,7 +76,7 @@ public class FrontalLobe {
 
     }
 
-    private Decision selectNewDecision() {
+    private void selectNewDecision() {
 
         UniformPicker<Decision> validDecisions = new UniformPicker();
 
@@ -139,15 +138,16 @@ public class FrontalLobe {
         ////// And pick one //////
 
         if (validDecisions.validDecisionsToPick()) {
+
             Decision newDecision = validDecisions.pickChoice();
+            System.out.println(npc.getType() + ": FrontalLobe: I picked a new decision: " + newDecision.getInterestType());
             memory.setDecision(newDecision);
-            return newDecision;
 
         } else {
 
             // Return a default decision
-            System.out.println("null");
-            return new Decision(new ExploreInterest(1.0));
+            System.err.println(npc.getType() + ": FrontalLobe: NULL decision reached!");
+            memory.setDecision(new Decision(new ExploreInterest(1.0)));
 
         }
 

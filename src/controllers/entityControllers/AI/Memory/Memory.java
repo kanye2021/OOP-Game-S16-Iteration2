@@ -1,6 +1,5 @@
 package controllers.entityControllers.AI.Memory;
 
-import controllers.entityControllers.AI.Personality.Interests.FollowInterest;
 import controllers.entityControllers.AI.Personality.Personality;
 import models.entities.Entity;
 import models.entities.npc.NPC;
@@ -98,7 +97,7 @@ public class Memory implements VisualInterface, ThoughtInterface, MotorInterface
 
     public void process() { // Forget the visuals we saw from the last tick.
 
-//        visualMemory.forget();
+        visualMemory.forget();
 
     }
 
