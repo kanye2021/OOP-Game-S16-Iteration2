@@ -3,7 +3,6 @@ package models.attack;
 import models.Attackion;
 import models.attack.status_effects.Sleep;
 import models.entities.Entity;
-import models.map.Map;
 import models.map.Tile;
 
 import java.awt.*;
@@ -27,7 +26,7 @@ public class RadialAttack extends Attackion{
         this.orientation = entity.getOrientation();
         this.map = entity.getMap();
         this.statusEffect = projectile.statusEffect;
-        findBreadthFirstTile();
+        findBreadthFirstTile(); // launches attack
     }
 
     public void findBreadthFirstTile(){//BFS algorithm here

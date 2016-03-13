@@ -1,9 +1,10 @@
 package models.map;
 
+import models.attack.Projectile;
 import models.entities.Entity;
 import models.items.Item;
 import utilities.TileDetection;
-import models.entities.npc.NPC;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,6 +83,20 @@ public class Map {
             updateTile(point);
         }
 
+    }
+
+    public void insertProjectileAtPoint(Projectile projectile, Point point){
+        if(tiles.containsKey(point)){
+            tiles.get(point).addProjectile(projectile);
+            updateTile(point);
+        }
+    }
+
+    public void removeProjectileAtPoint(Point point){
+        if(tiles.containsKey(point)){
+            tiles.get(point).removeProjectile();
+            updateTile(point);
+        }
     }
 
 

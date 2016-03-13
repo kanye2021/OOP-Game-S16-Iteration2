@@ -73,7 +73,7 @@ public class VisualCortex {
     // For now, the visual cortex only cares about seeing other entities or items. TODO: Make it so the npcs are aware of area effects and terrain.
     private void processRecursively(VisualInformation visualInfo, Map.Direction orientation, int visualRange, Point currentLocation){
 
-        if(visualRange == 0){
+        if(visualRange == 0 || map.getTileAt(currentLocation) == null){
             return;
         }
 
