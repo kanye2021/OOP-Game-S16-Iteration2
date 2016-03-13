@@ -128,6 +128,12 @@ public class Tile {
         return  null;
     }
 
+    public void setDecalVisibility(boolean b){
+        if(decal!=null){
+            decal.setVisible(b);
+        }
+    }
+
     public ArrayList<Item> getItems() {return items;}
     public Image getItemImage() {
         if (items.size() == 0) {
