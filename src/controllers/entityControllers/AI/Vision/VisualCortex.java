@@ -90,7 +90,7 @@ public class VisualCortex {
             memory.addVisualInput(item, currentLocation);
         }
 
-        // Update the currentLocation and visual range;
+        // update the currentLocation and visual range;
         visualRange--;
         currentLocation = orientation.neighbor(currentLocation);
 

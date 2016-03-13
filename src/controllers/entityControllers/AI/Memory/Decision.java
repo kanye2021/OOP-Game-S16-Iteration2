@@ -34,7 +34,7 @@ public class Decision {
     }
 
     public void updateInterest() {
-        interest.Update();
+        interest.update();
     }
 
     public String getInterestType() {

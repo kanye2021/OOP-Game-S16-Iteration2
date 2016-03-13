@@ -1,5 +1,6 @@
 package controllers.entityControllers.AI.Personality.Interests;
 
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -28,15 +29,45 @@ public class InterestList {
 
     }
 
-    public HashSet<Interest> getInterests(Interest.Type interestType) {
+    public HashSet<EntityInterest> getEntityInterests() {
 
-        HashSet<Interest> subsetInterests = new HashSet<>();
+        HashSet<EntityInterest> subsetInterests = new HashSet<>();
 
         interests.forEach((interest) -> {
-                if (interest.getInterestType() == interestType) {
-                    subsetInterests.add(interest);
+                    if (interest.getInterestType() == Interest.Type.ENTITY) {
+                        subsetInterests.add((EntityInterest) interest);
+                    }
                 }
-            }
+        );
+
+        return subsetInterests;
+
+    }
+
+    public HashSet<ItemInterest> getItemInterests() {
+
+        HashSet<ItemInterest> subsetInterests = new HashSet<>();
+
+        interests.forEach((interest) -> {
+                    if (interest.getInterestType() == Interest.Type.ITEM) {
+                        subsetInterests.add((ItemInterest) interest);
+                    }
+                }
+        );
+
+        return subsetInterests;
+
+    }
+
+    public HashSet<PointInterest> getPointInterests() {
+
+        HashSet<PointInterest> subsetInterests = new HashSet<>();
+
+        interests.forEach((interest) -> {
+                    if (interest.getInterestType() == Interest.Type.POINT) {
+                        subsetInterests.add((PointInterest) interest);
+                    }
+                }
         );
 
         return subsetInterests;

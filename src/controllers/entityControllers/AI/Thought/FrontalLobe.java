@@ -3,14 +3,15 @@ package controllers.entityControllers.AI.Thought;
 import controllers.entityControllers.AI.Memory.Decision;
 import controllers.entityControllers.AI.Memory.DecisionPicker;
 import controllers.entityControllers.AI.Memory.ThoughtInterface;
+import controllers.entityControllers.AI.Personality.Interests.EntityInterest;
 import controllers.entityControllers.AI.Personality.Interests.Interest;
 import controllers.entityControllers.AI.Personality.Interests.InterestList;
+import controllers.entityControllers.AI.Personality.Interests.ItemInterest;
 import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.items.Item;
 
 import java.awt.*;
-import java.util.HashSet;
 import java.util.Random;
 
 /**
@@ -41,17 +42,13 @@ public class FrontalLobe {
 
             if (currentDecision.isInterestValid(memory)) {
 
-                System.out.println("scatter?");
-
                 // Then check if we should get a new Interest based on scatter_brainedness
                 if (memory.getPersonality().getScatter_Brainedness() > rand) {
 
-                    System.out.println(npc.getType() + "I kept my same decision");
+                    System.out.println(npc.getType() + " I kept my same decision");
                     return;
 
                 }
-                //System.out.println(npc.getType() + "I kept my same decision");
-                return;
 
             }
 
@@ -95,14 +92,13 @@ public class FrontalLobe {
         Interest interestToAdd;
         Point pointOfInterest;
         InterestList interests = memory.getPersonality().getInterests();;
-        HashSet<Interest> subsetInterests = interests.getInterests(Interest.Type.ENTITY);
         double weight;
 
         // Find all entity interests and add them
         for (java.util.AbstractMap.Entry<Entity, Point> pair : memory.getSeenEntities().entrySet()) {
             Entity entityOfInterest = pair.getKey();
             pointOfInterest = pair.getValue();
-            for (Interest interest : subsetInterests) {
+            for (EntityInterest interest : interests.getEntityInterests()) {
                 weight = interest.getInterestWeight(entityOfInterest, memory);
 
                 if (weight > 0) {
@@ -117,12 +113,11 @@ public class FrontalLobe {
         }
 
         // Find all item interests and add them
-        subsetInterests = interests.getInterests(Interest.Type.ITEM);
         for (java.util.AbstractMap.Entry<Item, Point> pair : memory.getSeenItems().entrySet()) {
             Item itemOfInterest = pair.getKey();
             pointOfInterest = pair.getValue();
 
-            for (Interest interest : subsetInterests) {;
+            for (ItemInterest interest : interests.getItemInterests()) {
                 weight = interest.getInterestWeight(itemOfInterest, memory);
                 if (weight > 0) {
 

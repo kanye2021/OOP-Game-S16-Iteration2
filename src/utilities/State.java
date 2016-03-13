@@ -23,7 +23,7 @@ public class State {
         inputManager.setActiveController(viewController);
         display.setActiveView(view);
 
-        // Update the display.
+        // update the display.
         display.repaint();
     }
 

@@ -1,9 +1,6 @@
 package controllers.entityControllers.AI.Personality.Interests;
 
-import controllers.entityControllers.AI.Memory.Memory;
-import controllers.entityControllers.AI.Memory.Relationship;
 import controllers.entityControllers.AI.Memory.ThoughtInterface;
-import models.entities.Entity;
 import models.items.Item;
 import models.items.takeable.TakeableItem;
 
@@ -12,9 +9,7 @@ import java.awt.*;
 /**
  * Created by aseber on 3/11/16.
  */
-public class ItemPickupInterest extends Interest {
-
-    private Item itemOfInterest;
+public class ItemPickupInterest extends ItemInterest {
 
     public ItemPickupInterest(double interestLevel) {
 
@@ -22,31 +17,20 @@ public class ItemPickupInterest extends Interest {
 
     }
 
-    private ItemPickupInterest(Interest interest, Object objectOfInterest, Point pointOfInterest) {
+    private ItemPickupInterest(Interest interest, Item itemOfInterest, Point pointOfInterest) {
 
-        super(interest.getInterestLevel());
-        addInterestAttachment(objectOfInterest);
+        super(interest.getInterestLevel(), itemOfInterest);
         setPointOfInterest(pointOfInterest);
 
     }
 
-    public Interest createRuntimeInterest(Object objectOfInterest, Point pointOfInterest) {
+    public Interest createRuntimeInterest(Item itemOfInterest, Point pointOfInterest) {
 
-        return new ItemPickupInterest(this, objectOfInterest, pointOfInterest);
-
-    }
-
-    private void addInterestAttachment(Object object) {
-
-        if (object instanceof Item) {
-
-            this.itemOfInterest = (Item) object;
-
-        }
+        return new ItemPickupInterest(this, itemOfInterest, pointOfInterest);
 
     }
 
-    public void Update() {
+    public void update() {
 
         // Do nothing, the item doesn't move!
 
@@ -73,7 +57,5 @@ public class ItemPickupInterest extends Interest {
         return memory.getSeenItems().containsKey(itemOfInterest);
 
     }
-
-    public Type getInterestType() { return Type.ITEM; }
 
 }

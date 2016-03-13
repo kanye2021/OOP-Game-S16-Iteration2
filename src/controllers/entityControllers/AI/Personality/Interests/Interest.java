@@ -1,10 +1,9 @@
 package controllers.entityControllers.AI.Personality.Interests;
 
-import controllers.entityControllers.AI.Memory.Memory;
 import controllers.entityControllers.AI.Memory.ThoughtInterface;
-import models.items.Item;
 
 import java.awt.*;
+import java.lang.reflect.Type;
 
 /**
  * Created by aseber on 3/9/16.
@@ -13,27 +12,24 @@ public abstract class Interest {
 
     public enum Type {
 
-        ENTITY(0),
-        ITEM(1),
-        POINT(2),
-        NONE(3);
+        ENTITY(EntityInterest.class),
+        ITEM(ItemInterest.class),
+        POINT(PointInterest.class);
 
-        private int ID;
+        java.lang.reflect.Type type;
 
-        Type(int ID){
-            this.ID = ID;
-        }
-        public int getID() {
+        Type(java.lang.reflect.Type type) {
 
-            return ID;
+            this.type = type;
 
         }
-    }
 
-    protected Type ID;
+        public java.lang.reflect.Type getClassType() {
 
-    public Type getID(){
-        return ID;
+            return type;
+
+        }
+
     }
 
     private Point pointOfInterest;
@@ -57,9 +53,7 @@ public abstract class Interest {
 
     }
 
-    public abstract void Update();
-
-    public abstract Interest createRuntimeInterest(Object objectOfInterest, Point pointOfInterest);
+    public abstract void update();
 
     public abstract double getInterestWeight(Object objectofInterest, ThoughtInterface memory);
 
@@ -72,21 +66,5 @@ public abstract class Interest {
     }
 
     public abstract Interest.Type getInterestType();
-
-
-    public  boolean equalWTF(Object o) {
-        System.out.println("wtf");
-        System.out.println(o.toString());
-        if (o instanceof Interest) {
-
-            Interest otherItem = (Interest) o;
-
-            return this.getID()== otherItem.getID();
-
-        }
-
-        return false;
-
-    }
 
 }

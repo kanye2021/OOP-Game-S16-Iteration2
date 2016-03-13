@@ -53,8 +53,6 @@ public class MotorCortex {
             npc.move(directionToMove);
         }else if(memory.getDecision().getInterestType().equals(Interest.Type.ITEM.toString())){
             System.out.println("I should be stealing items");
-        }else if(memory.getDecision().getInterestType().equals(Interest.Type.NONE.toString())){
-            System.out.println("I should be idling");
         }
 
     }
