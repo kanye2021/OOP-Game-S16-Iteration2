@@ -131,7 +131,7 @@ public class GameLoader {
                 p.setLocation(x,y);
 
                 AreaEffect area = getAreaEffect(tileElement);
-                Item groundItem = getItemAtTile(tileElement);
+                ArrayList<Item> groundItem = getItemAtTile(tileElement);
                 Decal decal = getDecal(tileElement, area);
                 Terrain terrain = getTerrain(tileElement);
                 Entity entity = null;
@@ -180,15 +180,11 @@ public class GameLoader {
                 Terrain terrain = getTerrain(tileElement);
                 AreaEffect areaEffect = getAreaEffect(tileElement);
                 Decal decal = getDecal(tileElement,areaEffect);
-                Item item = getItemAtTile(tileElement);
+                ArrayList<Item> items = getItemAtTile(tileElement);
                 Entity entity = null;
 
-
-
-                item = getItemAtTile(tileElement);
-
 //                tiles.get(new Point(x, y)) = new Tile(terrain, areaEffect, decal, item, entity);
-                tiles.put(new Point(x, y),  new Tile(terrain, decal, item, entity, areaEffect));
+                tiles.put(new Point(x, y),  new Tile(terrain, decal, items, entity, areaEffect));
             }
 
             Map newMap = new Map(tiles);
@@ -270,26 +266,27 @@ public class GameLoader {
         }
         return areaEffect;
     }
-    public Item getItemAtTile(Element tileElement){
+    public ArrayList<Item> getItemAtTile(Element tileElement){
         // Get the item if there is one
-        Item item = null;
+        ArrayList<Item> items = new ArrayList<>();
         NodeList itemNodes = tileElement.getElementsByTagName("item");
-        if (itemNodes.getLength() > 0) {
-            Element itemElement = (Element) itemNodes.item(0);
-            String itemType = itemElement.getAttribute("type");
+
+        for(int i=0; i<itemNodes.getLength(); i++){
+            Element itemElement = (Element) itemNodes.item(i);
             int id = Integer.parseInt(itemElement.getAttribute("id"));
 
-            //if statements for the different types of items
+            Item item = Item.ItemDictionary.itemFromID(id);
 
-
-            item = Item.ItemDictionary.itemFromID(id);
+            // If the item is legit, add it to the list.
             if (item == null) {
                 System.out.println("GameLoader: unrecognized itemID");
             } else {
                 System.out.println("GameLoader: successfully loaded an item (id = " + id + ")");
+                items.add(item);
             }
         }
-        return item;
+
+        return items;
     }
     public Avatar getAvatar(Element e, Point p, Map map){
         Avatar avatar;

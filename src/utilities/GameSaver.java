@@ -114,16 +114,14 @@ public class GameSaver {
         if (currentTile.getAreaEffect() != null) {
             tile.appendChild( saveAreaEffect( doc,currentTile.getAreaEffect()));
         }
-        if (currentTile.getItem() != null){
-            Item i = currentTile.getItem();
-            Element item = doc.createElement("item");
-            item.setAttributeNode( saveAttr(doc, "id", i.getItemId()) );
-            item.setAttributeNode( saveAttr(doc, "type", i.getType()) );
+        ArrayList<Item> items = currentTile.getItems();
+        for(Item item: items){
+            Element itemElement = doc.createElement("item");
+            itemElement.setAttributeNode( saveAttr(doc, "id", item.getItemId()) );
+            itemElement.setAttributeNode( saveAttr(doc, "type", item.getType()) );
 
-            tile.appendChild(item);
+            tile.appendChild(itemElement);
         }
-
-
         return tile;
     }
     public Node saveAreaEffect(Document doc, AreaEffect aoe){
