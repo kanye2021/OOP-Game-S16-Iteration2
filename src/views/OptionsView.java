@@ -117,7 +117,8 @@ public class OptionsView extends View {
             TaskWrapper wrapper = entry.getValue();
             String descriptor = wrapper.getDescriptor();
 
-            if (descriptor.contains("Move") || descriptor.contains("Open") || descriptor.contains("Pause")) {
+            if (descriptor.contains("Move") || descriptor.contains("Open") || descriptor.contains("Pause") ||
+                    descriptor.contains("Unmount") || descriptor.contains("Basic")) {
                 listOfGenericKeybindings.add(new KeyCodeTaskObject(key, wrapper));
 
             }
