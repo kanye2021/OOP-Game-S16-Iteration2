@@ -6,6 +6,7 @@ import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.skills.PassiveSkill;
+import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 
@@ -52,6 +53,11 @@ public class EnchantmentSkill extends ActiveSkill {
         doTheCoolDown();
         new RadialAttack(entity,projectile);
 
+    }
+
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "summoner-enchanment.png");
     }
 
     @Override

@@ -4,6 +4,7 @@ import models.conditions.ConditionList;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
+import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 
@@ -27,7 +28,7 @@ public class BindWoundsSkill extends ActiveSkill {
 
     @Override
     public String getName() {
-        return "Bind-Wounds";
+        return "Bind Wounds";
     }
 
     public BindWoundsSkill() {
@@ -55,6 +56,11 @@ public class BindWoundsSkill extends ActiveSkill {
                 stats.modifyStat(Stats.Type.HEALTH, healAmt);
 
 
+    }
+
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "common-bindWounds.png");
     }
 
     @Override

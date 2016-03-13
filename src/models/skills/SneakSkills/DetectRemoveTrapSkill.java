@@ -7,6 +7,7 @@ import models.map.Map;
 import models.map.Tile;
 import models.map.Trap;
 import models.skills.ActiveSkill;
+import views.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -34,9 +35,13 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
 
     @Override
     public String getName() {
-        return "Detect-Remove-Trap";
+        return "Detect Remove Trap";
     }
 
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "sneak-detectRemovetrap.png");
+    }
 
     @Override
     public void onActivate(Entity entity) {

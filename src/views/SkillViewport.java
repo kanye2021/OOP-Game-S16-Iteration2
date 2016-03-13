@@ -112,6 +112,10 @@ public class SkillViewport extends View{
             g.drawRect(skillBoxX, skillBoxY, skillBoxSize, skillBoxSize);
 
             // TODO: Do draw image when have images. Not rly a large priority tbh
+            // Draw item image
+            Image skillImage = currentSkill.getSprite().getImage();
+            g.drawImage(skillImage, skillBoxX + (skillBoxSize - imgSize) / 2, skillBoxY + (skillBoxSize - imgSize) / 2, imgSize, imgSize, null);
+
             // Draw skill image
 
 
@@ -311,7 +315,7 @@ public class SkillViewport extends View{
     public void scaleView() {
         // Slot sizes
         skillBoxSize = (int) (((double) getScreenWidth() / 15));
-        imgSize = (int) ((double) skillBoxSize * .80);
+        imgSize = (int) ((double) skillBoxSize * .40);
         levelUpBoxSize = (int) ((double) skillBoxSize * .60);
         plusIconSize = (int) ((double) skillBoxSize * .45);
 

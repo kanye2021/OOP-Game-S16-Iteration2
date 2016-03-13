@@ -5,6 +5,7 @@ import models.skills.ActiveSkill;
 import models.skills.PassiveSkill;
 import models.skills.Skill;
 import models.stats.Stats;
+import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 
@@ -62,6 +63,11 @@ public class BoonSkill extends ActiveSkill {
         );
 
 
+    }
+
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "summoner-boonSkill.png");
     }
 
     @Override
