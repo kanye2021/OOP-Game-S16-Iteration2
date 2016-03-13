@@ -36,13 +36,13 @@ public class ItemPickupInterest extends ItemInterest {
 
     }
 
-    public double getInterestWeight(Object objectofInterest, ThoughtInterface memory) {
+    public double getInterestWeight(Item itemOfInterest, ThoughtInterface memory) {
 
         double weight = 0.0;
 
-        if (objectofInterest instanceof TakeableItem) {
+        if (itemOfInterest instanceof TakeableItem) {
 
-            TakeableItem item = (TakeableItem) objectofInterest;
+            TakeableItem item = (TakeableItem) itemOfInterest;
             weight = item.getMonetaryValue() * 100 * getInterestLevel();
 
         }

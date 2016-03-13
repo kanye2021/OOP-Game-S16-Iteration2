@@ -36,16 +36,14 @@ public class FollowInterest extends EntityInterest {
     }
 
     @Override
-    public double getInterestWeight(Object objectofInterest, ThoughtInterface memory) {
+    public double getInterestWeight(Entity entityOfInterest, ThoughtInterface memory) {
 
         double weight = 0.0;
+        Relationship relationship = memory.getEntityRelationship(entityOfInterest);
 
-        if (objectofInterest instanceof Entity) {
+        if (relationship.isFriend()) {
 
-            Entity entity = (Entity) objectofInterest;
-            Relationship relationship = memory.getEntityRelationship(entity);
             weight = relationship.getRelationshipValue() * 1000 * getInterestLevel();
-
 
         }
 

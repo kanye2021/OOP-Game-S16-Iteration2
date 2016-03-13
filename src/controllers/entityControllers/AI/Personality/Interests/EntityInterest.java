@@ -1,5 +1,6 @@
 package controllers.entityControllers.AI.Personality.Interests;
 
+import controllers.entityControllers.AI.Memory.ThoughtInterface;
 import models.entities.Entity;
 
 import java.awt.*;
@@ -26,5 +27,6 @@ public abstract class EntityInterest extends Interest {
 
     public final Type getInterestType() { return Type.ENTITY; }
     public abstract Interest createRuntimeInterest(Entity entityOfInterest, Point pointOfInterest);
+    public abstract double getInterestWeight(Entity entityOfInterest, ThoughtInterface memory);
 
 }

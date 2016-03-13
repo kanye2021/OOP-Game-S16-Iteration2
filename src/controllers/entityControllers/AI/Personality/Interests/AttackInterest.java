@@ -36,16 +36,9 @@ public class AttackInterest extends EntityInterest {
 
     }
 
-    public double getInterestWeight(Object objectofInterest, ThoughtInterface memory) {
+    public double getInterestWeight(Entity entityOfInterest, ThoughtInterface memory) {
 
         double weight = 0.0;
-
-        if (objectofInterest instanceof TakeableItem) {
-
-//            TakeableItem item = (TakeableItem) objectofInterest;
-//            weight = item.getMonetaryValue() * 100 * getInterestLevel();
-
-        }
 
         return weight;
 

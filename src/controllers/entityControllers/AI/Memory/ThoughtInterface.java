@@ -2,6 +2,7 @@ package controllers.entityControllers.AI.Memory;
 
 import controllers.entityControllers.AI.Personality.Personality;
 import models.entities.Entity;
+import models.entities.npc.NPC;
 import models.items.Item;
 
 import java.awt.*;
@@ -23,5 +24,6 @@ public interface ThoughtInterface extends MotorInterface {
     HashMap<Item, Point> getSeenItems();
     boolean itemsSeen();
     void setDecision(Decision newDecision);
+    NPC getNPC();
 
 }

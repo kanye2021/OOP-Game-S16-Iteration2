@@ -48,12 +48,7 @@ public class MotorCortex {
         updateInterest();
 
         Map.Direction directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), memory.getDecision().getPointOfInterest());
-
-        if(memory.getDecision().getInterestType().equals(Interest.Type.ENTITY.toString())){
-            npc.move(directionToMove);
-        }else if(memory.getDecision().getInterestType().equals(Interest.Type.ITEM.toString())){
-            System.out.println("I should be stealing items");
-        }
+        npc.move(directionToMove);
 
     }
 

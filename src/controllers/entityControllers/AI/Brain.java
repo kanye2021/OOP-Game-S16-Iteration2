@@ -22,7 +22,7 @@ public class Brain {
 
     public Brain(NPC npc, Personality personality){
         this.npc = npc;
-        memory = new Memory(personality);
+        memory = new Memory(npc, personality);
         visualCortex = new VisualCortex(npc, memory);
         frontalLobe = new FrontalLobe(npc, memory);
         motorCortex = new MotorCortex(npc, memory);

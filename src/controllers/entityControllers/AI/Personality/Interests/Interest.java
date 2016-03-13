@@ -12,23 +12,9 @@ public abstract class Interest {
 
     public enum Type {
 
-        ENTITY(EntityInterest.class),
-        ITEM(ItemInterest.class),
-        POINT(PointInterest.class);
-
-        java.lang.reflect.Type type;
-
-        Type(java.lang.reflect.Type type) {
-
-            this.type = type;
-
-        }
-
-        public java.lang.reflect.Type getClassType() {
-
-            return type;
-
-        }
+        ENTITY,
+        ITEM,
+        POINT
 
     }
 
@@ -54,8 +40,6 @@ public abstract class Interest {
     }
 
     public abstract void update();
-
-    public abstract double getInterestWeight(Object objectofInterest, ThoughtInterface memory);
 
     public abstract boolean isApplicable(ThoughtInterface memory);
 

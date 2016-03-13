@@ -1,6 +1,6 @@
 package controllers.entityControllers.AI.Personality.Interests;
 
-import java.awt.*;
+import models.entities.npc.NPC;
 
 /**
  * Created by aseber on 3/13/16.
@@ -14,6 +14,7 @@ public abstract class PointInterest extends Interest {
     }
 
     public final Type getInterestType() { return Type.POINT; }
-    public abstract Interest createRuntimeInterest(Point pointOfInterest);
+    public abstract Interest createRuntimeInterest(NPC npc);
+    public abstract double getInterestWeight();
 
 }

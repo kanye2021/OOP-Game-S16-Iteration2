@@ -3,6 +3,7 @@ package controllers.entityControllers.AI.Memory;
 import controllers.entityControllers.AI.Personality.Interests.FollowInterest;
 import controllers.entityControllers.AI.Personality.Personality;
 import models.entities.Entity;
+import models.entities.npc.NPC;
 import models.items.Item;
 
 import java.awt.*;
@@ -15,12 +16,22 @@ public class Memory implements VisualInterface, ThoughtInterface, MotorInterface
 
     //map of entity relationships
     private HashMap<Entity, Relationship> relationships = new HashMap<>();
+
+    // The visual (short term) memory
     private VisualInformation visualMemory = new VisualInformation();
+
+    // The decision
     private Decision decision;
+
+    // The entities personality
     private Personality personality;
 
-    public Memory(Personality personality) {
+    // The NPC
+    NPC npc;
 
+    public Memory(NPC npc, Personality personality) {
+
+        this.npc = npc;
         this.personality = personality;
 
     }
@@ -103,6 +114,10 @@ public class Memory implements VisualInterface, ThoughtInterface, MotorInterface
 
     }
 
+    public NPC getNPC() {
 
+        return npc;
+
+    }
 
 }

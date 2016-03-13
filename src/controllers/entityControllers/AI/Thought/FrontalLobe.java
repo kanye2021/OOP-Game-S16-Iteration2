@@ -1,12 +1,9 @@
 package controllers.entityControllers.AI.Thought;
 
 import controllers.entityControllers.AI.Memory.Decision;
-import controllers.entityControllers.AI.Memory.DecisionPicker;
+import controllers.entityControllers.AI.Memory.UniformPicker;
 import controllers.entityControllers.AI.Memory.ThoughtInterface;
-import controllers.entityControllers.AI.Personality.Interests.EntityInterest;
-import controllers.entityControllers.AI.Personality.Interests.Interest;
-import controllers.entityControllers.AI.Personality.Interests.InterestList;
-import controllers.entityControllers.AI.Personality.Interests.ItemInterest;
+import controllers.entityControllers.AI.Personality.Interests.*;
 import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.items.Item;
@@ -82,7 +79,7 @@ public class FrontalLobe {
 
     private Decision selectNewDecision() {
 
-        DecisionPicker validDecisions = new DecisionPicker();
+        UniformPicker<Decision> validDecisions = new UniformPicker();
 
         ////// Get all valid decisions //////
 
@@ -104,7 +101,7 @@ public class FrontalLobe {
                 if (weight > 0) {
 
                     interestToAdd = interest.createRuntimeInterest(entityOfInterest, pointOfInterest);
-                    validDecisions.addDecision(new Decision(interestToAdd), weight);
+                    validDecisions.addChoice(new Decision(interestToAdd), weight);
 
                 }
 
@@ -122,7 +119,7 @@ public class FrontalLobe {
                 if (weight > 0) {
 
                     interestToAdd = interest.createRuntimeInterest(itemOfInterest, pointOfInterest);
-                    validDecisions.addDecision(new Decision(interestToAdd), weight);
+                    validDecisions.addChoice(new Decision(interestToAdd), weight);
 
                 }
 
@@ -130,18 +127,27 @@ public class FrontalLobe {
 
         }
 
+        for (PointInterest interest : interests.getPointInterests()) {
+
+            weight = interest.getInterestWeight();
+            interestToAdd = interest.createRuntimeInterest(npc);
+            validDecisions.addChoice(new Decision(interestToAdd), weight);
+
+        }
+
+
         ////// And pick one //////
 
         if (validDecisions.validDecisionsToPick()) {
-            Decision newDecision = validDecisions.pickDecision();
+            Decision newDecision = validDecisions.pickChoice();
             memory.setDecision(newDecision);
             return newDecision;
 
         } else {
 
             // Return a default decision
-//            System.out.println("null");
-            return null;
+            System.out.println("null");
+            return new Decision(new ExploreInterest(1.0));
 
         }
 

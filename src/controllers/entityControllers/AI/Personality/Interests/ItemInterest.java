@@ -1,5 +1,6 @@
 package controllers.entityControllers.AI.Personality.Interests;
 
+import controllers.entityControllers.AI.Memory.ThoughtInterface;
 import models.entities.Entity;
 import models.items.Item;
 
@@ -27,5 +28,6 @@ public abstract class ItemInterest extends Interest {
 
     public final Type getInterestType() { return Type.ITEM; }
     public abstract Interest createRuntimeInterest(Item itemOfInterest, Point pointOfInterest);
+    public abstract double getInterestWeight(Item itemOfInterest, ThoughtInterface memory);
 
 }
