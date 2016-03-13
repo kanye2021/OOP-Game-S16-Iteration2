@@ -1,16 +1,12 @@
 package controllers.entityControllers.AI.Movement;
 
-import controllers.entityControllers.AI.Memory.Decision;
 import controllers.entityControllers.AI.Memory.Memory;
 import controllers.entityControllers.AI.Memory.MotorInterface;
-import controllers.entityControllers.AI.Personality.Interests.FollowInterest;
 import controllers.entityControllers.AI.Personality.Interests.Interest;
 import models.entities.npc.NPC;
 import models.map.Map;
-import models.map.Terrain;
 import utilities.NavigationUtilities;
 
-import java.awt.*;
 import java.util.Random;
 
 /**
@@ -21,7 +17,7 @@ public class MotorCortex {
     private Random rng = new Random();
     double rand;
     private NPC npc;
-    private Memory memory;
+    private MotorInterface memory;
 
     public MotorCortex(NPC npc, Memory memory){
         this.npc = npc;
@@ -48,6 +44,9 @@ public class MotorCortex {
 
     // Move towards our interest
     private void moveTowardsInterest() {
+
+        updateInterest();
+
         Map.Direction directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), memory.getDecision().getPointOfInterest());
 
         if(memory.getDecision().getInterestType().equals(Interest.Type.ENTITY.toString())){
@@ -61,14 +60,12 @@ public class MotorCortex {
     }
 
     // and see if it is close enough to interact with?
-    /*private void UpdateInterest() {
+    private void updateInterest() {
 
         //TODO: just me fucking around
-        System.out.println(npc.getType() + "'s interest is: " + interest);
-        interest += 2.0;
+        memory.getDecision().updateInterest();
 
-        memory.setDecision(new Decision(new FollowInterest(interest),new Point(-5,-2)));
-    }*/
+    }
 
 
 
