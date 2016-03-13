@@ -26,7 +26,7 @@ public class StaffSkill extends ActiveSkill {
     }
     @Override
     public String getName() {
-        return "Staff Mastery";
+        return "Staff-Mastery";
     }
 
     @Override

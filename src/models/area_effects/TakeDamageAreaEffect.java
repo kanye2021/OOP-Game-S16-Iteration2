@@ -29,4 +29,8 @@ public class TakeDamageAreaEffect extends AreaEffect {
         return "take-damage";
     }
 
+    public int getValue(){
+        return AMOUNT_OF_DAMAGE;
+    }
+
 }

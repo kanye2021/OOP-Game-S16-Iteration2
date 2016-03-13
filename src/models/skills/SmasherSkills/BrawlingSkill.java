@@ -33,7 +33,7 @@ public class BrawlingSkill extends ActiveSkill {
     }
     @Override
     public String getName() {
-        return "Brawling Mastery";
+        return "Brawling-Mastery";
     }
 
     @Override

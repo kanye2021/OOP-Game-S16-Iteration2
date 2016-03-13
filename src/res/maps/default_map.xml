@@ -3545,6 +3545,7 @@
     </tile>
     <tile x="-2" y="-3">
         <terrain type="grass"/>
+        <item id="7011"/>
     </tile>
     <tile x="-2" y="-2">
         <terrain type="grass"/>
@@ -3552,6 +3553,7 @@
     </tile>
     <tile x="-2" y="-1">
         <terrain type="grass"/>
+        <item id="7001"/>
     </tile>
     <tile x="-2" y="0">
         <terrain type="mountain"/>
@@ -3847,7 +3849,6 @@
     </tile>
     <tile x="0" y="-3">
         <terrain type="grass"/>
-        <entity type="npc"/>
     </tile>
     <tile x="0" y="-2">
         <terrain type="grass"/>

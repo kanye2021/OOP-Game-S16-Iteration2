@@ -52,6 +52,7 @@ public class TalkViewController extends ViewController {
     }
     public void setClose(Task task){
         closeActions = task;
+        npc.resetDialogue();
     }
 
 }

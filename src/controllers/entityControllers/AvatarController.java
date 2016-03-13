@@ -14,9 +14,13 @@ import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
 import models.skills.CommonSkills.BindWoundsSkill;
 import models.skills.Skill;
+
 import models.skills.SmasherSkills.BrawlingSkill;
 import models.skills.SmasherSkills.OneHandedWeaponSkill;
 import models.skills.SmasherSkills.TwoHandedWeaponSkill;
+
+import models.skills.SkillList;
+
 import models.skills.SneakSkills.CreepSkill;
 import models.skills.SneakSkills.DetectRemoveTrapSkill;
 import models.skills.SneakSkills.PickPocketSkill;
@@ -32,6 +36,7 @@ import views.InventoryView;
 import views.ToastView;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * Created by Bradley on 2/26/2016.
@@ -44,12 +49,16 @@ public class AvatarController {
     private GameView gameView;
     private Map.Direction movementDirection;
 
+    //Will hold A SkillList array, which the game VC will look at and assign keybinds to
+    private SkillList avatarsSkills;
+
     public AvatarController(Avatar avatar, GameViewController gameViewController){
         //TODO: Add gameview
         this.avatar = avatar;
         this.gameViewController = gameViewController;
         keyPressMapping = new InputMapping();
         this.gameView = (GameView)gameViewController.getView();
+        this.avatarsSkills = avatar.getSkills();
         initKeyPressMapping();
         movementDirection = null;
     }
@@ -68,8 +77,9 @@ public class AvatarController {
         Skill firstSkill = avatar.getSkills().get(1);
         BindWoundsSkill bindWoundsSkill = (BindWoundsSkill) firstSkill;
         bindWoundsSkill.onActivate(avatar);
-        System.out.println("Checkpoint 1");
+        //System.out.println("Checkpoint 1");
     }
+
 
     public void useFirstSkill(){
         //if smasher, get first skill
@@ -314,6 +324,10 @@ public class AvatarController {
         
         return avatar.move(movementDirection);
     }
+
+    public boolean avatarIsAlive(){
+        return avatar.getLives() > 0;
+    }
     
     public void setMovementDirection(Map.Direction direction){
         this.movementDirection = direction;
@@ -332,4 +346,11 @@ public class AvatarController {
         return avatar;
     }
 
+    public void unMount(){
+        avatar.removeMount();
+    }
+
+    public SkillList getAvatarsSkills() {
+        return avatarsSkills;
+    }
 }

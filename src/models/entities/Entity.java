@@ -15,6 +15,7 @@ import models.map.Terrain;
 import models.occupation.Occupation;
 import models.skills.Skill;
 import models.skills.SkillList;
+import models.stats.StatModification;
 import utilities.TileDetection;
 import models.stats.StatModificationList;
 import models.stats.Stats;
@@ -30,6 +31,7 @@ import java.util.*;
 public abstract class Entity{
 
     protected Point location;
+    protected Point startLocation;
     protected Map.Direction orientation;
     protected Stats stats;
     protected SkillList skills;
@@ -39,6 +41,10 @@ public abstract class Entity{
     protected Occupation occupation;
     protected AvatarController controller;
     protected Map map;
+
+    protected int level;
+
+
     // All entities should be able to have a pet.
     protected Pet pet;
 
@@ -57,7 +63,8 @@ public abstract class Entity{
     protected DirectionalSprite sprite;
 
     public Entity(Point location, Map map) {
-        this.location = location;
+        this.location = new Point(location);
+        this.startLocation = new Point(location);
         this.orientation = Map.Direction.SOUTH;
         this.stats = new Stats();
         this.occupation = initOccupation();
@@ -107,7 +114,9 @@ public abstract class Entity{
         return occupation.getOccupation();
     }
     public Map.Direction getOrientation(){return orientation;}
-
+    public int getLevel(){
+        return level;
+    }
     public Map getMap(){return map;}
     //Returns specific skill by name
     public Skill getSpecificSkill(Skill.SkillDictionary skill){
@@ -147,7 +156,7 @@ public abstract class Entity{
     }
 
     public final TileDetection move(Map.Direction direction){
-        orientation = direction;
+        setOrientation(direction);
         if(canMove){
             TileDetection td = map.moveEntity(Entity.this, direction);
             location = td.getLocation();
@@ -159,6 +168,11 @@ public abstract class Entity{
                 }
             }, getMovementDelay());
             map.updateTile(location);
+
+            // Include this so that the entity will be removed from the map.
+//            if(isDead()){
+//                map.removeEntityAt(location);
+//            }
             return td;
         }
 
@@ -222,6 +236,7 @@ public abstract class Entity{
         } else return true;
     }
 
+
     public final void equipItem(EquippableItem item){
 
         item.onUse(this);
@@ -229,8 +244,7 @@ public abstract class Entity{
     }
 
     public final void dropItem(TakeableItem item){
-        inventory.removeItem(item);
-        map.insertItemAtPoint(item, location);
+        inventory.dropItem(item, map, location);
     }
 
     // Wrapper functions for equpped items interaction
@@ -241,9 +255,7 @@ public abstract class Entity{
 
     public final void unequipItem(EquippableItem item){
         // Unequip (Which will remove stat mods)
-        equipment.unEquipItem(item);
-        // Add to inventory
-        inventory.addItem(item);
+        equipment.unEquipItem(item, inventory);
     }
 
     // Wrappers for occupation
@@ -264,8 +276,11 @@ public abstract class Entity{
     // Used to go to a new map
     public final void setMap(Map map){
         this.map = map;
+        updateBrain();
     }
-
+    //Function needs to be overrided by NPC
+    //TODO: Problem is caused because if you switch maps, the brain still thinks its on the old map
+    public void updateBrain(){}
     protected abstract StatModificationList initInitialStats();
     protected abstract Occupation initOccupation();
     protected abstract HashMap<Map.Direction, String> initSprites();
@@ -274,6 +289,14 @@ public abstract class Entity{
 
         return sprite.getImage(orientation);
     }
+    public int getLives(){
+        return stats.getLives();
+    }
+
+    public boolean isDead(){
+        return stats.getLives() < 1;
+    }
+
     // TODO: Pet methods may not belong here? just getting stuff 2 work.
     // They could belong here tho.
     public final Pet getPet() {
@@ -285,18 +308,41 @@ public abstract class Entity{
 
     public void setOrientation(Map.Direction orientation){
         this.orientation = orientation;
+        if (mount != null){
+            mount.setOrientation(orientation);
+        }
+
     }
 
     // Wrapper to levelup an entity
     public void levelUp() {
         // Upon level-up, notifies skillviewport to allow for level-ing up a skill
+        level++;
         this.stats.levelUp();
         Toast.createToastWithTimer("You've leveled up! Click a skill to increase", 1500);
     }
 
     // Wrapper to die (lose a life)
-    public void die() {
+    public void loseALife() {
         this.stats.loseALife();
+
+        handleDeath();
+    }
+
+    private void handleDeath(){
+
+        // Drop all items
+        equipment.unEquipAll(inventory);
+        inventory.dropAll(map, location);
+
+        // Check to see if this was the last life.
+        if(isDead()){
+            System.out.println("AN ENTITY HAS LOST ALL ITS LIVES");
+            map.removeEntityAt(location);
+        }else{
+            System.out.println("GOTO START");
+            teleport(startLocation);
+        }
     }
 
     // Wrapper to heal life
@@ -306,7 +352,12 @@ public abstract class Entity{
 
     // Wrapper to take damage
     public void takeDamage(int amount) {
+
+        int livesBefore = getLives();
         this.stats.modifyStat(Stats.Type.HEALTH, amount);
+        if(getLives()!=livesBefore){
+            handleDeath();
+        }
     }
 
     //Weird hacky thing (All entities do not have amount unless otherwise specificed. Avatar will
@@ -314,4 +365,30 @@ public abstract class Entity{
     public Mount getMount(){
         return mount;
     }
+
+    public void setMount(Mount mount){
+        this.mount = mount;
+        for(String s : mount.getTerrain()){
+            passableTerrain.add(s);
+        }
+        StatModification moveSpeed = new StatModification(Stats.Type.MOVEMENT, 10);
+        StatModificationList list = new StatModificationList(moveSpeed);
+        applyStatMod(list);
+        Point p = mount.getLocation();
+        map.removeEntityAt(p);
+    }
+    public void removeMount(){
+        if (mount != null) {
+            mount.location = getOrientation().neighbor(getLocation());
+            //Problem is that you are removing while the entity is already on the tile
+            //map.moveEntity(mount, getOrientation()); //Tmp solution is to drop off mount in direction you are facing
+            for(String s : mount.getTerrain()){
+                passableTerrain.remove(s);
+            }
+            map.insertEntity(mount);
+            this.mount = null;
+
+        }
+    }
+
 }

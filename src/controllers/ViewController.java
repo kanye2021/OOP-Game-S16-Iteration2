@@ -1,5 +1,6 @@
 package controllers;
 
+import models.entities.Avatar;
 import utilities.InputMapping;
 import utilities.StateManager;
 import utilities.Task;
@@ -17,11 +18,13 @@ public abstract class ViewController {
     protected View view;
     protected StateManager stateManager;
     private InputMapping keyPressMapping;
+    protected boolean inRemappingKeysState;
 
     public ViewController(View view, StateManager stateManager){
         this.view = view;
         this.stateManager = stateManager;
         keyPressMapping = new InputMapping();
+        this.inRemappingKeysState = false;
 
         initDefaultEscapeMapping();
         initKeyPressMapping();
@@ -36,7 +39,22 @@ public abstract class ViewController {
     }
 
     public void handleKeyPress(KeyEvent e) {
-        keyPressMapping.inputKey(getKeyIntMapping(e));
+        // If we hit enter, or we are currently NOT remapping, handle via the VC's mappings
+        // Because if we are remapping, ENTER saves the new mapping
+        if (e.getKeyCode() == KeyEvent.VK_ENTER || !inRemappingKeysState ) {
+            keyPressMapping.inputKey(getKeyIntMapping(e));
+        }
+        // Otherwise let the VC handle the new mapping
+        else {
+            handleNewKeyPressForRemap(e);
+        }
+    }
+
+    // Only called when a VC is in a remapping state.
+    // AKA when changing keybindings.
+    // They will override this method, and do what they want with the key press --> (map it somewhere)
+    protected void handleNewKeyPressForRemap(KeyEvent e) {
+        // Method stub to be overriden by a subclass who wants to
     }
 
     public void handleKeyRelease(KeyEvent e){
@@ -63,15 +81,7 @@ public abstract class ViewController {
 
     private final void initDefaultEscapeMapping() {
 
-        Task escapeTask = new Task() {
-            @Override
-            public void run() {
-                stateManager.goToPreviousState();
-            }
 
-            @Override
-            public void stop() {}
-        };
 
         Task altF4Task = new Task() {
             @Override
@@ -83,7 +93,7 @@ public abstract class ViewController {
             public void stop(){}
         };
 
-        addKeyPressMapping(escapeTask, KeyEvent.VK_BACK_SPACE);
+
         addKeyPressMapping(altF4Task, KeyEvent.VK_F4, KeyEvent.ALT_MASK);
 
     }
@@ -127,7 +137,5 @@ public abstract class ViewController {
         return number;
 
     }
-
-
 
 }

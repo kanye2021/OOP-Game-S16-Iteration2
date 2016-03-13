@@ -33,4 +33,11 @@ public class TeleportAreaEffect extends AreaEffect {
         return "teleport";
     }
 
+    public int getValue(){
+        return 0;
+    }
+    public Point getPoint(){
+        return targetPoint;
+    }
+
 }

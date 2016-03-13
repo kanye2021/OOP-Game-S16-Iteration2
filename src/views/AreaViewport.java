@@ -71,13 +71,14 @@ public class AreaViewport extends View {
         hexHeight = Math.round((float)(Math.sqrt(3) /2 * hexWidth));
         horizDistanceBtwnTiles = hexSize * 3 /2;
         vertDistanceBtwnTiles = Math.round((float)(hexSize * Math.sqrt(3)));
-        cachedViewport = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        cachedViewport = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         reRender = true;
     }
 
     public void setViewportOffset(Point offset){
         viewportOffset = offset;
-        getDisplay().repaint();
+        reRender = true;
+        System.out.println("OFFSET SET");
     }
 
     @Override
@@ -85,6 +86,7 @@ public class AreaViewport extends View {
 
         if(map.needsToBeRendered() || reRender){
             Graphics g1 = cachedViewport.getGraphics();
+            System.out.println("RENDERING");
 
             // Draw a black background
             g1.setColor(Color.BLACK);
@@ -155,7 +157,7 @@ public class AreaViewport extends View {
                     seenTiles.put(new Point(currentTileNode.logicalPoint), new Tile(currentTileNode.tile));
 
                     // Set the opacity based on the distance from the avatar.
-                    float opacity = 1.0f - (float) (currentTileNode.distanceFromAvatar * 0.15);
+                    float opacity = 1.0f - (1 - MIN_OPACITY)* (currentTileNode.distanceFromAvatar / (float)radiusOfVisibility);
                     opacity = opacity < MIN_OPACITY ? MIN_OPACITY : opacity;
 
                     renderTile(currentTileNode, g, opacity); // Render the tile.
@@ -205,94 +207,6 @@ public class AreaViewport extends View {
 
         g.setClip(oldClip);
     }
-
-
-//    private void renderTile(TileNode tileNode, Graphics2D g, float opacity){
-//
-//        // Do the actual Drawing here!
-//        Polygon tilePolygon = getHexTile(tileNode.pixelPoint);
-//        g.setColor(Color.BLACK);
-//        g.drawPolygon(tilePolygon); // This part kinda helps the tiles come together. Due to the math involved in rendering
-//        // The hex tiles, there are a few points where we have to cast to an int and lose precision.
-//
-//        // Get the old clip (Should be the entire window).
-//        Shape oldClip = g.getClip();
-//
-//        // Set the clip to just the hex tile
-//        g.setClip(tilePolygon);
-//
-//        // Set the opacity.
-//        AlphaComposite acomp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity);
-//        g.setComposite(acomp);
-//
-//        // Draw the terrain
-//        Terrain terrain = tileNode.tile.getTerrain();
-//        Image terrainImage = terrain.getImage();
-//
-//        int terrainX = (int) (tileNode.pixelPoint.getX() - hexWidth / 2);
-//        int terrainY = (int) (tileNode.pixelPoint.getY()) - hexHeight / 2;
-//        g.drawImage(terrainImage, terrainX, terrainY, hexWidth, hexHeight, getDisplay());
-//
-//
-//        // Draw the items
-//        Item item = tileNode.tile.getItem();
-//        if(item!=null){
-//            Image itemImage = item.getImage();
-//
-//            // Resize the item image
-//            int scaledWidth = hexWidth * 1;
-//            int scaledHeight = hexHeight * 1;
-//
-//            int itemX = (int)(tileNode.pixelPoint.getX() - scaledWidth /2);
-//            int itemY = (int)(tileNode.pixelPoint.getY() - scaledHeight /2);
-//            g.drawImage(itemImage, itemX, itemY, scaledWidth, scaledHeight,  getDisplay());
-//        }
-//
-//        // Draw Area Effects / Decals
-//        Decal decal = tileNode.tile.getDecal();
-//        if(decal!=null && decal.isVisible()){
-//            Image decalImage = decal.getImage();
-//
-//            // Resize the item image
-//            int scaledWidth = hexWidth * 3/5;
-//            int scaledHeight = hexHeight * 3/5;
-//
-//            int itemX = (int)(tileNode.pixelPoint.getX() - scaledWidth /2);
-//            int itemY = (int)(tileNode.pixelPoint.getY() - scaledHeight /2);
-//            g.drawImage(decalImage, itemX, itemY, scaledWidth, scaledHeight,  getDisplay());
-//        }
-//
-//
-//        // Display entities on the map
-//        Entity entity = tileNode.tile.getEntity();
-//        if (entity != null) {
-//
-//            Image entityImage = entity.getImage();
-//
-//            // Resize the entity image
-//            int scaledWidth = hexWidth * 3 / 4;
-//            int scaledHeight = hexHeight * 3 / 4;
-//
-//            int entityX = (int) (tileNode.pixelPoint.getX() - scaledWidth / 2);
-//            int entityY = (int) (tileNode.pixelPoint.getY() - scaledHeight / 2);
-//
-//            if (entity.getMount() != null){
-//                Image mountImage = entity.getMount().getImage();
-//                g.drawImage(mountImage, entityX, entityY + scaledHeight/3, scaledWidth, scaledHeight, getDisplay());
-//                g.drawImage(entityImage, entityX, entityY, scaledWidth, scaledHeight/2, getDisplay());
-//            }else{
-//                g.drawImage(entityImage, entityX, entityY, scaledWidth, scaledHeight, getDisplay());
-//
-//            }
-//
-//
-//            // Add this entity to list of entities and their locations to render its health later alligator
-//            this.entityLocationTuples.add(new EntityLocationTuple(entity, new Point(entityX, entityY)));
-//
-//        }
-//
-//        g.setClip(oldClip);
-//    }
 
     private void drawEntityHealthBar(Graphics g, Entity entity, Point p) {
         int entityX = (int) p.getX() - hexWidth*3/8;

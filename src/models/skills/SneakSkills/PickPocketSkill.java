@@ -8,6 +8,7 @@ import models.items.takeable.TakeableItem;
 import models.map.Map;
 import models.map.Tile;
 import models.skills.ActiveSkill;
+import utilities.Toast;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -42,9 +43,9 @@ public class PickPocketSkill extends ActiveSkill {
 
     @Override
     public void onActivate(Entity entity) {
-        if(isCooldown()){
+
+        if(isCooldown()) {
             System.out.println("Cooldown is not over yet!");
-            return;
         }
         if(!payMana(entity,cost)){
             return;
@@ -60,6 +61,7 @@ public class PickPocketSkill extends ActiveSkill {
         Inventory targetInventory = target.getInventory();
         if(targetInventory.isEmpty()){
             System.out.println("Target did not have any items!!! Nothing 2 steal :(");
+            Toast.createToastWithTimer("Nothing to steal over here...", 1200);
             cooldown=false;
             return;
         } else {
@@ -68,6 +70,9 @@ public class PickPocketSkill extends ActiveSkill {
 
             // Pocket the item
             entityInventory.addItem(stolenItem);
+
+            //do toast
+            Toast.createToastWithTimer("You stole an item!", 1200);
 
             // Cool-down that skill
             doTheCoolDown();

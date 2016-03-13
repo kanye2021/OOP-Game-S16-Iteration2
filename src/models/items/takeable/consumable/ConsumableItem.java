@@ -1,6 +1,7 @@
 package models.items.takeable.consumable;
 
 import models.entities.Entity;
+import models.entities.npc.NPC;
 import models.items.takeable.TakeableItem;
 import models.stats.StatModificationList;
 
@@ -9,13 +10,20 @@ import models.stats.StatModificationList;
  */
 public class ConsumableItem extends TakeableItem {
 
-    public StatModificationList onConsumeModifications;
+    protected StatModificationList onConsumeModifications;
+
+    //Properties
+    protected int itemWeight;
 
     public void onUse(Entity entity) {
-
         entity.applyStatMod(onConsumeModifications);
         entity.getInventory().removeItem(this);
-
     }
 
+    public void useOn(Entity entity, NPC npc){
+        npc.applyStatMod(onConsumeModifications);
+        entity.getInventory().removeItem(this);
+    }
+
+    public boolean isConsumable(){ return true; }
 }

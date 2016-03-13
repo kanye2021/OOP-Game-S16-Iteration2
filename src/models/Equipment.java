@@ -147,10 +147,20 @@ public class Equipment {
 
     }
 
-    public void unEquipItem(EquippableItem item) {
 
-        removeEquipmentFromAffectedLocations(item.getComponent());
+    public void unEquipAll(Inventory inventory){
+        for(Location loc : Location.values()){
+            if(isEquipmentAtLocation(loc)){
+                unEquipItem(getEquipmentLocation(loc), inventory);
+            }
+        }
+    }
 
+    public void unEquipItem(EquippableItem item, Inventory inventory) {
+        if(item!=null){
+            removeEquipmentFromAffectedLocations(item.getComponent());
+            inventory.addItem(item);
+        }
     }
 
     public void removeEquipmentFromAffectedLocations(Component component) {

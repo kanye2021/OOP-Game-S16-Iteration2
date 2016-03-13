@@ -28,7 +28,7 @@ public class RangedAttackSkill extends ActiveSkill {
 
     @Override
     public String getName() {
-        return "Ranged Attack Mastery";
+        return "Ranged-Attack-Mastery";
     }
 
 

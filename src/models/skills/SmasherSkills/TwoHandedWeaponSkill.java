@@ -32,7 +32,7 @@ public class TwoHandedWeaponSkill extends ActiveSkill {
     }
     @Override
     public String getName() {
-        return "Two Handed Weapon Mastery";
+        return "Two-Handed-Weapon-Mastery";
     }
 
     @Override

@@ -15,6 +15,9 @@ public abstract class ActiveSkill extends Skill  {
 
     public abstract void onActivate(Entity entity);
 
+    // All active skills have a keybinding
+    protected int keyBind;
+
     protected int cost;
 
     public int damageSent(Entity entity){
@@ -34,6 +37,7 @@ public abstract class ActiveSkill extends Skill  {
 
     public abstract KeyEvent[] initActivatorKeys();
 
+
     public boolean payMana(Entity entity,int delta){
         int mana = entity.getStats().getStat(Stats.Type.MANA);
         if(mana>=cost){
@@ -43,4 +47,16 @@ public abstract class ActiveSkill extends Skill  {
         }
         return false;
     }
+
+
+    public int getKeyBind() {
+        return keyBind;
+    }
+
+    public void setKeyBind(int keyBind) {
+        this.keyBind = keyBind;
+    }
+
+
+
 }

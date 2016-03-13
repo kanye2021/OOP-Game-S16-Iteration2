@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
  * Created by aseber on 2/24/16.
  */
 //TODO:Figure out if level is connected to entity
+// It is^^^ level is in stats
 public class BargainSkill extends PassiveSkill {
     private int bargainLv;
     private final double constant = 2.0;//Constant used for discounts
