@@ -33,6 +33,7 @@ public class Ride extends Action {
     }
     public void startRide(){
         avatar.setMount((Mount)npc);
+        ((Mount)npc).makeOwner(avatar);
 
     }
 }

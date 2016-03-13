@@ -32,7 +32,7 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
 
     @Override
     public String getName() {
-        return "Detect & Remove Trap";
+        return "Detect-Remove-Trap";
     }
 
 

@@ -14,7 +14,6 @@ public class StateManager{
     private Display display;
     private InputManager inputManager;
     private Stack<State> stateStack;
-    private SubState activeTalkState;
 
     public StateManager(Display display, InputManager inputManager){
         this.display = display;
@@ -38,6 +37,9 @@ public class StateManager{
     public void tick() {
         stateStack.peek().update();
         display.repaint();
+    }
+    public State getTop(){
+        return stateStack.peek();
     }
 }
 

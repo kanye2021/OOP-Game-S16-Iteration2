@@ -26,15 +26,17 @@ public class ShopKeeper extends NPC{
 
         super(location, map);
         passableTerrain.add("grass");
-        initActions();
         initInventory(); //Adds items to the inventory
+        modifyActions();
         brain = new Brain(this, Personalities.KIND); // Agnostic is the default personailty.
     }
     //---------NPC Stuff------------
-    public void initActions(){
-        actionList.add(new Talk(this));
-        actionList.add (new Attack(this));
+    public void modifyActions(){
         actionList.add(new Trade(this));
+    }
+    @Override
+    public void initDialogue(){
+        //dialogue.clear(); //Might be unnecessary
         actionList.add(new UseItemOnNPC(this));
         dialogue.add("Welcome to my store where I can sell you stuff!");
         dialogue.add("Don't have much though...");
@@ -87,11 +89,11 @@ public class ShopKeeper extends NPC{
         item.setMonetaryValue(currentValue - 10); //Item value returns back to original
         inventory.removeItem(item);
     }
-
+    @Override
     public final String getType() {
 
-        return "ShopKeeper" + "-" + super.getType();
-
+       // return "ShopKeeper" + "-" + super.getType();
+        return "ShopKeeper";
     }
 
 }

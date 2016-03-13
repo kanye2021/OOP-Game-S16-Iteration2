@@ -26,4 +26,7 @@ public class LevelUpAreaEffect extends AreaEffect {
         return "level-up";
     }
 
+    public int getValue(){
+        return 0;
+    }
 }

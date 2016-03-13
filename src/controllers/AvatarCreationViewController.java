@@ -51,26 +51,26 @@ public class AvatarCreationViewController extends ViewController {
                     case SMASHER:
                         gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         gameViewController = new GameViewController(gameView, stateManager);
-                        nextState = new GameState(gameViewController, gameView, "smasher");
+                        nextState = new GameState(gameViewController, gameView, "smasher", null);
                         stateManager.setActiveState(nextState);
                         // Set the gameViewController, initially here.
-                        Toast.setGameViewController(gameViewController);
+                        Toast.initWithGameViewController(gameViewController);
                         break;
                     case SUMMONER:
                         gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         gameViewController = new GameViewController(gameView, stateManager);
-                        nextState = new GameState(gameViewController, gameView, "summoner");
+                        nextState = new GameState(gameViewController, gameView, "summoner", null);
                         stateManager.setActiveState(nextState);
                         // Set the gameViewController, initially here.
-                        Toast.setGameViewController(gameViewController);
+                        Toast.initWithGameViewController(gameViewController);
                         break;
                     case SNEAK:
                         gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(),view.getDisplay());
                         gameViewController = new GameViewController(gameView, stateManager);
-                        nextState = new GameState(gameViewController, gameView, "sneak");
+                        nextState = new GameState(gameViewController, gameView, "sneak", null);
                         stateManager.setActiveState(nextState);
                         // Set the gameViewController, initially here.
-                        Toast.setGameViewController(gameViewController);
+                        Toast.initWithGameViewController(gameViewController);
                         break;
                 }
 
@@ -79,6 +79,17 @@ public class AvatarCreationViewController extends ViewController {
             public void stop() {}
         };
 
+        Task escapeTask = new Task() {
+            @Override
+            public void run() {
+                stateManager.goToPreviousState();
+            }
+
+            @Override
+            public void stop() {}
+        };
+
+        addKeyPressMapping(escapeTask, KeyEvent.VK_ESCAPE);
         addKeyPressMapping(previousOption, KeyEvent.VK_UP);
         addKeyPressMapping(nextOption, KeyEvent.VK_DOWN);
         addKeyPressMapping(selectOption, KeyEvent.VK_ENTER);
