@@ -2378,12 +2378,15 @@
     </tile>
     <tile x="-10" y="13">
         <terrain type="grass"/>
+        <item id="1502" type="takeable"/>
     </tile>
     <tile x="-10" y="14">
         <terrain type="grass"/>
+        <item id="1300" type="takeable"/>
     </tile>
     <tile x="-10" y="15">
         <terrain type="grass"/>
+        <item id="1602" type="takeable"/>
     </tile>
     <tile x="-10" y="16">
         <terrain type="mountain"/>

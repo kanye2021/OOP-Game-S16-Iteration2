@@ -1,15 +1,7 @@
 package models.entities.npc.actions;
 
-import controllers.GameViewController;
 import controllers.ViewController;
-import models.entities.Avatar;
-import models.stats.StatModification;
-import models.stats.StatModificationList;
-import models.stats.Stats;
-
 import models.entities.npc.NPC;
-import models.entities.npc.actions.Action;
-import views.GameView;
 import views.View;
 
 /**
@@ -28,9 +20,10 @@ public class Attack extends Action {
     }
 
     public void doDamage(){
-        Stats npcStats = npc.getStats();
-        npcStats.modifyStat(Stats.Type.HEALTH, -1);
-        System.out.println("NPC Current HP: " + npcStats.getStat(Stats.Type.HEALTH));
+        npc.takeDamage(-1);
+//        Stats npcStats = npc.getStats();
+//        npcStats.modifyStat(Stats.Type.HEALTH, -1);
+//        System.out.println("NPC Current HP: " + npcStats.getStat(Stats.Type.HEALTH));
     }
 
 

@@ -2,6 +2,7 @@ package models.skills.SummonerSkills;
 
 import models.attack.LinearAttack;
 import models.attack.Projectile;
+import models.attack.StatusEffects;
 import models.entities.Avatar;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
@@ -21,6 +22,9 @@ public class FireBallSkill extends ActiveSkill{
     public FireBallSkill(){
         damage = 5;
         range = 3;
+        cooldownTime = 1*SECONDS;
+        cost = 10;
+        level = 1;
     }
 
     @Override
@@ -38,8 +42,18 @@ public class FireBallSkill extends ActiveSkill{
 
     @Override
     public void onActivate(Entity entity) {
+        if(isCooldown()){
+            return;
+        }
+        if(!payMana(entity,cost)){
+            return;
+        }
+
+        doTheCoolDown();
         System.out.println("Can you take this? Fireball!");
-        Projectile projectile = new Projectile(damage,range);
+        Projectile projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);
+
+        cooldown=true;
         new LinearAttack(entity,projectile);//This is the attack
 
 

@@ -61,6 +61,7 @@ public class Tile {
             return result;
         }
 
+        //if(entity.get)
         // Check if there is another entity on this tile.
         if(this.entity != null){
             System.out.println("In tile");

@@ -19,10 +19,6 @@ import java.util.Random;
  * Created by aseber on 2/25/16.
  */
 
-//TODO:Get the inventory viewport to show that Item got stolen and that you have it
-    //TODO:SERGIO REED DIS.  SO I THINK IT DOESNT WORK B/C INVENTORY VIEW LOOKS AT ITEMS
-    //TODO:SO SINCE I ADDED IT TO THE ITEM NODES ARRAYLIST BUT NOT THE ITEMS IT DOESNT APPEAR
-    //TODO:IDK CURRENTLY HOW TO FIX
 public class PickPocketSkill extends ActiveSkill {
 
     public PickPocketSkill(){
@@ -31,6 +27,7 @@ public class PickPocketSkill extends ActiveSkill {
         cooldown = false;
         cooldownTime = 5*SECONDS;
         currentCooldownRemaining = 0;
+        level = 1;
     }
 
     @Override
@@ -46,10 +43,14 @@ public class PickPocketSkill extends ActiveSkill {
 
     @Override
     public void onActivate(Entity entity) {
-        if(cooldown){
-            Toast.createToastWithTimer("Cooldown is not over yet!", 1200);
+
+        if(isCooldown()) {
+            System.out.println("Cooldown is not over yet!");
+        }
+        if(!payMana(entity,cost)){
             return;
         }
+
         Entity target = findEntity(entity);
         if(target == null){
             System.out.println("Target is not there");
@@ -124,7 +125,7 @@ public class PickPocketSkill extends ActiveSkill {
         if(desiredTile == null){
             return null;
         }
-        if(desiredTile.hasEntity()){
+        if(desiredTile.hasEntity()&&!payMana(entity,cost)){
             return desiredTile.getEntity();
         }
 

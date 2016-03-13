@@ -3,17 +3,29 @@ package controllers.entityControllers;
 import controllers.*;
 import controllers.GameViewController;
 import controllers.InventoryViewController;
+import models.Equipment;
+import models.attack.LinearAttack;
+import models.attack.Projectile;
+import models.attack.StatusEffects;
 import models.entities.Avatar;
 import models.entities.Entity;
 import models.entities.npc.NPC;
+import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
 import models.skills.CommonSkills.BindWoundsSkill;
 import models.skills.Skill;
+
+import models.skills.SmasherSkills.BrawlingSkill;
+import models.skills.SmasherSkills.OneHandedWeaponSkill;
+import models.skills.SmasherSkills.TwoHandedWeaponSkill;
+
 import models.skills.SkillList;
+
 import models.skills.SneakSkills.CreepSkill;
 import models.skills.SneakSkills.DetectRemoveTrapSkill;
 import models.skills.SneakSkills.PickPocketSkill;
 import models.skills.SummonerSkills.*;
+import models.stats.Stats;
 import utilities.TileDetection;
 import utilities.InputMapping;
 import utilities.SubState;
@@ -65,6 +77,7 @@ public class AvatarController {
         Skill firstSkill = avatar.getSkills().get(1);
         BindWoundsSkill bindWoundsSkill = (BindWoundsSkill) firstSkill;
         bindWoundsSkill.onActivate(avatar);
+        //System.out.println("Checkpoint 1");
     }
 
 
@@ -187,6 +200,85 @@ public class AvatarController {
         }else if(avatar.getOccupation().contains("Sneak")){
             //first skill should be something..
             //first skill should be something..
+            Skill fifthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.CREEP);
+            System.out.println(fifthSkill);
+            CreepSkill creepSkill = (CreepSkill) fifthSkill;
+            creepSkill.sneakBehind(avatar);
+        }else{
+            System.out.println("What are you");
+        }
+    }
+    public void useBasicAttack(){
+
+        if(avatar.getOccupation().contains("Smasher")){
+            EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
+            if(item==null){
+                Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.BRAWLING);
+                System.out.println("Brawling Skill");
+                BrawlingSkill brawlingSkill = (BrawlingSkill) basicSkill;
+                brawlingSkill.onActivate(avatar);
+                return;
+            }
+
+            Equipment.Component component= item.getComponent();
+            if(component== Equipment.Component.ONE_HANDED_WEAPON){
+                Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.ONE_HANDED_WEAPON);
+                System.out.println("1h Skill");
+                OneHandedWeaponSkill OneHandSkill = (OneHandedWeaponSkill) basicSkill;
+                OneHandSkill.onActivate(avatar);
+                //call active skill one handed weapon
+            }else if(component == Equipment.Component.TWO_HANDED_WEAPON){
+                Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.TWO_HANDED_WEAPON);
+                System.out.println("2h Skill");
+                TwoHandedWeaponSkill TwoHandSkill = (TwoHandedWeaponSkill) basicSkill;
+                TwoHandSkill.onActivate(avatar);
+                //call active skill one handed weapon
+            }else{
+                System.out.println("Wat");
+            }
+                //avatar.basicAttack(avatar,component);
+
+
+
+        }else if(avatar.getOccupation().contains("Summoner")){
+            //No more skills
+            EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
+            if(item==null){
+                //TODO:Add cooldown somehow.  I feel like I need to make this a function?
+                Projectile projectile = new Projectile(10*avatar.getStats().getStat(Stats.Type.LEVEL)+1,1, StatusEffects.StatusEffect.NONE);
+                new LinearAttack(avatar,projectile);
+                return;
+            }
+            Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.STAFF);
+            //System.out.println("Staff Skill");
+            StaffSkill staffSkill = (StaffSkill) basicSkill;
+            staffSkill.onActivate(avatar);
+
+
+            //Equipment.Component component= item.getComponent();
+            /*EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
+            Equipment.Component component= item.getComponent();
+                avatar.basicAttack(avatar,component);*/
+
+
+        }else if(avatar.getOccupation().contains("Sneak")){
+            EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
+           // Equipment.Component component= item.getComponent();
+            if(item==null){
+                //TODO:Add cooldown somehow.  I feel like I need to make this a function?
+                Projectile projectile = new Projectile(10*avatar.getStats().getStat(Stats.Type.LEVEL)+1,1, StatusEffects.StatusEffect.NONE);
+                new LinearAttack(avatar,projectile);
+                return;
+            }
+            Equipment.Component component= item.getComponent();
+            if(component == Equipment.Component.RANGED_WEAPON){
+                avatar.basicAttack(avatar,component);
+            }else{
+                //TODO:Add cooldown somehow.  I feel like I need to make this a function?
+                Projectile projectile = new Projectile(10*avatar.getStats().getStat(Stats.Type.LEVEL)+1,1, StatusEffects.StatusEffect.NONE);
+                new LinearAttack(avatar,projectile);
+
+            }
 
         }else{
             System.out.println("What are you");

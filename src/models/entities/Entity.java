@@ -3,6 +3,9 @@ package models.entities;
 import controllers.entityControllers.AvatarController;
 import models.Equipment;
 import models.Inventory;
+import models.attack.LinearAttack;
+import models.attack.Projectile;
+import models.attack.StatusEffects;
 import models.entities.npc.Mount;
 import models.entities.npc.NPC;
 import models.items.takeable.TakeableItem;
@@ -32,12 +35,15 @@ public abstract class Entity{
     protected Map.Direction orientation;
     protected Stats stats;
     protected SkillList skills;
+    protected StatusEffects.StatusEffect statusEffect;
     protected Inventory inventory;
     protected Equipment equipment;
     protected Occupation occupation;
     protected AvatarController controller;
     protected Map map;
+
     protected int level;
+
 
     // All entities should be able to have a pet.
     protected Pet pet;
@@ -66,7 +72,7 @@ public abstract class Entity{
         this.inventory = new Inventory(30);
         this.equipment = new Equipment(this);
         passableTerrain = new ArrayList<>();
-
+        this.statusEffect = StatusEffects.StatusEffect.NONE;
         this.sprite = new DirectionalSprite(initSprites());
         this.map = map;
 
@@ -125,9 +131,28 @@ public abstract class Entity{
         if(found != null) {
             return found;
         }else{
-            System.out.println("hahahah couldn't find it bitch");
+
             return null;
         }
+    }
+
+    public void basicAttack(Entity entity, Equipment.Component component){
+
+        int cooldowntime = 0;
+        int damage = entity.getStats().getStat(Stats.Type.STRENGTH);
+        if(component== Equipment.Component.ONE_HANDED_WEAPON){
+            damage *= 1;
+            cooldowntime=2000;
+        }else if(component == Equipment.Component.TWO_HANDED_WEAPON){
+            damage *= 2;
+            cooldowntime=3000;
+        }else{
+            cooldowntime=1000;
+            damage /= 2;
+        }
+
+        Projectile projectile = new Projectile(damage,1, StatusEffects.StatusEffect.NONE);
+        new LinearAttack(this,projectile);
     }
 
     public final TileDetection move(Map.Direction direction){
@@ -188,6 +213,13 @@ public abstract class Entity{
     }
 
     // Wrappers for skills
+    public StatusEffects.StatusEffect getStatusEffect(){
+        return statusEffect;
+    }
+//Dont think I need setter?
+    public void setStatusEffect(StatusEffects.StatusEffect newStatusEffect){
+        this.statusEffect = newStatusEffect;
+    }
     // TODO: Implement skill stuff.
 
     // Wrapper functions for inventory interaction
@@ -235,7 +267,12 @@ public abstract class Entity{
         return "Entity";
 
     }
-
+    public boolean getCanMove(){
+        return canMove;
+    }
+    public void setCanMove(boolean canMove){
+        this.canMove = canMove;
+    }
     // Used to go to a new map
     public final void setMap(Map map){
         this.map = map;

@@ -2,6 +2,7 @@ package models.skills.SummonerSkills;
 
 import models.attack.AngularAttack;
 import models.attack.Projectile;
+import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
@@ -19,7 +20,10 @@ public class GroundDasherSkill extends ActiveSkill{
     public GroundDasherSkill(){
         damage = 1;
         range = 3;
-        projectile = new Projectile(damage,range);
+        cooldownTime = 2*SECONDS;
+        projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);
+        cost = 10;
+        level = 1;
     }
     @Override
     public SkillDictionary initID() {
@@ -35,11 +39,14 @@ public class GroundDasherSkill extends ActiveSkill{
 
     @Override
     public void onActivate(Entity entity) {
-        if(cooldown){
+        if(isCooldown()){
             System.out.println("ANOTHA ONE");
             return;
         }
-        cooldown = true;
+        if(!payMana(entity,cost)){
+            return;
+        }
+        doTheCoolDown();
         System.out.println("Bruh its OG Dasher");
         new AngularAttack(entity,projectile);
         //This attack is in the models
