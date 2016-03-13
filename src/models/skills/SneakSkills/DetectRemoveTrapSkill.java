@@ -19,11 +19,16 @@ import java.awt.event.KeyEvent;
 //TODO:Figure out a way to put trap in the XML.
 public class DetectRemoveTrapSkill extends ActiveSkill {
 
-    public DetectRemoveTrapSkill(){
+    private boolean detectedTrap;
+    private Point detectedTrapPoint;
+
+    public DetectRemoveTrapSkill() {
         cooldownTime = 3*SECONDS;
         cooldown = false;
         cost = 5;
         level = 1;
+        detectedTrap = false;
+        detectedTrapPoint = new Point();
     }
 
     @Override
@@ -49,86 +54,35 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
             System.out.println("Cooldown time is not over!");
             return;
         }
-        if(!findTrap(entity)){
-            cooldown = false;
-            System.out.println("Could not find trap");
-            return;
-        }
         if(!payMana(entity,cost)){
             return;
         }
 
-        doTheCoolDown();
-        findTrap(entity);
-        System.out.println("I am detect and remove trap skill");
-
-
-    }
-    //TODO:Map a key press to here for sneak
-    public void removeTrap(Entity entity){
-
-        if(!findTrap(entity)){
-            System.out.println("It appears that nothing is there");
-            return;
-        }
-
-        Point currentLocation = entity.getLocation();
-        Point offset = new Point();
-        Map.Direction entityOrientation = entity.getOrientation();
-
-        Point desiredLocation = new Point();
-
-        if(entityOrientation== Map.Direction.NORTH){
-            offset.x=0;
-            offset.y=-1;
-        }
-        else if(entityOrientation == Map.Direction.NORTH_EAST){
-            offset.x=1;
-            offset.y=-1;
-        }
-        else if(entityOrientation == Map.Direction.SOUTH_EAST){
-            offset.x=1;
-            offset.y=0;
-        }
-        else if(entityOrientation == Map.Direction.SOUTH){
-            offset.x=0;
-            offset.y=1;
-        }
-        else if(entityOrientation == Map.Direction.SOUTH_WEST){
-            offset.x=-1;
-            offset.y=1;
-        }
-        else if(entityOrientation == Map.Direction.NORTH_WEST){
-            offset.x=-1;
-            offset.y=0;
-        }
-        else{
-            offset.x=0;
-            offset.y=0;
-            System.out.println("Really? You put in that much work to break the program?");
-        }
-        desiredLocation.x = currentLocation.x+offset.x;
-        desiredLocation.y = currentLocation.y+offset.y;
-
-        Map map = entity.getMap();
-        Tile desiredTile = map.getTileAt(desiredLocation);
-
-        if(desiredTile.getAreaEffect().getDecal().isVisible()){
-            if(!payMana(entity,cost)){
+        if (!detectedTrap) {
+            Point point = findTrap(entity);
+            if (point == null) {
+                cooldown = false;
+                System.out.println("Could not find trap");
                 return;
             }
-
-            AreaEffect areaEffect = desiredTile.getAreaEffect();
-            desiredTile.getAreaEffect().getDecal().setVisible(false);//"Deletes it visibilitywise"
-
-            TrapAreaEffect areaEffect1 = (TrapAreaEffect) areaEffect;
-
-            areaEffect1.setRemoved(true);//Makes it "Removed" So when onTouch is called nothing happens
-            //TODO:Figure out if it is possible to delete the object
-
+            // Else I did find a trap and made it visible
+            else {
+                detectedTrap = true;
+                detectedTrapPoint = point;
+            }
+            System.out.println("I am detect and remove trap skill");
+        }
+        // Now, i want to remove that trap
+        else {
+            removeTrapAtPoint(detectedTrapPoint, entity);
+            // Reset stuff
+            detectedTrap = false;
+            detectedTrapPoint = new Point();
         }
 
+
     }
+
     @Override
     public KeyEvent[] initActivatorKeys() {
 
@@ -136,14 +90,15 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
 
     }
 
-    public boolean findTrap(Entity entity){
+    public Point findTrap(Entity entity) {
+        boolean foundATrap = false;
         Point currentLocation = entity.getLocation();
         Point offset = new Point();
         Map.Direction entityOrientation = entity.getOrientation();
+
         //How to find target based off of location.
         Point desiredLocation = new Point();
-//TODO:Refractor else if cascade into a function in Skills Class
-        if(entityOrientation== Map.Direction.NORTH){
+        if(entityOrientation== Map.Direction.NORTH) {
             offset.x=0;
             offset.y=-1;
         }
@@ -179,36 +134,34 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
         Tile desiredTile = map.getTileAt(desiredLocation);
 
         if(desiredTile == null){
-            return false;
+            foundATrap = false;
         }
         AreaEffect areaEffect = desiredTile.getAreaEffect();
         if(areaEffect==null){
-            return false;
+            foundATrap = false;
         }
         String typeOfAOE = areaEffect.getType();
         if(typeOfAOE== "trap"){
-            if(desiredTile.getDecal().isVisible()){
-                //removeTrap(entity);
-                map.removeAreaEffectAt(desiredLocation);
-                System.out.println("Somehow removed");
-                return true;
 
-            }
             System.out.println("Trap is here yo");
             //return desiredTile;
             map.setDecalVisibilityAtPoint(true, desiredLocation);
-            desiredTile.getAreaEffect().getDecal().setVisible(true);
-            boolean potato = desiredTile.getDecal().isVisible();
-            System.out.println(potato);
-            return true;
+            return desiredLocation;
         }
         else{
             System.out.println("Lol there is no trap here");
         }
-        /*if (desiredTile.hasTrap()) {
-            return desiredTile.getTrap();
-        }*/
-        return false;
+
+        if (!foundATrap) {
+            // Return null if couldnt find a trap
+            return null;
+        }
+        return null;
+    }
+
+    private void removeTrapAtPoint(Point point, Entity entity) {
+        Map map = entity.getMap();
+        map.removeAreaEffectAt(point);
     }
 
 }
