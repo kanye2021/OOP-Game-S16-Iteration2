@@ -4,6 +4,9 @@ import controllers.*;
 import controllers.GameViewController;
 import controllers.InventoryViewController;
 import models.Equipment;
+import models.attack.LinearAttack;
+import models.attack.Projectile;
+import models.attack.StatusEffects;
 import models.entities.Avatar;
 import models.entities.Entity;
 import models.entities.npc.NPC;
@@ -18,6 +21,7 @@ import models.skills.SneakSkills.CreepSkill;
 import models.skills.SneakSkills.DetectRemoveTrapSkill;
 import models.skills.SneakSkills.PickPocketSkill;
 import models.skills.SummonerSkills.*;
+import models.stats.Stats;
 import utilities.TileDetection;
 import utilities.InputMapping;
 import utilities.SubState;
@@ -229,15 +233,41 @@ public class AvatarController {
         }else if(avatar.getOccupation().contains("Summoner")){
             //No more skills
             EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
+            if(item==null){
+                //TODO:Add cooldown somehow.  I feel like I need to make this a function?
+                Projectile projectile = new Projectile(10*avatar.getStats().getStat(Stats.Type.LEVEL)+1,1, StatusEffects.StatusEffect.NONE);
+                new LinearAttack(avatar,projectile);
+                return;
+            }
+            Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.STAFF);
+            //System.out.println("Staff Skill");
+            StaffSkill staffSkill = (StaffSkill) basicSkill;
+            staffSkill.onActivate(avatar);
+
+
+            //Equipment.Component component= item.getComponent();
+            /*EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
             Equipment.Component component= item.getComponent();
-                avatar.basicAttack(avatar,component);
+                avatar.basicAttack(avatar,component);*/
 
 
         }else if(avatar.getOccupation().contains("Sneak")){
             EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
+           // Equipment.Component component= item.getComponent();
+            if(item==null){
+                //TODO:Add cooldown somehow.  I feel like I need to make this a function?
+                Projectile projectile = new Projectile(10*avatar.getStats().getStat(Stats.Type.LEVEL)+1,1, StatusEffects.StatusEffect.NONE);
+                new LinearAttack(avatar,projectile);
+                return;
+            }
             Equipment.Component component= item.getComponent();
-            if(component == Equipment.Component.TWO_HANDED_WEAPON){
+            if(component == Equipment.Component.RANGED_WEAPON){
                 avatar.basicAttack(avatar,component);
+            }else{
+                //TODO:Add cooldown somehow.  I feel like I need to make this a function?
+                Projectile projectile = new Projectile(10*avatar.getStats().getStat(Stats.Type.LEVEL)+1,1, StatusEffects.StatusEffect.NONE);
+                new LinearAttack(avatar,projectile);
+
             }
 
         }else{
