@@ -23,6 +23,7 @@ public class GroundDasherSkill extends ActiveSkill{
         cooldownTime = 2*SECONDS;
         projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);
         cost = 10;
+        level = 1;
     }
     @Override
     public SkillDictionary initID() {
@@ -38,14 +39,14 @@ public class GroundDasherSkill extends ActiveSkill{
 
     @Override
     public void onActivate(Entity entity) {
-        if(cooldown){
+        if(isCooldown()){
             System.out.println("ANOTHA ONE");
             return;
         }
         if(!payMana(entity,cost)){
             return;
         }
-        cooldown = true;
+        doTheCoolDown();
         System.out.println("Bruh its OG Dasher");
         new AngularAttack(entity,projectile);
         //This attack is in the models

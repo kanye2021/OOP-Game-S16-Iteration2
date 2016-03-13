@@ -22,6 +22,7 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
         cooldownTime = 3*SECONDS;
         cooldown = false;
         cost = 5;
+        level = 1;
     }
 
     @Override
@@ -39,7 +40,7 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
 
     @Override
     public void onActivate(Entity entity) {
-        if(cooldown){
+        if(isCooldown()){
             System.out.println("Cooldown time is not over!");
             return;
         }
@@ -52,21 +53,10 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
             return;
         }
 
-        cooldown = true;
+        doTheCoolDown();
 
         System.out.println("I am detect and remove trap skill");
 
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-
-
-                        cooldown = false;
-                    }
-                },
-                cooldownTime
-        );
 
     }
     //TODO:Map a key press to here for sneak

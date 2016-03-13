@@ -11,6 +11,9 @@ import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
 import models.skills.CommonSkills.BindWoundsSkill;
 import models.skills.Skill;
+import models.skills.SmasherSkills.BrawlingSkill;
+import models.skills.SmasherSkills.OneHandedWeaponSkill;
+import models.skills.SmasherSkills.TwoHandedWeaponSkill;
 import models.skills.SneakSkills.CreepSkill;
 import models.skills.SneakSkills.DetectRemoveTrapSkill;
 import models.skills.SneakSkills.PickPocketSkill;
@@ -195,8 +198,25 @@ public class AvatarController {
         if(avatar.getOccupation().contains("Smasher")){
             EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
             Equipment.Component component= item.getComponent();
-
-                avatar.basicAttack(avatar,component);
+            if(component== Equipment.Component.ONE_HANDED_WEAPON){
+                Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.ONE_HANDED_WEAPON);
+                System.out.println("1h Skill");
+                OneHandedWeaponSkill OneHandSkill = (OneHandedWeaponSkill) basicSkill;
+                OneHandSkill.onActivate(avatar);
+                //call active skill one handed weapon
+            }else if(component == Equipment.Component.TWO_HANDED_WEAPON){
+                Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.TWO_HANDED_WEAPON);
+                System.out.println("2h Skill");
+                TwoHandedWeaponSkill TwoHandSkill = (TwoHandedWeaponSkill) basicSkill;
+                TwoHandSkill.onActivate(avatar);
+                //call active skill one handed weapon
+            }else{
+                Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.BRAWLING);
+                System.out.println("Brawling Skill");
+                BrawlingSkill brawlingSkill = (BrawlingSkill) basicSkill;
+                brawlingSkill.onActivate(avatar);
+            }
+                //avatar.basicAttack(avatar,component);
 
 
 

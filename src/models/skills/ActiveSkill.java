@@ -17,6 +17,15 @@ public abstract class ActiveSkill extends Skill  {
 
     protected int cost;
 
+    public int damageSent(Entity entity){
+        int strength = entity.getStats().getStat(Stats.Type.STRENGTH);
+        int intellect = entity.getStats().getStat(Stats.Type.INTELLECT);
+        int itemStrength = entity.getStats().getStat(Stats.Type.OFFSENSIVE_RATING);
+        int agility = entity.getStats().getStat(Stats.Type.AGILITY);
+        return(strength+intellect+itemStrength+agility);
+    }
+    //protected int level;
+
     //activeSkills return true for activeSkill check
     @Override
     public boolean isActive() {

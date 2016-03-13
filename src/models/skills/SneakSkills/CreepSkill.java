@@ -26,6 +26,7 @@ public class CreepSkill extends ActiveSkill {
         cooldownTime = 5*SECONDS;
         damage = 10;
         cost = 5;
+        level = 1;
     }
     @Override
     public SkillDictionary initID() {
@@ -45,7 +46,7 @@ public class CreepSkill extends ActiveSkill {
             System.out.println("Calm Down and Cool Down m8");
             return;
         }
-        cooldown=true;
+        doTheCoolDown();
 
         if(!payMana(entity,cost)){
             return;
@@ -85,7 +86,7 @@ public class CreepSkill extends ActiveSkill {
     }
 
     public void sneakBehind(Entity entity){
-        if(cooldown&&entity.getStatusEffect() != StatusEffects.StatusEffect.INVISIBLE){
+        if(isCooldown()&&entity.getStatusEffect() != StatusEffects.StatusEffect.INVISIBLE){
             return;
         }
         if(!payMana(entity,cost)){
@@ -145,10 +146,12 @@ public class CreepSkill extends ActiveSkill {
             new LinearAttack(entity,projectile);
             System.out.println("Double Trouble!");
             entity.setStatusEffect(StatusEffects.StatusEffect.NONE);
+            doTheCoolDown();
         }else if(targetTile.hasEntity()){
             Projectile projectile = new Projectile(damage,1, StatusEffects.StatusEffect.NONE);
             new LinearAttack(entity,projectile);
             entity.setStatusEffect(StatusEffects.StatusEffect.NONE);
+            doTheCoolDown();
         }
         else{
             System.out.println("How did you get here?");
