@@ -1,6 +1,5 @@
 package controllers.entityControllers.AI.Memory;
 
-import controllers.entityControllers.AI.Personality.Interests.EmptyInterest;
 import controllers.entityControllers.AI.Personality.Personality;
 import models.entities.Entity;
 import models.items.Item;
@@ -15,7 +14,7 @@ public class Memory implements VisualInterface, ThoughtInterface, MotorInterface
 
     private HashMap<Entity, Relationship> relationships = new HashMap<>();
     private VisualInformation visualMemory = new VisualInformation();
-    private Decision decision = new Decision(new EmptyInterest(1.0), new Point());
+    private Decision decision;
     private Personality personality;
 
     public Memory(Personality personality) {

@@ -34,6 +34,12 @@ public class MotorCortex {
 
         }
 
+        if (memory.getDecision() == null) {
+
+            System.err.println("Error! NULL decision in " + npc.getType());
+
+        }
+
         moveTowardsInterest();
 
     }

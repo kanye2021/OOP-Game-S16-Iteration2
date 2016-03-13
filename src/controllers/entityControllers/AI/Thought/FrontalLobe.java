@@ -37,15 +37,19 @@ public class FrontalLobe {
         Decision currentDecision = memory.getDecision();
 
         //First check if our current decision is valid
-        if (currentDecision.isInterestValid(memory)) {
+        if (currentDecision != null) {
 
-            System.out.println("scatter?");
+            if (currentDecision.isInterestValid(memory)) {
 
-            // Then check if we should get a new Interest based on scatter_brainedness
-            if (memory.getPersonality().getScatter_Brainedness() > rand) {
+                System.out.println("scatter?");
 
-                System.out.println(npc.getType() + "I kept my same decision");
-                return;
+                // Then check if we should get a new Interest based on scatter_brainedness
+                if (memory.getPersonality().getScatter_Brainedness() > rand) {
+
+                    System.out.println(npc.getType() + "I kept my same decision");
+                    return;
+
+                }
 
             }
 
