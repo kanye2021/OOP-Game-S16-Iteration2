@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * Created by aseber on 2/18/16.
  */
-public class InputMapping extends HashMap<Integer, Task> {
+public class InputMapping extends HashMap<Integer, TaskWrapper> {
 
     private static Task emptyTask = new Task() {
 
@@ -18,13 +18,13 @@ public class InputMapping extends HashMap<Integer, Task> {
     };
 
     public void inputKey(Integer integer) {
-        Task task = super.getOrDefault(integer, emptyTask);
-        task.run();
+        TaskWrapper task = super.getOrDefault(integer, new TaskWrapper(emptyTask, "empty task"));
+        task.getTask().run();
     }
 
     public void keyReleased(Integer integer) {
-        Task task = super.getOrDefault(integer, emptyTask);
-        task.stop();
+        TaskWrapper task = super.getOrDefault(integer, new TaskWrapper(emptyTask, "empty task"));
+        task.getTask().stop();
     }
 
 }

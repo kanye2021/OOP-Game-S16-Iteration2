@@ -8,6 +8,7 @@ import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
 import utilities.StateManager;
 import utilities.Task;
+import utilities.TaskWrapper;
 import views.InventoryView;
 import views.NPCMenuView;
 import views.View;
@@ -103,18 +104,18 @@ public class InventoryViewController extends ViewController {
         };
 
 
-        addKeyPressMapping(previousItem, KeyEvent.VK_UP);
-        addKeyPressMapping(nextItem, KeyEvent.VK_DOWN);
-        addKeyPressMapping(previousItem, KeyEvent.VK_LEFT);
-        addKeyPressMapping(nextItem, KeyEvent.VK_RIGHT);
-        addKeyPressMapping(useItem, KeyEvent.VK_ENTER);
-        addKeyPressMapping(dropItem, KeyEvent.VK_D);
+        addKeyPressMapping(new TaskWrapper(previousItem, "previous"), KeyEvent.VK_UP);
+        addKeyPressMapping(new TaskWrapper(nextItem, "next"), KeyEvent.VK_DOWN);
+        addKeyPressMapping(new TaskWrapper(previousItem, "previous"), KeyEvent.VK_LEFT);
+        addKeyPressMapping(new TaskWrapper(nextItem, "next"), KeyEvent.VK_RIGHT);
+        addKeyPressMapping(new TaskWrapper(useItem, "Use Item"), KeyEvent.VK_ENTER);
+        addKeyPressMapping(new TaskWrapper(dropItem, "Drop Item"), KeyEvent.VK_D);
 
     }
 
     public void setCloseInventory(Task task) {
         this.closeInventory = task;
-        addKeyPressMapping(closeInventory, KeyEvent.VK_ESCAPE);
-        addKeyPressMapping(closeInventory, KeyEvent.VK_I);
+        addKeyPressMapping(new TaskWrapper(closeInventory, "Close"), KeyEvent.VK_ESCAPE);
+        addKeyPressMapping(new TaskWrapper(closeInventory, "Close"), KeyEvent.VK_I);
     }
 }
