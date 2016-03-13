@@ -5,6 +5,7 @@ import models.items.Item;
 import utilities.TileDetection;
 import models.entities.npc.NPC;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -163,16 +164,16 @@ public class Map {
         return null;
     }
 
-    public Item getItemAt(Point p){
+    public ArrayList<Item> getItemAt(Point p){
         if(tiles.containsKey(p)){
-            return tiles.get(p).getItem();
+            return tiles.get(p).getItems();
         }
         return null;
     }
 
-    public void removeItemAt(Point p){
+    public void removeItemsAt(Point p){
         if (tiles.containsKey(p)) {
-            tiles.get(p).removeItem();
+            tiles.get(p).removeItems();
             updateTile(p);
         }
     }

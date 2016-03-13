@@ -4,6 +4,7 @@ import models.items.Item;
 import models.map.Map;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by aseber
@@ -36,18 +37,16 @@ public class MapItemCondition extends MapCondition {
         Map map = (Map) getParameter(3);
 
 
-        Item itemOnMap = map.getTileAt(point).getItem();
+        ArrayList<Item> itemsOnMap = map.getTileAt(point).getItems();
 
-        if (itemOnMap != null) {
+        boolean returnValue = location.checkLocation(item, null);
 
-            return location.checkLocation(item, itemOnMap);
-
+        for(Item itemOnMap: itemsOnMap){
+            if(location.checkLocation(item, itemOnMap)){
+                returnValue = returnValue && location.checkLocation(item, itemOnMap);
+            }
         }
 
-        // A bit hacky, but it allows us to return true when the item isn't in that location, or false when it is.
-        // Dependent on the equality checker!
-        return location.checkLocation(item, null);
-
+        return returnValue;
     }
-
 }

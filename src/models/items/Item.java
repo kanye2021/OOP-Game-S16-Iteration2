@@ -17,6 +17,7 @@ import models.items.takeable.equippable.weapons.oneHanded.*;
 import models.items.takeable.equippable.weapons.twoHanded.*;
 
 import models.items.takeable.quest.KeyOfKanye;
+import utilities.IOUtilities;
 import views.sprites.Sprite;
 
 import java.awt.*;
@@ -212,6 +213,10 @@ public abstract class Item {
 
         }
 
+    }
+
+    public static Image getBagImage(){
+        return IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath("./src/res/items/bag.png")).getImage();
     }
 
     protected ItemDictionary ID;
