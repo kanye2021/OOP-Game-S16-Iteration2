@@ -195,8 +195,17 @@ public class AvatarController {
         }
     }
     public void useBasicAttack(){
+
         if(avatar.getOccupation().contains("Smasher")){
             EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
+            if(item==null){
+                Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.BRAWLING);
+                System.out.println("Brawling Skill");
+                BrawlingSkill brawlingSkill = (BrawlingSkill) basicSkill;
+                brawlingSkill.onActivate(avatar);
+                return;
+            }
+
             Equipment.Component component= item.getComponent();
             if(component== Equipment.Component.ONE_HANDED_WEAPON){
                 Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.ONE_HANDED_WEAPON);
@@ -211,10 +220,7 @@ public class AvatarController {
                 TwoHandSkill.onActivate(avatar);
                 //call active skill one handed weapon
             }else{
-                Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.BRAWLING);
-                System.out.println("Brawling Skill");
-                BrawlingSkill brawlingSkill = (BrawlingSkill) basicSkill;
-                brawlingSkill.onActivate(avatar);
+                System.out.println("Wat");
             }
                 //avatar.basicAttack(avatar,component);
 
