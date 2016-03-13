@@ -9,5 +9,6 @@ public interface MotorInterface {
 
     Decision getDecision();
     Personality getPersonality();
+    void setNewDecision(Decision decision);
 
 }

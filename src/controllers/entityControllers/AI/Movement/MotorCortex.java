@@ -1,7 +1,9 @@
 package controllers.entityControllers.AI.Movement;
 
+import controllers.entityControllers.AI.Memory.Decision;
 import controllers.entityControllers.AI.Memory.Memory;
 import controllers.entityControllers.AI.Memory.MotorInterface;
+import controllers.entityControllers.AI.Personality.Interests.FollowInterest;
 import controllers.entityControllers.AI.Personality.Interests.Interest;
 import models.entities.npc.NPC;
 import models.map.Map;
@@ -32,11 +34,11 @@ public class MotorCortex {
         }
 
         if (memory.getDecision() == null) {
-
-            System.err.println("Error! NULL decision in " + npc.getType());
+            Decision decision = new Decision(new FollowInterest(new FollowInterest(0.5),npc,npc.getLocation()));
+            memory.setNewDecision(decision);
             return;
-
         }
+
 
         moveTowardsInterest();
 

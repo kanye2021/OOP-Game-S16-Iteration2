@@ -103,6 +103,8 @@ public class Memory implements VisualInterface, ThoughtInterface, MotorInterface
 
     }
 
-
+    public void setNewDecision(Decision newDecision){
+        this.decision = newDecision;
+    }
 
 }
