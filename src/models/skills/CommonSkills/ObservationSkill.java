@@ -40,6 +40,7 @@ public class ObservationSkill extends PassiveSkill {
         observationLv = getLevel();//Gets the newly updated level
         percentError = 100 - constant*observationLv;
     }
+
     public void resetBounds(){
         upperBoundError = percentError;
         lowerBoundError = -percentError;

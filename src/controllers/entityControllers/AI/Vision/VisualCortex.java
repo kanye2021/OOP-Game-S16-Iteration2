@@ -37,31 +37,49 @@ public class VisualCortex {
                 processRecursively(Map.Direction.NORTH, npc.getRadiusOfVisiblility(), startLocation);
                 processRecursively(Map.Direction.NORTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
                 processRecursively(Map.Direction.NORTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
                 break;
             case NORTH_EAST:
                 processRecursively(Map.Direction.NORTH, npc.getRadiusOfVisiblility(), startLocation);
                 processRecursively(Map.Direction.NORTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH, npc.getRadiusOfVisiblility(), startLocation);
                 processRecursively(Map.Direction.SOUTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
                 break;
             case SOUTH_EAST:
-                processRecursively(Map.Direction.SOUTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH, npc.getRadiusOfVisiblility(), startLocation);
                 processRecursively(Map.Direction.NORTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
                 processRecursively(Map.Direction.SOUTH, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
                 break;
             case SOUTH:
-                processRecursively(Map.Direction.SOUTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
                 processRecursively(Map.Direction.SOUTH, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
                 processRecursively(Map.Direction.SOUTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
                 break;
             case SOUTH_WEST:
-                processRecursively(Map.Direction.SOUTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
-                processRecursively(Map.Direction.SOUTH, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
                 processRecursively(Map.Direction.NORTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
                 break;
             case NORTH_WEST:
-                processRecursively(Map.Direction.NORTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
-                processRecursively(Map.Direction.SOUTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
                 processRecursively(Map.Direction.NORTH, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.NORTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH_EAST, npc.getRadiusOfVisiblility(), startLocation);
+                processRecursively(Map.Direction.SOUTH_WEST, npc.getRadiusOfVisiblility(), startLocation);
                 break;
         }
 

@@ -33,6 +33,7 @@ public class MotorCortex {
             return;
         }
 
+        moveTowardsInterest();
 
     }
 

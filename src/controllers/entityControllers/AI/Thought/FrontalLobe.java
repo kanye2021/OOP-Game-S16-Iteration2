@@ -130,6 +130,7 @@ public class FrontalLobe {
 
         }
 
+
         for (PointInterest interest : interests.getPointInterests()) {
 
             weight = interest.getInterestWeight();
