@@ -43,7 +43,7 @@ public class MapItemCondition extends MapCondition {
 
         for(Item itemOnMap: itemsOnMap){
             if(location.checkLocation(item, itemOnMap)){
-                returnValue = returnValue && location.checkLocation(item, itemOnMap);
+                returnValue = returnValue || location.checkLocation(item, itemOnMap);
             }
         }
 
