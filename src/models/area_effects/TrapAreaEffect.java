@@ -40,5 +40,9 @@ public class TrapAreaEffect extends AreaEffect {
     public void setRemoved(boolean removed){
         this.removed = removed;
     }
+
+    public int getValue(){
+        return AMOUNT_OF_DAMAGE;
+    }
 }
 

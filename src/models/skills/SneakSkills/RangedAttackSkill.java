@@ -20,7 +20,7 @@ public class RangedAttackSkill extends PassiveSkill {
 
     @Override
     public String getName() {
-        return "Ranged Attack Mastery";
+        return "Ranged-Attack-Mastery";
     }
 
 

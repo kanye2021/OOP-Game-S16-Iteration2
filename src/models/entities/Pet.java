@@ -57,11 +57,11 @@ public class Pet extends NPC {
     public void talk(){
 
     }
-
+    @Override
     public final String getType() {
 
-        return "Pet" + "-" + super.getType();
-
+       // return "Pet" + "-" + super.getType();
+        return "Pet";
     }
 
 }

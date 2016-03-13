@@ -51,7 +51,7 @@ public class AvatarCreationViewController extends ViewController {
                     case SMASHER:
                         gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         gameViewController = new GameViewController(gameView, stateManager);
-                        nextState = new GameState(gameViewController, gameView, "smasher");
+                        nextState = new GameState(gameViewController, gameView, "smasher", null);
                         stateManager.setActiveState(nextState);
                         // Set the gameViewController, initially here.
                         Toast.initWithGameViewController(gameViewController);
@@ -59,7 +59,7 @@ public class AvatarCreationViewController extends ViewController {
                     case SUMMONER:
                         gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         gameViewController = new GameViewController(gameView, stateManager);
-                        nextState = new GameState(gameViewController, gameView, "summoner");
+                        nextState = new GameState(gameViewController, gameView, "summoner", null);
                         stateManager.setActiveState(nextState);
                         // Set the gameViewController, initially here.
                         Toast.initWithGameViewController(gameViewController);
@@ -67,7 +67,7 @@ public class AvatarCreationViewController extends ViewController {
                     case SNEAK:
                         gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(),view.getDisplay());
                         gameViewController = new GameViewController(gameView, stateManager);
-                        nextState = new GameState(gameViewController, gameView, "sneak");
+                        nextState = new GameState(gameViewController, gameView, "sneak", null);
                         stateManager.setActiveState(nextState);
                         // Set the gameViewController, initially here.
                         Toast.initWithGameViewController(gameViewController);

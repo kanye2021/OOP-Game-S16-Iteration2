@@ -46,7 +46,8 @@ public class FrontalLobe {
         }else if(visualInfo.foundItems()){
             Point itemLocation = visualInfo.getitemLocations().get(0);
 
-            decision = Decision.GET_ITEM;
+           // decision = Decision.GET_ITEM;
+            decision = Decision.DEFAULT;
             decision.addAttachment(itemLocation);
         }
 

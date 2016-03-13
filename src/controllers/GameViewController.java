@@ -5,9 +5,11 @@ import controllers.entityControllers.AvatarController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.map.Map;
+
 import models.skills.ActiveSkill;
 import models.skills.Skill;
 import models.skills.SkillList;
+
 import utilities.*;
 import views.*;
 
@@ -33,6 +35,10 @@ public class GameViewController extends ViewController{
     private Point offset;
     private Point lastOffset;
 
+    //Must be able to load and save from the GVC
+    private GameLoader gameLoader;
+    private GameSaver gameSaver;
+
     public GameViewController(View view, StateManager stateManager){
         super(view, stateManager);
         npcList = new ArrayList<>();
@@ -49,6 +55,7 @@ public class GameViewController extends ViewController{
         ((GameView)view).initAreaViewport(map, avatar);
         ((GameView)view).initStatusViewport(avatar.getStats());
         ((GameView)view).initSkillViewport(avatar);
+
     }
 
 
@@ -290,6 +297,7 @@ public class GameViewController extends ViewController{
                 System.out.println("1:Am I in");
                 PauseView pauseView = new PauseView(getScreenWidth(), getScreenHeight(), getDisplay());
                 PauseViewController pauseViewController = new PauseViewController(pauseView, getStateManager(), avatarController.getAvatar(), GameViewController.this);
+
                 SubState pauseSubstate = new SubState(pauseViewController, pauseView);
                 // Add closing task.
                 pauseViewController.setClosePause(new Task() {
@@ -473,8 +481,6 @@ public class GameViewController extends ViewController{
                 });
                 // Add the substate
                 addSubState(npcActionSubState);
-//                ((GameView) view).initNPCActionView(npcView);
-//                ((GameView) view).renderNPCAction(true);
                 avatarController.startInteraction(npc);
             }
         }

@@ -13,7 +13,7 @@ public abstract class Occupation {
     public Occupation(){
 
     }
-
+    //Why is this static? Might have a problem with leveling
     private static final SkillList defaultSkills = new SkillList(
         new BargainSkill(),
         new BindWoundsSkill(),

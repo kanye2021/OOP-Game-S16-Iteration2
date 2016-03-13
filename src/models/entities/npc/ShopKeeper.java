@@ -89,11 +89,11 @@ public class ShopKeeper extends NPC{
         item.setMonetaryValue(currentValue - 10); //Item value returns back to original
         inventory.removeItem(item);
     }
-
+    @Override
     public final String getType() {
 
-        return "ShopKeeper" + "-" + super.getType();
-
+       // return "ShopKeeper" + "-" + super.getType();
+        return "ShopKeeper";
     }
 
 }

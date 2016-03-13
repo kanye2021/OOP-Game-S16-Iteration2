@@ -83,5 +83,9 @@ public abstract class  NPC extends Entity {
         return "NPC" + "-" + super.getType();
 
     }
+    @Override
+    public void updateBrain(){
+        brain.updateBrainOnNPC();
+    }
 
 }

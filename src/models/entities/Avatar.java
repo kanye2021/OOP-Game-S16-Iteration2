@@ -72,11 +72,11 @@ public abstract class Avatar extends Entity {
         inventory.removeItem(item);
         money += price;
     }
-
+    @Override
     public String getType() {
-
-        return "Avatar" + "-" + super.getType();
-
+        //Why are we doing it this way?
+        //return "Avatar" + "-" + super.getType();
+        return "Avatar";
     }
 
     public void setMount(Mount mount){
