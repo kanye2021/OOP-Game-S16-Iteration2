@@ -54,7 +54,7 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
         }
 
         doTheCoolDown();
-
+        findTrap(entity);
         System.out.println("I am detect and remove trap skill");
 
 
@@ -182,9 +182,19 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
         }
         String typeOfAOE = areaEffect.getType();
         if(typeOfAOE== "trap"){
+            if(desiredTile.getDecal().isVisible()){
+                //removeTrap(entity);
+                map.removeAreaEffectAt(desiredLocation);
+                System.out.println("Somehow removed");
+                return true;
+
+            }
             System.out.println("Trap is here yo");
             //return desiredTile;
+            map.setDecalVisibilityAtPoint(true, desiredLocation);
             desiredTile.getAreaEffect().getDecal().setVisible(true);
+            boolean potato = desiredTile.getDecal().isVisible();
+            System.out.println(potato);
             return true;
         }
         else{

@@ -186,6 +186,13 @@ public class Map {
         }
     }
 
+    public void setDecalVisibilityAtPoint(boolean b, Point p){
+        if (tiles.containsKey(p)){
+            tiles.get(p).setDecalVisibility(b);
+            updateTile(p);
+        }
+    }
+
     public Terrain getTerrainAt(Point p){
         if(tiles.containsKey(p)){
             return tiles.get(p).getTerrain();

@@ -127,6 +127,7 @@ public class AvatarController {
             System.out.println(secondSkill);
             DetectRemoveTrapSkill detectSkill = (DetectRemoveTrapSkill) secondSkill;
             detectSkill.onActivate(avatar);
+            System.out.println("Hello World!");
 
         } else {
             System.out.println("What are you");
