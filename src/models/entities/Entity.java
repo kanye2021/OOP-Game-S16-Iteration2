@@ -230,8 +230,11 @@ public abstract class Entity{
     // Used to go to a new map
     public final void setMap(Map map){
         this.map = map;
+        updateBrain();
     }
-
+    //Function needs to be overrided by NPC
+    //TODO: Problem is caused because if you switch maps, the brain still thinks its on the old map
+    public void updateBrain(){}
     protected abstract StatModificationList initInitialStats();
     protected abstract Occupation initOccupation();
     protected abstract HashMap<Map.Direction, String> initSprites();
@@ -280,4 +283,5 @@ public abstract class Entity{
     public Mount getMount(){
         return mount;
     }
+
 }

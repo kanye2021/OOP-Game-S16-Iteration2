@@ -5,10 +5,7 @@ import controllers.entityControllers.AvatarController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
 import models.map.Map;
-import utilities.TileDetection;
-import utilities.StateManager;
-import utilities.SubState;
-import utilities.Task;
+import utilities.*;
 import views.*;
 
 import java.awt.*;
@@ -35,6 +32,10 @@ public class GameViewController extends ViewController{
     private Point offset;
     private Point lastOffset;
 
+    //Must be able to load and save from the GVC
+    private GameLoader gameLoader;
+    private GameSaver gameSaver;
+
     public GameViewController(View view, StateManager stateManager){
         super(view, stateManager);
         npcList = new ArrayList<>();
@@ -51,6 +52,9 @@ public class GameViewController extends ViewController{
         ((GameView)view).initAreaViewport(map, avatar);
         ((GameView)view).initStatusViewport(avatar.getStats());
         ((GameView)view).initSkillViewport(avatar);
+
+        //Sketchy AF way of doing this but there is no way for SaveGame to hold the map
+
     }
 
 
@@ -294,7 +298,7 @@ public class GameViewController extends ViewController{
             public void run(){
                 System.out.println("1:Am I in");
                 PauseView pauseView = new PauseView(getScreenWidth(), getScreenHeight(), getDisplay());
-                PauseViewController pauseViewController = new PauseViewController(pauseView, getStateManager());
+                PauseViewController pauseViewController = new PauseViewController(pauseView, getStateManager(), GameViewController.this);
                 SubState pauseSubstate = new SubState(pauseViewController, pauseView);
                 // Add closing task.
                 pauseViewController.setClosePause(new Task() {

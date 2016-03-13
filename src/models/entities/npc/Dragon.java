@@ -72,9 +72,11 @@ public class Dragon extends Mount {
         imagePaths.put(Map.Direction.NORTH_WEST, imageBasePath + "NW.png");
         return imagePaths;
     }
+    @Override
     public String getType() {
 
-        return "Horse" + "-" + super.getType();
+        //return "Horse" + "-" + super.getType();
+        return "Dragon";
     }
     public void initActions(){
         actionList.add(new Talk(this));

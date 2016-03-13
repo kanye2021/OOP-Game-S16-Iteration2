@@ -1,10 +1,7 @@
 package controllers;
 
-import utilities.IOUtilities;
-import utilities.Load;
-import utilities.State;
-import utilities.StateManager;
-import utilities.Task;
+import utilities.*;
+import views.GameView;
 import views.LoadGameView;
 import views.SaveGameView;
 import views.View;
@@ -62,6 +59,7 @@ public class LoadGameViewController extends ViewController {
         selectOption = new Task() {
             @Override
             public void run() {
+                System.out.println("Ran");
                 loadGame();
             }
 
@@ -108,15 +106,15 @@ public class LoadGameViewController extends ViewController {
     }
 
     public void loadGame(){ // Loads the game based on the current option
-        System.out.println("Load game!");
+        String selectedFile = listOfSaveFiles.get(myOption).getName();
+
+        GameView gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
+        GameViewController gameViewController = new GameViewController(gameView, stateManager);
+        GameState nextState = new GameState(gameViewController, gameView, null, selectedFile);
+        //nextState.loadGame(selectedFile);
+        stateManager.setActiveState(nextState);
         //Load game = new Load("test.xml");
         //game.loadGame();
-
-        //TODO: Remove this stuff and add game view
-        SaveGameView saveGameView = new SaveGameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
-        SaveGameViewController sGv = new SaveGameViewController(saveGameView, stateManager);
-        State nextState = new State(sGv, saveGameView);
-        stateManager.setActiveState(nextState);
 
     }
 

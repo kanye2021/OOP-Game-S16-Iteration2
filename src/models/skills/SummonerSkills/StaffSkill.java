@@ -23,7 +23,7 @@ public class StaffSkill extends PassiveSkill {
     }
     @Override
     public String getName() {
-        return "Staff Mastery";
+        return "Staff-Mastery";
     }
 
     @Override

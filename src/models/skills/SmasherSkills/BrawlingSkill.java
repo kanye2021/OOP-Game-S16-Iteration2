@@ -29,7 +29,7 @@ public class BrawlingSkill extends PassiveSkill {
     }
     @Override
     public String getName() {
-        return "Brawling Mastery";
+        return "Brawling-Mastery";
     }
 
     @Override

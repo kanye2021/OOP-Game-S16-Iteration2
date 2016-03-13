@@ -1,12 +1,7 @@
 package controllers;
 
-import utilities.State;
-import utilities.StateManager;
-import utilities.Task;
-import views.LoadGameView;
-import views.PauseView;
-import views.StartMenuView;
-import views.View;
+import utilities.*;
+import views.*;
 
 import java.awt.event.KeyEvent;
 
@@ -21,9 +16,10 @@ public class PauseViewController extends ViewController {
     private Task selectOption;
 
     private Task closePause;
-
-    public PauseViewController(View view, StateManager stateManager){
+    private GameViewController gVC;
+    public PauseViewController(View view, StateManager stateManager, GameViewController gs){
         super(view, stateManager);
+        gVC = gs;
     }
 
     @Override
@@ -59,11 +55,16 @@ public class PauseViewController extends ViewController {
                         closePause.run();
                         break;
                     case SAVE_GAME:
+                        SaveGameView saveGameView = new SaveGameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
+                        GameState gS = (GameState)stateManager.getTop();
+                        SaveGameViewController sGv = new SaveGameViewController(saveGameView, stateManager, gS);
+                        nextState = new State(sGv, saveGameView);
+                        stateManager.setActiveState(nextState);
                         break;
                     case OPTIONS:
                         break;
                     case LOAD_GAME:
-                        LoadGameView loadGameView = new LoadGameView(view.getScreenWidth()/ 2, view.getScreenHeight()/ 2, view.getDisplay());
+                        LoadGameView loadGameView = new LoadGameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         LoadGameViewController loadGameViewController = new LoadGameViewController(loadGameView, stateManager);
                         nextState = new State(loadGameViewController, loadGameView);
                         stateManager.setActiveState(nextState);
@@ -91,5 +92,6 @@ public class PauseViewController extends ViewController {
         addKeyPressMapping(closePause, KeyEvent.VK_M);
         addKeyPressMapping(closePause, KeyEvent.VK_P);
     }
+
 }
 

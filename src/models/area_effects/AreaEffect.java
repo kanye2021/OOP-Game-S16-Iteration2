@@ -33,4 +33,6 @@ public abstract class AreaEffect {
         this.decal = decal;
     }
 
+    public abstract int getValue();
+
 }

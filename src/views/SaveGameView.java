@@ -2,6 +2,7 @@ package views;
 
 import controllers.SaveGameViewController;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
@@ -24,7 +25,8 @@ public class SaveGameView extends View {
             return optionLabel;
         }
     }
-
+    private JTextField saveStateName;
+    private boolean firstRender;
     //Scalable variables
     private int buttonWidth;
     private int buttonHeight;
@@ -37,6 +39,7 @@ public class SaveGameView extends View {
     public SaveGameView(int width, int height, Display display){
         super(width, height, display);
         selected = MenuOptions.SAVE_GAME_EXIT;
+        firstRender = true;
     }
     public MenuOptions getSelected() {
         return selected;
@@ -73,7 +76,25 @@ public class SaveGameView extends View {
 
 
     public void renderTitle(Graphics g){
+        // Text Field
+        int ytextField = heightOffset;
+        int xtextField = getScreenWidth()/2 - buttonWidth/2;
 
+        FontMetrics fm = g.getFontMetrics(buttonFont);
+        g.setColor(Color.white);
+        String title = "Save File Name";
+        g.drawString(title, xtextField, ytextField);
+
+        int textHeightOffset = heightOffset + fm.getHeight();
+        if(firstRender) {
+            saveStateName = new JTextField(20);
+            saveStateName.setBounds(xtextField, textHeightOffset, 200, 40);
+            saveStateName.setVisible(true);
+            Display d = getDisplay();
+            d.add(saveStateName);
+            firstRender = false;
+        }
+        saveStateName.requestFocus();
     }
     public void renderButtons(Graphics g){
         FontMetrics fm = g.getFontMetrics(buttonFont);
@@ -91,7 +112,7 @@ public class SaveGameView extends View {
             // String stuff
             Rectangle2D r = fm.getStringBounds(option.toString(), g);
             int stringX = getScreenWidth() / 2 - (int) (r.getWidth() / 2);
-            int stringY = boxY + (buttonHeight/3);
+            int stringY = boxY + (buttonHeight/2);
 
             Color primaryColor;
             Color secondaryColor;
@@ -119,5 +140,11 @@ public class SaveGameView extends View {
     }
     public void setSelected(MenuOptions so){
         selected = so;
+    }
+    public String getSaveFileName(){
+        return saveStateName.getText();
+    }
+    public JTextField getSaveStateName(){
+        return saveStateName;
     }
 }

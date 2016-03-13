@@ -214,4 +214,8 @@ public class Map {
     public void setNeedsToBeRendered(boolean b){
         changeSinceLastRender = b;
     }
+
+    public HashMap<Point, Tile> getTiles(){
+        return tiles;
+    }
 }

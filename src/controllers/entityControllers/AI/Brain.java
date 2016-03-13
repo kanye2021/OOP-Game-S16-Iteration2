@@ -15,6 +15,7 @@ public class Brain {
 
     // TODO: I don't think that the brain should have the npc (it should only be the other way around). Try to find a way
     // around having to do this.
+    private Personalities personality;
     protected NPC npc;
     protected VisualCortex visualCortex;
     protected FrontalLobe frontalLobe;
@@ -25,6 +26,7 @@ public class Brain {
         visualCortex = new VisualCortex(npc);
         frontalLobe = new FrontalLobe(npc, personality);
         motorCortex = new MotorCortex(npc);
+        this.personality = personality;
     }
 
     // This is called once per cycle to determine what the AI should do.
@@ -46,5 +48,12 @@ public class Brain {
     // Returns a boolean if the NPC will be persuaded.
     public boolean processPersuasion(double entityPersuasiveness){
         return true;
+    }
+
+    public void updateBrainOnNPC(){
+        visualCortex = new VisualCortex(npc);
+        frontalLobe = new FrontalLobe(npc, personality);
+        motorCortex = new MotorCortex(npc);
+
     }
 }

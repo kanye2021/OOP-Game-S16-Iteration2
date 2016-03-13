@@ -169,8 +169,16 @@ public class Tile {
     public TileImage getTileImage(){
         return this.tileImage;
     }
-
     public void refreshImage(){
         tileImage.generate(this);
+    }
+
+    //Methods for loadSave (just getters) Shouldn't be violating princples as its not modifying source code
+    public String getTerrainType(){
+        if(getTerrain() != null){
+            return getTerrain().getType();
+        }else{
+            return "No terrrain? not possible";
+        }
     }
 }

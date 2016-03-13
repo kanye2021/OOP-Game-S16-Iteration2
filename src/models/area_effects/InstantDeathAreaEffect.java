@@ -27,4 +27,7 @@ public class InstantDeathAreaEffect extends AreaEffect {
         return "instant-death";
     }
 
+    public int getValue(){
+        return 0;
+    }
 }
