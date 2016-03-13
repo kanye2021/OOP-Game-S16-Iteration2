@@ -1,42 +1,43 @@
-package controllers;
+package controllers.NPCInteractions;
 
+import controllers.ViewController;
 import models.Inventory;
 import models.entities.Entity;
-import models.entities.npc.actions.Action;
 import models.entities.npc.NPC;
 import models.items.takeable.TakeableItem;
+import models.items.takeable.consumable.ConsumableItem;
 import models.items.takeable.equippable.EquippableItem;
 import utilities.StateManager;
 import utilities.Task;
+import utilities.Toast;
 import views.InventoryView;
-import views.NPCMenuView;
 import views.View;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
- * Created by sergiopuleri on 3/2/16.
+ * Created by David on 3/11/2016.
  */
-public class InventoryViewController extends ViewController {
-
+public class NPCItemUseController extends ViewController {
     private int selectedItemIndex;
     private Task previousItem;
     private Task nextItem;
     private Task dropItem;
     // useItem will equip an equippable item or use a consumable or whatever, or not do anything if not consumable or equippable
     private Task useItem;
-    private Task closeInventory;
+    private Task closeMenu;
 
-
+    private NPC npc;
     private Entity entity;
     private Inventory inventory;
     private ArrayList<Inventory.ItemNode> itemNodeArrayList;
 
-    public InventoryViewController(View view, StateManager stateManager, Entity entity) {
+    public NPCItemUseController(View view, StateManager stateManager, Entity entity, NPC npc) {
         super(view, stateManager);
         selectedItemIndex = 0;
         this.entity = entity;
+        this.npc = npc;
         this.inventory = entity.getInventory();
         this.itemNodeArrayList = inventory.getItemNodeArrayList();
         ((InventoryView)view).setItemNodeList(this.itemNodeArrayList);
@@ -70,31 +71,23 @@ public class InventoryViewController extends ViewController {
             public void stop() {}
         };
 
-        dropItem = new Task() {
-            @Override
-            public void run() {
-                TakeableItem currentItem = itemNodeArrayList.get(selectedItemIndex).getItem();
-                entity.dropItem(currentItem);
-                selectedItemIndex--;
-                if (selectedItemIndex < 0) selectedItemIndex = 0;
-                ((InventoryView) view).updateSelected(selectedItemIndex);
-            }
-
-            @Override
-            public void stop() {}
-        };
-
         useItem = new Task() {
             @Override
             public void run() {
                 TakeableItem currentItem = itemNodeArrayList.get(selectedItemIndex).getItem();
                 if (currentItem.isEquipable()) {
-                    entity.equipItem((EquippableItem) currentItem);
-                } else {
-                    currentItem.onUse(entity);
+                    Toast.createToastWithTimer("Can't use that on the NPC", 500);
+                }
+                else if(currentItem.isConsumable()){
+                    currentItem.onUse(npc);
+                    entity.getInventory().removeItem(currentItem);
+                }
+                else{
+                    Toast.createToastWithTimer("Nothing happened...", 1000);
                 }
                 selectedItemIndex--;
-                if (selectedItemIndex < 0) selectedItemIndex = 0;
+                if (selectedItemIndex < 0)
+                    selectedItemIndex = 0;
                 ((InventoryView) view).updateSelected(selectedItemIndex);
             }
 
@@ -108,13 +101,12 @@ public class InventoryViewController extends ViewController {
         addKeyPressMapping(previousItem, KeyEvent.VK_LEFT);
         addKeyPressMapping(nextItem, KeyEvent.VK_RIGHT);
         addKeyPressMapping(useItem, KeyEvent.VK_ENTER);
-        addKeyPressMapping(dropItem, KeyEvent.VK_D);
 
     }
 
-    public void setCloseInventory(Task task) {
-        this.closeInventory = task;
-        addKeyPressMapping(closeInventory, KeyEvent.VK_ESCAPE);
-        addKeyPressMapping(closeInventory, KeyEvent.VK_I);
+    public void setClose(Task task) {
+        this.closeMenu = task;
+        addKeyPressMapping(closeMenu, KeyEvent.VK_ESCAPE);
+        addKeyPressMapping(closeMenu, KeyEvent.VK_I);
     }
 }

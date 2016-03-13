@@ -1,5 +1,6 @@
 package utilities;
 
+import controllers.AvatarCreationViewController;
 import controllers.GameViewController;
 import controllers.entityControllers.AvatarController;
 import models.entities.Avatar;
@@ -7,10 +8,12 @@ import models.entities.Avatar;
 import models.entities.npc.NPC;
 
 import models.map.Map;
+import views.AvatarCreationView;
 import views.GameView;
 import views.View;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Bradley on 2/18/16.
@@ -43,6 +46,9 @@ public class GameState extends State {
 
         // Int the viewports
         viewController.initViewports(map, avatar, npcList);
+
+        // Init the default skill key bindings
+        viewController.initSkillKeyBindMappings();
     }
 
     public void setMap(Map map){
@@ -58,12 +64,32 @@ public class GameState extends State {
         this.npcList = npcList;
     }
 
+    public void removeNpc(NPC npc){
+        if(npcList.contains(npc)){
+            npcList.remove(npc);
+        }
+    }
+
     @Override
     public void update(){
-        for(NPC npc: npcList){
-            npc.update();
+        if(((GameViewController) viewController).avatarDied()){
+            ((GameViewController) viewController).gameOver();
+        }else{
+            ((GameViewController) viewController).update();
         }
-        ((GameViewController) viewController).update();
+
+        // Loop through the npcList
+        for(Iterator<NPC> iterator = npcList.iterator(); iterator.hasNext();) {
+
+            NPC npc = iterator.next();
+
+            // Check to see if the npc died. If it did, remove it from the list.
+            if (npc.getLives() < 1) {
+                iterator.remove();
+            } else {
+                npc.update();
+            }
+        }
     }
 }
 

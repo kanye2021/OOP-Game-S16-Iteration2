@@ -5,6 +5,7 @@ import controllers.entityControllers.AI.Thought.Personalities;
 import models.entities.npc.actions.Attack;
 import models.entities.npc.actions.Trade;
 import models.entities.npc.actions.Talk;
+import models.entities.npc.actions.UseItemOnNPC;
 import models.items.Item;
 import models.items.takeable.TakeableItem;
 import models.map.Map;
@@ -28,7 +29,6 @@ public class ShopKeeper extends NPC{
         initInventory(); //Adds items to the inventory
         modifyActions();
         brain = new Brain(this, Personalities.KIND); // Agnostic is the default personailty.
-
     }
     //---------NPC Stuff------------
     public void modifyActions(){
@@ -36,7 +36,8 @@ public class ShopKeeper extends NPC{
     }
     @Override
     public void initDialogue(){
-        dialogue.clear();
+        //dialogue.clear(); //Might be unnecessary
+        actionList.add(new UseItemOnNPC(this));
         dialogue.add("Welcome to my store where I can sell you stuff!");
         dialogue.add("Don't have much though...");
     }

@@ -30,7 +30,7 @@ public class Tile {
         this.item = item;
         this.entity = entity;
         this.areaEffect = areaEffect;
-        this.tileImage = new TileImage(50, 50, BufferedImage.TYPE_INT_ARGB); // Size is arbitrary as it will be scaled later anyway.
+        this.tileImage = new TileImage(75, 75, BufferedImage.TYPE_INT_RGB); // Size is arbitrary as it will be scaled later anyway.
         tileImage.generate(this); // Generate the image for the tile.
     }
 
@@ -49,6 +49,8 @@ public class Tile {
     // in the logic that consumes this function (and it has been).
     public TileDetection insertEntity(Entity entity) {
         TileDetection result = new TileDetection(null, null, false, false);
+        int entityLivesBeforeInteraciton = entity.getLives();
+
         // Check to see if this entity can pass here.
 
         // Check if the entity can pass through this terrain.
@@ -58,7 +60,6 @@ public class Tile {
 
         // Check if there is another entity on this tile.
         if(this.entity != null){
-            // TODO: Implment entity/ entity interaction.
             System.out.println("In tile");
             //the NPC will contain all of the interactions
 //            this.entity.startInteraction();
@@ -66,13 +67,18 @@ public class Tile {
         }
 
         // Check to see if there is an obstacle.
-        if(this.item!= null && this.item.getType().equals("obstacle")){
-            return result;
-
+        if(this.item!= null){
+            if(this.item.getType().equals("obstacle")){
+                return result;
+            }
+            if(this.item.getType().equals("interactive")){
+                if(!item.onTouch(entity)){
+                    return result;
+                }else{
+                    this.item = null;
+                }
+            }
         }
-
-        // The move was not
-
 
         // Active item on the tile
         if(this.item != null){
@@ -96,11 +102,11 @@ public class Tile {
             }
         }
 
-        // Add the entity to this location
-        this.entity = entity;
-
-        // Indicate that the move was successfull.
-        result.setMoved(true);
+        // Indicate that the move was successful only if it didnt result in the entity dieing.
+        if(entity.getLives() == entityLivesBeforeInteraciton){
+            this.entity = entity;
+            result.setMoved(true);
+        }
 
         return result;
     }
@@ -144,7 +150,6 @@ public class Tile {
 
     public void removeEntity() {
         entity = null;
-
     }
 
     // For now putting an item on this tile simply replaces one that was already there.

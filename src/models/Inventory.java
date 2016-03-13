@@ -2,9 +2,11 @@ package models;
 
 import models.items.Item;
 import models.items.takeable.TakeableItem;
+import models.map.Map;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -64,6 +66,10 @@ public class Inventory {
     public Inventory(int initialCapacity){
         maxCapacity = initialCapacity;
         itemNodeArrayList = new ArrayList<ItemNode>(maxCapacity);
+    }
+
+    public void clear(){
+        itemNodeArrayList.clear();
     }
 
     //Getters
@@ -142,7 +148,8 @@ public class Inventory {
 
     public boolean removeItem(TakeableItem item) {
         // Search the array list for the matching item
-        for (ItemNode node: itemNodeArrayList ) {
+        for (Iterator<ItemNode> iterator = itemNodeArrayList.iterator(); iterator.hasNext();) {
+            ItemNode node = iterator.next();
             // References shud be the same so this equality shud work.
             // If not gotta override .equals()
             if (node.getItem() == item) {
@@ -157,6 +164,27 @@ public class Inventory {
             }
         }
         return false;
+    }
+
+    public void dropAll(Map map, Point location){
+
+        // Safe way to delete things from a list while iterating through it :)
+        for(Iterator<ItemNode> iterator = itemNodeArrayList.iterator(); iterator.hasNext();){
+            ItemNode node = iterator.next();
+
+            int amount = node.getAmount();
+            for(int i=0; i<amount; i++){
+                map.insertItemAtPoint(node.getItem(), location);
+            }
+            iterator.remove();
+        }
+    }
+
+    // Removes the item and returns it to the map.
+    public void dropItem(TakeableItem item, Map map, Point location){
+        if(removeItem(item)){
+            map.insertItemAtPoint(item, location);
+        }
     }
 
     public void setMaxCapacity(int maxCapacity){
