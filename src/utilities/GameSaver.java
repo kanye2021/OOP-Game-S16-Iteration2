@@ -6,6 +6,7 @@ import models.Inventory;
 import models.area_effects.*;
 import models.entities.Avatar;
 import models.entities.Entity;
+import models.entities.npc.Mount;
 import models.entities.npc.NPC;
 import models.items.Item;
 import models.map.Map;
@@ -150,9 +151,31 @@ public class GameSaver {
 
         entity.appendChild( saveInventory( doc, currentEntity.getInventory()) );
         entity.appendChild( saveEquipped(doc, currentEntity.getEquipment()));
-        entity.appendChild( saveStats(doc, currentEntity.getStats()));
+        //entity.appendChild( saveStats(doc, currentEntity.getStats()));
+        entity.appendChild( saveStats(doc, currentEntity));
         entity.appendChild( saveSkills(doc, currentEntity.getSkills()));
+
+        if (currentEntity.getMount() != null){ //if the entity has a mount
+            entity.appendChild( saveMount(doc, currentEntity.getMount()));
+        }
+        //TODO: Pet should be fine since they exist on the map and the location will realize its a pet
         return entity;
+    }
+    public Node saveMount(Document doc, Mount mount){
+        Element mountElm = doc.createElement("mount");
+        int locationX = (int) mount.getLocation().getX();
+        int locationY = (int) mount.getLocation().getY();
+        mountElm.setAttributeNode( saveAttr(doc, "location", locationX + "," + locationY));
+        mountElm.setAttributeNode( saveAttr(doc, "occupation", mount.getOccupation()) );
+        mountElm.setAttributeNode( saveAttr(doc, "orientation", mount.getOrientation().name()) );
+        mountElm.setAttributeNode( saveAttr(doc, "type", mount.getType()));
+
+        mountElm.appendChild( saveInventory( doc, mount.getInventory()) );
+        mountElm.appendChild( saveEquipped(doc, mount.getEquipment()));
+        //mountElm.appendChild( saveStats(doc, mount.getStats()));
+        mountElm.appendChild( saveStats(doc, mount));
+        mountElm.appendChild( saveSkills(doc, mount.getSkills()));
+        return mountElm;
     }
     public Node saveInventory(Document doc, Inventory inv){
         Element inventory = doc.createElement("inventory");
@@ -184,11 +207,17 @@ public class GameSaver {
 
         return equipment;
     }
-    public Node saveStats(Document doc, Stats currentStats){
+    //TODO: fix this, when you get the stats you are actually creating new stats from occupation
+    //Big problem since none of those stats are "saved"
+    public Node saveStats(Document doc, Entity entity){
+        Stats currentStats = entity.getStats();
         Element stats = doc.createElement("stats");
         for (Stats.Type type : Stats.Type.values()){
             String statString = type.getDescriptor();
             int value = currentStats.getStat(type);
+            if (type.equals(Stats.Type.LEVEL)){
+                value = entity.getLevel();
+            }
             stats.setAttributeNode( saveAttr(doc, statString, value) );
         }
         return stats;

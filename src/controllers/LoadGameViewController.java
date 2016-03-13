@@ -121,6 +121,7 @@ public class LoadGameViewController extends ViewController {
 
         GameView gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
         GameViewController gameViewController = new GameViewController(gameView, stateManager);
+        Toast.initWithGameViewController(gameViewController); //inits when you're loading the game
         GameState nextState = new GameState(gameViewController, gameView, null, selectedFile);
         //nextState.loadGame(selectedFile);
         stateManager.setActiveState(nextState);

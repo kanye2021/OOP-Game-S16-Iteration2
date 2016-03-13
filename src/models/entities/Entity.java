@@ -12,6 +12,7 @@ import models.map.Terrain;
 import models.occupation.Occupation;
 import models.skills.Skill;
 import models.skills.SkillList;
+import models.stats.StatModification;
 import utilities.TileDetection;
 import models.stats.StatModificationList;
 import models.stats.Stats;
@@ -36,6 +37,7 @@ public abstract class Entity{
     protected Occupation occupation;
     protected AvatarController controller;
     protected Map map;
+    protected int level;
 
     // All entities should be able to have a pet.
     protected Pet pet;
@@ -106,7 +108,9 @@ public abstract class Entity{
         return occupation.getOccupation();
     }
     public Map.Direction getOrientation(){return orientation;}
-
+    public int getLevel(){
+        return level;
+    }
     public Map getMap(){return map;}
     //Returns specific skill by name
     public Skill getSpecificSkill(Skill.SkillDictionary skill){
@@ -127,7 +131,7 @@ public abstract class Entity{
     }
 
     public final TileDetection move(Map.Direction direction){
-        orientation = direction;
+        setOrientation(direction);
         if(canMove){
             TileDetection td = map.moveEntity(Entity.this, direction);
             location = td.getLocation();
@@ -267,11 +271,16 @@ public abstract class Entity{
 
     public void setOrientation(Map.Direction orientation){
         this.orientation = orientation;
+        if (mount != null){
+            mount.setOrientation(orientation);
+        }
+
     }
 
     // Wrapper to levelup an entity
     public void levelUp() {
         // Upon level-up, notifies skillviewport to allow for level-ing up a skill
+        level++;
         this.stats.levelUp();
         Toast.createToastWithTimer("You've leveled up! Click a skill to increase", 1500);
     }
@@ -318,6 +327,31 @@ public abstract class Entity{
     //override and return based on
     public Mount getMount(){
         return mount;
+    }
+
+    public void setMount(Mount mount){
+        this.mount = mount;
+        for(String s : mount.getTerrain()){
+            passableTerrain.add(s);
+        }
+        StatModification moveSpeed = new StatModification(Stats.Type.MOVEMENT, 10);
+        StatModificationList list = new StatModificationList(moveSpeed);
+        applyStatMod(list);
+        Point p = mount.getLocation();
+        map.removeEntityAt(p);
+    }
+    public void removeMount(){
+        if (mount != null) {
+            mount.location = getOrientation().neighbor(getLocation());
+            //Problem is that you are removing while the entity is already on the tile
+            //map.moveEntity(mount, getOrientation()); //Tmp solution is to drop off mount in direction you are facing
+            for(String s : mount.getTerrain()){
+                passableTerrain.remove(s);
+            }
+            map.insertEntity(mount);
+            this.mount = null;
+
+        }
     }
 
 }

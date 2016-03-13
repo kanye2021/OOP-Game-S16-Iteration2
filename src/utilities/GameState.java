@@ -53,7 +53,7 @@ public class GameState extends State {
 
         // Int the viewports
         viewController.initViewports(map, avatar, npcList);
-        if (occupation == null){ //only run when the game is being loaded
+        if (occupation == null){ //only run when the game is being loaded, after the areaviewport is initalized
             gameLoader.loadSeenTiles(this,fileName);
         }
         // Init the default skill key bindings
