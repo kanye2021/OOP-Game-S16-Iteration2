@@ -115,7 +115,7 @@ public class GameLoader {
             NodeList tileNodes = seenTiles.getElementsByTagName("tile");
             int numTiles = tileNodes.getLength();
             for (int i = 0; i < numTiles; i++) {
-
+                
             }
 
         }catch(Exception e){
