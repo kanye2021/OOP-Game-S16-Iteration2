@@ -169,4 +169,8 @@ public abstract class Skill {
 
     }
 
+    public void setLevel(int value){
+        level = value;
+    }
+
 }

@@ -84,7 +84,7 @@ public class GameSaver {
             HashMap.Entry pair = (HashMap.Entry)it.next();
             map.appendChild(saveTile(doc, (Point)pair.getKey(), (Tile)pair.getValue()));
             //System.out.println(pair.getKey() + " = " + pair.getValue());
-            it.remove(); // avoids a ConcurrentModificationException
+            //it.remove(); // avoids a ConcurrentModificationException
         }
         return map;
     }
@@ -226,8 +226,8 @@ public class GameSaver {
         Element skills = doc.createElement("skills");
         for (int i = 0; i <currentSkills.size(); i++){
             Element skill = doc.createElement("skill");
-            Attr a = saveAttr(doc, currentSkills.get(i).getName(), currentSkills.get(i).getLevel());
-            skill.setAttributeNode(a);
+            skill.setAttributeNode(saveAttr(doc, "name", currentSkills.get(i).getName()));
+            skill.setAttributeNode(saveAttr(doc, "value", currentSkills.get(i).getLevel()));
             skills.appendChild(skill);
         }
         return skills;

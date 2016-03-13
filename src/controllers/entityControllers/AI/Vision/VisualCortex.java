@@ -85,8 +85,10 @@ public class VisualCortex {
 
         // Get items here.
         ArrayList<Item> items = map.getItemAt(currentLocation);
-        if(!items.isEmpty()){
-            visualInfo.addItem(new Point(currentLocation));
+        if (items != null) {
+            if (!items.isEmpty()) {
+                visualInfo.addItem(new Point(currentLocation));
+            }
         }
 
         // Update the currentLocation and visual range;

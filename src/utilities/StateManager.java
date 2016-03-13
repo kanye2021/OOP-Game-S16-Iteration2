@@ -30,7 +30,8 @@ public class StateManager{
     public void goToPreviousState() {
         if (stateStack.size() >= 2) {
             stateStack.pop();
-            setActiveState(stateStack.peek());
+            //setActiveState(stateStack.peek());
+            stateStack.peek().activate(inputManager,display);
         }
     }
 
