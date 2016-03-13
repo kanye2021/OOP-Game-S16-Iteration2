@@ -10,6 +10,7 @@ import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
 import utilities.StateManager;
 import utilities.Task;
+import utilities.TaskWrapper;
 import views.NPCMenuView;
 import views.NPCShopView;
 import views.View;
@@ -147,19 +148,20 @@ public class NPCShopController extends ViewController {
             }
         };
 
-        addKeyPressMapping(previousItem, KeyEvent.VK_UP);
-        addKeyPressMapping(nextItem, KeyEvent.VK_DOWN);
-        addKeyPressMapping(previousItem, KeyEvent.VK_LEFT);
-        addKeyPressMapping(nextItem, KeyEvent.VK_RIGHT);
-        addKeyPressMapping(doAction, KeyEvent.VK_ENTER);
-        addKeyPressMapping(switchViews, KeyEvent.VK_TAB);
+
+        addKeyPressMapping(new TaskWrapper(previousItem, "Previous"), KeyEvent.VK_UP);
+        addKeyPressMapping(new TaskWrapper(nextItem, "Next"), KeyEvent.VK_DOWN);
+        addKeyPressMapping(new TaskWrapper(previousItem, "Previous"), KeyEvent.VK_LEFT);
+        addKeyPressMapping(new TaskWrapper(nextItem, "Next"), KeyEvent.VK_RIGHT);
+        addKeyPressMapping(new TaskWrapper(doAction, "Do Action"), KeyEvent.VK_ENTER);
+        addKeyPressMapping(new TaskWrapper(switchViews, "Switch View"), KeyEvent.VK_TAB);
 
     }
 
     public void setCloseInventory(Task task) {
         this.closeInventory = task;
-        addKeyPressMapping(closeInventory, KeyEvent.VK_ESCAPE);
-        addKeyPressMapping(closeInventory, KeyEvent.VK_I);
+        addKeyPressMapping(new TaskWrapper(closeInventory, "Close"), KeyEvent.VK_ESCAPE);
+        addKeyPressMapping(new TaskWrapper(closeInventory, "Close"), KeyEvent.VK_I);
     }
     public void updateCurrentList(){
         if (selectedView == 0) {
@@ -170,6 +172,6 @@ public class NPCShopController extends ViewController {
     }
     public void setClose(Task task){
         escape = task;
-        addKeyPressMapping(escape, KeyEvent.VK_BACK_SPACE);
+        addKeyPressMapping(new TaskWrapper(escape, "Exit"), KeyEvent.VK_BACK_SPACE);
     }
 }

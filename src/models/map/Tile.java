@@ -3,7 +3,6 @@ package models.map;
 //import javafx.util.Pair;
 import models.area_effects.AreaEffect;
 import models.entities.Entity;
-import models.entities.npc.NPC;
 import models.items.Item;
 import utilities.TileDetection;
 
@@ -121,7 +120,13 @@ public class Tile {
     }
 
     public Decal getDecal() {return decal;}
-    public Image getDecalImage(){ return (decal!=null) ? decal.getImage() : null;}
+
+    public Image getDecalImage(){
+        if(decal!=null){
+            return decal.isVisible() ? decal.getImage() : null;
+        }
+        return  null;
+    }
 
     public ArrayList<Item> getItems() {return items;}
     public Image getItemImage() {

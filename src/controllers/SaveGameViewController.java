@@ -1,10 +1,11 @@
 package controllers;
 
+import utilities.State;
+import utilities.StateManager;
+import utilities.TaskWrapper;
 import utilities.*;
-import views.LoadGameView;
 import views.SaveGameView;
 import views.View;
-import views.*;
 
 import java.awt.event.KeyEvent;
 
@@ -70,11 +71,10 @@ public class SaveGameViewController extends ViewController{
             public void stop() {}
         };
         //Task empty = null;
+        addKeyPressMapping(new TaskWrapper(previousOption, "Previous"), KeyEvent.VK_UP);
+        addKeyPressMapping(new TaskWrapper(nextOption, "Next"), KeyEvent.VK_DOWN);
+        addKeyPressMapping(new TaskWrapper(selectOption, "Select"), KeyEvent.VK_ENTER);
 
-        addKeyPressMapping(previousOption, KeyEvent.VK_UP);
-        addKeyPressMapping(nextOption, KeyEvent.VK_DOWN);
-        addKeyPressMapping(selectOption, KeyEvent.VK_ENTER);
-        //addKeyPressMapping(empty, KeyEvent.VK_BACK_SPACE);
 
     }
     public void saveGame(){

@@ -3,7 +3,6 @@ package controllers;
 import utilities.*;
 import views.GameView;
 import views.LoadGameView;
-import views.SaveGameView;
 import views.View;
 
 import java.awt.event.KeyEvent;
@@ -77,10 +76,10 @@ public class LoadGameViewController extends ViewController {
             public void stop() {}
         };
 
-        addKeyPressMapping(escapeTask, KeyEvent.VK_ESCAPE);
-        addKeyPressMapping(previousOption, KeyEvent.VK_UP);
-        addKeyPressMapping(nextOption, KeyEvent.VK_DOWN);
-        addKeyPressMapping(selectOption, KeyEvent.VK_ENTER);
+        addKeyPressMapping(new TaskWrapper(previousOption, "Previous"), KeyEvent.VK_UP);
+        addKeyPressMapping(new TaskWrapper(nextOption, "Next"), KeyEvent.VK_DOWN);
+        addKeyPressMapping(new TaskWrapper(selectOption, "Select"), KeyEvent.VK_ENTER);
+        addKeyPressMapping(new TaskWrapper(escapeTask, "Back"), KeyEvent.VK_ESCAPE);
 
     }
 
