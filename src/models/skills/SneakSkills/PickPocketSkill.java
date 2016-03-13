@@ -129,11 +129,9 @@ public class PickPocketSkill extends ActiveSkill {
         Map map = entity.getMap();
         Tile desiredTile = map.getTileAt(desiredLocation);
 
-        if(desiredTile == null){
-            return null;
-        }
-        if(desiredTile.hasEntity()&&!payMana(entity,cost)){
-            return desiredTile.getEntity();
+        if(desiredTile.hasEntity()&&payMana(entity,cost)){
+            return map.getEntityAt(desiredLocation);
+//            return desiredTile.getEntity();
         }
 
         return null;
