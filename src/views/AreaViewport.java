@@ -1,19 +1,17 @@
 package views;
 
-import models.area_effects.AreaEffect;
 import models.entities.Avatar;
 import models.entities.Entity;
-import models.items.Item;
-import models.map.Decal;
 import models.map.Map;
-import models.map.Terrain;
 import models.map.Tile;
 import models.stats.Stats;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Queue;
 
 /**
@@ -152,20 +150,26 @@ public class AreaViewport extends View {
                 hasBeenRendered.put(currentTileNode.logicalPoint, true); // Mark the tile as having been renderred.
 
                 // Render the current Tile
-                if(currentTileNode.distanceFromAvatar < radiusOfVisibility){
+                if (!displayDebugInformation) {
+                    if (currentTileNode.distanceFromAvatar < radiusOfVisibility) {
 
-                    // Mark this tile as having been seen.
-                    seenTiles.put(new Point(currentTileNode.logicalPoint), new Tile(currentTileNode.tile));
+                        // Mark this tile as having been seen.
+                        seenTiles.put(new Point(currentTileNode.logicalPoint), new Tile(currentTileNode.tile));
 
-                    // Set the opacity based on the distance from the avatar.
-                    float opacity = 1.0f - (float) (currentTileNode.distanceFromAvatar * 0.15);
-                    opacity = opacity < MIN_OPACITY ? MIN_OPACITY : opacity;
+                        // Set the opacity based on the distance from the avatar.
+                        float opacity = 1.0f - (float) (currentTileNode.distanceFromAvatar * 0.15);
+                        opacity = opacity < MIN_OPACITY ? MIN_OPACITY : opacity;
 
-                    renderTile(currentTileNode, g, opacity); // Render the tile.
-                }
-                else if(seenTiles.get(currentTileNode.logicalPoint) != null){
-                    currentTileNode.tile = seenTiles.get(currentTileNode.logicalPoint); // Switch out the actual tile with the seen tile.
-                    renderTile(currentTileNode, g, SEEN_OPACITY);
+                        renderTile(currentTileNode, g, opacity); // Render the tile.
+                    } else if (seenTiles.get(currentTileNode.logicalPoint) != null) {
+                        currentTileNode.tile = seenTiles.get(currentTileNode.logicalPoint); // Switch out the actual tile with the seen tile.
+                        renderTile(currentTileNode, g, SEEN_OPACITY);
+                    }
+                } else {
+
+                    // Yes, Austin put this in. You can tell by the spacing.
+                    renderTile(currentTileNode, g, 1f);
+
                 }
 
                 // Push all the adjacent nodes onto the queue
