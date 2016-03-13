@@ -27,6 +27,12 @@ public class Decision {
         return interest.getInterestLevel();
     }
 
+    public Point getPointOfInterest() {
+
+        return interest.getPointOfInterest();
+
+    }
+
     public void updateInterest() {
         interest.Update();
     }
