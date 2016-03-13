@@ -13,6 +13,7 @@ import java.awt.*;
  */
 public class VisualCortex {
 
+    int cycles;
     private NPC npc;
     private Map map;
     private VisualInterface memory;
@@ -67,7 +68,7 @@ public class VisualCortex {
     }
 
     private void processRecursively(Map.Direction orientation, int visualRange, Point currentLocation){
-
+        cycles++;
         if(visualRange == 0){
             return;
         }
@@ -80,6 +81,7 @@ public class VisualCortex {
         Entity entity = map.getEntityAt(currentLocation);
         if(entity!=null){
             memory.addVisualInput(entity, currentLocation);
+            cycles = 0;
         }
 
         // Get items here.

@@ -5,6 +5,7 @@ import models.occupation.Occupation;
 import models.occupation.Summoner;
 import utilities.IOUtilities;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,6 +54,18 @@ public class SummonerAvatar extends Avatar {
 
     @Override
     protected ArrayList<Image> getAnimatorImages() {
-        return null;
+
+        String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/entity-summoner-");
+
+
+        ArrayList<Image> imagePaths = new ArrayList<>();
+        imagePaths.add(new ImageIcon(imageBasePath + "N.png").getImage());
+        imagePaths.add(new ImageIcon(imageBasePath + "NE.png").getImage());
+        imagePaths.add(new ImageIcon(imageBasePath + "NW.png").getImage());
+        imagePaths.add(new ImageIcon(imageBasePath + "S.png").getImage());
+        imagePaths.add(new ImageIcon(imageBasePath + "SE.png").getImage());
+        imagePaths.add(new ImageIcon(imageBasePath + "SW.png").getImage());
+        return imagePaths;
+        }
     }
-}
+

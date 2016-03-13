@@ -1,45 +1,48 @@
 package controllers.entityControllers.AI.Personality.Interests;
 
-import controllers.entityControllers.AI.Memory.Decision;
 import controllers.entityControllers.AI.Memory.Memory;
 import controllers.entityControllers.AI.Memory.Relationship;
 import controllers.entityControllers.AI.Memory.ThoughtInterface;
 import models.entities.Entity;
 import models.items.Item;
+import models.items.takeable.TakeableItem;
 
 import java.awt.*;
 
 /**
- * Created by aseber on 3/9/16.
+ * Created by aseber on 3/11/16.
  */
-public class FollowInterest extends Interest {
+public class AttackInterest extends Interest {
 
-    Entity entityOfInterest;
+    private Entity entityOfInterest;
 
-    public FollowInterest(double interestLevel) {
+    public AttackInterest(double interestLevel) {
+
         super(interestLevel);
+
     }
 
-    public FollowInterest(Interest interest, Object objectOfInterest, Point pointOfInterest) {
+    private AttackInterest(Interest interest, Object objectOfInterest, Point pointOfInterest) {
 
         super(interest.getInterestLevel());
         addInterestAttachment(objectOfInterest);
         setPointOfInterest(pointOfInterest);
 
+    }
+
+    public Interest createRuntimeInterest(Object objectOfInterest, Point pointOfInterest) {
+
+        return new AttackInterest(this, objectOfInterest, pointOfInterest);
 
     }
 
     private void addInterestAttachment(Object object) {
 
         if (object instanceof Entity) {
+
             this.entityOfInterest = (Entity) object;
+
         }
-
-    }
-
-    public Interest createRuntimeInterest(Object objectOfInterest, Point pointOfInterest) {
-
-        return new FollowInterest(this, objectOfInterest, pointOfInterest);
 
     }
 
@@ -49,17 +52,14 @@ public class FollowInterest extends Interest {
 
     }
 
-    @Override
     public double getInterestWeight(Object objectofInterest, ThoughtInterface memory) {
 
         double weight = 0.0;
 
-        if (objectofInterest instanceof Entity) {
+        if (objectofInterest instanceof TakeableItem) {
 
-            Entity entity = (Entity) objectofInterest;
-            Relationship relationship = memory.getEntityRelationship(entity);
-            weight = relationship.getRelationshipValue() * 1000 * getInterestLevel();
-
+//            TakeableItem item = (TakeableItem) objectofInterest;
+//            weight = item.getMonetaryValue() * 100 * getInterestLevel();
 
         }
 
@@ -67,17 +67,13 @@ public class FollowInterest extends Interest {
 
     }
 
-    @Override
     public boolean isApplicable(ThoughtInterface memory) {
 
+        // Return whether or not we see the item of interest on the map around us.
         return memory.getSeenEntities().containsKey(entityOfInterest);
 
     }
 
-    @Override
-    public Type getInterestType() {
-
-        return Type.ENTITY;
-    }
+    public Type getInterestType() { return Type.ENTITY; }
 
 }

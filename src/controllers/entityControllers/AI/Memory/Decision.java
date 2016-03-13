@@ -9,15 +9,13 @@ import java.awt.*;
  */
 public class Decision {
 
-    public Decision(Interest interest, Point pointOfInterest) {
+    public Decision(Interest interest) {
 
         this.interest = interest;
-        this.pointOfInterest = pointOfInterest;
 
     }
 
     private Interest interest;
-    private Point pointOfInterest;
 
     public boolean isInterestValid(ThoughtInterface memory) {
 
@@ -25,10 +23,12 @@ public class Decision {
 
     }
 
+    public double getInterestLevel(){
+        return interest.getInterestLevel();
+    }
+
     public void updateInterest() {
-
         interest.Update();
-
     }
 
     public String getInterestType() {
@@ -37,10 +37,5 @@ public class Decision {
 
     }
 
-    public Point getPointOfInterest() {
-
-        return pointOfInterest;
-
-    }
 
 }

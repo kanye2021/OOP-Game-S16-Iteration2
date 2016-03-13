@@ -17,7 +17,7 @@ public class Relationship {
     }
 
     public void setRelationship(double setValue) {
-
+        System.out.println("I'm setting the relationship");
         this.relationship = setValue;
         MathUtilities.putInRange(-1.0, this.relationship, 1.0);
 

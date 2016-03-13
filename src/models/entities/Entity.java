@@ -72,7 +72,7 @@ public abstract class Entity{
 
         this.sprite = new DirectionalSprite(initSprites());
         this.animator = new Animator(getAnimatorImages());
-        animator.setSpeed(150);
+        animator.setSpeed(200);
         this.map = map;
 
 
@@ -128,16 +128,16 @@ public abstract class Entity{
         if(found != null) {
             return found;
         }else{
-            System.out.println("hahahah couldn't find it bitch");
             return null;
         }
     }
 
     public final TileDetection move(Map.Direction direction){
+
         if(canMove){
             TileDetection td = map.moveEntity(Entity.this, direction);
             location = td.getLocation();
-//            canMove = false;
+            canMove = false;
             movementTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {

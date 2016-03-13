@@ -43,7 +43,7 @@ public class AreaViewport extends View {
     private BufferedImage cachedViewport;
 
     //Debug stuff
-    private boolean displayDebugInformation = false;
+    private boolean displayDebugInformation = true;
 
     // Just a container to hold an entity and a location in order to draw the health bars w/o opacity messed up
     private class EntityLocationTuple {
@@ -107,6 +107,7 @@ public class AreaViewport extends View {
 
         }
 
+        //draws the viewport
         g.drawImage(cachedViewport, 0, 0, viewportWidth, viewportHeight, getDisplay());
 
         for (EntityLocationTuple et : this.entityLocationTuples) {
@@ -208,6 +209,7 @@ public class AreaViewport extends View {
         if(tileNode.tile.getEntity()!=null){
             this.entityLocationTuples.add(new EntityLocationTuple(tileNode.tile.getEntity(), new Point((int)tileNode.pixelPoint.getX(), (int)tileNode.pixelPoint.getY())));
         }
+
 
         g.setClip(oldClip);
     }

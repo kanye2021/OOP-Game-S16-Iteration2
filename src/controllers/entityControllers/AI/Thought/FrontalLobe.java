@@ -50,19 +50,19 @@ public class FrontalLobe {
                     return;
 
                 }
+                //System.out.println(npc.getType() + "I kept my same decision");
+                return;
 
             }
 
         }
 
-        //System.out.println(npc.getType() + "I got a new decision");
         // Otherwise select a new decision
         selectNewDecision();
 
     }
 
     private void findNewEntities() {
-
         for (Entity entity : memory.getSeenEntities().keySet()) {
 
             if (!memory.relationshipExists(entity)) {
@@ -94,7 +94,7 @@ public class FrontalLobe {
 
         Interest interestToAdd;
         Point pointOfInterest;
-        InterestList interests = memory.getPersonality().getInterests();
+        InterestList interests = memory.getPersonality().getInterests();;
         HashSet<Interest> subsetInterests = interests.getInterests(Interest.Type.ENTITY);
         double weight;
 
@@ -102,15 +102,13 @@ public class FrontalLobe {
         for (java.util.AbstractMap.Entry<Entity, Point> pair : memory.getSeenEntities().entrySet()) {
             Entity entityOfInterest = pair.getKey();
             pointOfInterest = pair.getValue();
-
             for (Interest interest : subsetInterests) {
-
                 weight = interest.getInterestWeight(entityOfInterest, memory);
 
                 if (weight > 0) {
 
-                    interestToAdd = interest.createRuntimeInterest(entityOfInterest);
-                    validDecisions.addDecision(new Decision(interestToAdd, pointOfInterest), weight);
+                    interestToAdd = interest.createRuntimeInterest(entityOfInterest, pointOfInterest);
+                    validDecisions.addDecision(new Decision(interestToAdd), weight);
 
                 }
 
@@ -124,14 +122,12 @@ public class FrontalLobe {
             Item itemOfInterest = pair.getKey();
             pointOfInterest = pair.getValue();
 
-            for (Interest interest : subsetInterests) {
-
+            for (Interest interest : subsetInterests) {;
                 weight = interest.getInterestWeight(itemOfInterest, memory);
-
                 if (weight > 0) {
 
-                    interestToAdd = interest.createRuntimeInterest(itemOfInterest);
-                    validDecisions.addDecision(new Decision(interestToAdd, pointOfInterest), weight);
+                    interestToAdd = interest.createRuntimeInterest(itemOfInterest, pointOfInterest);
+                    validDecisions.addDecision(new Decision(interestToAdd), weight);
 
                 }
 
@@ -142,14 +138,14 @@ public class FrontalLobe {
         ////// And pick one //////
 
         if (validDecisions.validDecisionsToPick()) {
-
             Decision newDecision = validDecisions.pickDecision();
-            System.out.println(newDecision.getInterestType());
+            memory.setDecision(newDecision);
             return newDecision;
 
         } else {
 
             // Return a default decision
+//            System.out.println("null");
             return null;
 
         }

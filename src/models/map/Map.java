@@ -1,7 +1,9 @@
 package models.map;
 
+import models.attack.Projectile;
 import models.entities.Entity;
 import models.items.Item;
+import utilities.ProjectileDetection;
 import utilities.TileDetection;
 import models.entities.npc.NPC;
 import java.awt.*;
@@ -72,6 +74,11 @@ public class Map {
     public void insertEntity(Entity entity){
         tiles.get(entity.getLocation()).insertEntity(entity);
         updateTile(entity.getLocation());
+    }
+
+    public void insertProjectile(Projectile projectile){
+        tiles.get(projectile.getLocation()).insertProjectile(projectile);
+        updateTile(projectile.getLocation());
     }
 
     // To insert an item on the map. Used when loading and dropping items
@@ -149,9 +156,28 @@ public class Map {
             removeEntityAt(currentLocation);
             return new TileDetection(null, desiredLocation, true, false);
         }else{
-            // return currentLocation;
+            // return currentLocation;;
             return new TileDetection(null,currentLocation, false, false);
         }
+    }
+
+    // the projectile movement
+    public ProjectileDetection moveProjectile(Projectile projectile, Direction direction){
+        //Determine the location of the tile that the projectile wants to move
+        Point currentLocation = projectile.getLocation();
+        Point desiredLocation = direction.neighbor(currentLocation);
+
+        //get the tile at that location. Exit if it is not on the map.
+        Tile desiredTile = tiles.get(desiredLocation);
+        if(desiredLocation == null){
+            return new ProjectileDetection(null,currentLocation,false);
+        }
+
+        //Tell the tile that the projectile wants to move to it. If it is successful, the tile will return true and carry
+        //out any actions that will result from the move. If not, it will return false.
+        ProjectileDetection resultOfMovement = desiredTile.insertProjectile(projectile);
+
+        return resultOfMovement;
     }
 
     public Tile getTileAt(Point p){
@@ -198,6 +224,13 @@ public class Map {
     public void removeEntityAt(Point p) {
         if(tiles.containsKey(p)){
             tiles.get(p).removeEntity();
+            updateTile(p);
+        }
+    }
+
+    public void removeProjectileAt(Point p){
+        if(tiles.containsKey(p)){
+            tiles.get(p).removeProjectile();
             updateTile(p);
         }
     }

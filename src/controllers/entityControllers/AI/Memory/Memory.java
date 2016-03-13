@@ -1,5 +1,6 @@
 package controllers.entityControllers.AI.Memory;
 
+import controllers.entityControllers.AI.Personality.Interests.FollowInterest;
 import controllers.entityControllers.AI.Personality.Personality;
 import models.entities.Entity;
 import models.items.Item;
@@ -12,6 +13,7 @@ import java.util.HashMap;
  */
 public class Memory implements VisualInterface, ThoughtInterface, MotorInterface {
 
+    //map of entity relationships
     private HashMap<Entity, Relationship> relationships = new HashMap<>();
     private VisualInformation visualMemory = new VisualInformation();
     private Decision decision;
@@ -85,16 +87,14 @@ public class Memory implements VisualInterface, ThoughtInterface, MotorInterface
 
     public void process() { // Forget the visuals we saw from the last tick.
 
-        visualMemory.forget();
+//        visualMemory.forget();
 
     }
 
-    public void addVisualInput(Object object, Point point) { visualMemory.addVisualInput(object, point); }
+    public void addVisualInput(Object object, Point point) {visualMemory.addVisualInput(object, point); }
 
     public Decision getDecision() {
-
         return decision;
-
     }
 
     public void setDecision(Decision newDecision) {
@@ -102,5 +102,7 @@ public class Memory implements VisualInterface, ThoughtInterface, MotorInterface
         this.decision = newDecision;
 
     }
+
+
 
 }

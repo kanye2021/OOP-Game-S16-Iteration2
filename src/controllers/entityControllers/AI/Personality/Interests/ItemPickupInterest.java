@@ -1,10 +1,13 @@
 package controllers.entityControllers.AI.Personality.Interests;
 
+import controllers.entityControllers.AI.Memory.Memory;
 import controllers.entityControllers.AI.Memory.Relationship;
 import controllers.entityControllers.AI.Memory.ThoughtInterface;
 import models.entities.Entity;
 import models.items.Item;
 import models.items.takeable.TakeableItem;
+
+import java.awt.*;
 
 /**
  * Created by aseber on 3/11/16.
@@ -19,16 +22,17 @@ public class ItemPickupInterest extends Interest {
 
     }
 
-    private ItemPickupInterest(Interest interest, Object objectOfInterest) {
+    private ItemPickupInterest(Interest interest, Object objectOfInterest, Point pointOfInterest) {
 
         super(interest.getInterestLevel());
         addInterestAttachment(objectOfInterest);
+        setPointOfInterest(pointOfInterest);
 
     }
 
-    public Interest createRuntimeInterest(Object objectOfInterest) {
+    public Interest createRuntimeInterest(Object objectOfInterest, Point pointOfInterest) {
 
-        return new ItemPickupInterest(this, objectOfInterest);
+        return new ItemPickupInterest(this, objectOfInterest, pointOfInterest);
 
     }
 
@@ -44,7 +48,7 @@ public class ItemPickupInterest extends Interest {
 
     public void Update() {
 
-        // Do nothing at moment.
+        // Do nothing, the item doesn't move!
 
     }
 

@@ -61,7 +61,6 @@ public class Animator {
                             return image;
                         } else {
                             //reset the frames
-                            System.out.println("resetted");
                             reset();
                         }
                     }

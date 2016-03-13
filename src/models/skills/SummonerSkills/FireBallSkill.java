@@ -48,7 +48,7 @@ public class FireBallSkill extends ActiveSkill{
     @Override
     public void onActivate(Entity entity) {
         System.out.println("Can you take this? Fireball!");
-        Projectile projectile = new Projectile(damage,range,5);
+        Projectile projectile = new Projectile(damage,range,5,entity.getMap(),initSprite());
         new LinearAttack(entity,projectile);//This is the attack
 
 
