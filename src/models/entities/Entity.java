@@ -44,6 +44,7 @@ public abstract class Entity{
     protected String type;
 
     protected int level;
+    protected int money;
 
 
     // All entities should be able to have a pet.
@@ -64,13 +65,14 @@ public abstract class Entity{
     protected DirectionalSprite sprite;
 
     public Entity(Point location, Map map) {
+        this.money = 500;
         this.location = new Point(location);
         this.startLocation = new Point(location);
         this.orientation = Map.Direction.SOUTH;
         this.stats = new Stats();
         this.occupation = initOccupation();
         this.skills = occupation.getSkills();
-        this.inventory = new Inventory(30);
+        this.inventory = new Inventory(30, money);
         this.equipment = new Equipment(this);
         passableTerrain = new ArrayList<>();
         this.statusEffect = StatusEffects.StatusEffect.NONE;

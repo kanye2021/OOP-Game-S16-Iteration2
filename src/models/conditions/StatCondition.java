@@ -2,6 +2,7 @@ package models.conditions;
 import models.entities.Entity;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.Stats;
+import utilities.Toast;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -34,7 +35,9 @@ public class StatCondition extends Condition {
         Stats stats = entity.getStats();
 
         int currentAmount = stats.getStat(statType);
-
+        if (!comparison.isValid(currentAmount, requiredAmount)){
+            Toast.createToastWithTimer("Your stats are too low!", 1000);
+        }
         return (comparison.isValid(currentAmount, requiredAmount));
 
     }

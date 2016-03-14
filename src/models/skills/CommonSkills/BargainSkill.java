@@ -46,6 +46,8 @@ public class BargainSkill extends PassiveSkill {
     }
 
     public double getPercentDiscount() {//used for when you access the shop.
+        bargainLv = getLevel();//Gets the newly updated level
+        percentDiscount = (constant*(bargainLv-1))/100.0;
         return percentDiscount;
     }
 
