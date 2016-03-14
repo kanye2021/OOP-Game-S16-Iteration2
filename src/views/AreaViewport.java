@@ -45,7 +45,7 @@ public class AreaViewport extends View {
     private BufferedImage cachedViewport;
 
     //Debug stuff
-    private boolean displayDebugInformation = true;
+    private boolean displayDebugInformation = false;
 
     private HashMap<Entity, Integer> entityHealthMap;
     private HashMap<Entity, Integer> entityEffedUpHealthMap;
