@@ -15,7 +15,7 @@ public class WoodBow extends EquippableItem{
         ID = Item.ItemDictionary.WOOD_BOW;
         name = "Wood bow";
         description = "A bow made of wood";
-        component = Equipment.Component.TWO_HANDED_WEAPON;
+        component = Equipment.Component.RANGED_WEAPON;
         sprite = new Sprite("pathname");
         monetaryValue = WOODCOST;
         onEquipModifications = new StatModificationList(

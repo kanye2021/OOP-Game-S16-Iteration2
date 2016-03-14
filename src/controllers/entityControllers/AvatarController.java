@@ -24,6 +24,7 @@ import models.skills.SkillList;
 import models.skills.SneakSkills.CreepSkill;
 import models.skills.SneakSkills.DetectRemoveTrapSkill;
 import models.skills.SneakSkills.PickPocketSkill;
+import models.skills.SneakSkills.RangedAttackSkill;
 import models.skills.SummonerSkills.*;
 import models.stats.Stats;
 import utilities.TileDetection;
@@ -273,7 +274,11 @@ public class AvatarController {
             }
             Equipment.Component component= item.getComponent();
             if(component == Equipment.Component.RANGED_WEAPON){
-                avatar.basicAttack(avatar,component);
+                //avatar.basicAttack(avatar,component);
+                 Skill skill = avatar.getSpecificSkill(Skill.SkillDictionary.RANGED_ATTACK);
+                RangedAttackSkill rangedAttackSkill = (RangedAttackSkill)skill;
+                rangedAttackSkill.onActivate(avatar);//yay!
+
             }else{
                 //TODO:Add cooldown somehow.  I feel like I need to make this a function?
                 Projectile projectile = new Projectile(10*avatar.getStats().getStat(Stats.Type.LEVEL)+1,1, StatusEffects.StatusEffect.NONE);

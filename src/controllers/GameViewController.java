@@ -298,7 +298,7 @@ public class GameViewController extends ViewController{
         // Available default key bindings.
         // Most skills an occupation has is 6.
         // We will assign each key to each skill incrementally, while looping over the avatar's skills.
-        int skillKeys[] = {KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5, KeyEvent.VK_6,  KeyEvent.VK_7 };
+        int skillKeys[] = {KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5, KeyEvent.VK_6,  KeyEvent.VK_7, KeyEvent.VK_8};
 
         int i = 0;
         for (Skill skill : skills) {
