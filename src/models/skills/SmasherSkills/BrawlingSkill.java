@@ -5,7 +5,6 @@ import models.attack.Projectile;
 import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
-import models.skills.PassiveSkill;
 import models.stats.Stats;
 import views.sprites.Sprite;
 
@@ -47,6 +46,11 @@ public class BrawlingSkill extends ActiveSkill {
         Projectile projectile = new Projectile(damageSent(entity)/2,1, StatusEffects.StatusEffect.NONE);
         new LinearAttack(entity,projectile);
 
+    }
+
+    @Override
+    public boolean isActive() {
+        return false;
     }
 
     @Override

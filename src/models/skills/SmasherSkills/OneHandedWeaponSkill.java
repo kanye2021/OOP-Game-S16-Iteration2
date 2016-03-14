@@ -5,8 +5,6 @@ import models.attack.Projectile;
 import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
-import models.skills.PassiveSkill;
-import models.skills.SkillList;
 import models.stats.Stats;
 import views.sprites.Sprite;
 
@@ -69,5 +67,10 @@ public class OneHandedWeaponSkill extends ActiveSkill {
 
     public int getBaseSpeed() {
         return baseSpeed;
+    }
+
+    @Override
+    public boolean isActive() {
+        return false;
     }
 }
