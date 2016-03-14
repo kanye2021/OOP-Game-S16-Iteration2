@@ -30,4 +30,10 @@ public abstract class EntityInterest extends Interest {
     public abstract Interest createRuntimeInterest(Entity entityOfInterest, Point pointOfInterest);
     public abstract double getInterestWeight(Entity entityOfInterest, ThoughtInterface memory);
 
+    @Override
+    public String getSpecificInterest() {
+        String test = "EntityInterest";
+        System.out.println(test);
+        return test;
+    }
 }

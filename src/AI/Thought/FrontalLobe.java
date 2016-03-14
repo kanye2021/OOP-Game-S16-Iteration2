@@ -108,6 +108,7 @@ public class FrontalLobe {
                 if (weight > 0) {
 
                     interestToAdd = interest.createRuntimeInterest(entityOfInterest, pointOfInterest);
+
                     validDecisions.addChoice(new Decision(interestToAdd), weight);
 
                 }
@@ -149,13 +150,9 @@ public class FrontalLobe {
         if (validDecisions.validDecisionsToPick()) {
 
             Decision newDecision = validDecisions.pickChoice();
-            if (newDecision.getInterestType().equals("ENTITY")) {
-
-                System.out.println(npc.getType() + ": FrontalLobe: I picked a new decision: " + newDecision.getInterestType());
-
-            }
 
             memory.setDecision(newDecision);
+            newDecision.getSpecificInterest();
 
         }
 

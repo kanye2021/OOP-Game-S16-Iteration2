@@ -1,5 +1,6 @@
 package AI.Personality.Interests.PointInterest;
 
+import AI.Memory.Memory;
 import AI.Memory.ThoughtInterface;
 import models.entities.npc.NPC;
 import models.map.Map;
@@ -46,7 +47,7 @@ public class ExploreInterest extends PointInterest {
 
     }
 
-    public void update() {
+    public void update(Memory memory) {
 
         // Do nothing, the item doesn't move!
 
@@ -64,4 +65,10 @@ public class ExploreInterest extends PointInterest {
 
     }
 
+    @Override
+    public String getSpecificInterest() {
+        String test = "ExploreInterest";
+        System.out.println(test);
+        return test;
+    }
 }

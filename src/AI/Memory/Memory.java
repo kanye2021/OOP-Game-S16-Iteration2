@@ -119,4 +119,8 @@ public class Memory implements VisualInterface, ThoughtInterface, MotorInterface
 
     }
 
+    @Override
+    public NPC getNPCforAttack() {
+        return npc;
+    }
 }

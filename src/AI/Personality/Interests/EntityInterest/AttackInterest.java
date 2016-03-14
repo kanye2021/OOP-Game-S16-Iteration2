@@ -1,7 +1,11 @@
 package AI.Personality.Interests.EntityInterest;
 
+import AI.Memory.Memory;
+import AI.Memory.MotorInterface;
 import AI.Memory.ThoughtInterface;
+import models.Equipment;
 import models.entities.Entity;
+import models.entities.npc.NPC;
 
 import java.awt.*;
 
@@ -29,15 +33,14 @@ public class AttackInterest extends EntityInterest {
 
     }
 
-    public void update() {
-
-        setPointOfInterest(entityOfInterest.getLocation());
-
+    public void update(Memory memory) {
+        NPC npc = memory.getNPCforAttack();
+        npc.basicAttack(entityOfInterest);
     }
 
     public double getInterestWeight(Entity entityOfInterest, ThoughtInterface memory) {
 
-        double weight = 0.0;
+        double weight = 100.0;
 
         return weight;
 
@@ -50,4 +53,10 @@ public class AttackInterest extends EntityInterest {
 
     }
 
+    @Override
+    public String getSpecificInterest() {
+        String test = "AttackInterest";
+        System.out.println(test);
+        return test;
+    }
 }

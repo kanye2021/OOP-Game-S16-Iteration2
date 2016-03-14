@@ -1,9 +1,11 @@
 package AI.Personality;
 
 import AI.Personality.Interests.*;
+import AI.Personality.Interests.EntityInterest.AttackInterest;
 import AI.Personality.Interests.EntityInterest.FollowInterest;
 import AI.Personality.Interests.ItemInterest.ItemPickupInterest;
 import AI.Personality.Interests.PointInterest.ExploreInterest;
+import models.entities.npc.actions.Attack;
 
 /**
  * Created by Bradley on 3/5/16.

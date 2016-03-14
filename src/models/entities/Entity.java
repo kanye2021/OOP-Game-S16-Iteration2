@@ -149,20 +149,28 @@ public abstract class Entity{
         }
     }
 
-    public void basicAttack(Entity entity, Equipment.Component component){
+    public void basicAttack(Entity entity){
 
         int cooldowntime = 0;
         int damage = entity.getStats().getStat(Stats.Type.STRENGTH);
-        if(component== Equipment.Component.ONE_HANDED_WEAPON){
+        String occupation = entity.getOccupation();
+
+        if(occupation.contains("Smasher")){
             damage *= 1;
-            cooldowntime=2000;
-        }else if(component == Equipment.Component.TWO_HANDED_WEAPON){
+            cooldowntime = 2000;
+            System.out.println(entity + " is attacking!");
+        }else if(occupation.contains("Summoner")){
             damage *= 2;
             cooldowntime=3000;
-        }else{
+            System.out.println(entity + " is attacking!");
+        }else if(occupation.contains("Sneak")){
             cooldowntime=1000;
             damage /= 2;
+            System.out.println(entity + " is attacking!");
+        }else{
+            System.out.println("How did you get here");
         }
+
 
         Projectile projectile = new Projectile(damage,1, StatusEffects.StatusEffect.NONE);
         new LinearAttack(this,projectile);
@@ -287,6 +295,7 @@ public abstract class Entity{
     public void setCanMove(boolean canMove){
         this.canMove = canMove;
     }
+
     // Used to go to a new map
     public final void setMap(Map map){
         this.map = map;
