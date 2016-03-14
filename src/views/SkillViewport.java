@@ -4,7 +4,6 @@ import models.skills.ActiveSkill;
 import models.skills.Skill;
 import models.skills.SkillList;
 import models.stats.Stats;
-import org.w3c.dom.css.Rect;
 import utilities.IOUtilities;
 import utilities.MathUtilities;
 

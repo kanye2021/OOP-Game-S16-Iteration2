@@ -41,8 +41,10 @@ public abstract class Entity{
     protected Occupation occupation;
     protected AvatarController controller;
     protected Map map;
+    protected String type;
 
     protected int level;
+    protected int money;
 
 
     // All entities should be able to have a pet.
@@ -63,13 +65,14 @@ public abstract class Entity{
     protected DirectionalSprite sprite;
 
     public Entity(Point location, Map map) {
+        this.money = 500;
         this.location = new Point(location);
         this.startLocation = new Point(location);
         this.orientation = Map.Direction.SOUTH;
         this.stats = new Stats();
         this.occupation = initOccupation();
         this.skills = occupation.getSkills();
-        this.inventory = new Inventory(30);
+        this.inventory = new Inventory(30, money);
         this.equipment = new Equipment(this);
         passableTerrain = new ArrayList<>();
         this.statusEffect = StatusEffects.StatusEffect.NONE;
@@ -181,7 +184,6 @@ public abstract class Entity{
     }
 
     public final TileDetection teleport(Point point) {
-        Toast.createToastWithTimer("Just teleported lol", 500);
         TileDetection td =  map.moveEntity(Entity.this, point);
         location = td.getLocation();
         return td;
@@ -319,6 +321,11 @@ public abstract class Entity{
         // Upon level-up, notifies skillviewport to allow for level-ing up a skill
         level++;
         this.stats.levelUp();
+    }
+
+    public void levelUpToast(){
+        level++;
+        this.stats.levelUp();
         Toast.createToastWithTimer("You've leveled up! Click a skill to increase", 1500);
     }
 
@@ -390,5 +397,6 @@ public abstract class Entity{
 
         }
     }
+
 
 }

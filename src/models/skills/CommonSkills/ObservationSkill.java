@@ -2,6 +2,7 @@ package models.skills.CommonSkills;
 
 import models.entities.Avatar;
 import models.entities.Entity;
+import models.skills.ActiveSkill;
 import models.skills.PassiveSkill;
 import views.sprites.Sprite;
 
@@ -39,13 +40,9 @@ public class ObservationSkill extends PassiveSkill {
     @Override
     public void onUpdate(Entity entity) {
         observationLv = getLevel();//Gets the newly updated level
-        percentError = 1.0f - constant*level;
+        percentError = 1.0f - constant * level;
         percentError = percentError < 0.001 ? 0.001f : percentError;
     }
-//    public void resetBounds(){
-//        upperBoundError = percentError;
-//        lowerBoundError = -percentError;
-//    }
 
     @Override
     public Sprite initSprite() {

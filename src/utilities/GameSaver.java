@@ -226,7 +226,9 @@ public class GameSaver {
         Element skills = doc.createElement("skills");
         for (int i = 0; i <currentSkills.size(); i++){
             Element skill = doc.createElement("skill");
-            skill.setAttributeNode(saveAttr(doc, "name", currentSkills.get(i).getName()));
+            String name = currentSkills.get(i).getName();
+            name = name.replace(' ', '-');
+            skill.setAttributeNode(saveAttr(doc, "name", name));
             skill.setAttributeNode(saveAttr(doc, "value", currentSkills.get(i).getLevel()));
             skills.appendChild(skill);
         }

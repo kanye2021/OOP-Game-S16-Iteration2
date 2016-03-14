@@ -19,7 +19,7 @@ public class RuniteBow extends EquippableItem{
         ID = Item.ItemDictionary.RUNITE_BOW;
         name = "Runite bow";
         description = "A bow made of runite";
-        component = Equipment.Component.TWO_HANDED_WEAPON;
+        component = Equipment.Component.RANGED_WEAPON;
         sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/sneak-template-bow.png");
         monetaryValue = RUNITECOST;
         onEquipModifications = new StatModificationList(

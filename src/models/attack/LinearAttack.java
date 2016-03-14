@@ -14,6 +14,7 @@ import java.util.Queue;
 //You are only supposed to call the constructor.  I.e new LinearAttack(Entity,Projectile);
 public class LinearAttack extends Attackion{
     Point slope;
+    Projectile projectile;
 
     public LinearAttack(Entity entity,Projectile projectile){
         this.entity = entity;
@@ -26,9 +27,18 @@ public class LinearAttack extends Attackion{
         this.damage = projectile.damage;
         this.range = projectile.range;
         this.orientation = entity.getOrientation();
+        this.projectile = projectile;
         slope = new Point();
         findSlope(orientation);
-        findEffectedTiles(slope);
+        launchAttack();
+    }
+
+    private void launchAttack(){
+        new Thread(new Runnable() {
+            public void run() {
+                findEffectedTiles(slope); // Launches attack
+            }
+        }).start();
     }
 
    /* @Override
@@ -87,31 +97,6 @@ public class LinearAttack extends Attackion{
 
         while(!pointQueue.isEmpty()){
 
-           /* new java.util.Timer().schedule(
-                    new java.util.TimerTask() {
-                        @Override
-                        public void run() {
-                            Point attackPoint = new Point();
-                            PointNode current = pointQueue.poll();//returns the top
-                            //Point attackPoint = new Point(0,0);
-
-                            attackPoint.x=current.target.x;
-                            attackPoint.y=current.target.y;
-                            System.out.println(attackPoint.x);
-                            System.out.println(attackPoint.y);
-                            Tile desiredTile = map.getTileAt(attackPoint);
-
-
-                            if(desiredTile.hasEntity()){
-                                Entity target = desiredTile.getEntity();
-                                target.takeDamage(-damage);
-                                System.out.println("Has Entity yo");
-                            }
-                        }
-                    },
-                    2000//half a second
-            );*/
-
             PointNode current = pointQueue.poll();//returns the top
             Point attackPoint = new Point();
 
@@ -120,14 +105,27 @@ public class LinearAttack extends Attackion{
             //System.out.println(attackPoint.x);
             //System.out.println(attackPoint.y);
             Tile desiredTile = map.getTileAt(attackPoint);
+            if(desiredTile!=null){
+                // Add the projectile to the tile.
+                map.insertProjectileAtPoint(projectile, attackPoint);
 
+                System.out.println("LinearAttackMoved");
 
-            if(desiredTile.hasEntity()){
-                Entity target = desiredTile.getEntity();
-                target.takeDamage(-damage);
+                if(desiredTile.hasEntity()){
+                    Entity target = desiredTile.getEntity();
+                    target.takeDamage(-damage);
 
+                }
+
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                // Remove the projectile from the tile.
+                map.removeProjectileAtPoint(attackPoint);
             }
-            //TODO:Implement a timer that does run into a out of memory exception
         }
     }
 

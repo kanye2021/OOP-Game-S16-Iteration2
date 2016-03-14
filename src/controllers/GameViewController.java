@@ -226,7 +226,6 @@ public class GameViewController extends ViewController{
         //Open Pause
         Task openPause = new Task() {
             public void run(){
-                System.out.println("1:Am I in");
                 PauseView pauseView = new PauseView(getScreenWidth(), getScreenHeight(), getDisplay());
                 PauseViewController pauseViewController = new PauseViewController(pauseView, getStateManager(), avatarController.getAvatar(), GameViewController.this);
 
@@ -235,7 +234,6 @@ public class GameViewController extends ViewController{
                 pauseViewController.setClosePause(new Task() {
                     @Override
                     public void run() {
-                        System.out.println("2:Did I close ");
                         pauseSubstate.dismiss();
                     }
 
@@ -300,7 +298,7 @@ public class GameViewController extends ViewController{
         // Available default key bindings.
         // Most skills an occupation has is 6.
         // We will assign each key to each skill incrementally, while looping over the avatar's skills.
-        int skillKeys[] = {KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5, KeyEvent.VK_6,  KeyEvent.VK_7 };
+        int skillKeys[] = {KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5, KeyEvent.VK_6,  KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9};
 
         int i = 0;
         for (Skill skill : skills) {

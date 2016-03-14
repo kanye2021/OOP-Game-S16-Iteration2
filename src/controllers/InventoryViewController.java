@@ -41,6 +41,7 @@ public class InventoryViewController extends ViewController {
         this.inventory = entity.getInventory();
         this.itemNodeArrayList = inventory.getItemNodeArrayList();
         ((InventoryView)view).setItemNodeList(this.itemNodeArrayList);
+        ((InventoryView)view).setInventory(inventory);
     }
 
     @Override
@@ -89,12 +90,16 @@ public class InventoryViewController extends ViewController {
             @Override
             public void run() {
                 TakeableItem currentItem = itemNodeArrayList.get(selectedItemIndex).getItem();
+                int invSize = itemNodeArrayList.size();
                 if (currentItem.isEquipable()) {
                     entity.equipItem((EquippableItem) currentItem);
+                    if(invSize != itemNodeArrayList.size())
+                        selectedItemIndex--;
                 } else {
                     currentItem.onUse(entity);
+                    if(invSize != itemNodeArrayList.size())
+                        selectedItemIndex--;
                 }
-                selectedItemIndex--;
                 if (selectedItemIndex < 0) selectedItemIndex = 0;
                 ((InventoryView) view).updateSelected(selectedItemIndex);
             }

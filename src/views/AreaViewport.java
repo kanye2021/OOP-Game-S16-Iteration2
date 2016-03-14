@@ -1,12 +1,8 @@
  package views;
 
-import models.area_effects.AreaEffect;
 import models.entities.Avatar;
 import models.entities.Entity;
-import models.items.Item;
-import models.map.Decal;
 import models.map.Map;
-import models.map.Terrain;
 import models.map.Tile;
 import models.skills.CommonSkills.ObservationSkill;
 import models.skills.Skill;
@@ -15,7 +11,9 @@ import models.stats.Stats;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Queue;
 
 /**
@@ -102,7 +100,6 @@ public class AreaViewport extends View {
     public void setViewportOffset(Point offset){
         viewportOffset = offset;
         reRender = true;
-        System.out.println("OFFSET SET");
     }
 
     @Override
@@ -110,7 +107,6 @@ public class AreaViewport extends View {
 
         if(map.needsToBeRendered() || reRender){
             Graphics g1 = cachedViewport.getGraphics();
-            System.out.println("RENDERING");
 
             // Draw a black background
             g1.setColor(Color.BLACK);
