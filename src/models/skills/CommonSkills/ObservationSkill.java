@@ -32,7 +32,7 @@ public class ObservationSkill extends PassiveSkill {
 
     @Override
     public String getName() {
-        return "Observati<<<<<<< HEADon";
+        return "Observation";
     }
 
 

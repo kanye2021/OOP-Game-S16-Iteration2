@@ -22,6 +22,7 @@ public class UseItemOnNPC extends Action {
     public void activate(View view, ViewController viewController) {
         //Display Dialogue
         InventoryView inventoryView = new InventoryView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
+        inventoryView.setInventory(avatar.getInventory());
         NPCItemUseController npcItemUseController = new NPCItemUseController(inventoryView, viewController.getStateManager(), avatar, npc);
         SubState useState = new SubState(npcItemUseController, inventoryView);
         npcItemUseController.setClose(new Task() {

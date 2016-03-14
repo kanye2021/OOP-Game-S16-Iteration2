@@ -345,9 +345,9 @@ public abstract class Entity {
     public abstract void startInteraction(NPC npc);
 
     public final Image getImage() {
-//        sprite.setDirection(orientation);
-//        return sprite.getImage();
-        return animator.update(System.currentTimeMillis());
+        sprite.setDirection(orientation);
+        return sprite.getImage();
+//        return animator.update(System.currentTimeMillis());
     }
 
     public int getLives() {
