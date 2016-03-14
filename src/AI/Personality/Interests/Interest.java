@@ -50,4 +50,6 @@ public abstract class Interest {
 
     public abstract Interest.Type getInterestType();
 
+    public abstract String getSpecificInterest();
+
 }

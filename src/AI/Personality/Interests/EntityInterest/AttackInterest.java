@@ -30,8 +30,7 @@ public class AttackInterest extends EntityInterest {
     }
 
     public void update() {
-
-        setPointOfInterest(entityOfInterest.getLocation());
+        System.out.println("Why am I not going in here");
 
     }
 
@@ -50,4 +49,10 @@ public class AttackInterest extends EntityInterest {
 
     }
 
+    @Override
+    public String getSpecificInterest() {
+        String test = "AttackInterest";
+        System.out.println(test);
+        return test;
+    }
 }

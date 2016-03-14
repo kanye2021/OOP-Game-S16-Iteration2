@@ -58,4 +58,10 @@ public class ItemPickupInterest extends ItemInterest {
 
     }
 
+    @Override
+    public String getSpecificInterest() {
+        String test = "ItemPickupInterest";
+        System.out.println(test);
+        return test;
+    }
 }

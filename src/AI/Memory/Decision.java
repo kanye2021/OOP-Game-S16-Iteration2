@@ -43,5 +43,9 @@ public class Decision {
 
     }
 
+    public void getSpecificInterest(){
+        interest.getSpecificInterest();
+    }
+
 
 }

@@ -64,4 +64,10 @@ public class ExploreInterest extends PointInterest {
 
     }
 
+    @Override
+    public String getSpecificInterest() {
+        String test = "ExploreInterest";
+        System.out.println(test);
+        return test;
+    }
 }
