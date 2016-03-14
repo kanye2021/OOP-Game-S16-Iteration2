@@ -14,6 +14,7 @@ public enum Personality {
 
     // should not trade unless avatar, should not follow unless followable
     // FACTIONS!
+    // check gameloop!
 
     DOGE(0.075, 0.3, 0.15, new InterestList(new FollowInterest(1.0), new ExploreInterest(0.1))),
     FAT_LARD_SHOPKEEPER(0.03, -0.25, 0.95, new InterestList(new TradeInterest(0.75), new ExploreInterest(0.01))),
