@@ -1,11 +1,11 @@
 package models.skills.SneakSkills;
 
 import models.attack.AngularAttack;
+import models.attack.LinearAttack;
 import models.attack.Projectile;
 import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
-import models.skills.PassiveSkill;
 import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
@@ -45,8 +45,10 @@ public class RangedAttackSkill extends ActiveSkill {
         cooldown = true;
         doTheCoolDown();
         int damage  = damageSent(entity);
-        Projectile projectile = new Projectile(damage,3, StatusEffects.StatusEffect.NONE);
+
+        Projectile projectile = new Projectile(damage,5, StatusEffects.StatusEffect.NONE, "sneak-rangedAttack.png");
         new AngularAttack(entity,projectile);
+
 
     }
 

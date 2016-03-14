@@ -4,6 +4,7 @@ package models.items.takeable.equippable.weapons.twoHanded;
 import models.Equipment;
 import models.conditions.Condition;
 import models.conditions.ConditionList;
+import models.conditions.OccupationCondition;
 import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.decorations.equippableItemDecoration;
@@ -29,6 +30,7 @@ public class bow extends EquippableItem {
                 new StatModification(Stats.Type.WEAPON_MODIFIER, decoration.attackModifier)
         );
         equipConditions = new ConditionList(
+                new OccupationCondition(null, "Sneak", Condition.Comparison.EXACTLY),
                 new StatCondition(null, decoration.levelRequiredModifier, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = decoration.weightModifier;

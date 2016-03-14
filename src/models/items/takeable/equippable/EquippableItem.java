@@ -76,7 +76,7 @@ public class EquippableItem extends TakeableItem {
             entity.getEquipment().equipItem(this);
         } else {
 
-            Toast.createToastWithTimer("You need a higher level in order to equip this item.", 1000);
+            //Toast.createToastWithTimer("You can't equip the item!", 1000);
 
         }
 

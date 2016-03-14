@@ -2,6 +2,7 @@ package models.skills.CommonSkills;
 
 import models.entities.Avatar;
 import models.entities.Entity;
+import models.skills.ActiveSkill;
 import models.skills.PassiveSkill;
 import views.sprites.Sprite;
 
@@ -35,6 +36,7 @@ public class ObservationSkill extends PassiveSkill {
     public String getName() {
         return "Observation";
     }
+
 
     @Override
     public void onUpdate(Entity entity) {

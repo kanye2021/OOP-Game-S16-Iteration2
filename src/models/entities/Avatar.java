@@ -15,11 +15,9 @@ import java.awt.*;
  */
 public abstract class Avatar extends Entity {
     private int radiusOfVisiblility;
-    private int money;
     public Avatar(Point location, Map map) {
         super(location, map);
         this.radiusOfVisiblility = 4;
-        money = 100;
     }
 
     @Override
@@ -48,6 +46,7 @@ public abstract class Avatar extends Entity {
     }
 
     public int getAmountofMoney(){
+
         return money;
     }
     public void buyItem(TakeableItem item){

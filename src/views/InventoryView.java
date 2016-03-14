@@ -3,6 +3,7 @@ package views;
 import models.Inventory;
 import models.items.takeable.TakeableItem;
 import utilities.IOUtilities;
+import views.sprites.Sprite;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,7 +59,7 @@ public class InventoryView extends View {
 
     private int selectedItem;
     private ArrayList<Inventory.ItemNode> itemNodeList;
-
+    private Inventory inventory;
     private String takeableItemRootFilepath;
 
     public InventoryView(int width, int height, Display display){
@@ -70,15 +71,39 @@ public class InventoryView extends View {
     public void setItemNodeList(ArrayList<Inventory.ItemNode> itemNodeList) {
         this.itemNodeList = itemNodeList;
     }
-
+    public void setInventory(Inventory inventory){
+        this.inventory = inventory;
+    }
 
     @Override
     public void render(Graphics g) {
         renderTitle(g);
         renderItemsView(g);
         renderInfoView(g);
+        int moneyX = inventoryViewXStart + itemMargin/2;
+        int moneyY = titleStartY + titleHeight - 30;
+        renderMoney(g,Integer.toString(inventory.getMoney()),moneyX, moneyY);
     }
+    public void renderMoney(Graphics g, String value, int imgStart_X, int imgStart_Y){
+        //Renders the money amount
+        g.setFont(smallFont);
+        FontMetrics fm = g.getFontMetrics();
+        int valueWidth = fm.stringWidth(value);
 
+        ///Renders the icon
+        String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/etc/money.png");
+        Sprite s = new Sprite(imageBasePath);
+        Image money = s.getImage();
+//        int imgStart_X = titleStartX ;
+//        int imgStart_Y = titleStartY * 3;
+        int imgWidth = money.getWidth(null)/2;
+        int imgHeight = money.getHeight(null)/2;
+
+        g.drawImage(money, imgStart_X + valueWidth, imgStart_Y, imgWidth, imgHeight, null);
+
+        g.drawString(value, imgStart_X, imgStart_Y + (int)(imgHeight * .66));
+
+    }
     private void renderTitle(Graphics g) {
         int titleMargin = 5;
         int instMargin = 15;

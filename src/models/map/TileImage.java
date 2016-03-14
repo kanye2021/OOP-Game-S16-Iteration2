@@ -1,5 +1,6 @@
 package models.map;
 
+
 import models.entities.npc.Mount;
 
 import java.awt.*;
@@ -86,5 +87,6 @@ public class TileImage extends BufferedImage {
                 g.drawImage(entity, x, y, width, height, null);
             }
         }
+
     }
 }

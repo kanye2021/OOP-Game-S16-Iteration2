@@ -1,6 +1,7 @@
 package models.map;
 
 //import javafx.util.Pair;
+
 import models.area_effects.AreaEffect;
 import models.attack.Projectile;
 import models.entities.Entity;
@@ -24,9 +25,9 @@ public class Tile {
     private Decal decal;
     private ArrayList<Item> items;
     private Entity entity;
-    private Projectile projectile;
     private Trap trap;
     private TileImage tileImage;
+    private Projectile projectile;
 
 //<<<<<<< HEAD
 //    public Tile(Terrain terrain, Decal decal, Item item, Entity entity, AreaEffect areaEffect,Projectile projectile) {
@@ -41,6 +42,7 @@ public class Tile {
         this.projectile = projectile;
         this.tileImage = new TileImage(75, 75, BufferedImage.TYPE_INT_RGB); // Size is arbitrary as it will be scaled later anyway.
         tileImage.generate(this); // Generate the image for the tile.
+        projectile = null;
     }
 
     // Creates a new tile with the same instance vars as the old tile
@@ -53,6 +55,7 @@ public class Tile {
         this.projectile = tile.getProjectile();
         this.areaEffect = tile.getAreaEffect(); // THis will also store the same reference.
         this.tileImage = TileImage.copyImage(tile.getTileImage()); // The image will stay the same tho...at least.
+        projectile = null;
     }
 
 //    public ProjectileDetection insertProjectile(Projectile projectile){
@@ -180,12 +183,6 @@ public class Tile {
     }
     public Image getEntityImage() {return (entity!=null) ? entity.getImage() : null;}
 
-    public Image getProjectileImage(){
-        if(projectile!=null){
-            System.out.println("yo");
-        }
-        return null;
-    }
 
     public Trap getTrap(){return trap;}
 
@@ -246,5 +243,13 @@ public class Tile {
         }else{
             return "No terrrain? not possible";
         }
+    }
+
+    public void addProjectile(Projectile projectile){
+        this.projectile = projectile;
+    }
+
+    public Image getProjectileImage(){
+        return projectile!=null ? projectile.getImage() : null;
     }
 }

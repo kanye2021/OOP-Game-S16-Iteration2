@@ -28,9 +28,18 @@ public class LinearAttack extends Attackion{
         this.damage = projectile.damage;
         this.range = projectile.range;
         this.orientation = entity.getOrientation();
+        this.projectile = projectile;
         slope = new Point();
         findSlope(orientation);
-        findEffectedTiles(slope);
+        launchAttack();
+    }
+
+    private void launchAttack(){
+        new Thread(new Runnable() {
+            public void run() {
+                findEffectedTiles(slope); // Launches attack
+            }
+        }).start();
     }
 
    /* @Override
@@ -96,12 +105,26 @@ public class LinearAttack extends Attackion{
             attackPoint.x=current.target.x;
             attackPoint.y=current.target.y;
             Tile desiredTile = map.getTileAt(attackPoint);
+            if(desiredTile!=null){
+                // Add the projectile to the tile.
+                map.insertProjectileAtPoint(projectile, attackPoint);
 
+                System.out.println("LinearAttackMoved");
 
-            if(desiredTile.hasEntity()){
-                Entity target = desiredTile.getEntity();
-                target.takeDamage(-damage);
+                if(desiredTile.hasEntity()){
+                    Entity target = desiredTile.getEntity();
+                    target.takeDamage(-damage);
 
+                }
+
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                // Remove the projectile from the tile.
+                map.removeProjectileAtPoint(attackPoint);
             }
         }
     }
