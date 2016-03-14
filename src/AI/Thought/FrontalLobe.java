@@ -38,27 +38,27 @@ public class FrontalLobe {
         rand = rng.nextDouble();
         Decision currentDecision = memory.getDecision();
 
-        //First check if our current decision is valid
+        //First check if our current decision is not null
         if (currentDecision != null) {
 
+            // Then check if our current decision is valid given the visual memory.
             if (currentDecision.isInterestValid(memory)) {
 
                 // Then check if we should get a new Interest based on scatter_brainedness
                 if (memory.getPersonality().getScatter_Brainedness() > rand) {
 
+                    // If all of these are true, we may continue with our current decision!
+                    System.err.println(npc.getType() + " WERE GOOD" + memory.getPersonality().getScatter_Brainedness());
                     return;
 
                 }
 
-            }else{
-//                System.out.println("The decision isn't valid");
             }
-
-
 
         }
 
         // Otherwise select a new decision
+        System.err.println(npc.getType() + " WERE NOT GOOD" + memory.getPersonality().getScatter_Brainedness());
         selectNewDecision();
 
     }
@@ -156,12 +156,6 @@ public class FrontalLobe {
             }
 
             memory.setDecision(newDecision);
-
-        } else {
-
-            // Return a default decision
-            System.err.println(npc.getType() + ": FrontalLobe: NULL decision reached!");
-            memory.setDecision(new Decision(new ExploreInterest(1.0)));
 
         }
 

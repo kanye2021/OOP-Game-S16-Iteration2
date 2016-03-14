@@ -29,6 +29,12 @@ public class MotorCortex {
             return;
         }
 
+        if (memory.getDecision() == null) {
+
+            return;
+
+        }
+
         moveTowardsInterest();
 
     }

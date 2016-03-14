@@ -14,16 +14,17 @@ public class UniformPicker<T> {
     private double rand;
     private double totalWeight;
 
-    public void addChoice(T decision, double weight) {
+    public void addChoice(T choice, double weight) {
 
         MathUtilities.putInRange(0.0, weight, Double.MAX_VALUE);
 
         if (weight > 0.0) {
 
-            originalChoices.put(decision, weight);
+            originalChoices.put(choice, weight);
             totalWeight += weight;
 
         }
+
 
     }
 

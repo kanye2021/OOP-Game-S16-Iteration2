@@ -53,7 +53,6 @@ public class FollowInterest extends EntityInterest {
 
     public boolean isApplicable(ThoughtInterface memory) {
 
-        System.out.println(memory.entitiesSeen());
         return memory.getSeenEntities().containsKey(entityOfInterest);
 
     }

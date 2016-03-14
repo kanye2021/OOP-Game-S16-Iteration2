@@ -43,7 +43,7 @@ public class AreaViewport extends View {
     private BufferedImage cachedViewport;
 
     //Debug stuff
-    private boolean displayDebugInformation = false;
+    private boolean displayDebugInformation = true;
 
     // Just a container to hold an entity and a location in order to draw the health bars w/o opacity messed up
     private class EntityLocationTuple {
