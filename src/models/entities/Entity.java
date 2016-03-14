@@ -158,15 +158,12 @@ public abstract class Entity{
         if(occupation.contains("Smasher")){
             damage *= 1;
             cooldowntime = 2000;
-            System.out.println(entity + " is attacking!");
         }else if(occupation.contains("Summoner")){
             damage *= 2;
             cooldowntime=3000;
-            System.out.println(entity + " is attacking!");
         }else if(occupation.contains("Sneak")){
             cooldowntime=1000;
             damage /= 2;
-            System.out.println(entity + " is attacking!");
         }else{
             System.out.println("How did you get here");
         }
