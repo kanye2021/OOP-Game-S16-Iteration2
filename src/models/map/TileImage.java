@@ -75,5 +75,16 @@ public class TileImage extends BufferedImage {
                 g.drawImage(entity, x, y, width, height, null);
             }
         }
+
+        // Draw the Projectile
+        Image projectile = tile.getProjectileImage();
+        if(projectile!=null){
+            int width = getWidth() * 3/4;
+            int height = getHeight() * 3/4;
+            int x = getWidth()/2 - width/2;
+            int y = getHeight()/2 - height/2;
+
+            g.drawImage(projectile, x, y, width, height, null);
+        }
     }
 }

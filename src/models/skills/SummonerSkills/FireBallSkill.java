@@ -3,10 +3,8 @@ package models.skills.SummonerSkills;
 import models.attack.LinearAttack;
 import models.attack.Projectile;
 import models.attack.StatusEffects;
-import models.entities.Avatar;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
-import models.stats.Stats;
 import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
@@ -60,7 +58,7 @@ public class FireBallSkill extends ActiveSkill{
 
         doTheCoolDown();
         System.out.println("Can you take this? Fireball!");
-        Projectile projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);
+        Projectile projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE, "summoner-fireball.png");
 
         cooldown=true;
         new LinearAttack(entity,projectile);//This is the attack
