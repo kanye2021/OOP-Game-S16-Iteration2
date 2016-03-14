@@ -141,19 +141,12 @@ public class GameView extends View{
     }
 
     public boolean hasSubState(){
-        if(substates.size() > 0)
-            return true;
-        else
-            return false;
+        return substates.size() > 0;
 
     }
 
     public void renderNPCAction(boolean shouldRender){
-        if (shouldRender) {
-            hasNPCAction = true;
-        }else {
-            hasNPCAction = false;
-        }
+        hasNPCAction = shouldRender;
     }
 
     public void setAreaViewportOffset(Point offset){

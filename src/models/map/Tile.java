@@ -221,12 +221,7 @@ public class Tile {
         return entity != null;
     }
     public boolean hasTrap(){
-        if(trap!= null){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return trap != null;
     }
 
     public TileImage getTileImage(){

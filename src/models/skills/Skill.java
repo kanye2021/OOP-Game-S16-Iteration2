@@ -130,7 +130,7 @@ public abstract class Skill {
                     timer.cancel();  // Terminates this timer, discarding any currently scheduled tasks.
                     timer.purge();   // Removes all cancelled tasks from this timer's task queue.
                 }
-            };
+            }
         }, 0, 1);
     }
 

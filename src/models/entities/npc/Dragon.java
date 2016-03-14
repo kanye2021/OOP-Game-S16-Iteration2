@@ -3,6 +3,8 @@ package models.entities.npc;
 
 import models.entities.npc.actions.Ride;
 import models.entities.npc.actions.Talk;
+import models.factions.Faction;
+import models.factions.FactionAssociation;
 import models.map.Map;
 import models.occupation.Occupation;
 import models.occupation.Sneak;
@@ -48,11 +50,19 @@ public class Dragon extends Mount {
     public void startInteraction(NPC npc) {
 
     }
+
+    protected final FactionAssociation initFaction() {
+
+        return new FactionAssociation(0.35, Faction.ANIMAL);
+
+    }
+
     @Override
     public void initDialogue(){
         dialogue.add("Yo, I'm a dragon.");
         dialogue.add("Shut up and get on!");
     }
+
     //Horse has no occuptation
     @Override
     protected Occupation initOccupation() {

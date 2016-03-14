@@ -105,10 +105,7 @@ public class LoadGameViewController extends ViewController {
     //Added this because the check valid part might be longer in the future
     public boolean checkValidFileName(String name) {
         //TODO: Add more checks (IE what about .bd.sf.xml or a.xml.df.sf)
-        if (name.contains(".xml") && !name.equals(".xml")){
-            return true;
-        }
-        return false;
+        return name.contains(".xml") && !name.equals(".xml");
     }
     public void sendViewUpdatedOption(){
         ((LoadGameView) view).updateOption(myOption);

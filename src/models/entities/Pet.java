@@ -4,6 +4,8 @@ package models.entities;
 import AI.Brain;
 import AI.Personality.Personality;
 import models.entities.npc.NPC;
+import models.factions.Faction;
+import models.factions.FactionAssociation;
 import models.map.Map;
 import models.occupation.Occupation;
 import models.occupation.Sneak;
@@ -35,6 +37,12 @@ public class Pet extends NPC {
         return new Sneak();
     }
 
+
+    protected final FactionAssociation initFaction() {
+
+        return new FactionAssociation(1.0, Faction.BLUE);
+
+    }
 
     @Override
     public void startInteraction(NPC npc) {

@@ -1,5 +1,7 @@
 package models.entities.npc;
 
+import models.factions.Faction;
+import models.factions.FactionAssociation;
 import models.map.Map;
 import models.occupation.Occupation;
 import models.skills.SkillList;
@@ -45,6 +47,11 @@ public class Enemy extends NPC{
     //TODO: Needs to be separated entity controllers that do different things
 
 
+    protected final FactionAssociation initFaction() {
+
+        return new FactionAssociation(0.65, Faction.RED);
+
+    }
 
     protected HashMap<Map.Direction, String> initSprites(){
         String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/entity-smasher-");

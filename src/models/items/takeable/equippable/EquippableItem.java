@@ -94,10 +94,7 @@ public class EquippableItem extends TakeableItem {
 
     public final Equipment.Component getComponent() { return component; }
     public boolean hasComponent(){
-        if(component == null){
-            return false;
-        }
-        return true;
+        return component != null;
     }
     @Override
     public String getType() {

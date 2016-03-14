@@ -19,7 +19,7 @@ public class AvatarCreationView extends View {
         private String text;
         private String description;
 
-        private OccupationOptions(String text, String description) {
+        OccupationOptions(String text, String description) {
             this.text = text;
             this.description = description;
         }

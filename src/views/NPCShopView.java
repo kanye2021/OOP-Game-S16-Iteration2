@@ -420,7 +420,7 @@ public class NPCShopView extends View {
 
         infoXMargin = getScreenWidth()/30;
         infoYMargin = (int) (infoViewHeight * 0.2);
-        infoElementHeight = (int) (infoViewHeight - infoYMargin * 2);
-        infoDescriptionWidth = (int) (infoViewWidth - 2 * infoElementHeight - 4 * infoXMargin);
+        infoElementHeight = infoViewHeight - infoYMargin * 2;
+        infoDescriptionWidth = infoViewWidth - 2 * infoElementHeight - 4 * infoXMargin;
     }
 }

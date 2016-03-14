@@ -265,7 +265,7 @@ public class SkillViewport extends View{
                     CDTimer.cancel();  // Terminates this timer, discarding any currently scheduled tasks.
                     CDTimer.purge();   // Removes all cancelled tasks from this timer's task queue.
                 }
-            };
+            }
         }, 0, 30);
     }
 

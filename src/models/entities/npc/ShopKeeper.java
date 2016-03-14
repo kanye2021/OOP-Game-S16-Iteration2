@@ -6,6 +6,8 @@ import models.entities.npc.actions.Attack;
 import models.entities.npc.actions.Trade;
 import models.entities.npc.actions.Talk;
 import models.entities.npc.actions.UseItemOnNPC;
+import models.factions.Faction;
+import models.factions.FactionAssociation;
 import models.items.Item;
 import models.items.takeable.TakeableItem;
 import models.map.Map;
@@ -56,6 +58,11 @@ public class ShopKeeper extends NPC {
         return new Smasher();
     }
 
+    protected final FactionAssociation initFaction() {
+
+        return new FactionAssociation(0.65, Faction.TRADE_GUILD);
+
+    }
 
     //TODO: Refactor this because NPC's shouldn't start interaction I believe.
     @Override

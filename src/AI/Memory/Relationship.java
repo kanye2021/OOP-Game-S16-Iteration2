@@ -12,6 +12,7 @@ public class Relationship {
 
     public Relationship(double relationship) {
 
+        MathUtilities.putInRange(-1.0, relationship, 1.0);
         this.relationship = relationship;
 
     }

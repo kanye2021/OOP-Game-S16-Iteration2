@@ -26,10 +26,7 @@ public abstract class Attackion {
     protected StatusEffects.StatusEffect statusEffect;
 
     public boolean canAttack(Entity entity) {
-        if(entity.getStatusEffect()== StatusEffects.StatusEffect.SLEEP){
-            return false;
-        }
-        return true;
+        return entity.getStatusEffect() != StatusEffects.StatusEffect.SLEEP;
     }
 
 }

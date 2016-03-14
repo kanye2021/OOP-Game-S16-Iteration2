@@ -2,6 +2,8 @@ package models.entities;
 
 import models.entities.npc.Mount;
 import models.entities.npc.NPC;
+import models.factions.Faction;
+import models.factions.FactionAssociation;
 import models.items.takeable.TakeableItem;
 import models.map.Map;
 import models.stats.StatModification;
@@ -41,8 +43,13 @@ public abstract class Avatar extends Entity {
     @Override
     public void startInteraction(NPC npc){
 
-
         return;
+    }
+
+    protected final FactionAssociation initFaction() {
+
+        return new FactionAssociation(1.0, Faction.BLUE);
+
     }
 
     public int getAmountofMoney(){

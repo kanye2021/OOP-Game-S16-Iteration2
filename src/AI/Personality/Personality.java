@@ -19,7 +19,7 @@ public enum Personality {
     DOGE(0.075, -0.3, 0.15, new InterestList(new FollowInterest(1.0), new ExploreInterest(0.1))),
     FAT_LARD_SHOPKEEPER(0.03, -0.25, 0.95, new InterestList(new TradeInterest(0.75), new ExploreInterest(0.01))),
     SKINNY_SHOPKEEPER(0.03, -0.25, 0.1, new InterestList(new TradeInterest(0.75), new ExploreInterest(0.35), new ItemPickupInterest(0.5))),
-    JORGE_BOSS(0.15, -0.85, 0.05, new InterestList(new AttackInterest(0.85), new ExploreInterest(0.35), new ItemPickupInterest(0.65))),
+    JORGE_BOSS(0.10, 0.85, 0.05, new InterestList(new AttackInterest(0.85), new ExploreInterest(0.15), new ItemPickupInterest(0.65))),
     DEFAULT(0.05, -0.15, 0.2, new InterestList(new ExploreInterest(0.1)));
 
     private double scatter_Brainedness;   // How likely the entity is to change their decision before it is completed

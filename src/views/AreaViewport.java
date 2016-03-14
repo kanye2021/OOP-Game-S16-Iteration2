@@ -419,10 +419,7 @@ public class AreaViewport extends View {
             return false;
         }
 
-        if(p.getY() + hexHeight/2 < 0 || p.getY() - hexHeight/2 > viewportHeight){
-            return false;
-        }
-        return true;
+        return !(p.getY() + hexHeight / 2 < 0 || p.getY() - hexHeight / 2 > viewportHeight);
     }
 
     public Polygon getHexTile(Point center){

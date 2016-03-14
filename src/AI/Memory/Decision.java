@@ -9,13 +9,13 @@ import java.awt.*;
  */
 public class Decision {
 
+    private Interest interest;
+
     public Decision(Interest interest) {
 
         this.interest = interest;
 
     }
-
-    private Interest interest;
 
     public boolean isInterestValid(ThoughtInterface memory) {
 

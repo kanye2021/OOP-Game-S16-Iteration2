@@ -7,6 +7,7 @@ import models.attack.Projectile;
 import models.attack.StatusEffects;
 import models.entities.npc.Mount;
 import models.entities.npc.NPC;
+import models.factions.FactionAssociation;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
@@ -14,17 +15,19 @@ import models.map.Terrain;
 import models.occupation.Occupation;
 import models.skills.Skill;
 import models.skills.SkillList;
-import utilities.Animator;
 import models.stats.StatModification;
-import utilities.TileDetection;
 import models.stats.StatModificationList;
 import models.stats.Stats;
+import utilities.Animator;
+import utilities.TileDetection;
 import utilities.Toast;
 import views.sprites.DirectionalSprite;
 
 import java.awt.*;
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Bradley on 2/18/16.
@@ -46,6 +49,8 @@ public abstract class Entity{
     protected int level;
     protected int money;
 
+    // All entities have a faction
+    protected FactionAssociation faction;
 
     // All entities should be able to have a pet.
     protected Pet pet;
@@ -76,6 +81,7 @@ public abstract class Entity{
         this.stats = new Stats();
         this.occupation = initOccupation();
         this.skills = occupation.getSkills();
+        this.faction = initFaction();
         this.inventory = new Inventory(30, money);
         this.equipment = new Equipment(this);
         passableTerrain = new ArrayList<>();
@@ -102,6 +108,14 @@ public abstract class Entity{
             movementTimerDelay = 50;
         }
         return movementTimerDelay;
+    }
+
+    protected abstract FactionAssociation initFaction();
+
+    public FactionAssociation getFaction() {
+
+        return faction;
+
     }
 
     public boolean canTraverseTerrain(Terrain terrain){

@@ -10,6 +10,7 @@ import AI.Personality.Interests.PointInterest.PointInterest;
 import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.items.Item;
+import utilities.MathUtilities;
 import utilities.UniformPicker;
 
 import java.awt.*;
@@ -72,7 +73,10 @@ public class FrontalLobe {
                 double aggressiveFactor = -memory.getPersonality().getAggressiveness();
                 double scatter_brainedNess = memory.getPersonality().getScatter_Brainedness();
                 double scatterBrainFactor = scatter_brainedNess * rng.nextGaussian() - (scatter_brainedNess / 2);
-                double relationalValue = aggressiveFactor + scatterBrainFactor;
+                double factionFactor = npc.getFaction().getFactionWeight(entity.getFaction());
+
+                double relationalValue = aggressiveFactor + scatterBrainFactor + factionFactor;
+                relationalValue = MathUtilities.putInRange(-1.0, relationalValue, 1.0);
                 System.out.println(npc.getType() + " FrontalLobe: Added " + entity.getType() + " as a new relationship: " + relationalValue);
                 memory.addEntityRelationship(entity, relationalValue);
 
@@ -93,7 +97,7 @@ public class FrontalLobe {
 
         Interest interestToAdd;
         Point pointOfInterest;
-        InterestList interests = memory.getPersonality().getInterests();;
+        InterestList interests = memory.getPersonality().getInterests();
         double weight;
 
         // Find all entity interests and add them
