@@ -5,7 +5,6 @@ import models.attack.RadialAttack;
 import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
-import models.skills.PassiveSkill;
 
 import java.awt.event.KeyEvent;
 
@@ -21,10 +20,11 @@ public class EnchantmentSkill extends ActiveSkill {
         cooldownTime = 4*SECONDS;
         damage = 0;
         range = 4;
-        projectile = new Projectile(damage,range, StatusEffects.StatusEffect.SLEEP);
+        projectile = new Projectile(damage,range, StatusEffects.StatusEffect.SLEEP, "summoner-enchantment.png");
         cost = 10;
         level = 1;
     }
+
     @Override
     public SkillDictionary initID() {
 

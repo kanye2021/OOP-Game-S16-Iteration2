@@ -58,7 +58,7 @@ public class AngularAttack extends Attackion {
 
             if(desiredTile!=null && !hitTiles.containsKey(attackPoint)){
 
-                // Add the projectile to the tile and mark it as hit.
+                // Mark this tile as hit.
                 hitTiles.put(new Point(attackPoint), current);
 
                 if(desiredTile.hasEntity()&&entity!=desiredTile.getEntity()){
@@ -69,14 +69,12 @@ public class AngularAttack extends Attackion {
 
                 for(PointNode pointNode: getAdjacentTiles(current,orientation)){
                     if(!hitTiles.containsKey(pointNode.target)){
-                        pointNode.range += 1;
 
+                        pointNode.range += 1;
                         pointQueue.offer(pointNode);
                     }
                 }
 
-
-                System.out.println(current.range);
 
                 if(current.range == currentDistance){
                     map.insertProjectileAtPoint(projectile, attackPoint);
@@ -85,7 +83,7 @@ public class AngularAttack extends Attackion {
                     currentDistance = current.range;
 
                     try {
-                        Thread.sleep(300);
+                        Thread.sleep(200);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
