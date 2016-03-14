@@ -4,13 +4,14 @@ package models.map;
 import models.area_effects.AreaEffect;
 import models.attack.Projectile;
 import models.entities.Entity;
-import models.entities.npc.NPC;
 import models.items.Item;
 import utilities.ProjectileDetection;
 import utilities.TileDetection;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Bradley on 2/25/2016.
@@ -21,16 +22,20 @@ public class Tile {
     private Terrain terrain;
     private AreaEffect areaEffect;
     private Decal decal;
-    private Item item;
+    private ArrayList<Item> items;
     private Entity entity;
     private Projectile projectile;
     private Trap trap;
     private TileImage tileImage;
 
-    public Tile(Terrain terrain, Decal decal, Item item, Entity entity, AreaEffect areaEffect,Projectile projectile) {
+//<<<<<<< HEAD
+//    public Tile(Terrain terrain, Decal decal, Item item, Entity entity, AreaEffect areaEffect,Projectile projectile) {
+//=======
+    public Tile(Terrain terrain, Decal decal, ArrayList<Item> items, Entity entity, AreaEffect areaEffect) {
+
         this.terrain = terrain;
         this.decal = decal;
-        this.item = item;
+        this.items = (ArrayList<Item>)items.clone();
         this.entity = entity;
         this.areaEffect = areaEffect;
         this.projectile = projectile;
@@ -42,35 +47,38 @@ public class Tile {
     public Tile(Tile tile){
         this.terrain = new Terrain(tile.getTerrain());
         this.decal = (tile.getDecal()!=null) ?  new Decal(tile.getDecal()) : null;
-        this.item = (tile.getItem()!=null) ? Item.ItemDictionary.itemFromID(tile.getItem().getItemId()) : null;
+        this.items = (ArrayList<Item>) tile.getItems().clone();
+//        Item item = (tile.getItem()!=null) ? Item.ItemDictionary.itemFromID(tile.getItem().getItemId()) : null;
         this.entity = tile.getEntity(); // This will store the same reference.... this is bad.
         this.projectile = tile.getProjectile();
         this.areaEffect = tile.getAreaEffect(); // THis will also store the same reference.
         this.tileImage = TileImage.copyImage(tile.getTileImage()); // The image will stay the same tho...at least.
     }
 
-    public ProjectileDetection insertProjectile(Projectile projectile){
-        ProjectileDetection result = new ProjectileDetection(null,null,false);
-
-        if(!projectile.canTraverseTerrain(this.terrain)){
-            System.out.println("projectile can't travel here");
-            return result;
-        }
-
-        //check to see if theres an obstacle
-        if(this.item != null){
-            if(this.item.getType().equals("obstacle")){
-                System.out.println("obstacle");
-            }
-        }
-
-        return result;
-    }
+//    public ProjectileDetection insertProjectile(Projectile projectile){
+//        ProjectileDetection result = new ProjectileDetection(null,null,false);
+//
+//        if(!projectile.canTraverseTerrain(this.terrain)){
+//            System.out.println("projectile can't travel here");
+//            return result;
+//        }
+//
+//        //check to see if theres an obstacle
+//        if(this.item != null){
+//            if(this.item.getType().equals("obstacle")){
+//                System.out.println("obstacle");
+//            }
+//        }
+//
+//        return result;
+//    }
     // For now if there is already an entity on the tile. adding an entity will replace that
     // entity with this one. This may or may not be the desired affect so care should be taken
     // in the logic that consumes this function (and it has been).
     public TileDetection insertEntity(Entity entity) {
         TileDetection result = new TileDetection(null, null, false, false);
+        int entityLivesBeforeInteraciton = entity.getLives();
+
         // Check to see if this entity can pass here.
 
         // Check if the entity can pass through this terrain.
@@ -78,6 +86,7 @@ public class Tile {
             return result;
         }
 
+        //if(entity.get)
         // Check if there is another entity on this tile.
         if(this.entity != null){
             System.out.println("In tile");
@@ -86,30 +95,22 @@ public class Tile {
             return result;
         }
 
-        // Check to see if there is an obstacle.
-        if(this.item!= null){
-            if(this.item.getType().equals("obstacle")){
+        // Loop through all the items on the tile and active them.
+        for(Iterator<Item> iterator = items.iterator(); iterator.hasNext();){
+            Item item = iterator.next();
+
+            if(item.getType().equals("obstacle")){
                 return result;
-            }
-            if(this.item.getType().equals("interactive")){
+            }else if(item.getType().equals("interactive")){
                 if(!item.onTouch(entity)){
                     return result;
                 }else{
-                    this.item = null;
+                    iterator.remove();
                 }
-            }
-
-        }
-
-        // The move was not
-
-
-        // Active item on the tile
-        if(this.item != null){
-            boolean pickedUp = this.item.onTouch(entity);
-            // Remove it from this tile if it was sucessfully picked up
-            if (pickedUp) {
-                this.item = null;
+            }else{
+                if(item.onTouch(entity)){
+                    iterator.remove();
+                }
             }
         }
 
@@ -126,11 +127,11 @@ public class Tile {
             }
         }
 
-        // Add the entity to this location
-        this.entity = entity;
-
-        // Indicate that the move was successfull.
-        result.setMoved(true);
+        // Indicate that the move was successful only if it didnt result in the entity dieing.
+        if(entity.getLives() == entityLivesBeforeInteraciton){
+            this.entity = entity;
+            result.setMoved(true);
+        }
 
         return result;
     }
@@ -145,10 +146,30 @@ public class Tile {
     }
 
     public Decal getDecal() {return decal;}
-    public Image getDecalImage(){ return (decal!=null) ? decal.getImage() : null;}
 
-    public Item getItem() {return item;}
-    public Image getItemImage() {return (item!=null) ? item.getImage() : null;}
+    public Image getDecalImage(){
+        if(decal!=null){
+            return decal.isVisible() ? decal.getImage() : null;
+        }
+        return  null;
+    }
+
+    public void setDecalVisibility(boolean b){
+        if(decal!=null){
+            decal.setVisible(b);
+        }
+    }
+
+    public ArrayList<Item> getItems() {return items;}
+    public Image getItemImage() {
+        if (items.size() == 0) {
+            return null;
+        } else if (items.size() == 1) {
+            return items.get(0).getImage();
+        } else {
+            return Item.getBagImage();
+        }
+    }
 
     public Entity getEntity() {
         return entity;
@@ -168,9 +189,9 @@ public class Tile {
 
     public Trap getTrap(){return trap;}
 
-    public void removeItem() {
+    public void removeItems() {
 
-        item = null;
+        items.clear();
     }
 
     public void removeAreaEffect() {
@@ -194,7 +215,8 @@ public class Tile {
     // For now putting an item on this tile simply replaces one that was already there.
     // Perhaps in a later iteration multiple items could be on a single tile?
     public void addItem(Item item) {
-        this.item = item;
+
+        this.items.add(item);
     }
 
     //Checks if the tile has an Entity
@@ -213,8 +235,16 @@ public class Tile {
     public TileImage getTileImage(){
         return this.tileImage;
     }
-
     public void refreshImage(){
         tileImage.generate(this);
+    }
+
+    //Methods for loadSave (just getters) Shouldn't be violating princples as its not modifying source code
+    public String getTerrainType(){
+        if(getTerrain() != null){
+            return getTerrain().getType();
+        }else{
+            return "No terrrain? not possible";
+        }
     }
 }

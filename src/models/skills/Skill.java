@@ -2,6 +2,7 @@ package models.skills;
 
 import models.conditions.ConditionList;
 import utilities.MathUtilities;
+import views.sprites.Sprite;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,18 +42,21 @@ public abstract class Skill {
 
     private SkillDictionary ID;
     protected ConditionList conditionsToActivate = new ConditionList();
-    private int level;
+    protected int level;
+    protected String SKILL_ROOT_FILE_PATH = "./src/res/skills/";
 
     protected boolean cooldown;
     protected int cooldownTime;
     protected double currentCooldownRemaining;
     protected final int SECONDS = 1000;
+    private Sprite sprite;
+
 
     public Skill() {
         this.currentCooldownRemaining = 0;
         this.level = 1;
         this.ID = initID();
-
+        this.sprite = initSprite();
     }
 
     public void modifyLevel(int delta) {
@@ -61,6 +65,9 @@ public abstract class Skill {
 
     }
 
+    public Sprite getSprite() {
+        return sprite;
+    }
 
     public int getLevel() {
         return this.level;
@@ -137,6 +144,7 @@ public abstract class Skill {
 
 
     public abstract SkillDictionary initID();
+    public abstract Sprite initSprite();
     public abstract String getName();
 
     //check to see if the skill is active or not
@@ -160,6 +168,10 @@ public abstract class Skill {
 
         return false;
 
+    }
+
+    public void setLevel(int value){
+        level = value;
     }
 
 }

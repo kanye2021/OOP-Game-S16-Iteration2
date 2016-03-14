@@ -1,15 +1,23 @@
 package models.items;
 
 import models.entities.Entity;
+import models.items.decorations.potionDecorations.smallDecoration;
 import models.items.decorations.smasherDecorations.*;
 import models.items.decorations.sneakDecorations.*;
 import models.items.decorations.summonerDecorations.*;
+import models.items.decorations.sneakDecorations.dragonHideDecoration;
+import models.items.decorations.sneakDecorations.leatherDecoration;
+import models.items.decorations.sneakDecorations.woolDecoration;
+import models.items.decorations.summonerDecorations.bodyDecoration;
+import models.items.decorations.summonerDecorations.dragonFurDecoration;
+import models.items.decorations.summonerDecorations.cosmicDecoration;
+import models.items.decorations.summonerDecorations.mindDecoration;
 import models.items.interactive.*;
 import models.items.obstacle.*;
+import models.items.takeable.consumable.Potions.SmallHealthPotion;
+import models.items.takeable.consumable.Potions.SmallManaPotion;
 import models.items.takeable.equippable.chestplate.*;
-import models.items.takeable.equippable.chestplate.bow;
 import models.items.takeable.equippable.chestplate.chaps;
-import models.items.takeable.equippable.chestplate.staff;
 import models.items.takeable.equippable.helmets.*;
 import models.items.takeable.equippable.greaves.*;
 import models.items.takeable.equippable.boots.*;
@@ -20,6 +28,7 @@ import models.items.takeable.equippable.weapons.twoHanded.*;
 
 import models.items.takeable.quest.KeyOfKanye;
 import views.sprites.Drawable;
+import utilities.IOUtilities;
 import views.sprites.Sprite;
 
 import java.awt.*;
@@ -62,6 +71,7 @@ public abstract class Item {
         GOLD_CHESTPLATE(1104) {public Item createInstance() {return new chestplate(new goldDecoration());}},
         RUNITE_CHESTPLATE(1105) {public Item createInstance() {return new chestplate(new runiteDecoration());}},
 
+
         SOFT_LEATHER_HIDE(1106) {public Item createInstance() {return new hide(new softLeatherDecoration());}},
         HARD_LEATHER_HIDE(1107) {public Item createInstance() {return new hide(new hardLeatherDecoration());}},
         STUDDED_LEATHER_HIDE(1108) {public Item createInstance() {return new hide(new studdedLeatherDecoration());}},
@@ -70,13 +80,24 @@ public abstract class Item {
         RED_D_HIDE(1111) {public Item createInstance() {return new hide(new redDragonhideDecoration());}},
         BLACK_D_HIDE(1112) {public Item createInstance() {return new hide(new blackDragonhideDecoration());}},
 
-        BODY_ROBE(1113) {public Item createInstance() {return new robe(new bodyDecoration());}},
-        MIND_ROBE(1114) {public Item createInstance() {return new robe(new mindDecoration());}},
-        COSMIC_ROBE(1115) {public Item createInstance() {return new robe(new cosmicDecoration());}},
+        BODY_ROBE1(1113) {public Item createInstance() {return new robe(new bodyDecoration());}},
+        MIND_ROBE1(1114) {public Item createInstance() {return new robe(new mindDecoration());}},
+        COSMIC_ROBE1(1115) {public Item createInstance() {return new robe(new cosmicDecoration());}},
         CHAOS_ROBE(1116) {public Item createInstance() {return new robe(new chaosDecoration());}},
         NATURE_ROBE(1117) {public Item createInstance() {return new robe(new natureDecoration());}},
         DEATH_ROBE(1118) {public Item createInstance() {return new robe(new deathDecoration());}},
         LAW_ROBE(1119) {public Item createInstance() {return new robe(new lawDecoration());}},
+
+
+        DRAGON_HIDE(1120) {public Item createInstance() {return new hide(new dragonHideDecoration());}},
+        LEATHER_HIDE(1121) {public Item createInstance() {return new hide(new leatherDecoration());}},
+        WOOL_HIDE(1122) {public Item createInstance() {return new hide(new woolDecoration());}},
+
+        BODY_ROBE(1123) {public Item createInstance() {return new robe(new bodyDecoration());}},
+        COSMIC_ROBE(1124) {public Item createInstance() {return new robe(new cosmicDecoration());}},
+        DRAGON_FUR_ROBE(1125) {public Item createInstance() {return new robe(new dragonFurDecoration());}},
+        MIND_ROBE(1126) {public Item createInstance() {return new robe(new mindDecoration());}},
+
 
         WOOD_GREAVES(1200) {public Item createInstance() {return new greaves(new woodDecoration());}},
         IRON_GREAVES(1201) {public Item createInstance() {return new greaves(new ironDecoration());}},
@@ -140,20 +161,22 @@ public abstract class Item {
         RUNITE_TWO_HAND_SWORD(1705) {public Item createInstance() {return new twoHandedSword(new runiteDecoration());}},
 
         // Bows
-        WOOD_BOW(1706) {public Item createInstance() {return new bow(new woodDecoration());}},
-        IRON_BOW(1707) {public Item createInstance() {return new bow(new ironDecoration());}},
-        STEEL_BOW(1708) {public Item createInstance() {return new bow(new steelDecoration());}},
-        MITHRIL_BOW(1709) {public Item createInstance() {return new bow(new mithrilDecoration());}},
-        GOLD_BOW(1710) {public Item createInstance() {return new bow(new goldDecoration());}},
-        RUNITE_BOW(1711) {public Item createInstance() {return new bow(new runiteDecoration());}},
 
-        BODY_STAFF(1712) {public Item createInstance() {return new staff(new bodyDecoration());}},
-        MIND_STAFF(1713) {public Item createInstance() {return new staff(new mindDecoration());}},
-        COSMIC_STAFF(1714) {public Item createInstance() {return new staff(new cosmicDecoration());}},
-        CHAOS_STAFF(1715) {public Item createInstance() {return new staff(new chaosDecoration());}},
-        NATURE_STAFF(1716) {public Item createInstance() {return new staff(new natureDecoration());}},
-        DEATH_STAFF(1717) {public Item createInstance() {return new staff(new deathDecoration());}},
-        LAW_STAFF(1718) {public Item createInstance() {return new staff(new lawDecoration());}},
+//        WOOD_BOW(1900) {public Item createInstance() {return new bow(new woodDecoration());}},
+//        IRON_BOW(1901) {public Item createInstance() {return new bow(new ironDecoration());}},
+//        STEEL_BOW(1902) {public Item createInstance() {return new bow(new steelDecoration());}},
+//        MITHRIL_BOW(1903) {public Item createInstance() {return new bow(new mithrilDecoration());}},
+//        GOLD_BOW(1904) {public Item createInstance() {return new bow(new goldDecoration());}},
+//        RUNITE_BOW(1905) {public Item createInstance() {return new bow(new runiteDecoration());}},
+//
+//        // Staff
+//        WOOD_STAFF(2100) {public Item createInstance() {return new staff(new woodDecoration());}},
+//        IRON_STAFF(2101) {public Item createInstance() {return new staff(new ironDecoration());}},
+//        STEEL_STAFF(2102) {public Item createInstance() {return new staff(new steelDecoration());}},
+//        MITHRIL_STAFF(2103) {public Item createInstance() {return new staff(new mithrilDecoration());}},
+//        GOLD_STAFF(2104) {public Item createInstance() {return new staff(new goldDecoration());}},
+//        RUNITE_STAFF(2105) {public Item createInstance() {return new staff(new runiteDecoration());}},
+
 
 
         SWAMPHACKS_SHIRT(1800){public Item createInstance(){return new Special_SwampHacksShirt();}},
@@ -170,7 +193,13 @@ public abstract class Item {
         GATE_OF_KANYE(5000) {public Item createInstance() {return new GateOfKanye();}},
 
         // Quest items
-        KEY_OF_KANYE(6000) {public Item createInstance() {return new KeyOfKanye();}};
+        KEY_OF_KANYE(6000) {public Item createInstance() {return new KeyOfKanye();}},
+
+        //Potions
+        SMALL_HEALTH_POTION(7001) {public Item createInstance() {return new SmallHealthPotion(new smallDecoration());}},
+        SMALL_MANA_POTION(7011){public Item createInstance() {return new SmallManaPotion(new smallDecoration());}};
+
+
 
         private int ID;
         public abstract Item createInstance();
@@ -215,6 +244,10 @@ public abstract class Item {
 
         }
 
+    }
+
+    public static Image getBagImage(){
+        return IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath("./src/res/items/bag.png")).getImage();
     }
 
     protected ItemDictionary ID;

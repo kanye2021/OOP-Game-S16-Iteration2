@@ -2,11 +2,10 @@ package controllers;
 
 import utilities.State;
 import utilities.StateManager;
-import views.LoadGameView;
+import utilities.TaskWrapper;
+import utilities.*;
 import views.SaveGameView;
 import views.View;
-import utilities.Task;
-import views.*;
 
 import java.awt.event.KeyEvent;
 
@@ -18,10 +17,10 @@ public class SaveGameViewController extends ViewController{
     private Task previousOption;
     private Task nextOption;
     private Task selectOption;
-
-
-    public SaveGameViewController(View view, StateManager stateManager){
+    private GameState gameState;
+    public SaveGameViewController(View view, StateManager stateManager, GameState gS){
         super(view, stateManager);
+        gameState = gS;
     }
     @Override
     protected final void initKeyPressMapping() {
@@ -54,17 +53,16 @@ public class SaveGameViewController extends ViewController{
                 switch (((SaveGameView)view).getSelected()) {
                     case SAVE_GAME_EXIT:
                         //TODO: Add save game
+                        saveGame();
                         System.exit(0);
                         break;
                     case SAVE_GAME:
-                        //TODO: Save Game state
-//                        LoadGameView loadGameView = new LoadGameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
-//                        LoadGameViewController loadGameViewController = new LoadGameViewController(loadGameView, stateManager);
-//                        nextState = new State(loadGameViewController, loadGameView);
-//                        stateManager.setActiveState(nextState);
+                        saveGame();
+                        goPrevious();
                         break;
                     case EXIT:
-                        System.exit(0);
+                        goPrevious();
+                        break;
 
                 }
             }
@@ -72,10 +70,27 @@ public class SaveGameViewController extends ViewController{
             @Override
             public void stop() {}
         };
+        //Task empty = null;
+        addKeyPressMapping(new TaskWrapper(previousOption, "Previous"), KeyEvent.VK_UP);
+        addKeyPressMapping(new TaskWrapper(nextOption, "Next"), KeyEvent.VK_DOWN);
+        addKeyPressMapping(new TaskWrapper(selectOption, "Select"), KeyEvent.VK_ENTER);
 
-        addKeyPressMapping(previousOption, KeyEvent.VK_UP);
-        addKeyPressMapping(nextOption, KeyEvent.VK_DOWN);
-        addKeyPressMapping(selectOption, KeyEvent.VK_ENTER);
 
     }
+    public void saveGame(){
+        String saveGameName = ((SaveGameView)view).getSaveFileName();
+        System.out.println("THE SAVE STATE NAME IS: " + saveGameName);
+        if (saveGameName.isEmpty()) {
+            System.out.println("File name is empty");
+            saveGameName = "No_File_Name.xml";
+        }
+        gameState.saveGame(saveGameName);
+    }
+    public void goPrevious(){
+        //TODO: Make this nicer somehow...
+        view.getDisplay().remove(((SaveGameView)view).getSaveStateName());
+        //stateManager.goToPreviousState();
+        stateManager.goToPreviousState();
+    }
+
 }

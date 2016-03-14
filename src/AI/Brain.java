@@ -49,4 +49,5 @@ public class Brain {
     public boolean processPersuasion(double entityPersuasiveness){
         return true;
     }
+
 }

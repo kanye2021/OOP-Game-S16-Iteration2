@@ -4,6 +4,7 @@ import models.conditions.ConditionList;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
+import views.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by aseber on 2/24/16.
  */
-//TODO: Tie in skill level with skill class.  Polish/Test the condition is called correctly
+
 public class BindWoundsSkill extends ActiveSkill {
     private Stats stats;
     private final int constant = 5;
@@ -37,30 +38,31 @@ public class BindWoundsSkill extends ActiveSkill {
         conditionsToActivate = new ConditionList(
 //            new StatCondition(Avatar, 3, Stats.Type.LIVES, Condition.Comparison.EXACTLY);
         );
-
+        level = 1;
+        cost = 5;
+        cooldownTime = 5*SECONDS;
     }
 
     @Override
     public void onActivate(Entity entity) {
     //This is used to heal.
-        cost = 5;
-        int mana = entity.getStats().getStat(Stats.Type.MANA);
-
-        if (conditionsToActivate.checkCondition()) {
-
-            if (mana >= cost) {
-
-                int healAmt = constant * getLevel();
+        if(isCooldown()){
+            return;
+        }
+        if(!payMana(entity,cost)){
+            return;
+        }
+        doTheCoolDown();
+                int healAmt = constant * level;
                 Stats stats = entity.getStats();//gets the instance of the stats
-                stats.modifyStat(Stats.Type.MANA, cost);
                 stats.modifyStat(Stats.Type.HEALTH, healAmt);
 
-            }
 
+    }
 
-
-        }
-
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "common-bindWounds.png");
     }
 
     @Override
@@ -72,8 +74,4 @@ public class BindWoundsSkill extends ActiveSkill {
 
     }
 
-    @Override
-    public ArrayList<Image> initSprite() {
-        return null;
-    }
 }

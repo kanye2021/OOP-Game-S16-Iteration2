@@ -19,6 +19,10 @@ public class AngularAttack extends Attackion {
 
     public AngularAttack(Entity entity,Projectile projectile){
         this.entity=entity;
+        //If you cannot attack
+        if(!canAttack(entity)){
+            return;
+        }
         this.origin = entity.getLocation();
         this.damage = projectile.damage;
         this.range = projectile.range;

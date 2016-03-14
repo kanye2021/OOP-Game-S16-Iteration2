@@ -55,6 +55,10 @@ public class Enemy extends NPC{
     public void talk(){
 
     }
+    @Override
+    public String getType(){
+        return "Enemy";
+    }
 
     @Override
     protected ArrayList<Image> getAnimatorImages() {

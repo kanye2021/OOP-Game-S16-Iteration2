@@ -34,4 +34,8 @@ public class HealDamageAreaEffect extends AreaEffect {
         return "heal-damage";
     }
 
+    public int getValue(){
+        return AMOUNT_OF_DAMAGE;
+    }
+
 }

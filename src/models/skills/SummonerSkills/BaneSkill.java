@@ -2,6 +2,7 @@ package models.skills.SummonerSkills;
 
 import models.entities.Entity;
 import models.skills.PassiveSkill;
+import views.sprites.Sprite;
 
 /**
  * Created by aseber on 2/24/16.
@@ -21,6 +22,12 @@ public class BaneSkill extends PassiveSkill {
     @Override
     public String getName() {
         return "Bane";
+    }
+
+
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "summoner-baneSkill.png");
     }
 
 

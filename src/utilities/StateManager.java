@@ -14,7 +14,6 @@ public class StateManager{
     private Display display;
     private InputManager inputManager;
     private Stack<State> stateStack;
-    private SubState activeTalkState;
 
     public StateManager(Display display, InputManager inputManager){
         this.display = display;
@@ -31,7 +30,8 @@ public class StateManager{
     public void goToPreviousState() {
         if (stateStack.size() >= 2) {
             stateStack.pop();
-            setActiveState(stateStack.peek());
+            //setActiveState(stateStack.peek());
+            stateStack.peek().activate(inputManager,display);
         }
     }
 
@@ -39,6 +39,9 @@ public class StateManager{
         stateStack.peek().update();
         display.repaint();
 
+    }
+    public State getTop(){
+        return stateStack.peek();
     }
 }
 

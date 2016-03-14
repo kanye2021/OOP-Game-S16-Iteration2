@@ -7,6 +7,7 @@ import models.items.Item;
 import models.map.Map;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by Bradley on 3/5/16.
@@ -103,9 +104,11 @@ public class VisualCortex {
         }
 
         // Get items here.
-        Item item = map.getItemAt(currentLocation);
-        if(item!=null){
-            memory.addVisualInput(item, currentLocation);
+        ArrayList<Item> itemList = map.getItemAt(currentLocation);
+        for(Item item : itemList){
+            if(item!=null){
+                memory.addVisualInput(item, currentLocation);
+            }
         }
 
         // update the currentLocation and visual range;

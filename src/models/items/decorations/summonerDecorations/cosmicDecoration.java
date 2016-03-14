@@ -5,27 +5,21 @@ import models.items.decorations.equippableItemDecoration;
 import java.awt.*;
 import java.util.HashMap;
 
-/**
- * Created by aseber on 3/9/16.
- */
+
 public class cosmicDecoration extends equippableItemDecoration {
-
-    public cosmicDecoration() {
-
-        IDModifier = 2;
-
-        nameModifier = "Cosmic";
-        descriptionModifier = "cosmic";
+    public cosmicDecoration(){
+        //ID
+        IDModifier = 24;
+        nameModifier = "Cosmic Runes";
+        descriptionModifier = "cosmic runes";
 
         colorMap = new HashMap<>();
-        colorMap.put(new Color(255, 255, 255), new Color(0, 0, 255));
+        colorMap.put(new Color(204, 204, 204), new Color(218, 165, 32));
 
+        //Stats
         monetaryModifier = 10;
         defenseModifier = 5;
-        attackModifier = 10;
         levelRequiredModifier = 1;
         weightModifier = 2;
-
     }
-
 }

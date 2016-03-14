@@ -1,6 +1,7 @@
 package models.attack;
 
 import models.Attackion;
+import models.attack.status_effects.Sleep;
 import models.entities.Entity;
 import models.map.Map;
 import models.map.Tile;
@@ -16,11 +17,16 @@ public class RadialAttack extends Attackion{
     //Map map;
     public RadialAttack(Entity entity, Projectile projectile){
         this.entity = entity;
+        //If you cannot attack
+        if(!canAttack(entity)){
+            return;
+        }
         this.origin = entity.getLocation();
         this.damage = projectile.damage;
         this.range = projectile.range;
         this.orientation = entity.getOrientation();
         this.map = entity.getMap();
+        this.statusEffect = projectile.statusEffect;
         findBreadthFirstTile();
     }
 
@@ -47,6 +53,12 @@ public class RadialAttack extends Attackion{
             if(desiredTile.hasEntity()&&originTile!=desiredTile&&entity!=desiredTile.getEntity()){
                 Entity target = desiredTile.getEntity();
                 target.takeDamage(-damage);
+                if(statusEffect!= StatusEffects.StatusEffect.NONE){
+                    System.out.println("Status Effects Happens!!!");
+
+                    target.setStatusEffect(statusEffect);
+                    new Sleep(target);
+                }
 
             }
             for(PointNode pointNode: getAdjacentTiles(current)){
@@ -145,4 +157,6 @@ public class RadialAttack extends Attackion{
     public void calculateDamage() {
 
     }
+
+
 }
