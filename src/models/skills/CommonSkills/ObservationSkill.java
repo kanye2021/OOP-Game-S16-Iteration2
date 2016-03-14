@@ -12,7 +12,7 @@ import java.util.Random;
 /**
  * Created by aseber on 2/24/16.
  */
-public class ObservationSkill extends ActiveSkill {
+public class ObservationSkill extends PassiveSkill {
     private int observationLv;
     private int percentError;
     private int upperBoundError;
@@ -56,12 +56,8 @@ public class ObservationSkill extends ActiveSkill {
     }
 
     @Override
-    public void onActivate(Entity entity) {
-
-    }
-
-    @Override
-    public KeyEvent[] initActivatorKeys() {
-        return new KeyEvent[0];
+    public void onUpdate(Entity entity) {
+        observationLv = getLevel();//Gets the newly updated level
+        percentError = 100 - constant*observationLv;
     }
 }
