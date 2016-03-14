@@ -1,17 +1,14 @@
 package models.skills.SneakSkills;
 
 import models.area_effects.AreaEffect;
-import models.area_effects.TrapAreaEffect;
 import models.entities.Entity;
 import models.map.Map;
 import models.map.Tile;
-import models.map.Trap;
 import models.skills.ActiveSkill;
 import views.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 /**
  * Created by aseber on 2/25/16.
@@ -24,7 +21,7 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
     private Point detectedTrapPoint;
 
     public DetectRemoveTrapSkill() {
-        cooldownTime = 3*SECONDS;
+        cooldownTime = 3 * SECONDS;
         cooldown = false;
         cost = 5;
         level = 1;
@@ -51,11 +48,11 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
 
     @Override
     public void onActivate(Entity entity) {
-        if(isCooldown()){
+        if (isCooldown()) {
             System.out.println("Cooldown time is not over!");
             return;
         }
-        if(!payMana(entity,cost)){
+        if (!payMana(entity, cost)) {
             return;
         }
 
@@ -99,46 +96,40 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
 
         //How to find target based off of location.
         Point desiredLocation = new Point();
-        if(entityOrientation== Map.Direction.NORTH) {
-            offset.x=0;
-            offset.y=-1;
-        }
-        else if(entityOrientation == Map.Direction.NORTH_EAST){
-            offset.x=1;
-            offset.y=-1;
-        }
-        else if(entityOrientation == Map.Direction.SOUTH_EAST){
-            offset.x=1;
-            offset.y=0;
-        }
-        else if(entityOrientation == Map.Direction.SOUTH){
-            offset.x=0;
-            offset.y=1;
-        }
-        else if(entityOrientation == Map.Direction.SOUTH_WEST){
-            offset.x=-1;
-            offset.y=1;
-        }
-        else if(entityOrientation == Map.Direction.NORTH_WEST){
-            offset.x=-1;
-            offset.y=0;
-        }
-        else{
-            offset.x=0;
-            offset.y=0;
+        if (entityOrientation == Map.Direction.NORTH) {
+            offset.x = 0;
+            offset.y = -1;
+        } else if (entityOrientation == Map.Direction.NORTH_EAST) {
+            offset.x = 1;
+            offset.y = -1;
+        } else if (entityOrientation == Map.Direction.SOUTH_EAST) {
+            offset.x = 1;
+            offset.y = 0;
+        } else if (entityOrientation == Map.Direction.SOUTH) {
+            offset.x = 0;
+            offset.y = 1;
+        } else if (entityOrientation == Map.Direction.SOUTH_WEST) {
+            offset.x = -1;
+            offset.y = 1;
+        } else if (entityOrientation == Map.Direction.NORTH_WEST) {
+            offset.x = -1;
+            offset.y = 0;
+        } else {
+            offset.x = 0;
+            offset.y = 0;
             System.out.println("Really? You put in that much work to break the program?");
         }
-        desiredLocation.x = currentLocation.x+offset.x;
-        desiredLocation.y = currentLocation.y+offset.y;
+        desiredLocation.x = currentLocation.x + offset.x;
+        desiredLocation.y = currentLocation.y + offset.y;
 
         Map map = entity.getMap();
         Tile desiredTile = map.getTileAt(desiredLocation);
 
-        if(desiredTile == null){
+        if (desiredTile == null) {
             foundATrap = false;
         }
         AreaEffect areaEffect = desiredTile.getAreaEffect();
-        if(areaEffect==null){
+        if (areaEffect == null) {
             foundATrap = false;
         }
         if (areaEffect != null) {

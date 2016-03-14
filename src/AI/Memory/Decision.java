@@ -23,7 +23,7 @@ public class Decision {
 
     }
 
-    public double getInterestLevel(){
+    public double getInterestLevel() {
         return interest.getInterestLevel();
     }
 
@@ -43,7 +43,7 @@ public class Decision {
 
     }
 
-    public String getSpecificInterest(){
+    public String getSpecificInterest() {
         return interest.getSpecificInterest();
     }
 

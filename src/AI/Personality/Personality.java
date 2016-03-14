@@ -23,16 +23,16 @@ public enum Personality {
     DEFAULT(0.05, -0.15, 0.2, new InterestList(new ExploreInterest(0.1)));
 
     private double scatter_Brainedness;   // How likely the entity is to change their decision before it is completed
-                                            // Exists on a continuum:
-                                            // Clear-headed (0.0) <--------------------> Scatter-brain-Jane (1.0)
+    // Exists on a continuum:
+    // Clear-headed (0.0) <--------------------> Scatter-brain-Jane (1.0)
     private double aggressiveness;        // How aggressive the entity is with other entities
-                                            // Exists on a continuum:
-                                            // friendly (-1.0) <---------- | passive (0.0) | ---------> aggressive(1.0)
+    // Exists on a continuum:
+    // friendly (-1.0) <---------- | passive (0.0) | ---------> aggressive(1.0)
     private double laziness;              // How likely the entity is to not carry out a decision that tick
-                                            // Exists on a continuum:
-                                            // Cocaine cowboy  (0.0) <--------------------> Snorlax (1.0)
+    // Exists on a continuum:
+    // Cocaine cowboy  (0.0) <--------------------> Snorlax (1.0)
     private InterestList interests;       // A list of all interests a personality has.
-                                            // Useful for defining what a NPC is capable of.
+    // Useful for defining what a NPC is capable of.
 
     Personality(double scatter_Brainedness, double aggressiveness, double laziness, InterestList interests) {
 

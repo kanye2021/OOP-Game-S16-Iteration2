@@ -7,7 +7,6 @@ import models.entities.Avatar;
 import models.entities.npc.NPC;
 import utilities.SubState;
 import utilities.Task;
-import views.NPCMenuView;
 import views.NPCShopView;
 import views.View;
 
@@ -16,10 +15,11 @@ import views.View;
  * Created by dyeung on 3/2/16.
  */
 public class Trade extends Action {
-    public Trade(NPC npc){
+    public Trade(NPC npc) {
         super(npc);
         avatar = null;
     }
+
     @Override
     public void activate(View view, ViewController gvController) {
         NPCShopView shopView = new NPCShopView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay(), npc, avatar);
@@ -28,12 +28,14 @@ public class Trade extends Action {
         shopCtrl.setClose(new Task() {
             @Override
             public void run() {
-                sub.dismiss(); }
+                sub.dismiss();
+            }
 
             @Override
-            public void stop() { }
+            public void stop() {
+            }
         });
-        ((GameViewController)gvController).addSubState(sub);
+        ((GameViewController) gvController).addSubState(sub);
 
     }
 
@@ -41,7 +43,8 @@ public class Trade extends Action {
     public String getName() {
         return "Trade";
     }
-    public void setAvatar(Avatar avatar){
+
+    public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
     }
 }

@@ -17,23 +17,33 @@ import java.awt.event.ActionListener;
 /**
  * Created by sergiopuleri on 2/1/16.
  */
-public class RunGame extends JFrame implements ActionListener{
+public class RunGame extends JFrame implements ActionListener {
 
+    private final int INITIAL_WIDTH = 1200;
+    private final int INITIAL_HEIGHT = 800;
+    private final int TIMER_DELAY = 100;
     private Display display;
     private InputManager inputManager;
     private StateManager stateManager;
-    private final int INITIAL_WIDTH = 1200;
-    private final int INITIAL_HEIGHT = 800;
     private Timer gameTimer;
-    private final int TIMER_DELAY = 100;
+
+    public RunGame() {
+        init();
+    }
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                RunGame ex = new RunGame();
+                ex.setVisible(true);
+            }
+        });
+    }
 
     @Override
     public void setExtendedState(int state) {
         super.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    }
-
-    public RunGame() {
-        init();
     }
 
     private void init() {
@@ -70,16 +80,6 @@ public class RunGame extends JFrame implements ActionListener{
 
         // Start the timer.
         gameTimer.start();
-    }
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                RunGame ex = new RunGame();
-                ex.setVisible(true);
-            }
-        });
     }
 
     @Override

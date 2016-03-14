@@ -4,13 +4,13 @@ import controllers.GameViewController;
 import controllers.ViewController;
 import controllers.entityControllers.AvatarController;
 import models.entities.Avatar;
-import models.entities.npc.actions.Action;
 import models.entities.npc.NPC;
+import models.entities.npc.actions.Action;
 import utilities.StateManager;
-import utilities.SubState;
 import utilities.Task;
 import utilities.TaskWrapper;
-import views.*;
+import views.NPCMenuView;
+import views.View;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -28,6 +28,7 @@ public class NPCMenuController extends ViewController {
     private ArrayList<Action> actionList;
     private GameViewController gvController;
     private Avatar avatar;
+
     public NPCMenuController(View view, StateManager stateManager, GameViewController gvController, NPC npc, AvatarController avatarController) {
         super(view, stateManager);
         myOption = 0;
@@ -50,19 +51,22 @@ public class NPCMenuController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         nextOption = new Task() {
             @Override
             public void run() {
-                if (myOption < actionList.size()){
+                if (myOption < actionList.size()) {
                     myOption++;
                     ((NPCMenuView) view).updateSelectedOption(myOption);
                 }
             }
+
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         selectOption = new Task() {
@@ -71,7 +75,7 @@ public class NPCMenuController extends ViewController {
                 //TODO: Not a good method but can't think of anything else
                 if (myOption == actionList.size()) { //Checks for the length (if its greater than it must be exit
                     closeActions.run();
-                }else {
+                } else {
                     Action a = actionList.get(myOption);
                     a.setAvatar(avatar);
                     a.activate(view, gvController);
@@ -80,7 +84,8 @@ public class NPCMenuController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         addKeyPressMapping(new TaskWrapper(previousOption, "Previous"), KeyEvent.VK_UP);
@@ -88,7 +93,8 @@ public class NPCMenuController extends ViewController {
         addKeyPressMapping(new TaskWrapper(selectOption, "Select"), KeyEvent.VK_ENTER);
 
     }
-    public void setClose(Task task){
+
+    public void setClose(Task task) {
         closeActions = task;
     }
 }

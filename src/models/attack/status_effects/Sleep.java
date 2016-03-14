@@ -6,24 +6,27 @@ import models.entities.Entity;
 /**
  * Created by ben on 3/11/16.
  */
-public class Sleep extends StatusEffects{
- //protected Entity entity;
+public class Sleep extends StatusEffects {
+    //protected Entity entity;
 
     /*public Sleep(){
         applySleep();
     }*/
-    public Sleep(Entity entity){
+    public Sleep(Entity entity) {
         applySleep(entity);
     }
-    public void sleepEffects(Entity entity){
+
+    public void sleepEffects(Entity entity) {
         entity.setCanMove(false);
         //How do I disable attacks?
     }
-    public void sleepUneffects(Entity entity){
+
+    public void sleepUneffects(Entity entity) {
         entity.setCanMove(true);
     }
-    public void applySleep(Entity target){
-        if(!target.getCanMove()){//If entity cannot move
+
+    public void applySleep(Entity target) {
+        if (!target.getCanMove()) {//If entity cannot move
             return;
         }
         //Find out how movement works

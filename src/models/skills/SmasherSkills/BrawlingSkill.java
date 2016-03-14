@@ -20,17 +20,19 @@ public class BrawlingSkill extends ActiveSkill {
     private int finalDamage;
     private int brawlLv;
 
-    public BrawlingSkill(){
-       cooldownTime = 1*SECONDS;
+    public BrawlingSkill() {
+        cooldownTime = 1 * SECONDS;
         cooldown = false;
         baseDamage = 10;
     }
+
     @Override
     public SkillDictionary initID() {
 
         return SkillDictionary.BRAWLING;
 
     }
+
     @Override
     public String getName() {
         return "Brawling Mastery";
@@ -38,13 +40,13 @@ public class BrawlingSkill extends ActiveSkill {
 
     @Override
     public void onActivate(Entity entity) {
-        if(isCooldown()){
+        if (isCooldown()) {
             return;
         }
         doTheCoolDown();
 
-        Projectile projectile = new Projectile(damageSent(entity)/2,1, StatusEffects.StatusEffect.NONE);
-        new LinearAttack(entity,projectile);
+        Projectile projectile = new Projectile(damageSent(entity) / 2, 1, StatusEffects.StatusEffect.NONE);
+        new LinearAttack(entity, projectile);
 
     }
 
@@ -63,12 +65,15 @@ public class BrawlingSkill extends ActiveSkill {
         return new Sprite(SKILL_ROOT_FILE_PATH + "smasher-brawlingSkill.png");
     }
 
-    public int getCombatWeight(Entity entity){return ((int) 0.5*entity.getStats().getStat(Stats.Type.TOTAL_WEIGHT));}
-    public int getFinalDamage(){//Used for combat always gets final damage
+    public int getCombatWeight(Entity entity) {
+        return ((int) 0.5 * entity.getStats().getStat(Stats.Type.TOTAL_WEIGHT));
+    }
+
+    public int getFinalDamage() {//Used for combat always gets final damage
         return finalDamage;
     }
 
-    public int getBaseSpeed(){
+    public int getBaseSpeed() {
         return baseSpeed;
     }
 }

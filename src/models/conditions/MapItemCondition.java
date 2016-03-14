@@ -41,8 +41,8 @@ public class MapItemCondition extends MapCondition {
 
         boolean returnValue = location.checkLocation(item, null);
 
-        for(Item itemOnMap: itemsOnMap){
-            if(location.checkLocation(item, itemOnMap)){
+        for (Item itemOnMap : itemsOnMap) {
+            if (location.checkLocation(item, itemOnMap)) {
                 returnValue = returnValue || location.checkLocation(item, itemOnMap);
             }
         }

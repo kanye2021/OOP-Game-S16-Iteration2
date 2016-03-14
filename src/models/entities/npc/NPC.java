@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by aseber on 2/22/16.
  */
-public abstract class  NPC extends Entity {
+public abstract class NPC extends Entity {
     protected ArrayList<Action> actionList;
 
     protected ArrayList<String> dialogue;
@@ -30,18 +30,22 @@ public abstract class  NPC extends Entity {
         dialogueLocation = 0;
         initNPC();
     }
-    protected void initNPC(){
+
+    protected void initNPC() {
         initActions();
         initDialogue();
     }
+
     //Override this method if you want it to say something
-    protected void initDialogue(){
+    protected void initDialogue() {
         this.dialogue.add("....I have nothing to say");
     }
-    protected void initActions(){
+
+    protected void initActions() {
         actionList.add(new Talk(this));
         actionList.add(new Attack(this));
     }
+
     @Override
     protected final StatModificationList initInitialStats() {
 
@@ -57,24 +61,35 @@ public abstract class  NPC extends Entity {
         return initialStats;
 
     }
+
     //Starts the interaction between entities (For now it is also showcasing the view list
-    public void startInteraction(){
+    public void startInteraction() {
         System.out.println("Starts interaction with npc");
     }
-    public ArrayList<Action> getActionList(){
+
+    public ArrayList<Action> getActionList() {
         return actionList;
     }
-    public void progressDialogue() { dialogueLocation++; }
-    public void resetDialogue() { dialogueLocation = 0; }
+
+    public void progressDialogue() {
+        dialogueLocation++;
+    }
+
+    public void resetDialogue() {
+        dialogueLocation = 0;
+    }
 
 
-    public ArrayList<String> getDialogue(){ return dialogue; }
-    public int getDialogueLocation(){ return dialogueLocation;}
+    public ArrayList<String> getDialogue() {
+        return dialogue;
+    }
+
+    public int getDialogueLocation() {
+        return dialogueLocation;
+    }
 
 
-
-
-    public void update(){
+    public void update() {
         brain.think();
     }
 

@@ -14,8 +14,8 @@ import views.sprites.Sprite;
 /**
  * Created by ben on 3/5/16.
  */
-public class Special_EnergySword extends EquippableItem{
-    public Special_EnergySword(){
+public class Special_EnergySword extends EquippableItem {
+    public Special_EnergySword() {
         ID = Item.ItemDictionary.ENERGY_SWORD;
         name = "Energy Sword";
         description = "If you someone with this sword... run";

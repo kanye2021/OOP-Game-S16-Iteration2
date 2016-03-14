@@ -15,13 +15,6 @@ public enum Faction {
     TRADE_GUILD;
 
     private static final Relationship neutralRelationship = new Relationship(0.0);
-    private HashMap<Faction, Relationship> factionRelations = new HashMap<>();
-
-    private void addAssociation(Faction otherFaction, Relationship relationship) {
-
-        factionRelations.put(otherFaction, relationship);
-
-    }
 
     static {
 
@@ -37,9 +30,19 @@ public enum Faction {
 
     }
 
+    private HashMap<Faction, Relationship> factionRelations = new HashMap<>();
+
+    private void addAssociation(Faction otherFaction, Relationship relationship) {
+
+        factionRelations.put(otherFaction, relationship);
+
+    }
+
     public double getAssociation(Faction otherFaction) {
 
-        if (this == otherFaction) { return 1.0; }
+        if (this == otherFaction) {
+            return 1.0;
+        }
 
         return factionRelations.getOrDefault(otherFaction, neutralRelationship).getRelationshipValue();
 

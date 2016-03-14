@@ -3,8 +3,6 @@ package views;
 import models.entities.npc.NPC;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 
 /**
  * Created by david on 3/3/16.
@@ -24,17 +22,15 @@ public class TalkView extends View {
     private Font generalFont;
 
 
-    public TalkView(int width, int height, Display display, NPC npc){
+    public TalkView(int width, int height, Display display, NPC npc) {
         super(width, height, display);
         scaleView();
         this.npc = npc;
     }
 
 
-
-
     @Override
-    public void render(Graphics g){
+    public void render(Graphics g) {
 
         renderBackground(g);
         renderDialogue(g);
@@ -42,7 +38,7 @@ public class TalkView extends View {
     }
 
 
-    private void renderBackground(Graphics g){
+    private void renderBackground(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
 
         g2d.setColor(Color.lightGray);
@@ -55,23 +51,22 @@ public class TalkView extends View {
     }
 
     //Can only render 41 character per line currently
-    private void renderDialogue(Graphics g){
+    private void renderDialogue(Graphics g) {
         int stringLocation = 0; //where the you currently are
         String subString = null;
 
         //String Locations
-        int stringX = (int)(talkViewXStart*1.035);
+        int stringX = (int) (talkViewXStart * 1.035);
         int stringY = (int) (getScreenHeight() * 0.18);
 
-        while(stringLocation <= npc.getDialogue().get(npc.getDialogueLocation()).length()){
-            if(npc.getDialogue().get(npc.getDialogueLocation()).length() - stringLocation >= 38){
+        while (stringLocation <= npc.getDialogue().get(npc.getDialogueLocation()).length()) {
+            if (npc.getDialogue().get(npc.getDialogueLocation()).length() - stringLocation >= 38) {
                 subString = npc.getDialogue().get(npc.getDialogueLocation()).substring(stringLocation, stringLocation + 38);
                 stringLocation += 38;
                 g.drawString(subString, stringX, stringY);
                 stringY += (int) (getScreenHeight() * 0.02);
-            }
-            else{
-                subString = npc.getDialogue().get(npc.getDialogueLocation()).substring(stringLocation,  npc.getDialogue().get(npc.getDialogueLocation()).length());
+            } else {
+                subString = npc.getDialogue().get(npc.getDialogueLocation()).substring(stringLocation, npc.getDialogue().get(npc.getDialogueLocation()).length());
                 g.drawString(subString, stringX, stringY);
                 break;
             }
@@ -81,12 +76,12 @@ public class TalkView extends View {
 
 
     @Override
-    public void scaleView(){
+    public void scaleView() {
         //PAUSE VIEW DIMENSIONS
 
         talkViewWidth = (int) (getScreenWidth() * 0.3);
         talkViewHeight = (int) (getScreenHeight() * 0.15);
-        talkViewXStart = (getScreenWidth() - talkViewWidth)/2;
+        talkViewXStart = (getScreenWidth() - talkViewWidth) / 2;
         talkViewYStart = (int) (getScreenHeight() * 0.15);
 
         // Scale font

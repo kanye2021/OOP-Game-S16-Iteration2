@@ -16,7 +16,7 @@ public class ObstacleItem extends Item {
 
 
     @Override
-    public String getType(){
+    public String getType() {
         return "obstacle";
     }
 

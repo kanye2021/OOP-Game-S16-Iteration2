@@ -1,18 +1,21 @@
 package models.items.takeable.equippable.gloves;
 
 import models.Equipment;
-import models.conditions.*;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.decorations.equippableItemDecoration;
 import models.items.takeable.equippable.EquippableItem;
-import models.stats.*;
+import models.stats.StatModification;
+import models.stats.StatModificationList;
+import models.stats.Stats;
 import views.sprites.DecoratedSprite;
-import views.sprites.Sprite;
 
 /**
  * Created by ben on 2/27/16.
  */
-public class gloves extends EquippableItem{
+public class gloves extends EquippableItem {
     public gloves(equippableItemDecoration decoration) {
         ID = Item.ItemDictionary.getDictionaryItemFromID(1400 + decoration.IDModifier);
         name = "{NAME} Gloves".replace("{NAME}", decoration.nameModifier);

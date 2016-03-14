@@ -1,6 +1,5 @@
 package utilities;
 
-import models.conditions.MapCondition;
 import models.entities.Entity;
 import models.entities.npc.NPC;
 
@@ -23,22 +22,24 @@ public class TileDetection {
     }
 
 
-    public boolean npcDetected(){
+    public boolean npcDetected() {
         return entity != null;
     }
-    public Point getLocation(){
+
+    public Point getLocation() {
         return location;
     }
-    public Entity getEntity(){
+
+    public void setLocation(Point location) {
+        this.location = location;
+    }
+
+    public Entity getEntity() {
         return entity;
     }
 
     public void setNpc(NPC npc) {
         this.entity = npc;
-    }
-
-    public void setLocation(Point location) {
-        this.location = location;
     }
 
     public boolean isMoved() {

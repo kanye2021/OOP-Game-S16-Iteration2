@@ -25,7 +25,7 @@ public abstract class TakeableItem extends Item {
 
 
     @Override
-    public String getType(){
+    public String getType() {
         return "take-able";
     }
 
@@ -54,5 +54,7 @@ public abstract class TakeableItem extends Item {
         return false;
     }
 
-    public boolean isConsumable(){ return false; }
+    public boolean isConsumable() {
+        return false;
+    }
 }

@@ -26,7 +26,7 @@ public abstract class InteractiveItem extends Item {
     protected abstract ConditionList initConditions();
 
     @Override
-    public String getType(){
+    public String getType() {
         return "interactive";
     }
 }

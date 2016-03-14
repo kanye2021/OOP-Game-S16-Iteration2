@@ -10,32 +10,23 @@ import java.awt.*;
  */
 public abstract class Interest {
 
-    public enum Type {
-
-        ENTITY,
-        ITEM,
-        POINT
-
-    }
-
     private Point pointOfInterest;
     private double interestLevel;
-
     public Interest(double interestLevel) {
 
         this.interestLevel = interestLevel;
 
     }
 
-    protected void setPointOfInterest(Point pointOfInterest) {
-
-        this.pointOfInterest = pointOfInterest;
-
-    }
-
     public Point getPointOfInterest() {
 
         return pointOfInterest;
+
+    }
+
+    protected void setPointOfInterest(Point pointOfInterest) {
+
+        this.pointOfInterest = pointOfInterest;
 
     }
 
@@ -52,5 +43,13 @@ public abstract class Interest {
     public abstract Interest.Type getInterestType();
 
     public abstract String getSpecificInterest();
+
+    public enum Type {
+
+        ENTITY,
+        ITEM,
+        POINT
+
+    }
 
 }

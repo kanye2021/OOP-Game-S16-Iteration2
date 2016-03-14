@@ -19,6 +19,7 @@ public class TeleportAreaEffect extends AreaEffect {
         this.targetPoint = point;
         init();
     }
+
     public void init() {
         decal = new Decal(Decal.Types.TELEPORT);
     }
@@ -33,10 +34,11 @@ public class TeleportAreaEffect extends AreaEffect {
         return "teleport";
     }
 
-    public int getValue(){
+    public int getValue() {
         return 0;
     }
-    public Point getPoint(){
+
+    public Point getPoint() {
         return targetPoint;
     }
 

@@ -13,20 +13,16 @@ import java.util.HashMap;
  */
 public class Memory implements VisualInterface, ThoughtInterface, MotorInterface {
 
-    //map of entity relationships
-    private HashMap<Entity, Relationship> relationships = new HashMap<>();
-
-    // The visual (short term) memory
-    private VisualInformation visualMemory = new VisualInformation();
-
-    // The decision
-    private Decision decision;
-
-    // The entities personality
-    private Personality personality;
-
     // The NPC
     NPC npc;
+    //map of entity relationships
+    private HashMap<Entity, Relationship> relationships = new HashMap<>();
+    // The visual (short term) memory
+    private VisualInformation visualMemory = new VisualInformation();
+    // The decision
+    private Decision decision;
+    // The entities personality
+    private Personality personality;
 
     public Memory(NPC npc, Personality personality) {
 
@@ -101,7 +97,9 @@ public class Memory implements VisualInterface, ThoughtInterface, MotorInterface
 
     }
 
-    public void addVisualInput(Object object, Point point) {visualMemory.addVisualInput(object, point); }
+    public void addVisualInput(Object object, Point point) {
+        visualMemory.addVisualInput(object, point);
+    }
 
     public Decision getDecision() {
         return decision;

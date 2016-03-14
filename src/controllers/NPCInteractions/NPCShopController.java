@@ -7,7 +7,6 @@ import models.entities.Avatar;
 import models.entities.Entity;
 import models.entities.npc.ShopKeeper;
 import models.items.takeable.TakeableItem;
-import models.items.takeable.equippable.EquippableItem;
 import models.skills.CommonSkills.BargainSkill;
 import models.skills.Skill;
 import utilities.StateManager;
@@ -17,7 +16,6 @@ import views.NPCMenuView;
 import views.NPCShopView;
 import views.View;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -44,6 +42,7 @@ public class NPCShopController extends ViewController {
     private NPCMenuView menuView;
     private Avatar avatar; //The person who is doing the buying
     private GameViewController gameViewController;
+
     public NPCShopController(View view, StateManager stateManager, GameViewController gvController, Entity entity, Avatar avatar) {
         super(view, stateManager);
         selectedItemIndex = 0;
@@ -70,19 +69,22 @@ public class NPCShopController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         nextItem = new Task() {
             @Override
             public void run() {
-                if (selectedItemIndex < currentList.getCurrentSize() - 1){
+                if (selectedItemIndex < currentList.getCurrentSize() - 1) {
                     selectedItemIndex++;
                     ((NPCShopView) view).updateSelected(selectedItemIndex);
                 }
             }
+
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         playerSellItem = new Task() {
@@ -96,7 +98,8 @@ public class NPCShopController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         playerBuyItem = new Task() {
@@ -115,17 +118,18 @@ public class NPCShopController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
-        switchViews = new Task(){
+        switchViews = new Task() {
 
             @Override
             public void run() {
                 selectedView = selectedView ^ 1;
-                ((NPCShopView)view).updateSelectedView(selectedView);
+                ((NPCShopView) view).updateSelectedView(selectedView);
                 selectedItemIndex = 0;
-                ((NPCShopView)view).updateSelected(selectedItemIndex); //resets back to zero
+                ((NPCShopView) view).updateSelected(selectedItemIndex); //resets back to zero
                 updateCurrentList();
             }
 
@@ -134,13 +138,13 @@ public class NPCShopController extends ViewController {
 
             }
         };
-        doAction = new Task(){
+        doAction = new Task() {
 
             @Override
             public void run() {
                 if (selectedView == 0) {
                     playerSellItem.run();
-                }else {
+                } else {
                     playerBuyItem.run();
                 }
             }
@@ -166,24 +170,27 @@ public class NPCShopController extends ViewController {
         addKeyPressMapping(new TaskWrapper(closeInventory, "Close"), KeyEvent.VK_ESCAPE);
         addKeyPressMapping(new TaskWrapper(closeInventory, "Close"), KeyEvent.VK_I);
     }
-    public void updateCurrentList(){
+
+    public void updateCurrentList() {
         if (selectedView == 0) {
             currentList = avatarNodeList;
-        }else {
+        } else {
             currentList = shopNodeList;
         }
     }
-    public void setClose(Task task){
+
+    public void setClose(Task task) {
         escape = task;
         addKeyPressMapping(new TaskWrapper(escape, "Exit"), KeyEvent.VK_BACK_SPACE);
     }
-    public void initPriceByBargin(){
+
+    public void initPriceByBargin() {
         ArrayList<Inventory.ItemNode> inv = shopKeeper.getInventory().getItemNodeArrayList();
-        for(Inventory.ItemNode i : inv){
+        for (Inventory.ItemNode i : inv) {
             int itemValue = i.getItem().getMonetaryValue();
             Skill bargin = avatar.getSpecificSkill(Skill.SkillDictionary.BARGAIN);
             double discount = (((BargainSkill) bargin).getPercentDiscount()) * 10;
-            int newValue = itemValue - ((int)(itemValue * discount));
+            int newValue = itemValue - ((int) (itemValue * discount));
             i.getItem().setMonetaryValue(newValue);
         }
 

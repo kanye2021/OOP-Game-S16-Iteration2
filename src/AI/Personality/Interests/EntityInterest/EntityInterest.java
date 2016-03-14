@@ -26,8 +26,12 @@ public abstract class EntityInterest extends Interest {
 
     }
 
-    public final Type getInterestType() { return Type.ENTITY; }
+    public final Type getInterestType() {
+        return Type.ENTITY;
+    }
+
     public abstract Interest createRuntimeInterest(Entity entityOfInterest, Point pointOfInterest);
+
     public abstract double getInterestWeight(Entity entityOfInterest, ThoughtInterface memory);
 
     @Override

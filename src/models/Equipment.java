@@ -1,10 +1,12 @@
 package models;
 
 import models.entities.Entity;
-import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by aseber on 2/21/16.
@@ -24,61 +26,8 @@ public class Equipment {
 
     // Then make interactive items finally!
 
-    public enum Location {
-        // Descriptor is just used to display the location "name" on the view.
-        HEAD("Head"),
-        NECK("Neck"),
-        CHEST("Chest"),
-        BACK("Back"),
-        LEGS("Legs"),
-        FEET("Greaves"),
-        HANDS("Gloves"),
-        LEFT_ARM("Left"),
-        RIGHT_ARM("Right");
-
-        private String descriptor;
-
-        Location(String descriptor){this.descriptor = descriptor;}
-
-        public String getDescriptor() { return descriptor; }
-    }
-
-    public enum Component {
-
-        HELMET(Location.HEAD),                                        // Maps to HEAD
-        AMULET(Location.NECK),                                        // Maps to Neck for necklace/ammy
-        CHESTPLATE(Location.CHEST),                                   // Maps to CHEST
-        CAPE(Location.BACK),                                          // Maps to BACK for cape
-        GREAVES(Location.LEGS),                                       // Maps to LEGS
-        BOOTS(Location.FEET),                                         // Maps to FEET
-        GLOVES(Location.HANDS),                                       // Maps to HANDS
-        SHIELD(Location.LEFT_ARM),                                    // Maps to LEFT_ARM
-        DAGGER(Location.RIGHT_ARM),                                   // Maps to RIGHT_ARM
-        RANGED_WEAPON(Location.RIGHT_ARM),                            // Maps to RIGHT_ARM
-        ONE_HANDED_WEAPON(Location.RIGHT_ARM),                        // Maps to RIGHT_ARM
-        TWO_HANDED_WEAPON(Location.LEFT_ARM, Location.RIGHT_ARM);     // Maps to RIGHT_ARM and LEFT_ARM
-
-        private Set<Location> affectedLocations;
-
-        Component(Location... affectedLocations) {
-
-            this.affectedLocations = new HashSet<>(Arrays.asList(affectedLocations));
-
-        }
-
-        protected boolean ComponentsIntersect(Component otherComponent) {
-
-            Set<Location> intersection = new HashSet<>(this.affectedLocations);
-            intersection.retainAll(otherComponent.affectedLocations);
-            return !intersection.isEmpty();
-
-        }
-
-    }
-
     // The entity this Equipment belongs to
     private Entity entity;
-
     //Equipped Items
     private EquipmentSlot head = new EquipmentSlot();
     private EquipmentSlot neck = new EquipmentSlot();
@@ -90,11 +39,6 @@ public class Equipment {
     private EquipmentSlot leftArm = new EquipmentSlot();
     private EquipmentSlot rightArm = new EquipmentSlot();
     private EnumMap<Location, EquippableItemLocationTask> locationMap = new EnumMap<>(Location.class);
-
-    // do getters and setters through this enummap stuff. only need to do
-    // getEquipment().getComponent(Component component) and it maps dynamically
-    // to each internal call.
-
     public Equipment(Entity entity) {
 
         this.entity = entity;
@@ -102,7 +46,7 @@ public class Equipment {
         locationMap.put(Location.HEAD, () -> head);
         locationMap.put(Location.NECK, () -> neck);
         locationMap.put(Location.CHEST, () -> chest);
-        locationMap.put(Location.BACK , () -> back);
+        locationMap.put(Location.BACK, () -> back);
         locationMap.put(Location.LEGS, () -> legs);
         locationMap.put(Location.FEET, () -> feet);
         locationMap.put(Location.HANDS, () -> hands);
@@ -116,10 +60,10 @@ public class Equipment {
         return locationMap.get(location).get().getSlotContents();
 
     }
-//TODO:Make onehandedweapon work
-   /* public boolean isOneHandedWeapon(){
-        if(rightArm = get)
-    }*/
+
+    // do getters and setters through this enummap stuff. only need to do
+    // getEquipment().getComponent(Component component) and it maps dynamically
+    // to each internal call.
 
     // If we call the above function and there is no equipment at the specified location,
     // Will get a null ptr exception. Use this method to verify if there is something first before.
@@ -140,6 +84,10 @@ public class Equipment {
         return (EquippableItem[]) items.toArray();
 
     }
+//TODO:Make onehandedweapon work
+   /* public boolean isOneHandedWeapon(){
+        if(rightArm = get)
+    }*/
 
     public void removeEquipmentFromLocation(Location location) {
 
@@ -147,17 +95,16 @@ public class Equipment {
 
     }
 
-
-    public void unEquipAll(Inventory inventory){
-        for(Location loc : Location.values()){
-            if(isEquipmentAtLocation(loc)){
+    public void unEquipAll(Inventory inventory) {
+        for (Location loc : Location.values()) {
+            if (isEquipmentAtLocation(loc)) {
                 unEquipItem(getEquipmentLocation(loc), inventory);
             }
         }
     }
 
     public void unEquipItem(EquippableItem item, Inventory inventory) {
-        if(item!=null){
+        if (item != null) {
             removeEquipmentFromAffectedLocations(item.getComponent());
             inventory.addItem(item);
         }
@@ -201,6 +148,62 @@ public class Equipment {
 
     }
 
+    public enum Location {
+        // Descriptor is just used to display the location "name" on the view.
+        HEAD("Head"),
+        NECK("Neck"),
+        CHEST("Chest"),
+        BACK("Back"),
+        LEGS("Legs"),
+        FEET("Greaves"),
+        HANDS("Gloves"),
+        LEFT_ARM("Left"),
+        RIGHT_ARM("Right");
+
+        private String descriptor;
+
+        Location(String descriptor) {
+            this.descriptor = descriptor;
+        }
+
+        public String getDescriptor() {
+            return descriptor;
+        }
+    }
+
+    public enum Component {
+
+        HELMET(Location.HEAD),                                        // Maps to HEAD
+        AMULET(Location.NECK),                                        // Maps to Neck for necklace/ammy
+        CHESTPLATE(Location.CHEST),                                   // Maps to CHEST
+        CAPE(Location.BACK),                                          // Maps to BACK for cape
+        GREAVES(Location.LEGS),                                       // Maps to LEGS
+        BOOTS(Location.FEET),                                         // Maps to FEET
+        GLOVES(Location.HANDS),                                       // Maps to HANDS
+        SHIELD(Location.LEFT_ARM),                                    // Maps to LEFT_ARM
+        DAGGER(Location.RIGHT_ARM),                                   // Maps to RIGHT_ARM
+        RANGED_WEAPON(Location.RIGHT_ARM),                            // Maps to RIGHT_ARM
+        ONE_HANDED_WEAPON(Location.RIGHT_ARM),                        // Maps to RIGHT_ARM
+        TWO_HANDED_WEAPON(Location.LEFT_ARM, Location.RIGHT_ARM);     // Maps to RIGHT_ARM and LEFT_ARM
+
+        private Set<Location> affectedLocations;
+
+        Component(Location... affectedLocations) {
+
+            this.affectedLocations = new HashSet<>(Arrays.asList(affectedLocations));
+
+        }
+
+        protected boolean ComponentsIntersect(Component otherComponent) {
+
+            Set<Location> intersection = new HashSet<>(this.affectedLocations);
+            intersection.retainAll(otherComponent.affectedLocations);
+            return !intersection.isEmpty();
+
+        }
+
+    }
+
     private interface EquippableItemLocationTask {
 
         EquipmentSlot get();
@@ -211,15 +214,15 @@ public class Equipment {
 
         EquippableItem item;
 
-        public void setSlotContents(EquippableItem item) {
-
-            this.item = item;
-
-        }
-
         public EquippableItem getSlotContents() {
 
             return this.item;
+
+        }
+
+        public void setSlotContents(EquippableItem item) {
+
+            this.item = item;
 
         }
 

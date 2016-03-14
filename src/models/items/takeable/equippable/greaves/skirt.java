@@ -11,13 +11,12 @@ import models.stats.StatModification;
 import models.stats.StatModificationList;
 import models.stats.Stats;
 import views.sprites.DecoratedSprite;
-import views.sprites.Sprite;
 
 /**
  * Created by austin on 3/5/16.
  */
-public class skirt extends EquippableItem{
-    public skirt(equippableItemDecoration decoration){
+public class skirt extends EquippableItem {
+    public skirt(equippableItemDecoration decoration) {
         ID = Item.ItemDictionary.getDictionaryItemFromID(1212 + decoration.IDModifier);
         name = "{NAME} Skirt".replace("{NAME}", decoration.nameModifier);
         description = "A wizardly skirt made of {NAME}".replace("{NAME}", decoration.descriptionModifier);

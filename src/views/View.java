@@ -1,7 +1,6 @@
 package views;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  * Created by Bradley on 2/17/16.
@@ -12,7 +11,7 @@ public abstract class View {
     private int screenHeight;
     private Display display;
 
-    public View(int width, int height, Display display){
+    public View(int width, int height, Display display) {
 
         this.screenWidth = width;
         this.screenHeight = height;
@@ -31,15 +30,15 @@ public abstract class View {
     public abstract void scaleView();
 
     // Accessors
-    public final int getScreenWidth(){
+    public final int getScreenWidth() {
         return this.screenWidth;
     }
 
-    public final int getScreenHeight(){
+    public final int getScreenHeight() {
         return this.screenHeight;
     }
 
-    public Display getDisplay(){
+    public Display getDisplay() {
         return display;
     }
 

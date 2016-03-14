@@ -20,10 +20,12 @@ public class ConsumableItem extends TakeableItem {
         entity.getInventory().removeItem(this);
     }
 
-    public void useOn(Entity entity, NPC npc){
+    public void useOn(Entity entity, NPC npc) {
         npc.applyStatMod(onConsumeModifications);
         entity.getInventory().removeItem(this);
     }
 
-    public boolean isConsumable(){ return true; }
+    public boolean isConsumable() {
+        return true;
+    }
 }

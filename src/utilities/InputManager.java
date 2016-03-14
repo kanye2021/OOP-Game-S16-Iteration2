@@ -8,10 +8,10 @@ import java.awt.event.*;
 /**
  * Created by Bradley on 2/17/16.
  */
-public class InputManager extends ComponentAdapter implements KeyEventDispatcher, MouseListener, MouseMotionListener{
+public class InputManager extends ComponentAdapter implements KeyEventDispatcher, MouseListener, MouseMotionListener {
     private ViewController activeController;
 
-    public void setActiveController(ViewController activeController){
+    public void setActiveController(ViewController activeController) {
         this.activeController = activeController;
     }
 

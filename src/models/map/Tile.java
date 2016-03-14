@@ -6,7 +6,6 @@ import models.area_effects.AreaEffect;
 import models.attack.Projectile;
 import models.entities.Entity;
 import models.items.Item;
-import utilities.ProjectileDetection;
 import utilities.TileDetection;
 
 import java.awt.*;
@@ -29,14 +28,14 @@ public class Tile {
     private TileImage tileImage;
     private Projectile projectile;
 
-//<<<<<<< HEAD
+    //<<<<<<< HEAD
 //    public Tile(Terrain terrain, Decal decal, Item item, Entity entity, AreaEffect areaEffect,Projectile projectile) {
 //=======
     public Tile(Terrain terrain, Decal decal, ArrayList<Item> items, Entity entity, AreaEffect areaEffect) {
 
         this.terrain = terrain;
         this.decal = decal;
-        this.items = (ArrayList<Item>)items.clone();
+        this.items = (ArrayList<Item>) items.clone();
         this.entity = entity;
         this.areaEffect = areaEffect;
         this.projectile = projectile;
@@ -46,9 +45,9 @@ public class Tile {
     }
 
     // Creates a new tile with the same instance vars as the old tile
-    public Tile(Tile tile){
+    public Tile(Tile tile) {
         this.terrain = new Terrain(tile.getTerrain());
-        this.decal = (tile.getDecal()!=null) ?  new Decal(tile.getDecal()) : null;
+        this.decal = (tile.getDecal() != null) ? new Decal(tile.getDecal()) : null;
         this.items = (ArrayList<Item>) tile.getItems().clone();
 //        Item item = (tile.getItem()!=null) ? Item.ItemDictionary.itemFromID(tile.getItem().getItemId()) : null;
         this.entity = tile.getEntity(); // This will store the same reference.... this is bad.
@@ -58,7 +57,7 @@ public class Tile {
         projectile = null;
     }
 
-//    public ProjectileDetection insertProjectile(Projectile projectile){
+    //    public ProjectileDetection insertProjectile(Projectile projectile){
 //        ProjectileDetection result = new ProjectileDetection(null,null,false);
 //
 //        if(!projectile.canTraverseTerrain(this.terrain)){
@@ -85,13 +84,13 @@ public class Tile {
         // Check to see if this entity can pass here.
 
         // Check if the entity can pass through this terrain.
-        if(!entity.canTraverseTerrain(this.terrain)){
+        if (!entity.canTraverseTerrain(this.terrain)) {
             return result;
         }
 
         //if(entity.get)
         // Check if there is another entity on this tile.
-        if(this.entity != null){
+        if (this.entity != null) {
             System.out.println("In tile");
             //the NPC will contain all of the interactions
 //            this.entity.startInteraction();
@@ -99,19 +98,19 @@ public class Tile {
         }
 
         // Loop through all the items on the tile and active them.
-        for(Iterator<Item> iterator = items.iterator(); iterator.hasNext();){
+        for (Iterator<Item> iterator = items.iterator(); iterator.hasNext(); ) {
             Item item = iterator.next();
 
-            if(item.getType().equals("obstacle")){
+            if (item.getType().equals("obstacle")) {
                 return result;
-            }else if(item.getType().equals("interactive")){
-                if(!item.onTouch(entity)){
+            } else if (item.getType().equals("interactive")) {
+                if (!item.onTouch(entity)) {
                     return result;
-                }else{
+                } else {
                     iterator.remove();
                 }
-            }else{
-                if(item.onTouch(entity)){
+            } else {
+                if (item.onTouch(entity)) {
                     iterator.remove();
                 }
             }
@@ -131,7 +130,7 @@ public class Tile {
         }
 
         // Indicate that the move was successful only if it didnt result in the entity dieing.
-        if(entity.getLives() == entityLivesBeforeInteraciton){
+        if (entity.getLives() == entityLivesBeforeInteraciton) {
             this.entity = entity;
             result.setMoved(true);
         }
@@ -142,28 +141,36 @@ public class Tile {
     public Terrain getTerrain() {
         return terrain;
     }
-    public Image getTerrainImage(){ return terrain.getImage(); }
+
+    public Image getTerrainImage() {
+        return terrain.getImage();
+    }
 
     public AreaEffect getAreaEffect() {
         return areaEffect;
     }
 
-    public Decal getDecal() {return decal;}
-
-    public Image getDecalImage(){
-        if(decal!=null){
-            return decal.isVisible() ? decal.getImage() : null;
-        }
-        return  null;
+    public Decal getDecal() {
+        return decal;
     }
 
-    public void setDecalVisibility(boolean b){
-        if(decal!=null){
+    public Image getDecalImage() {
+        if (decal != null) {
+            return decal.isVisible() ? decal.getImage() : null;
+        }
+        return null;
+    }
+
+    public void setDecalVisibility(boolean b) {
+        if (decal != null) {
             decal.setVisible(b);
         }
     }
 
-    public ArrayList<Item> getItems() {return items;}
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
     public Image getItemImage() {
         if (items.size() == 0) {
             return null;
@@ -178,13 +185,18 @@ public class Tile {
         return entity;
     }
 
-    public Projectile getProjectile(){
+    public Projectile getProjectile() {
         return projectile;
     }
-    public Image getEntityImage() {return (entity!=null) ? entity.getImage() : null;}
+
+    public Image getEntityImage() {
+        return (entity != null) ? entity.getImage() : null;
+    }
 
 
-    public Trap getTrap(){return trap;}
+    public Trap getTrap() {
+        return trap;
+    }
 
     public void removeItems() {
 
@@ -205,7 +217,7 @@ public class Tile {
         entity = null;
     }
 
-    public void removeProjectile(){
+    public void removeProjectile() {
         projectile = null;
     }
 
@@ -217,34 +229,36 @@ public class Tile {
     }
 
     //Checks if the tile has an Entity
-    public boolean hasEntity(){
+    public boolean hasEntity() {
         return entity != null;
     }
-    public boolean hasTrap(){
+
+    public boolean hasTrap() {
         return trap != null;
     }
 
-    public TileImage getTileImage(){
+    public TileImage getTileImage() {
         return this.tileImage;
     }
-    public void refreshImage(){
+
+    public void refreshImage() {
         tileImage.generate(this);
     }
 
     //Methods for loadSave (just getters) Shouldn't be violating princples as its not modifying source code
-    public String getTerrainType(){
-        if(getTerrain() != null){
+    public String getTerrainType() {
+        if (getTerrain() != null) {
             return getTerrain().getType();
-        }else{
+        } else {
             return "No terrrain? not possible";
         }
     }
 
-    public void addProjectile(Projectile projectile){
+    public void addProjectile(Projectile projectile) {
         this.projectile = projectile;
     }
 
-    public Image getProjectileImage(){
-        return projectile!=null ? projectile.getImage() : null;
+    public Image getProjectileImage() {
+        return projectile != null ? projectile.getImage() : null;
     }
 }

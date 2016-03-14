@@ -7,30 +7,30 @@ import models.entities.Entity;
 import models.skills.ActiveSkill;
 import views.sprites.Sprite;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 /**
  * Created by ben on 3/8/16.
  */
 
 //Indignation is a skill that is an area effect skill
-    //It is the strongest spell according to Tales of Symphonia
+//It is the strongest spell according to Tales of Symphonia
 
-public class IndignationSkill extends ActiveSkill{
+public class IndignationSkill extends ActiveSkill {
     Projectile projectile;
     private int damage;
     private int range;
-    public IndignationSkill(){
+
+    public IndignationSkill() {
         cooldown = false;
-        cooldownTime = 3*SECONDS;
+        cooldownTime = 3 * SECONDS;
         damage = 1;
         range = 3;
-        projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE, "summoner-indignation.png");
+        projectile = new Projectile(damage, range, StatusEffects.StatusEffect.NONE, "summoner-indignation.png");
         cost = 10;
         level = 1;
     }
+
     @Override
     public SkillDictionary initID() {
 
@@ -52,16 +52,16 @@ public class IndignationSkill extends ActiveSkill{
     @Override
     public void onActivate(Entity entity) {
 
-        if(isCooldown()){
+        if (isCooldown()) {
             return;
         }
-        if(!payMana(entity,cost)){
+        if (!payMana(entity, cost)) {
             return;
         }
         doTheCoolDown();
         System.out.println("Can you take this? INDIGNATION!");
 
-        new RadialAttack(entity,projectile);
+        new RadialAttack(entity, projectile);
 
     }
 

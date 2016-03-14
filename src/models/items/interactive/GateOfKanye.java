@@ -23,8 +23,8 @@ public class GateOfKanye extends InteractiveItem {
     protected ConditionList initConditions() {
 
         ConditionList conditions = new ConditionList(
-            new StatCondition(null, 5, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST),
-            new InventoryCondition(null, Condition.Comparison.AT_LEAST, 1, ItemDictionary.KEY_OF_KANYE)
+                new StatCondition(null, 5, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST),
+                new InventoryCondition(null, Condition.Comparison.AT_LEAST, 1, ItemDictionary.KEY_OF_KANYE)
         );
 
         return conditions;

@@ -5,32 +5,25 @@ import models.attack.Projectile;
 import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
-import models.stats.Stats;
-import utilities.Animator;
-import utilities.IOUtilities;
-
 import views.sprites.Sprite;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 /**
  * Created by ben on 3/8/16.
  */
 //From Tales of symphonia is a linear path of a fire ball
-    //Kinda like fireball jutsu if you want to think of it like that
-public class FireBallSkill extends ActiveSkill{
+//Kinda like fireball jutsu if you want to think of it like that
+public class FireBallSkill extends ActiveSkill {
     private int damage;
     private int range;
     private int speed;
 
-    public FireBallSkill(){
+    public FireBallSkill() {
         damage = 5;
         range = 3;
         speed = 200;
-        cooldownTime = 1*SECONDS;
+        cooldownTime = 1 * SECONDS;
         cost = 10;
         level = 1;
     }
@@ -48,8 +41,6 @@ public class FireBallSkill extends ActiveSkill{
     }
 
 
-
-
     @Override
     public String getName() {
         return "Fireball";
@@ -58,24 +49,23 @@ public class FireBallSkill extends ActiveSkill{
 
     @Override
     public void onActivate(Entity entity) {
-        if(isCooldown()){
+        if (isCooldown()) {
             return;
         }
-        if(!payMana(entity,cost)){
+        if (!payMana(entity, cost)) {
             return;
         }
 
         doTheCoolDown();
         System.out.println("Can you take this? Fireball!");
-        Projectile projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE, "summoner-fireball.png");
+        Projectile projectile = new Projectile(damage, range, StatusEffects.StatusEffect.NONE, "summoner-fireball.png");
 
-        cooldown=true;
+        cooldown = true;
 
-        new LinearAttack(entity,projectile);//This is the attack
+        new LinearAttack(entity, projectile);//This is the attack
 
 
     }
-
 
 
     @Override

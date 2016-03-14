@@ -9,9 +9,9 @@ public class StatModificationList {
 
     ArrayList<StatModification> modifications = new ArrayList<>();
 
-    public StatModificationList(StatModification... modifications){
+    public StatModificationList(StatModification... modifications) {
 
-        for(StatModification modification : modifications){
+        for (StatModification modification : modifications) {
 
             this.modifications.add(modification);
 
@@ -19,18 +19,18 @@ public class StatModificationList {
 
     }
 
-    public void applyStats(Stats stats){
+    public void applyStats(Stats stats) {
 
-        for (StatModification statMod : modifications){
+        for (StatModification statMod : modifications) {
 
             statMod.apply(stats);
         }
 
     }
 
-    public void removeStats(Stats stats){
+    public void removeStats(Stats stats) {
 
-        for (StatModification statMod : modifications){
+        for (StatModification statMod : modifications) {
 
             statMod.remove(stats);
         }

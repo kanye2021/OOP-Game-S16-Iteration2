@@ -5,8 +5,6 @@ import models.attack.Projectile;
 import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
-import models.skills.PassiveSkill;
-import models.skills.Skill;
 import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
@@ -18,10 +16,10 @@ public class BaneSkill extends ActiveSkill {
     private int damage;
     private int range;
 
-    public BaneSkill(){
+    public BaneSkill() {
         damage = 5;
         range = 3;
-        cooldownTime = 1*SECONDS;
+        cooldownTime = 1 * SECONDS;
         cost = 10;
         level = 1;
     }
@@ -39,8 +37,6 @@ public class BaneSkill extends ActiveSkill {
     }
 
 
-
-
     @Override
     public String getName() {
         return "Bane";
@@ -49,23 +45,22 @@ public class BaneSkill extends ActiveSkill {
 
     @Override
     public void onActivate(Entity entity) {
-        if(isCooldown()){
+        if (isCooldown()) {
             return;
         }
-        if(!payMana(entity,cost)){
+        if (!payMana(entity, cost)) {
             return;
         }
 
         doTheCoolDown();
         System.out.println("Can you take this? Bane!");
-        Projectile projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE, "summoner-baneSkill.png");
+        Projectile projectile = new Projectile(damage, range, StatusEffects.StatusEffect.NONE, "summoner-baneSkill.png");
 
-        cooldown=true;
-        new LinearAttack(entity,projectile);//This is the attack
+        cooldown = true;
+        new LinearAttack(entity, projectile);//This is the attack
 
 
     }
-
 
 
     @Override

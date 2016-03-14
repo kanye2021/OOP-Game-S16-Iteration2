@@ -8,7 +8,6 @@ import models.conditions.OccupationCondition;
 import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.decorations.equippableItemDecoration;
-
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
@@ -16,9 +15,8 @@ import models.stats.Stats;
 import views.sprites.DecoratedSprite;
 
 
-
 public class bow extends EquippableItem {
-    public bow(equippableItemDecoration decoration){
+    public bow(equippableItemDecoration decoration) {
         ID = Item.ItemDictionary.getDictionaryItemFromID(1900 + decoration.IDModifier);
         name = "{NAME} Bow".replace("{NAME}", decoration.nameModifier);
         description = "Bow made of {NAME}".replace("{NAME}", decoration.descriptionModifier);

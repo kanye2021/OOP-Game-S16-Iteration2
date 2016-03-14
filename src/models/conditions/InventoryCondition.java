@@ -2,7 +2,6 @@ package models.conditions;
 
 import models.entities.Entity;
 import models.items.Item;
-import models.items.takeable.TakeableItem;
 
 /**
  * Created by denzel on 2/6/16.

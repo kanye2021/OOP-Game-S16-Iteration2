@@ -1,24 +1,22 @@
 package models.skills.CommonSkills;
 
-import models.entities.Avatar;
 import models.entities.Entity;
-import models.skills.ActiveSkill;
 import models.skills.PassiveSkill;
 import views.sprites.Sprite;
 
-import java.awt.event.KeyEvent;
 import java.util.Random;
 
 /**
  * Created by aseber on 2/24/16.
  */
 public class ObservationSkill extends PassiveSkill {
+    private final float constant = .04f;
     private int observationLv;
     private float percentError;
     private int upperBoundError;
     private int lowerBoundError;
-    private final float constant = .04f;
-    public ObservationSkill(){
+
+    public ObservationSkill() {
         observationLv = 1;
         percentError = 1.0f;
 //        upperBoundError = percentError;
@@ -53,7 +51,7 @@ public class ObservationSkill extends PassiveSkill {
 
 
     //TODO:Get this to be displayed on the area viewport
-    public int getCombatPercentError(int expected) {
+    public int getCombatError(int expected) {
 //        resetBounds();
         Random random = new Random();
         float sign = random.nextFloat();
@@ -61,7 +59,7 @@ public class ObservationSkill extends PassiveSkill {
 
         float error = random.nextFloat() * percentError;
 
-        return (int) (sign * (error * expected) + expected);
+        return (int) (sign * (error * expected));
 
     }
 }

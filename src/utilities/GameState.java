@@ -1,14 +1,10 @@
 package utilities;
 
-import controllers.AvatarCreationViewController;
 import controllers.GameViewController;
 import controllers.entityControllers.AvatarController;
 import models.entities.Avatar;
-
 import models.entities.npc.NPC;
-
 import models.map.Map;
-import views.AvatarCreationView;
 import views.AreaViewport;
 import views.GameView;
 import views.View;
@@ -29,7 +25,7 @@ public class GameState extends State {
     private GameSaver gameSaver;
 
     // Create a new game.
-    public GameState(GameViewController viewController, View view, String occupation, String fileName){
+    public GameState(GameViewController viewController, View view, String occupation, String fileName) {
 
         super(viewController, view);
         //I don't like how we have to create the gameView and gameViewController outside of gameState
@@ -43,8 +39,8 @@ public class GameState extends State {
         //loaded game
         if (occupation != null) {
             gameLoader.createNewGame(this, occupation);
-        }else{
-            gameLoader.loadGame(this,fileName);
+        } else {
+            gameLoader.loadGame(this, fileName);
 
         }
 
@@ -53,39 +49,41 @@ public class GameState extends State {
 
         // Int the viewports
         viewController.initViewports(map, avatar, npcList);
-        if (occupation == null){ //only run when the game is being loaded, after the areaviewport is initalized
-            gameLoader.loadSeenTiles(this,fileName);
+        if (occupation == null) { //only run when the game is being loaded, after the areaviewport is initalized
+            gameLoader.loadSeenTiles(this, fileName);
         }
         // Init the default skill key bindings
         viewController.initSkillKeyBindMappings();
-        gameSaver = new GameSaver(map, avatar, npcList, getAreaViewport() );
+        gameSaver = new GameSaver(map, avatar, npcList, getAreaViewport());
 
     }
 
-    public void setMap(Map map){
+    public void setMap(Map map) {
         this.map = map;
     }
 
-    public void setAvatar(Avatar avatar){
+    public void setAvatar(Avatar avatar) {
 
         this.avatar = avatar;
     }
 
-    public void setNpcList(ArrayList<NPC> npcList){
+    public void setNpcList(ArrayList<NPC> npcList) {
         this.npcList = npcList;
     }
-    public void loadGame(String filePath){
-        gameLoader.loadGame(this,filePath);
+
+    public void loadGame(String filePath) {
+        gameLoader.loadGame(this, filePath);
     }
-    public void saveGame(String filePath){
+
+    public void saveGame(String filePath) {
         //This is awkward since gameLoader might create new map avatar and npclist thus
         //previous gameSaver would not have references to the new ones
         gameSaver = new GameSaver(map, avatar, npcList, getAreaViewport());
         gameSaver.saveGame(filePath);
     }
 
-    public void removeNpc(NPC npc){
-        if(npcList.contains(npc)){
+    public void removeNpc(NPC npc) {
+        if (npcList.contains(npc)) {
             npcList.remove(npc);
         }
     }
@@ -115,8 +113,8 @@ public class GameState extends State {
         }
     }
 
-    public AreaViewport getAreaViewport(){
-       return ((GameView)view).getAreaViewport();
+    public AreaViewport getAreaViewport() {
+        return ((GameView) view).getAreaViewport();
     }
 }
 

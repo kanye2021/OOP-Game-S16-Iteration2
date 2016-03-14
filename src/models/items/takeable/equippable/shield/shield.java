@@ -11,13 +11,12 @@ import models.stats.StatModification;
 import models.stats.StatModificationList;
 import models.stats.Stats;
 import views.sprites.DecoratedSprite;
-import views.sprites.Sprite;
 
 /**
  * Created by ben on 2/27/16.
  */
-public class shield extends EquippableItem{
-    public shield(equippableItemDecoration decoration){
+public class shield extends EquippableItem {
+    public shield(equippableItemDecoration decoration) {
         ID = Item.ItemDictionary.getDictionaryItemFromID(1500 + decoration.IDModifier);
         name = "{NAME} Shield".replace("{NAME}", decoration.nameModifier);
         description = "Shield made of {NAME}".replace("{NAME}", decoration.descriptionModifier);

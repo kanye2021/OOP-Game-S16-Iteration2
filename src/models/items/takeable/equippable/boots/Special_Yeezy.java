@@ -14,8 +14,8 @@ import views.sprites.Sprite;
 /**
  * Created by ben on 3/5/16.
  */
-public class Special_Yeezy extends EquippableItem{
-    public Special_Yeezy(){
+public class Special_Yeezy extends EquippableItem {
+    public Special_Yeezy() {
         ID = Item.ItemDictionary.YEEZY;
         name = "Yeezys";
         description = "Yeezus they are so stylish and help you run";

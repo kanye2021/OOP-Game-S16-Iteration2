@@ -1,9 +1,5 @@
 package models.attack;
 
-import models.attack.status_effects.Sleep;
-import models.entities.Entity;
-
-
 /**
  * Created by ben on 3/11/16.
  */
@@ -18,13 +14,6 @@ public class StatusEffects {
 
    /* public StatusEffects() {
     }*/
-
-
-    public enum StatusEffect{
-        SLEEP,
-        INVISIBLE,
-        NONE
-    }
 
     //This is used to make something take an effect
     //You want to apply the statusEffect immediately
@@ -44,14 +33,22 @@ public class StatusEffects {
         }
         //Don't do anything if you can find status
     }*/
-    public String getStatusEffect(){
+    public String getStatusEffect() {
         return status.toString();
     }
-    public void clearStatus(){
+
+    public void clearStatus() {
         status = StatusEffect.NONE;
     }
+
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    public enum StatusEffect {
+        SLEEP,
+        INVISIBLE,
+        NONE
     }
 }

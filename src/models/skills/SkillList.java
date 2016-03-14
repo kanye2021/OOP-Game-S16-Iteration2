@@ -1,7 +1,5 @@
 package models.skills;
 
-import models.stats.StatModification;
-
 import java.util.ArrayList;
 
 /**
@@ -11,18 +9,19 @@ public class SkillList extends ArrayList<Skill> {
 
     public SkillList(Skill... skills) {
 
-        for(Skill skill : skills) {
+        for (Skill skill : skills) {
 
             this.add(skill);
 
         }
 
     }
-    public void loadSkills(String name, int value){
-        for (Skill skill : this){
-           if (skill.getName().equals(name)){
-               skill.setLevel(value);
-           }
+
+    public void loadSkills(String name, int value) {
+        for (Skill skill : this) {
+            if (skill.getName().equals(name)) {
+                skill.setLevel(value);
+            }
         }
     }
 

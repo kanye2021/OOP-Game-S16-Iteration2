@@ -14,12 +14,12 @@ public class State {
     protected View view;
     protected ArrayList<SubState> substates;
 
-    public State(ViewController viewController, View view){
+    public State(ViewController viewController, View view) {
         this.viewController = viewController;
         this.view = view;
     }
 
-    public void activate(InputManager inputManager, Display display){
+    public void activate(InputManager inputManager, Display display) {
         inputManager.setActiveController(viewController);
         display.setActiveView(view);
 
@@ -28,10 +28,12 @@ public class State {
     }
 
 
-    public View getView(){
+    public View getView() {
         return view;
     }
-    public void update(){}
+
+    public void update() {
+    }
 
 
 }

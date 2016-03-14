@@ -21,7 +21,7 @@ public abstract class AreaEffect {
 
     public abstract String getType();
 
-    public Image getImage(){
+    public Image getImage() {
         return decal.getImage();
     }
 

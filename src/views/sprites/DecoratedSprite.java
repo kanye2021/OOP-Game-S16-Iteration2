@@ -3,7 +3,6 @@ package views.sprites;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * Created by aseber on 3/7/16.

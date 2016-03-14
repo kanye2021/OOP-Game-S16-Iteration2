@@ -1,13 +1,7 @@
 package utilities;
 
-import models.map.Map;
-import views.sprites.DirectionalSprite;
-
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by denzel on 3/10/16.
@@ -54,37 +48,36 @@ public class Animator {
             if (time - previous >= speed) {
                 //increment frames
                 if (bufferedImages != null) {
-                        if (frame < 6) {
-                            image = bufferedImages.get(frame);
-                            previous = time;
-                            frame++;
-                            return image;
-                        } else {
-                            //reset the frames
-                            reset();
-                        }
+                    if (frame < 6) {
+                        image = bufferedImages.get(frame);
+                        previous = time;
+                        frame++;
+                        return image;
+                    } else {
+                        //reset the frames
+                        reset();
                     }
                 }
             }
-            return image;
         }
-
+        return image;
+    }
 
 
     //be able to pause at the exact frame left off at
-    public void pause(){
+    public void pause() {
         pauseFrame = frame;
         running = false;
     }
 
     //be able to resume at the exact frame paused at
-    public void resume(){
+    public void resume() {
         running = true;
         frame = pauseFrame;
     }
 
     //reset everything
-    public void reset(){
+    public void reset() {
         frame = 0;
         running = false;
     }

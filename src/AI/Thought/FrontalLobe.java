@@ -2,10 +2,10 @@ package AI.Thought;
 
 import AI.Memory.Decision;
 import AI.Memory.ThoughtInterface;
-import AI.Personality.Interests.*;
 import AI.Personality.Interests.EntityInterest.EntityInterest;
+import AI.Personality.Interests.Interest;
+import AI.Personality.Interests.InterestList;
 import AI.Personality.Interests.ItemInterest.ItemInterest;
-import AI.Personality.Interests.PointInterest.ExploreInterest;
 import AI.Personality.Interests.PointInterest.PointInterest;
 import models.entities.Entity;
 import models.entities.npc.NPC;
@@ -21,13 +21,12 @@ import java.util.Random;
  */
 public class FrontalLobe {
 
-    private Random rng = new Random();
-    double rand;
-
     protected NPC npc;
+    double rand;
+    private Random rng = new Random();
     private ThoughtInterface memory;
 
-    public FrontalLobe(NPC npc, ThoughtInterface memory){
+    public FrontalLobe(NPC npc, ThoughtInterface memory) {
         this.npc = npc;
         this.memory = memory;
     }

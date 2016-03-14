@@ -14,7 +14,7 @@ public class Terrain {
         this.type = type;
     }
 
-    public Terrain(Terrain terrain){
+    public Terrain(Terrain terrain) {
         this.type = terrain.getType();
     }
 
@@ -22,7 +22,7 @@ public class Terrain {
         return type;
     }
 
-    public Image getImage(){
+    public Image getImage() {
         String filePath = IOUtilities.getFileSystemDependentPath("./src/res/terrain/" + type + ".png");
         return IOUtilities.getImageIcon(filePath).getImage();
     }

@@ -12,13 +12,14 @@ public class LevelUpAreaEffect extends AreaEffect {
     public LevelUpAreaEffect() {
         init();
     }
+
     public void init() {
         decal = new Decal(Decal.Types.GOLD_STAR);
     }
 
     @Override
     public void onTouch(Entity entity) {
-        if(entity.getType().contains("Avatar"))
+        if (entity.getType().contains("Avatar"))
             entity.levelUpToast();
         else
             entity.levelUp();
@@ -29,7 +30,7 @@ public class LevelUpAreaEffect extends AreaEffect {
         return "level-up";
     }
 
-    public int getValue(){
+    public int getValue() {
         return 0;
     }
 }

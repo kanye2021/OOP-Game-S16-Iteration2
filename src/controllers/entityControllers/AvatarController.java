@@ -1,43 +1,31 @@
 package controllers.entityControllers;
 
-import controllers.*;
 import controllers.GameViewController;
-import controllers.InventoryViewController;
 import models.Equipment;
 import models.attack.LinearAttack;
 import models.attack.Projectile;
 import models.attack.StatusEffects;
 import models.entities.Avatar;
-import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
 import models.skills.CommonSkills.BindWoundsSkill;
 import models.skills.Skill;
-
+import models.skills.SkillList;
 import models.skills.SmasherSkills.BrawlingSkill;
 import models.skills.SmasherSkills.OneHandedWeaponSkill;
 import models.skills.SmasherSkills.TwoHandedWeaponSkill;
-
-import models.skills.SkillList;
-
 import models.skills.SneakSkills.CreepSkill;
 import models.skills.SneakSkills.DetectRemoveTrapSkill;
 import models.skills.SneakSkills.PickPocketSkill;
 import models.skills.SneakSkills.RangedAttackSkill;
 import models.skills.SummonerSkills.*;
 import models.stats.Stats;
-import utilities.TileDetection;
 import utilities.InputMapping;
-import utilities.SubState;
-import utilities.Task;
-import views.*;
+import utilities.TileDetection;
 import views.GameView;
-import views.InventoryView;
-import views.ToastView;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 /**
  * Created by Bradley on 2/26/2016.
@@ -53,12 +41,12 @@ public class AvatarController {
     //Will hold A SkillList array, which the game VC will look at and assign keybinds to
     private SkillList avatarsSkills;
 
-    public AvatarController(Avatar avatar, GameViewController gameViewController){
+    public AvatarController(Avatar avatar, GameViewController gameViewController) {
         //TODO: Add gameview
         this.avatar = avatar;
         this.gameViewController = gameViewController;
         keyPressMapping = new InputMapping();
-        this.gameView = (GameView)gameViewController.getView();
+        this.gameView = (GameView) gameViewController.getView();
         this.avatarsSkills = avatar.getSkills();
         initKeyPressMapping();
         movementDirection = null;
@@ -69,39 +57,39 @@ public class AvatarController {
         keyPressMapping.inputKey(getKeyIntMapping(e));
     }
 
-    public void handleKeyRelease(KeyEvent e){
+    public void handleKeyRelease(KeyEvent e) {
 
         keyPressMapping.keyReleased(getKeyIntMapping(e));
     }
 
-    public void useBindWounds(){
+    public void useBindWounds() {
         Skill firstSkill = avatar.getSkills().get(1);
         BindWoundsSkill bindWoundsSkill = (BindWoundsSkill) firstSkill;
         bindWoundsSkill.onActivate(avatar);
     }
 
 
-    public void useFirstSkill(){
+    public void useFirstSkill() {
         //if smasher, get first skill
-        if(avatar.getOccupation().contains("Smasher")){
+        if (avatar.getOccupation().contains("Smasher")) {
             //Technically the Smasher class has no actives
-        }else if(avatar.getOccupation().contains("Summoner")){
+        } else if (avatar.getOccupation().contains("Summoner")) {
             //first skill should be enchantment here
             Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.ENCHANTMENT);
             EnchantmentSkill enchantmentSkill = (EnchantmentSkill) firstSkill;
             enchantmentSkill.onActivate(avatar);
 
-        }else if(avatar.getOccupation().contains("Sneak")){
+        } else if (avatar.getOccupation().contains("Sneak")) {
             //first skill should be enchantment here
             Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.CREEP);
             CreepSkill creepSkill = (CreepSkill) firstSkill;
             creepSkill.onActivate(avatar);
-        }else{
+        } else {
             System.err.println("AvatarController: Invalid Entity");
         }
     }
 
-    public void useSecondSkill(){
+    public void useSecondSkill() {
         //if smasher, get first skill
         if (avatar.getOccupation().contains("Smasher")) {
             //Technically the Smasher class has no actives
@@ -149,34 +137,34 @@ public class AvatarController {
         }
     }
 
-    public void useFourthSkill(){
+    public void useFourthSkill() {
         //if smasher, get first skill
-        if(avatar.getOccupation().contains("Smasher")){
+        if (avatar.getOccupation().contains("Smasher")) {
             //Technically the Smasher class has no actives
 
-        }else if(avatar.getOccupation().contains("Summoner")){
+        } else if (avatar.getOccupation().contains("Summoner")) {
             //No more skills
             Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.INDIGNATION);
             IndignationSkill indignationSkill = (IndignationSkill) fourthSkill;
             indignationSkill.onActivate(avatar);
-        }else if(avatar.getOccupation().contains("Sneak")){
+        } else if (avatar.getOccupation().contains("Sneak")) {
             //first skill should be something..
             //first skill should be something..
             Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
             DetectRemoveTrapSkill detectRemoveTrapSkill = (DetectRemoveTrapSkill) fourthSkill;
             detectRemoveTrapSkill.onActivate(avatar);
 
-        }else{
+        } else {
             System.err.println("AvatarController: Invalid Entity");
         }
     }
 
-    public void useFifthSkill(){
+    public void useFifthSkill() {
         //if smasher, get first skill
-        if(avatar.getOccupation().contains("Smasher")){
+        if (avatar.getOccupation().contains("Smasher")) {
             //Technically the Smasher class has no actives
 
-        }else if(avatar.getOccupation().contains("Summoner")){
+        } else if (avatar.getOccupation().contains("Summoner")) {
             //No more skills
             //Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.INDIGNATION);
             //System.out.println(fourthSkill);
@@ -186,50 +174,50 @@ public class AvatarController {
             GroundDasherSkill groundDasherSkill = (GroundDasherSkill) fifthSkill;
             groundDasherSkill.onActivate(avatar);
 
-        }else if(avatar.getOccupation().contains("Sneak")){
+        } else if (avatar.getOccupation().contains("Sneak")) {
             Skill fifthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.CREEP);
             CreepSkill creepSkill = (CreepSkill) fifthSkill;
             creepSkill.sneakBehind(avatar);
-        }else{
+        } else {
             System.err.println("AvatarController: Invalid Entity");
         }
     }
-    public void useBasicAttack(){
 
-        if(avatar.getOccupation().contains("Smasher")){
+    public void useBasicAttack() {
+
+        if (avatar.getOccupation().contains("Smasher")) {
             EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
-            if(item==null){
+            if (item == null) {
                 Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.BRAWLING);
                 BrawlingSkill brawlingSkill = (BrawlingSkill) basicSkill;
                 brawlingSkill.onActivate(avatar);
                 return;
             }
 
-            Equipment.Component component= item.getComponent();
-            if(component== Equipment.Component.ONE_HANDED_WEAPON){
+            Equipment.Component component = item.getComponent();
+            if (component == Equipment.Component.ONE_HANDED_WEAPON) {
                 Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.ONE_HANDED_WEAPON);
                 OneHandedWeaponSkill OneHandSkill = (OneHandedWeaponSkill) basicSkill;
                 OneHandSkill.onActivate(avatar);
                 //call active skill one handed weapon
-            }else if(component == Equipment.Component.TWO_HANDED_WEAPON){
+            } else if (component == Equipment.Component.TWO_HANDED_WEAPON) {
                 Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.TWO_HANDED_WEAPON);
                 TwoHandedWeaponSkill TwoHandSkill = (TwoHandedWeaponSkill) basicSkill;
                 TwoHandSkill.onActivate(avatar);
                 //call active skill one handed weapon
-            }else{
+            } else {
                 System.err.println("AvatarController: Invalid Entity");
             }
-                //avatar.basicAttack(avatar,component);
+            //avatar.basicAttack(avatar,component);
 
 
-
-        }else if(avatar.getOccupation().contains("Summoner")){
+        } else if (avatar.getOccupation().contains("Summoner")) {
             //No more skills
             EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
-            if(item==null){
+            if (item == null) {
                 //TODO:Add cooldown somehow.  I feel like I need to make this a function?
-                Projectile projectile = new Projectile(10*avatar.getStats().getStat(Stats.Type.LEVEL)+1,1, StatusEffects.StatusEffect.NONE);
-                new LinearAttack(avatar,projectile);
+                Projectile projectile = new Projectile(10 * avatar.getStats().getStat(Stats.Type.LEVEL) + 1, 1, StatusEffects.StatusEffect.NONE);
+                new LinearAttack(avatar, projectile);
                 return;
             }
             Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.STAFF);
@@ -244,36 +232,37 @@ public class AvatarController {
                 avatar.basicAttack(avatar,component);*/
 
 
-        }else if(avatar.getOccupation().contains("Sneak")){
+        } else if (avatar.getOccupation().contains("Sneak")) {
             EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
-           // Equipment.Component component= item.getComponent();
-            if(item==null){
+            // Equipment.Component component= item.getComponent();
+            if (item == null) {
                 //TODO:Add cooldown somehow.  I feel like I need to make this a function?
-                Projectile projectile = new Projectile(10*avatar.getStats().getStat(Stats.Type.LEVEL)+1,1, StatusEffects.StatusEffect.NONE);
-                new LinearAttack(avatar,projectile);
+                Projectile projectile = new Projectile(10 * avatar.getStats().getStat(Stats.Type.LEVEL) + 1, 1, StatusEffects.StatusEffect.NONE);
+                new LinearAttack(avatar, projectile);
                 return;
             }
-            Equipment.Component component= item.getComponent();
-            if(component == Equipment.Component.RANGED_WEAPON){
+            Equipment.Component component = item.getComponent();
+            if (component == Equipment.Component.RANGED_WEAPON) {
                 avatar.basicAttack(avatar);
                 //avatar.basicAttack(avatar,component);
-                 Skill skill = avatar.getSpecificSkill(Skill.SkillDictionary.RANGED_ATTACK);
-                RangedAttackSkill rangedAttackSkill = (RangedAttackSkill)skill;
+                Skill skill = avatar.getSpecificSkill(Skill.SkillDictionary.RANGED_ATTACK);
+                RangedAttackSkill rangedAttackSkill = (RangedAttackSkill) skill;
                 rangedAttackSkill.onActivate(avatar);//yay!
-            }else{
+            } else {
                 //TODO:Add cooldown somehow.  I feel like I need to make this a function?
-                Projectile projectile = new Projectile(10*avatar.getStats().getStat(Stats.Type.LEVEL)+1,1, StatusEffects.StatusEffect.NONE);
-                new LinearAttack(avatar,projectile);
+                Projectile projectile = new Projectile(10 * avatar.getStats().getStat(Stats.Type.LEVEL) + 1, 1, StatusEffects.StatusEffect.NONE);
+                new LinearAttack(avatar, projectile);
 
             }
 
-        }else{
+        } else {
             System.err.println("AvatarController: Invalid Entity");
         }
     }
 
 
-    protected void initKeyPressMapping(){}
+    protected void initKeyPressMapping() {
+    }
 
     private final int getKeyIntMapping(KeyEvent e) {
 
@@ -282,7 +271,7 @@ public class AvatarController {
          * in order to ensure that there is no crossing paths with standard keys.
          */
 
-        return e.getKeyCode() + 1000*e.getModifiers();
+        return e.getKeyCode() + 1000 * e.getModifiers();
 
     }
 
@@ -297,43 +286,43 @@ public class AvatarController {
 
         for (int i = 1; i < key.length; i++) {
 
-            number += 1000*key[i];
+            number += 1000 * key[i];
 
         }
 
         return number;
     }
-    
-    public TileDetection move(){
-        if(movementDirection == null){
+
+    public TileDetection move() {
+        if (movementDirection == null) {
             return null;
         }
-        
+
         return avatar.move(movementDirection);
     }
 
-    public boolean avatarIsAlive(){
+    public boolean avatarIsAlive() {
         return avatar.getLives() > 0;
     }
-    
-    public void setMovementDirection(Map.Direction direction){
+
+    public void setMovementDirection(Map.Direction direction) {
         this.movementDirection = direction;
     }
 
-    public void stopMoving(){
+    public void stopMoving() {
         this.movementDirection = null;
     }
 
-    public void startInteraction(NPC npc){
+    public void startInteraction(NPC npc) {
         avatar.startInteraction(npc);
     }
 
     //I am so sorry for doing this...
-    public Avatar getAvatar(){
+    public Avatar getAvatar() {
         return avatar;
     }
 
-    public void unMount(){
+    public void unMount() {
         avatar.removeMount();
     }
 

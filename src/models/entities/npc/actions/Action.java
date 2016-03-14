@@ -14,12 +14,16 @@ public abstract class Action {
     //Actions occur between two people
     protected NPC npc; //Thing being interacted
     protected Avatar avatar; //Thing that is doing the interaction
-    public Action(NPC npc){
+
+    public Action(NPC npc) {
         this.npc = npc;
     }
+
     public abstract void activate(View view, ViewController viewController);
+
     public abstract String getName();
-    public void setAvatar(Avatar avatar){
+
+    public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
     }
 }

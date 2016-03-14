@@ -12,46 +12,15 @@ import java.util.TimerTask;
  */
 public abstract class Skill {
 
-    public enum SkillDictionary {
-
-        BIND_WOUNDS,  // Skills all Occupations have.
-        BARGAIN,
-        OBSERVATION,
-        ONE_HANDED_WEAPON,  // Skills Smashers have
-        TWO_HANDED_WEAPON,
-        BRAWLING,
-        ENCHANTMENT,  // Skills Summoners have
-        BOON,
-        BANE,
-        STAFF,
-        FIREBALL,
-        GROUND_DASHER,
-        INDIGNATION,
-        PICK_POCKET,  // Skills Sneaks have
-        DETECT_REMOVE_TRAP,
-        CREEP,
-        RANGED_ATTACK
-
-    }
-
-    public enum AttackType{
-        LINEAR,
-        RADIAL,
-        AREA
-    }
-
-    private SkillDictionary ID;
+    protected final int SECONDS = 1000;
     protected ConditionList conditionsToActivate = new ConditionList();
     protected int level;
     protected String SKILL_ROOT_FILE_PATH = "./src/res/skills/";
-
     protected boolean cooldown;
     protected int cooldownTime;
     protected double currentCooldownRemaining;
-    protected final int SECONDS = 1000;
+    private SkillDictionary ID;
     private Sprite sprite;
-
-
     public Skill() {
         this.currentCooldownRemaining = 0;
         this.level = 1;
@@ -71,6 +40,10 @@ public abstract class Skill {
 
     public int getLevel() {
         return this.level;
+    }
+
+    public void setLevel(int value) {
+        level = value;
     }
 
     public void incrementLevel() {
@@ -103,7 +76,6 @@ public abstract class Skill {
         countDownAndUpdateRemainingTime();
     }
 
-
     /***
      * This function will update the "currentCooldownRemaining" property of the skill
      * it'll update every MS. This is to get an accurate status of how long of the CD is left.
@@ -116,6 +88,7 @@ public abstract class Skill {
 
         timer.schedule(new TimerTask() {
             double elapsedTime = 0;
+
             @Override
             public void run() {
                 if (cooldown) {
@@ -125,8 +98,7 @@ public abstract class Skill {
                     // Current time remaining is the elapsed time minus total cooldown time
                     // divide by 1000 to get seconds
                     currentCooldownRemaining = (cooldownTime - elapsedTime) / SECONDS;
-                }
-                else {
+                } else {
                     timer.cancel();  // Terminates this timer, discarding any currently scheduled tasks.
                     timer.purge();   // Removes all cancelled tasks from this timer's task queue.
                 }
@@ -142,14 +114,14 @@ public abstract class Skill {
         return currentCooldownRemaining;
     }
 
-
     public abstract SkillDictionary initID();
+
     public abstract Sprite initSprite();
+
     public abstract String getName();
 
     //check to see if the skill is active or not
     public abstract boolean isActive();
-
 
     @Override
     public boolean equals(Object o) {
@@ -170,8 +142,33 @@ public abstract class Skill {
 
     }
 
-    public void setLevel(int value){
-        level = value;
+
+    public enum SkillDictionary {
+
+        BIND_WOUNDS,  // Skills all Occupations have.
+        BARGAIN,
+        OBSERVATION,
+        ONE_HANDED_WEAPON,  // Skills Smashers have
+        TWO_HANDED_WEAPON,
+        BRAWLING,
+        ENCHANTMENT,  // Skills Summoners have
+        BOON,
+        BANE,
+        STAFF,
+        FIREBALL,
+        GROUND_DASHER,
+        INDIGNATION,
+        PICK_POCKET,  // Skills Sneaks have
+        DETECT_REMOVE_TRAP,
+        CREEP,
+        RANGED_ATTACK
+
+    }
+
+    public enum AttackType {
+        LINEAR,
+        RADIAL,
+        AREA
     }
 
 }

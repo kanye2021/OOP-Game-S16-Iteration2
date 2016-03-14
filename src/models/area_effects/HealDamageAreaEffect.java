@@ -1,14 +1,8 @@
 package models.area_effects;
 
 
-import models.Equipment;
 import models.entities.Entity;
-import models.items.Item;
 import models.map.Decal;
-import models.stats.StatModification;
-import models.stats.StatModificationList;
-import models.stats.Stats;
-import views.sprites.Sprite;
 
 /**
  * Created by Bradley on 2/4/16.
@@ -20,6 +14,7 @@ public class HealDamageAreaEffect extends AreaEffect {
         this.AMOUNT_OF_DAMAGE = damage;
         init();
     }
+
     public void init() {
         decal = new Decal(Decal.Types.RED_CROSS);
     }
@@ -34,7 +29,7 @@ public class HealDamageAreaEffect extends AreaEffect {
         return "heal-damage";
     }
 
-    public int getValue(){
+    public int getValue() {
         return AMOUNT_OF_DAMAGE;
     }
 

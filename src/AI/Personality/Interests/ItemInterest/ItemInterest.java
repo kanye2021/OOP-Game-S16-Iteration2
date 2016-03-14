@@ -26,8 +26,12 @@ public abstract class ItemInterest extends Interest {
 
     }
 
-    public final Type getInterestType() { return Type.ITEM; }
+    public final Type getInterestType() {
+        return Type.ITEM;
+    }
+
     public abstract Interest createRuntimeInterest(Item itemOfInterest, Point pointOfInterest);
+
     public abstract double getInterestWeight(Item itemOfInterest, ThoughtInterface memory);
 
 }

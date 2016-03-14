@@ -1,26 +1,27 @@
 package AI.Movement;
 
 import AI.Memory.Memory;
-import AI.Memory.MotorInterface;
 import models.entities.npc.NPC;
 import models.map.Map;
 import utilities.NavigationUtilities;
 
 import java.util.Random;
+
 /**
  * Created by Bradley on 3/5/16.
  */
 public class MotorCortex {
+    double rand;
     //Needed so the toast doesn't constantly pop up
     private Random rng = new Random();
-    double rand;
     private NPC npc;
     private Memory memory;
 
-    public MotorCortex(NPC npc, Memory memory){
+    public MotorCortex(NPC npc, Memory memory) {
         this.npc = npc;
         this.memory = memory;
     }
+
     public void process() {
 
         rand = rng.nextDouble();
@@ -55,9 +56,6 @@ public class MotorCortex {
         memory.getDecision().updateInterest(memory);
 
     }
-
-
-
 
 
 }

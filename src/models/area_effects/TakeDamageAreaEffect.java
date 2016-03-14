@@ -14,6 +14,7 @@ public class TakeDamageAreaEffect extends AreaEffect {
         this.AMOUNT_OF_DAMAGE = damage;
         init();
     }
+
     public void init() {
         decal = new Decal(Decal.Types.SKULL_CROSSBONES);
     }
@@ -29,7 +30,7 @@ public class TakeDamageAreaEffect extends AreaEffect {
         return "take-damage";
     }
 
-    public int getValue(){
+    public int getValue() {
         return AMOUNT_OF_DAMAGE;
     }
 

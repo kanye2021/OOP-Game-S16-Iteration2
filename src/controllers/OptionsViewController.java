@@ -2,14 +2,13 @@ package controllers;
 
 import models.entities.Avatar;
 import models.skills.ActiveSkill;
-import utilities.*;
-import views.LoadGameView;
+import utilities.StateManager;
+import utilities.Task;
+import utilities.TaskWrapper;
 import views.OptionsView;
-import views.PauseView;
 import views.View;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 /**
  * Created by sergiopuleri on 3/11/16.
@@ -27,7 +26,7 @@ public class OptionsViewController extends ViewController {
     // Necessary to re-map skill keybindings. cuz thats where they live.
     private GameViewController gameViewController;
 
-    public OptionsViewController(View view, StateManager stateManager, GameViewController gameVC){
+    public OptionsViewController(View view, StateManager stateManager, GameViewController gameVC) {
         super(view, stateManager);
         this.gameViewController = gameVC;
     }
@@ -35,7 +34,7 @@ public class OptionsViewController extends ViewController {
     @Override
     protected final void initKeyPressMapping() {
 
-        OptionsView optionsView = ((OptionsView)view);
+        OptionsView optionsView = ((OptionsView) view);
         previousOption = new Task() {
             @Override
             public void run() {
@@ -43,7 +42,8 @@ public class OptionsViewController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         nextOption = new Task() {
@@ -53,7 +53,8 @@ public class OptionsViewController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         selectOption = new Task() {
@@ -108,7 +109,8 @@ public class OptionsViewController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
 
         };
 
@@ -117,7 +119,7 @@ public class OptionsViewController extends ViewController {
     }
 
     private void saveNewSkillKeyBind() {
-        OptionsView optionsView = ((OptionsView)view);
+        OptionsView optionsView = ((OptionsView) view);
 
         // Get the skill we are re-mapping
         ActiveSkill skillWeAreReMapping = optionsView.getCurrentSelectedSkill();
@@ -127,22 +129,27 @@ public class OptionsViewController extends ViewController {
 
         Task activateSkill = new Task() {
             @Override
-            public void run() { skillWeAreReMapping.onActivate(avatar); }
+            public void run() {
+                skillWeAreReMapping.onActivate(avatar);
+            }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         Task emptyTask = new Task() {
             @Override
-            public void run() {}
+            public void run() {
+            }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         // Set the keybind on the skill
-        skillWeAreReMapping.setKeyBind( lastHeardKeyPress.getKeyCode() );
+        skillWeAreReMapping.setKeyBind(lastHeardKeyPress.getKeyCode());
 
         // Remove old keybind
         gameViewController.addKeyPressMapping(new TaskWrapper(emptyTask, "Empty Task"), oldKeyBind);
@@ -150,8 +157,9 @@ public class OptionsViewController extends ViewController {
         // Set the keybind for realz with the game vc
         gameViewController.addKeyPressMapping(new TaskWrapper(activateSkill, "skill"), lastHeardKeyPress.getKeyCode());
     }
+
     private void saveNewGenericKeyBind() {
-        OptionsView optionsView = ((OptionsView)view);
+        OptionsView optionsView = ((OptionsView) view);
 
         // Get the skill we are re-mapping
         OptionsView.KeyCodeTaskObject genericTaskWeAreRemapping = optionsView.getCurrentSelectedTask();
@@ -167,14 +175,16 @@ public class OptionsViewController extends ViewController {
 
         Task emptyTask = new Task() {
             @Override
-            public void run() {}
+            public void run() {
+            }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         // Set the keybind on the skill
-        genericTaskWeAreRemapping.setKeyCode( lastHeardKeyPress.getKeyCode() );
+        genericTaskWeAreRemapping.setKeyCode(lastHeardKeyPress.getKeyCode());
 
         // Remove old keybind
         gameViewController.addKeyPressMapping(new TaskWrapper(emptyTask, "Empty Task"), oldKeyBind);
@@ -186,7 +196,7 @@ public class OptionsViewController extends ViewController {
 
     @Override
     protected void handleNewKeyPressForRemap(KeyEvent e) {
-        OptionsView optionsView = ((OptionsView)view);
+        OptionsView optionsView = ((OptionsView) view);
         int selectedIndex = optionsView.getSelected();
         int skillCount = optionsView.getSkillCount();
 
@@ -207,9 +217,7 @@ public class OptionsViewController extends ViewController {
             taskWeAreReMapping.setKeyCode(e.getKeyCode());
 
 
-
         }
-
 
 
     }
@@ -219,12 +227,16 @@ public class OptionsViewController extends ViewController {
         addKeyPressMapping(new TaskWrapper(nextOption, "Next"), KeyEvent.VK_DOWN);
         addKeyPressMapping(new TaskWrapper(selectOption, "Select"), KeyEvent.VK_ENTER);
     }
+
     private void clearDefaultMappings() {
         Task empty = new Task() {
             @Override
-            public void run() { }
+            public void run() {
+            }
+
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
         addKeyPressMapping(new TaskWrapper(empty, "Empty Task"), KeyEvent.VK_UP);
         addKeyPressMapping(new TaskWrapper(empty, "Empty Task"), KeyEvent.VK_DOWN);

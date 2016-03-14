@@ -9,6 +9,41 @@ import java.awt.*;
  */
 public class Decal {
 
+    private int id;
+    private Image image;
+    private boolean visible;
+    public Decal(Types type) {
+        id = type.ordinal();
+        image = IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath(getPathToFile())).getImage();
+        visible = true;
+    }
+
+    public Decal(Decal decal) {
+        this.id = decal.getID();
+        this.image = IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath(decal.getPathToFile())).getImage();
+        this.visible = decal.isVisible();
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public int getID() {
+        return id;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public String getPathToFile() {
+        return Types.values()[getID()].getPathToFile();
+    }
+
     public enum Types {
         RED_CROSS("red-cross.png"),
         SKULL_CROSSBONES("skull-and-crossbones.png"),
@@ -16,36 +51,15 @@ public class Decal {
         TELEPORT("teleport-sample.png"),
         TRAP("trap-sample.png");
 
-        String pathToFile;
         final String rootPath = "./src/res/decals/";
+        String pathToFile;
 
-        Types(String pathToFile) { this.pathToFile = rootPath + pathToFile; }
+        Types(String pathToFile) {
+            this.pathToFile = rootPath + pathToFile;
+        }
 
-        public String getPathToFile() { return pathToFile; }
+        public String getPathToFile() {
+            return pathToFile;
+        }
     }
-
-    private int id;
-    private Image image;
-    private boolean visible;
-
-    public Decal(Types type) {
-        id = type.ordinal();
-        image = IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath(getPathToFile())).getImage();
-        visible = true;
-    }
-
-    public Decal(Decal decal){
-        this.id = decal.getID();
-        this.image = IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath(decal.getPathToFile())).getImage();
-        this.visible = decal.isVisible();
-    }
-
-    public Image getImage() { return image; }
-    public int getID() { return id; }
-
-    public boolean isVisible() { return visible; }
-
-    public void setVisible(boolean visible) { this.visible = visible; }
-
-    public String getPathToFile() { return Types.values()[getID()].getPathToFile(); }
 }

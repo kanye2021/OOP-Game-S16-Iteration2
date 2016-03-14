@@ -14,7 +14,7 @@ import views.sprites.DecoratedSprite;
 
 
 public class hide extends EquippableItem {
-    public hide(equippableItemDecoration decoration){
+    public hide(equippableItemDecoration decoration) {
 
         ID = Item.ItemDictionary.getDictionaryItemFromID(1100 + decoration.IDModifier);
         name = "{NAME} hide".replace("{NAME}", decoration.nameModifier);

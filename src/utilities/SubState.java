@@ -1,7 +1,6 @@
 package utilities;
 
 import controllers.ViewController;
-import views.Display;
 import views.GameView;
 import views.View;
 
@@ -18,7 +17,7 @@ public class SubState {
     private View view;
     private GameView parent;
 
-    public SubState(ViewController viewController, View view){
+    public SubState(ViewController viewController, View view) {
         this.viewController = viewController;
         this.view = view;
     }
@@ -26,6 +25,7 @@ public class SubState {
     public void render(Graphics g) {
         this.view.render(g);
     }
+
     public void handleInput(KeyEvent e) {
         this.viewController.handleKeyPress(e);
     }
@@ -38,26 +38,27 @@ public class SubState {
         return view;
     }
 
-    public void setParent(GameView parent) {
-        this.parent = parent;
+    public void setView(View view) {
+        this.view = view;
     }
 
     public GameView getParent() {
         return parent;
     }
+
+    public void setParent(GameView parent) {
+        this.parent = parent;
+    }
+
     public void dismiss() {
         this.parent.removeSubState(this);
     }
 
-    public void setView(View view) {
-        this.view = view;
-    }
-
-    public void scaleView(){
+    public void scaleView() {
         view.scaleView();
     }
 
-    public void setNewController(ViewController vc){
+    public void setNewController(ViewController vc) {
         viewController = vc;
     }
 }

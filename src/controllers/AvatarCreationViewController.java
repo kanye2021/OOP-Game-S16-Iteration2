@@ -1,7 +1,9 @@
 package controllers;
 
 import utilities.*;
-import views.*;
+import views.AvatarCreationView;
+import views.GameView;
+import views.View;
 
 import java.awt.event.KeyEvent;
 
@@ -14,7 +16,7 @@ public class AvatarCreationViewController extends ViewController {
     private Task nextOption;
     private Task selectOption;
 
-    public AvatarCreationViewController(View view, StateManager stateManager){
+    public AvatarCreationViewController(View view, StateManager stateManager) {
         super(view, stateManager);
     }
 
@@ -28,7 +30,8 @@ public class AvatarCreationViewController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         nextOption = new Task() {
@@ -38,7 +41,8 @@ public class AvatarCreationViewController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         selectOption = new Task() {
@@ -47,7 +51,7 @@ public class AvatarCreationViewController extends ViewController {
                 State nextState;
                 GameView gameView;
                 GameViewController gameViewController;
-                switch (((AvatarCreationView)view).getSelected()) {
+                switch (((AvatarCreationView) view).getSelected()) {
                     case SMASHER:
                         gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         gameViewController = new GameViewController(gameView, stateManager);
@@ -65,7 +69,7 @@ public class AvatarCreationViewController extends ViewController {
                         Toast.initWithGameViewController(gameViewController);
                         break;
                     case SNEAK:
-                        gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(),view.getDisplay());
+                        gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         gameViewController = new GameViewController(gameView, stateManager);
                         nextState = new GameState(gameViewController, gameView, "sneak", null);
                         stateManager.setActiveState(nextState);
@@ -75,8 +79,10 @@ public class AvatarCreationViewController extends ViewController {
                 }
 
             }
+
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
 
@@ -87,15 +93,14 @@ public class AvatarCreationViewController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         addKeyPressMapping(new TaskWrapper(previousOption, "Previous"), KeyEvent.VK_UP);
         addKeyPressMapping(new TaskWrapper(nextOption, "Next"), KeyEvent.VK_DOWN);
         addKeyPressMapping(new TaskWrapper(selectOption, "Select"), KeyEvent.VK_ENTER);
         addKeyPressMapping(new TaskWrapper(escapeTask, "Back"), KeyEvent.VK_ESCAPE);
-
-
 
 
     }

@@ -7,18 +7,19 @@ import models.map.Tile;
 
 import java.awt.*;
 import java.util.*;
+import java.util.Queue;
 
 /**
  * Created by ben on 3/8/16.
  */
-public class RadialAttack extends Attackion{
-    
+public class RadialAttack extends Attackion {
+
     private Projectile projectile;
-    
-    public RadialAttack(Entity entity, Projectile projectile){
+
+    public RadialAttack(Entity entity, Projectile projectile) {
         this.entity = entity;
         //If you cannot attack
-        if(!canAttack(entity)){
+        if (!canAttack(entity)) {
             return;
         }
         this.origin = entity.getLocation();
@@ -30,8 +31,8 @@ public class RadialAttack extends Attackion{
         this.projectile = projectile;
         launchAttack(); // launches attack
     }
-    
-    public void launchAttack(){
+
+    public void launchAttack() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -40,57 +41,57 @@ public class RadialAttack extends Attackion{
         }).start();
     }
 
-    public void findBreadthFirstTile(){//BFS algorithm here
-        
+    public void findBreadthFirstTile() {//BFS algorithm here
+
         // Create the point queue and a hashmap for hit tiles.
         Queue<PointNode> pointQueue = new LinkedList<>();
         HashMap<Point, PointNode> hitTiles = new HashMap<>();
-        
+
         // Find the root (the entity itself).
         Tile originTile = map.getTileAt(origin);
-        PointNode root = new PointNode(originTile,origin,0);
+        PointNode root = new PointNode(originTile, origin, 0);
         pointQueue.add(root);//Push into the queue the original node
-        
+
         // Container to know what level we are at and what projectiles are currently on the map.
         int currentDistance = 0;
         HashMap<Point, PointNode> projectilesOnMap = new HashMap<>();
-        
-        while(!pointQueue.isEmpty()){
+
+        while (!pointQueue.isEmpty()) {
             PointNode current = pointQueue.poll();
             Point attackPoint = new Point(current.target);
-            
+
             Tile desiredTile = map.getTileAt(attackPoint);
 
-            if(desiredTile!=null && !hitTiles.containsKey(attackPoint)){
-                
+            if (desiredTile != null && !hitTiles.containsKey(attackPoint)) {
+
                 // Mark this tile as hit.
                 hitTiles.put(new Point(attackPoint), current);
-                
-                if(desiredTile.hasEntity()&&originTile!=desiredTile&&entity!=desiredTile.getEntity()){
+
+                if (desiredTile.hasEntity() && originTile != desiredTile && entity != desiredTile.getEntity()) {
                     Entity target = desiredTile.getEntity();
                     target.takeDamage(-damage);
-                    if(statusEffect!= StatusEffects.StatusEffect.NONE){
+                    if (statusEffect != StatusEffects.StatusEffect.NONE) {
                         target.setStatusEffect(statusEffect);
                         new Sleep(target);
                     }
 
                 }
-                for(PointNode pointNode: getAdjacentTiles(current)){
-                    if(!hitTiles.containsKey(pointNode.target)){
-                        
+                for (PointNode pointNode : getAdjacentTiles(current)) {
+                    if (!hitTiles.containsKey(pointNode.target)) {
+
                         pointNode.range += 1;
                         pointQueue.offer(pointNode);
                     }
-                    
+
                 }
-                
+
                 // Display the stuff
-                if(current.range == currentDistance){
-                    if(current.range != 0){ // Do this so it doesnt show up on the avatar.
+                if (current.range == currentDistance) {
+                    if (current.range != 0) { // Do this so it doesnt show up on the avatar.
                         map.insertProjectileAtPoint(projectile, attackPoint);
                         projectilesOnMap.put(new Point(attackPoint), current);
                     }
-                }else{
+                } else {
                     currentDistance = current.range;
 
                     try {
@@ -99,8 +100,8 @@ public class RadialAttack extends Attackion{
                         e.printStackTrace();
                     }
 
-                    for(Iterator iterator = projectilesOnMap.keySet().iterator(); iterator.hasNext();){
-                        Point location = (Point)iterator.next();
+                    for (Iterator iterator = projectilesOnMap.keySet().iterator(); iterator.hasNext(); ) {
+                        Point location = (Point) iterator.next();
 
                         map.removeProjectileAtPoint(location);
                         iterator.remove();
@@ -110,11 +111,11 @@ public class RadialAttack extends Attackion{
                     projectilesOnMap.put(new Point(attackPoint), current);
                 }
 
-                if(current.range>range){
+                if (current.range > range) {
 
                     // Clear out any projectiles that are left on themap.
-                    for(Iterator iterator = projectilesOnMap.keySet().iterator(); iterator.hasNext();){
-                        Point location = (Point)iterator.next();
+                    for (Iterator iterator = projectilesOnMap.keySet().iterator(); iterator.hasNext(); ) {
+                        Point location = (Point) iterator.next();
 
                         map.removeProjectileAtPoint(location);
                         iterator.remove();
@@ -124,7 +125,8 @@ public class RadialAttack extends Attackion{
             }
         }
     }
-    private ArrayList<PointNode> getAdjacentTiles(PointNode pointNode){
+
+    private ArrayList<PointNode> getAdjacentTiles(PointNode pointNode) {
         ArrayList<PointNode> adjacentTiles = new ArrayList<>();
 
         // Get the tile adjacent to the north.
@@ -133,8 +135,8 @@ public class RadialAttack extends Attackion{
 
 
         Tile northTile = map.getTileAt(northLogicalPoint);
-        if(northTile != null){
-            adjacentTiles.add(new PointNode(northTile, northLogicalPoint,pointNode.range));
+        if (northTile != null) {
+            adjacentTiles.add(new PointNode(northTile, northLogicalPoint, pointNode.range));
         }
 
         // Get the tile to the south of the current position.
@@ -143,8 +145,8 @@ public class RadialAttack extends Attackion{
 
 
         Tile southTile = map.getTileAt(southLogicalPoint);
-        if(southTile != null){
-            adjacentTiles.add(new PointNode(southTile, southLogicalPoint,pointNode.range));
+        if (southTile != null) {
+            adjacentTiles.add(new PointNode(southTile, southLogicalPoint, pointNode.range));
         }
 
 
@@ -153,8 +155,8 @@ public class RadialAttack extends Attackion{
         northWestLogicalPoint.translate(-1, 0);
 
         Tile northWestTile = map.getTileAt(northWestLogicalPoint);
-        if(northWestTile != null){
-            adjacentTiles.add(new PointNode(northWestTile, northWestLogicalPoint,pointNode.range));
+        if (northWestTile != null) {
+            adjacentTiles.add(new PointNode(northWestTile, northWestLogicalPoint, pointNode.range));
         }
 
 
@@ -163,8 +165,8 @@ public class RadialAttack extends Attackion{
         southEastLogicalPoint.translate(1, 0);
 
         Tile southEastTile = map.getTileAt(southEastLogicalPoint);
-        if(southEastTile != null){
-            adjacentTiles.add(new PointNode(southEastTile, southEastLogicalPoint,pointNode.range));
+        if (southEastTile != null) {
+            adjacentTiles.add(new PointNode(southEastTile, southEastLogicalPoint, pointNode.range));
         }
 
 
@@ -173,8 +175,8 @@ public class RadialAttack extends Attackion{
         northEastLogicaPoint.translate(1, -1);
 
         Tile northEastTile = map.getTileAt(northEastLogicaPoint);
-        if(northEastTile != null){
-            adjacentTiles.add(new PointNode(northEastTile, northEastLogicaPoint,pointNode.range));
+        if (northEastTile != null) {
+            adjacentTiles.add(new PointNode(northEastTile, northEastLogicaPoint, pointNode.range));
         }
 
 
@@ -183,28 +185,31 @@ public class RadialAttack extends Attackion{
         southWestLogicalPoint.translate(-1, 1);
 
         Tile southWestTile = map.getTileAt(southWestLogicalPoint);
-        if(southWestTile != null){
-            adjacentTiles.add(new PointNode(southWestTile,southWestLogicalPoint,pointNode.range));
+        if (southWestTile != null) {
+            adjacentTiles.add(new PointNode(southWestTile, southWestLogicalPoint, pointNode.range));
         }
 
         return adjacentTiles;
     }
-    class PointNode{
+
+    @Override
+    public void calculateDamage() {
+
+    }
+
+    class PointNode {
         public Point target;
         public Tile tile;
         public int range;
-        public PointNode(Tile tile, Point point, int range){
+
+        public PointNode(Tile tile, Point point, int range) {
             target = new Point();
-            this.target.x=point.x;
+            this.target.x = point.x;
             this.target.y = point.y;
             this.tile = tile;
             this.range = range;
             //this.range = -1;
         }
-    }
-    @Override
-    public void calculateDamage() {
-
     }
 
 

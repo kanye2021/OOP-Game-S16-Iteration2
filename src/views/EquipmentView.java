@@ -15,29 +15,24 @@ import java.awt.geom.Rectangle2D;
 public class EquipmentView extends View {
 
 
+    // Strings
+    private final String TITLE = "Equipped Items";
+    private final String DESCRIPTION = "Press [ENTER] on your selected item to unequip";
     // Model
     private Equipment equipment;
-
     // Colors
     private Color secondary;
     private Color primary;
     private Color rlySmallColor;
-
     // Fonts
     private Font rlySmall;
     private Font small;
     private Font title;
     private Font desc;
     private Font infoTitle;
-
     // Stuff
     private String takeableItemRootFilepath;
     private int selectedIndex;
-
-    // Strings
-    private final String TITLE = "Equipped Items";
-    private final String DESCRIPTION = "Press [ENTER] on your selected item to unequip";
-
     // Panel sizes n shit
     private int rect_w;
     private int rect_h;
@@ -55,8 +50,7 @@ public class EquipmentView extends View {
     private int img_size;
 
 
-
-    public EquipmentView(int width, int height, Display display){
+    public EquipmentView(int width, int height, Display display) {
         super(width, height, display);
         takeableItemRootFilepath = IOUtilities.getFileSystemDependentPath("./src/res/items/takeable/");
         selectedIndex = 0;
@@ -171,8 +165,7 @@ public class EquipmentView extends View {
                 if (selectedIndex == location.ordinal()) {
                     drawInfoPane(g, item);
                 }
-            }
-            else {
+            } else {
                 // No item equipped for this slot
                 // Render a place holder image
                 ii = new ImageIcon("./src/res/items/takeable/placeholder.png");
@@ -229,8 +222,8 @@ public class EquipmentView extends View {
             int h2 = (int) rec.getHeight();
             int y1 = info_pane_y - (h1 + h2 + fm.getAscent());
             int y2 = info_pane_y - (h2 + fm.getAscent());
-            g.drawString(infoString1, info_pane_x + (info_pane_w - w1)/2, y1);
-            g.drawString(infoString2, info_pane_x + (info_pane_w - w2)/2, y2);
+            g.drawString(infoString1, info_pane_x + (info_pane_w - w1) / 2, y1);
+            g.drawString(infoString2, info_pane_x + (info_pane_w - w2) / 2, y2);
 
         } else {
             // Else, only 1 line.
@@ -242,12 +235,12 @@ public class EquipmentView extends View {
 
         // Draw gray line too
         g.setColor(Color.lightGray);
-        int line_w = info_pane_w/15;
-        g.fillRect(info_pane_x - line_w/2, rect_xy_offset_top, line_w , info_pane_h + top_pane_h);
+        int line_w = info_pane_w / 15;
+        g.fillRect(info_pane_x - line_w / 2, rect_xy_offset_top, line_w, info_pane_h + top_pane_h);
 
         int statModsX = info_pane_x + line_w;
-        int initialY,  statModsY;
-        initialY = statModsY= info_pane_y;
+        int initialY, statModsY;
+        initialY = statModsY = info_pane_y;
 
         // Draw Stat Mods toStrings first
         g.setColor(Color.RED);
@@ -256,7 +249,7 @@ public class EquipmentView extends View {
         statModsY = initialY;
         g.setColor(Color.RED);
         for (StatModification s : item.getModifications().getModifications()) {
-            String statModString  = s.toString();
+            String statModString = s.toString();
             rec = fm.getStringBounds(statModString, g);
             w = (int) rec.getWidth();
             h = (int) rec.getHeight();
@@ -268,28 +261,27 @@ public class EquipmentView extends View {
 
     @Override
     public void scaleView() {
-        small = new Font("Courier New", 1, getScreenWidth()/100);
-        rlySmall = new Font("Courier New", Font.BOLD, getScreenWidth()/120);
-        desc = new Font("Courier New", 1, getScreenWidth()/86);
-        infoTitle = new Font("Courier New", Font.BOLD, getScreenWidth()/50);
-        title = new Font("Courier New", Font.BOLD, getScreenWidth()/38);
-
+        small = new Font("Courier New", 1, getScreenWidth() / 100);
+        rlySmall = new Font("Courier New", Font.BOLD, getScreenWidth() / 120);
+        desc = new Font("Courier New", 1, getScreenWidth() / 86);
+        infoTitle = new Font("Courier New", Font.BOLD, getScreenWidth() / 50);
+        title = new Font("Courier New", Font.BOLD, getScreenWidth() / 38);
 
 
         // Panel sizes
         rect_w = getScreenWidth() / 3;
         rect_h = getScreenHeight() / 2;
         top_pane_h = getScreenHeight() / 8;
-        rect_xy_offset_top = (int) (((double) getScreenWidth()/24) * 1.5);
-        rect_x_offset = (int) (((double) getScreenWidth()/24) * 1.5);
-        rect_y_offset = (int) (((double) getScreenWidth()/24) * 1.5) + top_pane_h;
+        rect_xy_offset_top = (int) (((double) getScreenWidth() / 24) * 1.5);
+        rect_x_offset = (int) (((double) getScreenWidth() / 24) * 1.5);
+        rect_y_offset = (int) (((double) getScreenWidth() / 24) * 1.5) + top_pane_h;
         info_pane_x = rect_x_offset + rect_w;
         info_pane_y = rect_y_offset;
-        info_pane_w = rect_w/2;
+        info_pane_w = rect_w / 2;
         info_pane_h = rect_h;
 
         // Slot sizes
-        item_slot = (int) (((double) getScreenWidth()/24) * 1.5);
+        item_slot = (int) (((double) getScreenWidth() / 24) * 1.5);
         img_size = (int) ((double) item_slot * .80);
     }
 }

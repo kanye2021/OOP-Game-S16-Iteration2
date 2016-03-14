@@ -46,7 +46,7 @@ public class Pet extends NPC {
 
     @Override
     public void startInteraction(NPC npc) {
-        
+
     }
 
     @Override
@@ -64,13 +64,15 @@ public class Pet extends NPC {
         imagePaths.put(Map.Direction.NORTH_WEST, imageBasePath + "NW.png");
         return imagePaths;
     }
-    public void talk(){
+
+    public void talk() {
 
     }
+
     @Override
     public final String getType() {
 
-       // return "Pet" + "-" + super.getType();
+        // return "Pet" + "-" + super.getType();
         return "Pet";
     }
 

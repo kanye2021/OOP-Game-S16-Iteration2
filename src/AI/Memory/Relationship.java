@@ -1,6 +1,5 @@
 package AI.Memory;
 
-import models.entities.Entity;
 import utilities.MathUtilities;
 
 /**

@@ -22,7 +22,7 @@ public class LoadGameViewController extends ViewController {
     private Task nextOption;
     private Task selectOption;
 
-    public LoadGameViewController(View view, StateManager stateManager){
+    public LoadGameViewController(View view, StateManager stateManager) {
         super(view, stateManager);
         updateSaveFiles(); // Initial update for save files
     }
@@ -40,19 +40,22 @@ public class LoadGameViewController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         nextOption = new Task() {
             @Override
             public void run() {
-                if (myOption < listOfSaveFiles.size() - 1){
+                if (myOption < listOfSaveFiles.size() - 1) {
                     myOption++;
                     ((LoadGameView) view).updateOption(myOption);
                 }
             }
+
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         selectOption = new Task() {
@@ -62,7 +65,8 @@ public class LoadGameViewController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         Task escapeTask = new Task() {
@@ -72,7 +76,8 @@ public class LoadGameViewController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         addKeyPressMapping(new TaskWrapper(previousOption, "Previous"), KeyEvent.VK_UP);
@@ -82,8 +87,8 @@ public class LoadGameViewController extends ViewController {
 
     }
 
-/*-------------------Main functions --------------*/
-    public void updateSaveFiles(){
+    /*-------------------Main functions --------------*/
+    public void updateSaveFiles() {
         File folder = new File(SAVE_FILE_LOCATION);
         if (!folder.exists()) {
             folder.mkdir();
@@ -95,7 +100,7 @@ public class LoadGameViewController extends ViewController {
         for (int i = 0; i < f.length && i < limit; i++) {
             File current = f[i];
             // Checks if its a valid name (IE not .DS_Store) and adds it to the array list
-            if (checkValidFileName(current.getName()))  {
+            if (checkValidFileName(current.getName())) {
                 listOfSaveFiles.add(current);
             }
         }
@@ -107,11 +112,12 @@ public class LoadGameViewController extends ViewController {
         //TODO: Add more checks (IE what about .bd.sf.xml or a.xml.df.sf)
         return name.contains(".xml") && !name.equals(".xml");
     }
-    public void sendViewUpdatedOption(){
+
+    public void sendViewUpdatedOption() {
         ((LoadGameView) view).updateOption(myOption);
     }
 
-    public void loadGame(){ // Loads the game based on the current option
+    public void loadGame() { // Loads the game based on the current option
         String selectedFile = listOfSaveFiles.get(myOption).getName();
 
         GameView gameView = new GameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());

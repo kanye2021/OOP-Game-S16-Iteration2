@@ -1,20 +1,15 @@
 package models.items.takeable.equippable;
 
+import models.Equipment;
 import models.conditions.ConditionList;
 import models.entities.Entity;
-import models.Equipment;
 import models.items.takeable.TakeableItem;
 import models.stats.StatModificationList;
-import utilities.Toast;
 
 /**
  * Created by aseber on 2/21/16.
  */
 public class EquippableItem extends TakeableItem {
-
-    protected Equipment.Component component;
-    protected StatModificationList onEquipModifications = new StatModificationList();
-    protected ConditionList equipConditions = new ConditionList();
 
     //TODO:Go back to the items classes and put the constants in oh boi
     protected final int WOODCOST = 10;
@@ -31,7 +26,7 @@ public class EquippableItem extends TakeableItem {
     protected final int GOLDATK = 60;
     protected final int RUNITEATK = 80;
     protected final int CHUCKNORRISATK = 200;
-    protected final int WOODDEF= 5;
+    protected final int WOODDEF = 5;
     protected final int IRONDEF = 10;
     protected final int STEELDEF = 20;
     protected final int MITHRILDEF = 30;
@@ -52,18 +47,18 @@ public class EquippableItem extends TakeableItem {
     protected final int GOLDLV = 30;
     protected final int RUNITELV = 40;
     protected final int CHUCKNORRISLV = 60;
-
-    protected int itemWeight;
-    //Currently range is kind of bad design since range is only for weapons but putting it here
-    //For now In case of special stuff that increases range make it
-    protected int range;
-
     protected final int RANGE = 0;
-
     //Used for weapons
     protected final int SMASHERRANGE = 1;
     protected final int SNEAKRANGE = 4;
     protected final int SUMMONERRANGE = 4;
+    protected Equipment.Component component;
+    protected StatModificationList onEquipModifications = new StatModificationList();
+    protected ConditionList equipConditions = new ConditionList();
+    protected int itemWeight;
+    //Currently range is kind of bad design since range is only for weapons but putting it here
+    //For now In case of special stuff that increases range make it
+    protected int range;
 
     //Concatenate the ranges and get 144? Last number of muliplication table in
     //elementary school?  Illuminati confirmed
@@ -81,6 +76,7 @@ public class EquippableItem extends TakeableItem {
         }
 
     }
+
     // function for unequipping.
     public final void onUnequip(Entity entity) {
         entity.removeStatMod(onEquipModifications);
@@ -92,10 +88,14 @@ public class EquippableItem extends TakeableItem {
 
     }
 
-    public final Equipment.Component getComponent() { return component; }
-    public boolean hasComponent(){
+    public final Equipment.Component getComponent() {
+        return component;
+    }
+
+    public boolean hasComponent() {
         return component != null;
     }
+
     @Override
     public String getType() {
         return "equippable";

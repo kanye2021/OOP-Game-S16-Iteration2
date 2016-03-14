@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.HashMap;
 
 public class bodyDecoration extends equippableItemDecoration {
-    public bodyDecoration(){
+    public bodyDecoration() {
         //ID
         IDModifier = 23;
         nameModifier = "Body Runes";
@@ -16,8 +16,8 @@ public class bodyDecoration extends equippableItemDecoration {
         colorMap = new HashMap<>();
         colorMap.put(new Color(204, 204, 204), new Color(0, 0, 200));
         colorMap.put(new Color(255, 255, 255), new Color(255, 255, 255));
-        colorMap.put(new Color(211,211,211),new Color(0,0,100));
-        colorMap.put(new Color(187,187,187),new Color(0,0,160));
+        colorMap.put(new Color(211, 211, 211), new Color(0, 0, 100));
+        colorMap.put(new Color(187, 187, 187), new Color(0, 0, 160));
         colorMap.put(new Color(85, 85, 85), new Color(0, 0, 120));
         //Stat Stuff
         monetaryModifier = 10;

@@ -15,17 +15,18 @@ import java.util.HashMap;
 /**
  * Created by dyeung on 2/28/16.
  */
-public class Enemy extends NPC{
+public class Enemy extends NPC {
+    public Enemy(Point location, Map map) {
+        super(location, map);
+
+    }
+
     @Override
     public void startInteraction(NPC npc) {
         super.startInteraction();
     }
 
-    public Enemy(Point location, Map map){
-        super(location,map);
-
-    }
-    protected Occupation initOccupation(){
+    protected Occupation initOccupation() {
         Occupation occupation = new Occupation() {
             @Override
             protected StatModificationList initStats() {
@@ -53,17 +54,19 @@ public class Enemy extends NPC{
 
     }
 
-    protected HashMap<Map.Direction, String> initSprites(){
+    protected HashMap<Map.Direction, String> initSprites() {
         String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/entity-smasher-");
 
         HashMap<Map.Direction, String> imagePaths = new HashMap<>();
         return imagePaths;
     }
-    public void talk(){
+
+    public void talk() {
 
     }
+
     @Override
-    public String getType(){
+    public String getType() {
         return "Enemy";
     }
 

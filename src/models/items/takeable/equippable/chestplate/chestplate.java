@@ -1,11 +1,15 @@
 package models.items.takeable.equippable.chestplate;
 
 import models.Equipment;
-import models.conditions.*;
+import models.conditions.Condition;
+import models.conditions.ConditionList;
+import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.decorations.equippableItemDecoration;
 import models.items.takeable.equippable.EquippableItem;
-import models.stats.*;
+import models.stats.StatModification;
+import models.stats.StatModificationList;
+import models.stats.Stats;
 import views.sprites.DecoratedSprite;
 
 /**
@@ -13,7 +17,7 @@ import views.sprites.DecoratedSprite;
  */
 public class chestplate extends EquippableItem {
 
-    public chestplate(equippableItemDecoration decoration){
+    public chestplate(equippableItemDecoration decoration) {
 
         ID = Item.ItemDictionary.getDictionaryItemFromID(1100 + decoration.IDModifier);
         name = "{NAME} Chestplate".replace("{NAME}", decoration.nameModifier);

@@ -1,7 +1,6 @@
 package models.conditions;
 
 import models.entities.Entity;
-import models.stats.Stats;
 import utilities.Toast;
 
 /**
@@ -14,6 +13,7 @@ public class OccupationCondition extends Condition {
         setParameter(1, occupation);
         setParameter(2, comparison);
     }
+
     @Override
     protected boolean checkConditionInternal() {
         Entity entity = (Entity) getParameter(0);
@@ -23,7 +23,7 @@ public class OccupationCondition extends Condition {
         String entityOccupation = entity.getOccupation();
 
         //return (comparison.isValid(occupation, entityOccupation));
-        if (!occupation.equals(entityOccupation)){
+        if (!occupation.equals(entityOccupation)) {
             Toast.createToastWithTimer("You have the wrong occupation!", 1000);
         }
         return (occupation.equals(entityOccupation));

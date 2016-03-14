@@ -4,14 +4,10 @@ import controllers.NPCInteractions.NPCMenuController;
 import controllers.entityControllers.AvatarController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
-import models.items.Item;
 import models.map.Map;
-
-import models.map.Tile;
 import models.skills.ActiveSkill;
 import models.skills.Skill;
 import models.skills.SkillList;
-
 import utilities.*;
 import views.*;
 
@@ -19,12 +15,11 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by sergiopuleri on 2/18/16.
  */
-public class GameViewController extends ViewController{
+public class GameViewController extends ViewController {
 
     //TODO: Map avatar movement to the correct numpad keys
 
@@ -38,7 +33,7 @@ public class GameViewController extends ViewController{
     private Point offset;
     private Point lastOffset;
 
-    public GameViewController(View view, StateManager stateManager){
+    public GameViewController(View view, StateManager stateManager) {
         super(view, stateManager);
         npcList = new ArrayList<>();
         mouseStartLocation = new Point(0, 0);
@@ -47,23 +42,26 @@ public class GameViewController extends ViewController{
         lastOffset = new Point(0, 0);
     }
 
-    public void setAvatarController(AvatarController controller){
+    public void setAvatarController(AvatarController controller) {
         avatarController = controller;
     }
-    public void initViewports(Map map, Avatar avatar, ArrayList<NPC> npcList){
-        ((GameView)view).initAreaViewport(map, avatar);
-        ((GameView)view).initStatusViewport(avatar.getStats());
-        ((GameView)view).initSkillViewport(avatar);
+
+    public void initViewports(Map map, Avatar avatar, ArrayList<NPC> npcList) {
+        ((GameView) view).initAreaViewport(map, avatar);
+        ((GameView) view).initStatusViewport(avatar.getStats());
+        ((GameView) view).initSkillViewport(avatar);
 
     }
 
 
     public void addSubState(SubState s) {
-        ((GameView)view).addSubState(s);
+        ((GameView) view).addSubState(s);
     }
+
     public void popTopSubState() {
-        ((GameView)view).popTopSubState();
+        ((GameView) view).popTopSubState();
     }
+
     public void addToastWithDefaultCloseKeyBindOfX(SubState s) {
         addSubState(s);
         // Dismiss the toast with "X" Toast
@@ -74,32 +72,33 @@ public class GameViewController extends ViewController{
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
         // Default to close a Toast is "X"
         this.addKeyPressMapping(new TaskWrapper(dismissTask, "Dismiss Toast"), KeyEvent.VK_X);
     }
 
-//    public void popSubState() {
+    //    public void popSubState() {
 //        ((GameView)view).popTopSubState();
 //    }
     public void insertSubState(SubState s, int index) {
-        ((GameView)view).insertSubState(s, index);
+        ((GameView) view).insertSubState(s, index);
     }
 
     @Override
     public final void handleKeyPress(KeyEvent e) {
 
-        if (!((GameView)view).passInputToSubstate(e))
+        if (!((GameView) view).passInputToSubstate(e))
             super.handleKeyPress(e);
 
     }
 
     @Override
-    public final void handleKeyRelease(KeyEvent e){
+    public final void handleKeyRelease(KeyEvent e) {
         super.handleKeyRelease(e);
 
-        if(avatarController!=null){
+        if (avatarController != null) {
             avatarController.handleKeyRelease(e);
         }
     }
@@ -110,7 +109,7 @@ public class GameViewController extends ViewController{
         Task task = new Task() {
             @Override
             public void run() {
-                ((GameView)view).toggleDetailedStats();
+                ((GameView) view).toggleDetailedStats();
             }
 
             @Override
@@ -124,7 +123,7 @@ public class GameViewController extends ViewController{
         task = new Task() {
             @Override
             public void run() {
-                ((GameView)view).toggleDebugInformation();
+                ((GameView) view).toggleDebugInformation();
             }
 
             @Override
@@ -142,7 +141,9 @@ public class GameViewController extends ViewController{
             }
 
             @Override
-            public void stop() { avatarController.stopMoving(); }
+            public void stop() {
+                avatarController.stopMoving();
+            }
         };
 
         addKeyPressMapping(new TaskWrapper(task, "Move North"), KeyEvent.VK_W);
@@ -150,10 +151,14 @@ public class GameViewController extends ViewController{
 
         task = new Task() {
             @Override
-            public void run() { avatarController.setMovementDirection(Map.Direction.NORTH_WEST);}
+            public void run() {
+                avatarController.setMovementDirection(Map.Direction.NORTH_WEST);
+            }
 
             @Override
-            public void stop() { avatarController.stopMoving(); }
+            public void stop() {
+                avatarController.stopMoving();
+            }
         };
 
         addKeyPressMapping(new TaskWrapper(task, "Move Northwest"), KeyEvent.VK_Q);
@@ -161,10 +166,14 @@ public class GameViewController extends ViewController{
 
         task = new Task() {
             @Override
-            public void run() { avatarController.setMovementDirection(Map.Direction.SOUTH_WEST);}
+            public void run() {
+                avatarController.setMovementDirection(Map.Direction.SOUTH_WEST);
+            }
 
             @Override
-            public void stop() { avatarController.stopMoving(); }
+            public void stop() {
+                avatarController.stopMoving();
+            }
         };
 
         addKeyPressMapping(new TaskWrapper(task, "Move Southwest"), KeyEvent.VK_Z);
@@ -172,10 +181,14 @@ public class GameViewController extends ViewController{
 
         task = new Task() {
             @Override
-            public void run() { avatarController.setMovementDirection(Map.Direction.SOUTH);}
+            public void run() {
+                avatarController.setMovementDirection(Map.Direction.SOUTH);
+            }
 
             @Override
-            public void stop() { avatarController.stopMoving(); }
+            public void stop() {
+                avatarController.stopMoving();
+            }
         };
 
         addKeyPressMapping(new TaskWrapper(task, "Move South"), KeyEvent.VK_S);
@@ -183,10 +196,14 @@ public class GameViewController extends ViewController{
 
         task = new Task() {
             @Override
-            public void run() { avatarController.setMovementDirection(Map.Direction.SOUTH_EAST);}
+            public void run() {
+                avatarController.setMovementDirection(Map.Direction.SOUTH_EAST);
+            }
 
             @Override
-            public void stop() { avatarController.stopMoving(); }
+            public void stop() {
+                avatarController.stopMoving();
+            }
         };
 
         addKeyPressMapping(new TaskWrapper(task, "Move Southeast"), KeyEvent.VK_C);
@@ -194,10 +211,14 @@ public class GameViewController extends ViewController{
 
         task = new Task() {
             @Override
-            public void run() { avatarController.setMovementDirection(Map.Direction.NORTH_EAST);}
+            public void run() {
+                avatarController.setMovementDirection(Map.Direction.NORTH_EAST);
+            }
 
             @Override
-            public void stop() { avatarController.stopMoving(); }
+            public void stop() {
+                avatarController.stopMoving();
+            }
         };
 
         addKeyPressMapping(new TaskWrapper(task, "Move NorthEast"), KeyEvent.VK_E);
@@ -214,21 +235,26 @@ public class GameViewController extends ViewController{
                 // Add closing task.
                 equipmentViewController.setCloseEquipmentTask(new Task() {
                     @Override
-                    public void run() { equipmentSubState.dismiss(); }
+                    public void run() {
+                        equipmentSubState.dismiss();
+                    }
 
                     @Override
-                    public void stop() { }
+                    public void stop() {
+                    }
                 });
                 // Add the substate
                 addSubState(equipmentSubState);
             }
+
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         //Open Pause
         Task openPause = new Task() {
-            public void run(){
+            public void run() {
                 PauseView pauseView = new PauseView(getScreenWidth(), getScreenHeight(), getDisplay());
                 PauseViewController pauseViewController = new PauseViewController(pauseView, getStateManager(), avatarController.getAvatar(), GameViewController.this);
 
@@ -241,13 +267,16 @@ public class GameViewController extends ViewController{
                     }
 
                     @Override
-                    public void stop() {}
+                    public void stop() {
+                    }
                 });
                 // Add the substate
                 addSubState(pauseSubstate);
             }
+
             @Override
-            public void stop(){}
+            public void stop() {
+            }
         };
         //Open equip menu
         Task unMount = new Task() {
@@ -255,8 +284,10 @@ public class GameViewController extends ViewController{
             public void run() {
                 avatarController.unMount();
             }
+
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
         addKeyPressMapping(new TaskWrapper(unMount, "Unmount"), KeyEvent.VK_K);
 
@@ -269,15 +300,20 @@ public class GameViewController extends ViewController{
                 // Add closing task.
                 inventoryViewController.setCloseInventory(new Task() {
                     @Override
-                    public void run() { inventorySubState.dismiss(); }
+                    public void run() {
+                        inventorySubState.dismiss();
+                    }
 
                     @Override
-                    public void stop() { }
+                    public void stop() {
+                    }
                 });
                 addSubState(inventorySubState);
             }
+
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         //InventoryView
@@ -287,7 +323,7 @@ public class GameViewController extends ViewController{
         addKeyPressMapping(new TaskWrapper(openEquipment, "Open Equipment"), KeyEvent.VK_Y);
 
         //PauseView
-        addKeyPressMapping(new TaskWrapper(openPause, "Pause"),KeyEvent.VK_P);
+        addKeyPressMapping(new TaskWrapper(openPause, "Pause"), KeyEvent.VK_P);
 
     }
 
@@ -301,25 +337,27 @@ public class GameViewController extends ViewController{
         // Available default key bindings.
         // Most skills an occupation has is 6.
         // We will assign each key to each skill incrementally, while looping over the avatar's skills.
-        int skillKeys[] = {KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5, KeyEvent.VK_6,  KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9};
+        int skillKeys[] = {KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5, KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9};
 
         int i = 0;
         for (Skill skill : skills) {
 
             // Only ActiveSkills need to have a Task.
             if (skill.isActive()) {
-                ActiveSkill activeSkill = (ActiveSkill)skill;
+                ActiveSkill activeSkill = (ActiveSkill) skill;
                 Task skillActivate = new Task() {
                     @Override
                     public void run() {
                         // Call on activate upon executing
                         activeSkill.onActivate(avatar);
                     }
+
                     @Override
-                    public void stop() {}
+                    public void stop() {
+                    }
                 };
                 // Set the default keybind on the skill
-                activeSkill.setKeyBind( skillKeys[i] );
+                activeSkill.setKeyBind(skillKeys[i]);
                 // Add the mapping to game VC
                 addKeyPressMapping(new TaskWrapper(skillActivate, "skill"), activeSkill.getKeyBind());
                 i++;
@@ -330,40 +368,43 @@ public class GameViewController extends ViewController{
         //Basic Attack
         Task basicAttack = new Task() {
             @Override
-            public void run(){
+            public void run() {
                 avatarController.useBasicAttack();
             }
+
             @Override
-            public void stop(){}
+            public void stop() {
+            }
         };
 
         //BasicAttack
-        addKeyPressMapping(new TaskWrapper(basicAttack, "Basic Attack"),KeyEvent.VK_G);
+        addKeyPressMapping(new TaskWrapper(basicAttack, "Basic Attack"), KeyEvent.VK_G);
 
     }
+
     @Override
-    public void handleMouseDragged(java.awt.event.MouseEvent e){
-        if(!mousePressed){
+    public void handleMouseDragged(java.awt.event.MouseEvent e) {
+        if (!mousePressed) {
             mousePressed = true;
             mouseStartLocation = new Point(e.getXOnScreen(), e.getYOnScreen());
         }
 
         //System.out.println("MouseDragged");
         offset = new Point(e.getXOnScreen(), e.getYOnScreen());
-        offset.translate((int)(-mouseStartLocation.getX()), (int)(-mouseStartLocation.getY()));
-        offset.translate((int)lastOffset.getX(), (int)lastOffset.getY());
-        ((GameView)view).setAreaViewportOffset(offset);
+        offset.translate((int) (-mouseStartLocation.getX()), (int) (-mouseStartLocation.getY()));
+        offset.translate((int) lastOffset.getX(), (int) lastOffset.getY());
+        ((GameView) view).setAreaViewportOffset(offset);
     }
 
     @Override
-    public void handleMouseReleased(java.awt.event.MouseEvent e){
+    public void handleMouseReleased(java.awt.event.MouseEvent e) {
         mousePressed = false;
         lastOffset = offset;
     }
 
     @Override
     public void handleMouseClicked(MouseEvent e) {
-        ((GameView)view).handleMouseClick(e);
+        ((GameView) view).handleMouseClick(e);
     }
 
     //Wrappers shits for things that have handles to GameVC and need screen dimensions + Display to create otha views
@@ -382,26 +423,26 @@ public class GameViewController extends ViewController{
     //Method is called whenever avatar moves. Basically checks what is in the tile through
     //Tile detection and then whether an NPC is detected, it'll paint the interaction
 
-    public void update(){
+    public void update() {
         moveAndDetect();
         //projectile updates
     }
 
-    public void projectileDetect(){
+    public void projectileDetect() {
 
     }
 
-    public boolean avatarDied(){
+    public boolean avatarDied() {
         return !avatarController.avatarIsAlive();
     }
 
-    public void gameOver(){
+    public void gameOver() {
         GameOverView gameOverView = new GameOverView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
         GameOverViewController gameOverViewController = new GameOverViewController(gameOverView, stateManager);
         stateManager.setActiveState(new State(gameOverViewController, gameOverView));
     }
 
-    public void moveAndDetect(){
+    public void moveAndDetect() {
 
         // Tell the avatar controller to move the avatar.
         TileDetection td;
@@ -412,7 +453,7 @@ public class GameViewController extends ViewController{
             // Return the viewport back to center
             mousePressed = false;
             lastOffset.setLocation(0, 0);
-            ((GameView)view).setAreaViewportOffset(new Point(0, 0));
+            ((GameView) view).setAreaViewportOffset(new Point(0, 0));
 
             if (td.npcDetected()) {
                 NPC npc = (NPC) td.getEntity();
@@ -425,10 +466,13 @@ public class GameViewController extends ViewController{
                 // Add closing task.
                 npcIC.setClose(new Task() {
                     @Override
-                    public void run() { npcActionSubState.dismiss(); }
+                    public void run() {
+                        npcActionSubState.dismiss();
+                    }
 
                     @Override
-                    public void stop() { }
+                    public void stop() {
+                    }
                 });
                 // Add the substate
                 addSubState(npcActionSubState);

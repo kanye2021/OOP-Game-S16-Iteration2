@@ -20,16 +20,19 @@ public class TwoHandedWeaponSkill extends ActiveSkill {
     private int baseSpeed;
     private int finalDamage;
     private int twoHandedWeaponLv;
-    public TwoHandedWeaponSkill(){
-        cooldownTime = 3*SECONDS;
+
+    public TwoHandedWeaponSkill() {
+        cooldownTime = 3 * SECONDS;
         cooldown = false;
     }
+
     @Override
     public SkillDictionary initID() {
 
         return Skill.SkillDictionary.TWO_HANDED_WEAPON;
 
     }
+
     @Override
     public String getName() {
         return "Two Handed Weapon Mastery";
@@ -43,13 +46,13 @@ public class TwoHandedWeaponSkill extends ActiveSkill {
 
     @Override
     public void onActivate(Entity entity) {
-        if(isCooldown()){
+        if (isCooldown()) {
             return;
         }
         doTheCoolDown();
         int strength = entity.getStats().getStat(Stats.Type.STRENGTH);
-        Projectile projectile = new Projectile(2*damageSent(entity),1, StatusEffects.StatusEffect.NONE);
-        new LinearAttack(entity,projectile);
+        Projectile projectile = new Projectile(2 * damageSent(entity), 1, StatusEffects.StatusEffect.NONE);
+        new LinearAttack(entity, projectile);
     }
 
     @Override
@@ -58,7 +61,9 @@ public class TwoHandedWeaponSkill extends ActiveSkill {
     }
 
 
-    public int getCombatWeight(Entity entity){return (2*entity.getStats().getStat(Stats.Type.TOTAL_WEIGHT));}
+    public int getCombatWeight(Entity entity) {
+        return (2 * entity.getStats().getStat(Stats.Type.TOTAL_WEIGHT));
+    }
 
 
     public int getFinalDamage() {

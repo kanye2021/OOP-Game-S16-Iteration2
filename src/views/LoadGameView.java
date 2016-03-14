@@ -11,6 +11,9 @@ import java.util.ArrayList;
  */
 
 public class LoadGameView extends View {
+    //Properties
+    ArrayList<File> listOfSaveFiles;
+    int selectedOption;
     //Scalable variables for resizing
     private int buttonWidth;
     private int buttonHeight;
@@ -18,24 +21,22 @@ public class LoadGameView extends View {
     private Font titleFont;
     private Font buttonFont;
 
-    //Properties
-    ArrayList<File> listOfSaveFiles;
-    int selectedOption;
-
-    public LoadGameView (int width, int height, Display display){
+    public LoadGameView(int width, int height, Display display) {
         super(width, height, display);
         selectedOption = 0;
     }
-    public void render(Graphics g){
+
+    public void render(Graphics g) {
         if (listOfSaveFiles.isEmpty()) {
-            renderTitle(g,false); //Changes the message of the title to no save files present
-        }else {
-            renderTitle(g,true);
+            renderTitle(g, false); //Changes the message of the title to no save files present
+        } else {
+            renderTitle(g, true);
             renderSaveFiles(g);
         }
     }
-    public void scaleView(){ //Remainder that this is called from class view
-        titleFont = new Font("Courier New", Font.PLAIN, getScreenWidth() / 19 );
+
+    public void scaleView() { //Remainder that this is called from class view
+        titleFont = new Font("Courier New", Font.PLAIN, getScreenWidth() / 19);
         buttonWidth = getScreenWidth() / 6;
         buttonHeight = getScreenHeight() / 25;
         buttonFont = new Font("Helvetica", Font.BOLD, getScreenWidth() / 86);
@@ -43,7 +44,7 @@ public class LoadGameView extends View {
 
     }
 
-    public void renderTitle(Graphics g, boolean hasTitle){
+    public void renderTitle(Graphics g, boolean hasTitle) {
         // Draw title
         FontMetrics fm = g.getFontMetrics(titleFont);
         g.setFont(titleFont);
@@ -53,11 +54,12 @@ public class LoadGameView extends View {
             titleString = "No games found!";
         }
         Rectangle2D rec = fm.getStringBounds(titleString, g);
-        int xTitle = (getScreenWidth()/2 - (int) (rec.getWidth()/2));
-        int yTitle = getScreenHeight()/6 + (int) (rec.getHeight() / 2);
-        g.drawString(titleString, xTitle , yTitle );
+        int xTitle = (getScreenWidth() / 2 - (int) (rec.getWidth() / 2));
+        int yTitle = getScreenHeight() / 6 + (int) (rec.getHeight() / 2);
+        g.drawString(titleString, xTitle, yTitle);
     }
-    public void renderSaveFiles(Graphics g){
+
+    public void renderSaveFiles(Graphics g) {
         int START_FILES = g.getFontMetrics(titleFont).getHeight() + titleButtonMargin;
         FontMetrics fm = g.getFontMetrics(buttonFont);
         g.setFont(buttonFont);
@@ -92,11 +94,13 @@ public class LoadGameView extends View {
         }
 
     }
+
     //Called by the view controller
-    public void updateSaveFiles(ArrayList<File> newList){
+    public void updateSaveFiles(ArrayList<File> newList) {
         listOfSaveFiles = newList;
     }
-    public void updateOption(int newOption){
+
+    public void updateOption(int newOption) {
         selectedOption = newOption;
     }
 

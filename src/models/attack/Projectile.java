@@ -1,12 +1,5 @@
 package models.attack;
 
-import models.map.Map;
-import models.map.Terrain;
-import utilities.Animator;
-import utilities.ProjectileDetection;
-
-import java.awt.*;
-import java.util.*;
 import utilities.IOUtilities;
 
 import java.awt.*;
@@ -15,12 +8,13 @@ import java.awt.*;
  * Created by ben on 3/8/16.
  */
 public class Projectile {
+    private final String BASE_FILEPATH = "./src/res/skills/";
     //Things I would need:
     //Attack
     //
     protected int damage;
     protected int range;
-//<<<<<<< HEAD
+    //<<<<<<< HEAD
 //    protected int speed;
 //    protected Point location;
 //    private boolean canMove;
@@ -87,24 +81,23 @@ public class Projectile {
 //=======
     protected StatusEffects.StatusEffect statusEffect;
     protected Image image;
-    private final String BASE_FILEPATH = "./src/res/skills/";
 
     //Put status effects here
-    public Projectile(int damage,int range,StatusEffects.StatusEffect attackEffect){
+    public Projectile(int damage, int range, StatusEffects.StatusEffect attackEffect) {
         this.damage = damage;
         this.range = range;
         this.statusEffect = attackEffect;
         this.image = null;
     }
 
-    public Projectile(int damage, int range, StatusEffects.StatusEffect attackEffect, String filepath){
+    public Projectile(int damage, int range, StatusEffects.StatusEffect attackEffect, String filepath) {
         this.damage = damage;
         this.range = range;
         this.statusEffect = attackEffect;
         this.image = IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath(BASE_FILEPATH + filepath)).getImage();
     }
 
-    public Image getImage(){
+    public Image getImage() {
         return image;
     }
 }

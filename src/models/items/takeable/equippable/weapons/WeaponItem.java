@@ -1,6 +1,5 @@
 package models.items.takeable.equippable.weapons;
 
-import models.entities.Entity;
 import models.items.takeable.equippable.EquippableItem;
 
 /**
@@ -11,7 +10,6 @@ public abstract class WeaponItem extends EquippableItem {
     //component = Equipment.Component.WEAPON;
 
     public void onUse() {
-
 
 
     }

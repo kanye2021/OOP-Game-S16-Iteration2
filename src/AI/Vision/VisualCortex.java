@@ -9,8 +9,9 @@ import models.map.Tile;
 import utilities.TileUtilities;
 
 import java.awt.*;
-import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created by Bradley on 3/5/16.
  */
@@ -20,7 +21,7 @@ public class VisualCortex {
     private Map map;
     private VisualInterface memory;
 
-    public VisualCortex(NPC npc, VisualInterface memory){
+    public VisualCortex(NPC npc, VisualInterface memory) {
         this.npc = npc;
         this.map = npc.getMap();
         this.memory = memory;
@@ -52,8 +53,8 @@ public class VisualCortex {
 
             // Get items here.
             ArrayList<Item> itemList = tile.getItems();
-            for(Item item : itemList){
-                if(item!=null){
+            for (Item item : itemList) {
+                if (item != null) {
                     memory.addVisualInput(item, pointOfTile);
                 }
             }

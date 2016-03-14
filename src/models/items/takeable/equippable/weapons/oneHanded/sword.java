@@ -11,13 +11,12 @@ import models.stats.StatModification;
 import models.stats.StatModificationList;
 import models.stats.Stats;
 import views.sprites.DecoratedSprite;
-import views.sprites.Sprite;
 
 /**
  * Created by aseber on 3/2/16.
  */
-public class sword extends EquippableItem{
-    public sword(equippableItemDecoration decoration){
+public class sword extends EquippableItem {
+    public sword(equippableItemDecoration decoration) {
         ID = Item.ItemDictionary.getDictionaryItemFromID(1600 + decoration.IDModifier);
         name = "{NAME} Sword".replace("{NAME}", decoration.nameModifier);
         description = "Sword made of {NAME}".replace("{NAME}", decoration.descriptionModifier);

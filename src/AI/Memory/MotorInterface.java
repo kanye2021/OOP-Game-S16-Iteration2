@@ -9,7 +9,9 @@ import models.entities.npc.NPC;
 public interface MotorInterface {
 
     Decision getDecision();
+
     Personality getPersonality();
+
     NPC getNPC();
 
 }

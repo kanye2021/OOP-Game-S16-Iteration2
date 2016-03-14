@@ -11,45 +11,21 @@ import java.awt.geom.Rectangle2D;
  */
 public class AvatarCreationView extends View {
 
-    public enum OccupationOptions {
-        SMASHER("Smasher", "Specialized in hand-to-hand combat"),
-        SUMMONER("Summoner", "Specialized in spell-casting"),
-        SNEAK("Sneak", "Specialized in ranged weapons, evading detection, finding/removing traps");
-
-        private String text;
-        private String description;
-
-        OccupationOptions(String text, String description) {
-            this.text = text;
-            this.description = description;
-        }
-        public String getText() {
-            return text;
-        }
-        public String getDescription() {
-            return description;
-        }
-
-    }
     // Constants
     private final String AVATAR_CREATE_TEXT = "Please select an occupation";
     private String arrowFilePath;
-
-
     // Scalable variables.
     private int buttonWidth;
     private int buttonHeight;
     private int arrowWidth;
     private int arrowHeight;
-
     // Styling properties
     private Font smallFont;
     private Font titleFont;
-
     // Data Options
     private OccupationOptions selected;
 
-    public AvatarCreationView(int width, int height, Display display){
+    public AvatarCreationView(int width, int height, Display display) {
         super(width, height, display);
         selected = OccupationOptions.SMASHER;
         arrowFilePath = "./src/res/arrow.png";
@@ -62,11 +38,12 @@ public class AvatarCreationView extends View {
 
     public void previousOption() {
         if (this.selected.ordinal() == 0) {
-            selected =  OccupationOptions.values()[OccupationOptions.values().length - 1];
+            selected = OccupationOptions.values()[OccupationOptions.values().length - 1];
         } else {
             selected = OccupationOptions.values()[selected.ordinal() - 1];
         }
     }
+
     public void nextOption() {
         if (this.selected.ordinal() == OccupationOptions.values().length - 1) {
             selected = OccupationOptions.values()[0];
@@ -76,16 +53,15 @@ public class AvatarCreationView extends View {
     }
 
     @Override
-    public void scaleView(){
+    public void scaleView() {
         // Scale font
         int titleFontSize = getScreenWidth() / 43;
         titleFont = new Font("Courier New", Font.BOLD, titleFontSize);
         int smallFontSize = getScreenWidth() / 85;
         smallFont = new Font("Helvetica", Font.BOLD, smallFontSize);
-        arrowWidth = getScreenWidth()/24;
-        arrowHeight = (int)(((double)getScreenHeight())/22.6);
+        arrowWidth = getScreenWidth() / 24;
+        arrowHeight = (int) (((double) getScreenHeight()) / 22.6);
     }
-
 
     @Override
     public void render(Graphics g) {
@@ -101,9 +77,9 @@ public class AvatarCreationView extends View {
 
 
         // Paint occupation Titles + Descriptions
-        int stringX = getScreenWidth()/12;
+        int stringX = getScreenWidth() / 12;
         int arrow_x_offset = stringX;
-        int stringY = getScreenHeight()/3;
+        int stringY = getScreenHeight() / 3;
         int stringY2 = 0;
         int prevY = 0;
         // Loop through menu options and display on screen
@@ -113,7 +89,7 @@ public class AvatarCreationView extends View {
             fm = g.getFontMetrics(smallFont);
             Rectangle2D rectangle2 = fm.getStringBounds(occupation.getDescription(), g);
 
-            stringY = prevY != 0 ? prevY + ((int) rectangle2.getHeight()) + getScreenHeight()/16 : stringY;
+            stringY = prevY != 0 ? prevY + ((int) rectangle2.getHeight()) + getScreenHeight() / 16 : stringY;
             stringY2 = ((int) (rectangle1.getHeight()) + fm.getAscent()) + stringY;
 
             Color primaryColor = Color.white;
@@ -122,7 +98,7 @@ public class AvatarCreationView extends View {
                 // Drawing Arrow next to selection
                 ImageIcon ii = new ImageIcon(arrowFilePath);
                 Image arrow = ii.getImage();
-                arrow_x_offset -= arrowWidth + getScreenWidth()/120;
+                arrow_x_offset -= arrowWidth + getScreenWidth() / 120;
                 g.drawImage(arrow, arrow_x_offset, stringY, arrowWidth, arrowHeight, null);
             }
 
@@ -135,6 +111,30 @@ public class AvatarCreationView extends View {
         }
 
         Toolkit.getDefaultToolkit().sync();
+
+    }
+
+
+    public enum OccupationOptions {
+        SMASHER("Smasher", "Specialized in hand-to-hand combat"),
+        SUMMONER("Summoner", "Specialized in spell-casting"),
+        SNEAK("Sneak", "Specialized in ranged weapons, evading detection, finding/removing traps");
+
+        private String text;
+        private String description;
+
+        OccupationOptions(String text, String description) {
+            this.text = text;
+            this.description = description;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public String getDescription() {
+            return description;
+        }
 
     }
 }

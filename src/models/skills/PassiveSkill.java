@@ -1,6 +1,5 @@
 package models.skills;
 
-import models.entities.Avatar;
 import models.entities.Entity;
 
 /**

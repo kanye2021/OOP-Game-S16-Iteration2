@@ -30,28 +30,30 @@ public class TalkViewController extends ViewController {
     }
 
     @Override
-    public void initKeyPressMapping(){
-        continueText = new Task(){
+    public void initKeyPressMapping() {
+        continueText = new Task() {
             @Override
-            public void run(){
+            public void run() {
                 npc.progressDialogue(); //Goes to next dialogue box
-                if(npc.getDialogueLocation() == npc.getDialogue().size()){
+                if (npc.getDialogueLocation() == npc.getDialogue().size()) {
                     npc.resetDialogue();
                     closeActions.run();
                 }
             }
 
             @Override
-            public void stop(){}
+            public void stop() {
+            }
         };
 
         addKeyPressMapping(new TaskWrapper(continueText, "Continue"), KeyEvent.VK_ENTER);
     }
 
-    public TalkViewController getTalkViewController(){
+    public TalkViewController getTalkViewController() {
         return this;
     }
-    public void setClose(Task task){
+
+    public void setClose(Task task) {
         closeActions = task;
         npc.resetDialogue();
     }

@@ -6,20 +6,27 @@ import models.skills.ActiveSkill;
 import models.stats.Stats;
 import views.sprites.Sprite;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 /**
  * Created by aseber on 2/24/16.
  */
 
 public class BindWoundsSkill extends ActiveSkill {
-    private Stats stats;
     private final int constant = 5;
+    private Stats stats;
     //cost = -5;//This is the mana cost it takes to activate this skill
 
 
+    public BindWoundsSkill() {
+
+        conditionsToActivate = new ConditionList(
+//            new StatCondition(Avatar, 3, Stats.Type.LIVES, Condition.Comparison.EXACTLY);
+        );
+        level = 1;
+        cost = 5;
+        cooldownTime = 5 * SECONDS;
+    }
 
     @Override
     public SkillDictionary initID() {
@@ -33,29 +40,19 @@ public class BindWoundsSkill extends ActiveSkill {
         return "Bind Wounds";
     }
 
-    public BindWoundsSkill() {
-
-        conditionsToActivate = new ConditionList(
-//            new StatCondition(Avatar, 3, Stats.Type.LIVES, Condition.Comparison.EXACTLY);
-        );
-        level = 1;
-        cost = 5;
-        cooldownTime = 5*SECONDS;
-    }
-
     @Override
     public void onActivate(Entity entity) {
-    //This is used to heal.
-        if(isCooldown()){
+        //This is used to heal.
+        if (isCooldown()) {
             return;
         }
-        if(!payMana(entity,cost)){
+        if (!payMana(entity, cost)) {
             return;
         }
         doTheCoolDown();
-                int healAmt = constant * level;
-                Stats stats = entity.getStats();//gets the instance of the stats
-                stats.modifyStat(Stats.Type.HEALTH, healAmt);
+        int healAmt = constant * level;
+        Stats stats = entity.getStats();//gets the instance of the stats
+        stats.modifyStat(Stats.Type.HEALTH, healAmt);
 
 
     }

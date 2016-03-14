@@ -1,8 +1,5 @@
 package controllers;
 
-import utilities.State;
-import utilities.StateManager;
-import utilities.TaskWrapper;
 import utilities.*;
 import views.SaveGameView;
 import views.View;
@@ -12,37 +9,41 @@ import java.awt.event.KeyEvent;
 /**
  * Created by dyeung on 2/18/16.
  */
-public class SaveGameViewController extends ViewController{
+public class SaveGameViewController extends ViewController {
 
     private Task previousOption;
     private Task nextOption;
     private Task selectOption;
     private GameState gameState;
-    public SaveGameViewController(View view, StateManager stateManager, GameState gS){
+
+    public SaveGameViewController(View view, StateManager stateManager, GameState gS) {
         super(view, stateManager);
         gameState = gS;
     }
+
     @Override
     protected final void initKeyPressMapping() {
 
         previousOption = new Task() {
             @Override
             public void run() {
-                ((SaveGameView)view).previousOption();
+                ((SaveGameView) view).previousOption();
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         nextOption = new Task() {
             @Override
             public void run() {
-                ((SaveGameView)view).nextOption();
+                ((SaveGameView) view).nextOption();
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         selectOption = new Task() {
@@ -50,7 +51,7 @@ public class SaveGameViewController extends ViewController{
             public void run() {
                 State nextState;
 
-                switch (((SaveGameView)view).getSelected()) {
+                switch (((SaveGameView) view).getSelected()) {
                     case SAVE_GAME_EXIT:
                         //TODO: Add save game
                         saveGame();
@@ -68,7 +69,8 @@ public class SaveGameViewController extends ViewController{
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
         //Task empty = null;
         addKeyPressMapping(new TaskWrapper(previousOption, "Previous"), KeyEvent.VK_UP);
@@ -77,16 +79,18 @@ public class SaveGameViewController extends ViewController{
 
 
     }
-    public void saveGame(){
-        String saveGameName = ((SaveGameView)view).getSaveFileName();
+
+    public void saveGame() {
+        String saveGameName = ((SaveGameView) view).getSaveFileName();
         if (saveGameName.isEmpty()) {
             saveGameName = "No_File_Name.xml";
         }
         gameState.saveGame(saveGameName);
     }
-    public void goPrevious(){
+
+    public void goPrevious() {
         //TODO: Make this nicer somehow...
-        view.getDisplay().remove(((SaveGameView)view).getSaveStateName());
+        view.getDisplay().remove(((SaveGameView) view).getSaveStateName());
         //stateManager.goToPreviousState();
         stateManager.goToPreviousState();
     }

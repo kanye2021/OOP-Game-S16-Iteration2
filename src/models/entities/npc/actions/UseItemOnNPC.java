@@ -15,11 +15,11 @@ import views.View;
  */
 public class UseItemOnNPC extends Action {
 
-    public UseItemOnNPC(NPC npc){
+    public UseItemOnNPC(NPC npc) {
         super(npc);
     }
 
-    public void activate(View view, ViewController viewController){
+    public void activate(View view, ViewController viewController) {
         //Display Dialogue
         InventoryView inventoryView = new InventoryView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
         NPCItemUseController npcItemUseController = new NPCItemUseController(inventoryView, viewController.getStateManager(), avatar, npc);
@@ -27,17 +27,23 @@ public class UseItemOnNPC extends Action {
         npcItemUseController.setClose(new Task() {
             @Override
             public void run() {
-                useState.dismiss(); }
+                useState.dismiss();
+            }
 
             @Override
-            public void stop() { }
+            public void stop() {
+            }
         });
         ((GameViewController) viewController).addSubState(useState);
     }
 
     @Override
-    public String getName(){ return "Use Item"; }
+    public String getName() {
+        return "Use Item";
+    }
 
     @Override
-    public void setAvatar(Avatar avatar){ this.avatar = avatar; }
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
+    }
 }

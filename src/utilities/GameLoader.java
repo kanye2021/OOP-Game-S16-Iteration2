@@ -1,9 +1,7 @@
 package utilities;
 
-import models.Equipment;
 import models.area_effects.*;
 import models.entities.*;
-import models.entities.Entity;
 import models.entities.npc.Dragon;
 import models.entities.npc.Mount;
 import models.entities.npc.NPC;
@@ -15,19 +13,17 @@ import models.map.Decal;
 import models.map.Map;
 import models.map.Terrain;
 import models.map.Tile;
-import models.occupation.Occupation;
-import models.skills.Skill;
 import models.skills.SkillList;
-import models.stats.Stats;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXParseException;
 import views.AreaViewport;
-import views.Display;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
-import java.awt.geom.Area;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,10 +39,11 @@ import java.util.HashMap;
 public class GameLoader {
 
     private final String DEFAULT_MAP = IOUtilities.getFileSystemDependentPath("./src/res/maps/default_map.xml");
-    private final Point DEFAULT_START_LOCATION = new Point(0,-2);
+    private final Point DEFAULT_START_LOCATION = new Point(0, -2);
     private GameState game;
     private AreaViewport areaViewport;
-    public void createNewGame(GameState gameState, String occupation){
+
+    public void createNewGame(GameState gameState, String occupation) {
         game = gameState;
         // Load the map
         Map newMap = loadMap(DEFAULT_MAP);
@@ -54,7 +51,7 @@ public class GameLoader {
 
         // Create a new avatar
         Avatar newAvatar;
-        switch(occupation){
+        switch (occupation) {
             case "smasher":
                 newAvatar = new SmasherAvatar(DEFAULT_START_LOCATION, newMap);
                 break;
@@ -80,7 +77,7 @@ public class GameLoader {
 
         // TODO: Inilialize the npcs. (needs to be done by xml)
         //TODO: Current a tmp npc
-        Point tmp = new Point(-10,-3);
+        Point tmp = new Point(-10, -3);
         ShopKeeper newVillager = new ShopKeeper(tmp, newMap);
         newMap.insertEntity(newVillager);
         ArrayList<NPC> tmpList = new ArrayList<>();
@@ -89,10 +86,11 @@ public class GameLoader {
         game.setNpcList(tmpList);
 
 
-        Dragon dragon = new Dragon(new Point(1,-1),newMap);
+        Dragon dragon = new Dragon(new Point(1, -1), newMap);
         newMap.insertEntity(dragon);
     }
-    public void loadGame(GameState gameState, String fileName){
+
+    public void loadGame(GameState gameState, String fileName) {
         game = gameState; //Needs to update game state
         String updateFile = "./src/res/save_files/" + fileName;
         String filePath = IOUtilities.getFileSystemDependentPath(updateFile);
@@ -104,7 +102,8 @@ public class GameLoader {
         //will have to be called later)
 //        loadSeenTiles(filePath);
     }
-    public void loadSeenTiles(GameState gameState, String fileName){
+
+    public void loadSeenTiles(GameState gameState, String fileName) {
         String updateFile = "./src/res/save_files/" + fileName;
         String filePath = IOUtilities.getFileSystemDependentPath(updateFile);
         System.out.println(filePath);
@@ -120,19 +119,19 @@ public class GameLoader {
             doc.getDocumentElement().normalize();
 
             NodeList seenList = doc.getElementsByTagName("seen-tiles");
-            Element seenTiles = (Element)seenList.item(0);
+            Element seenTiles = (Element) seenList.item(0);
             // Get the tilesNodes from the xml file.
             NodeList tileNodes = seenTiles.getElementsByTagName("tile");
             int numTiles = tileNodes.getLength();
             HashMap<Point, Tile> seen = areaViewport.seenTiles;
             for (int i = 0; i < numTiles; i++) {
-                Element tileElement = (Element)tileNodes.item(i);
+                Element tileElement = (Element) tileNodes.item(i);
 
                 // The tiles will be loaded using an axial coordinate system.
                 int x = Integer.parseInt(tileElement.getAttribute("x"));
                 int y = Integer.parseInt(tileElement.getAttribute("y"));
                 Point p = new Point();
-                p.setLocation(x,y);
+                p.setLocation(x, y);
 
                 AreaEffect area = getAreaEffect(tileElement);
                 ArrayList<Item> groundItem = getItemAtTile(tileElement);
@@ -143,14 +142,14 @@ public class GameLoader {
                 seen.put(p, tmp);
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private Map loadMap(String filepath){
+    private Map loadMap(String filepath) {
 
-        try{
+        try {
             // Create a document from the xml file
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -183,13 +182,13 @@ public class GameLoader {
                 // Declare variables use to construct a tile
                 Terrain terrain = getTerrain(tileElement);
                 AreaEffect areaEffect = getAreaEffect(tileElement);
-                Decal decal = getDecal(tileElement,areaEffect);
+                Decal decal = getDecal(tileElement, areaEffect);
                 ArrayList<Item> items = getItemAtTile(tileElement);
                 Entity entity = null;
 
 //                tiles.get(new Point(x, y)) = new Tile(terrain, areaEffect, decal, item, entity);
 
-                tiles.put(new Point(x, y),  new Tile(terrain, decal, items, entity, areaEffect));
+                tiles.put(new Point(x, y), new Tile(terrain, decal, items, entity, areaEffect));
 
 //                tiles.put(new Point(x, y),  new Tile(terrain, decal, items, entity, areaEffect));
 
@@ -212,18 +211,19 @@ public class GameLoader {
 
         return null;
     }
-    public Terrain getTerrain(Element tileElement){
+
+    public Terrain getTerrain(Element tileElement) {
         Element terrainElement = (Element) tileElement.getElementsByTagName("terrain").item(0);
         String terrainType = terrainElement.getAttribute("type");
         Terrain terrain = new Terrain(terrainType);
         return terrain;
     }
-    public Decal getDecal(Element tileElement, AreaEffect areaEffect){
+
+    public Decal getDecal(Element tileElement, AreaEffect areaEffect) {
         Decal decal = null;
         if (areaEffect != null) {
             decal = areaEffect.getDecal();
-        }
-        else {
+        } else {
             NodeList decalNodes = tileElement.getElementsByTagName("decal");
             if (decalNodes.getLength() > 0) {
                 Element decalElement = (Element) decalNodes.item(0);
@@ -233,7 +233,8 @@ public class GameLoader {
         }
         return decal;
     }
-    public AreaEffect getAreaEffect(Element tileElement){
+
+    public AreaEffect getAreaEffect(Element tileElement) {
         // Get the areaEffect if there is one
         NodeList areaEffectNodes = tileElement.getElementsByTagName("area-effect");
         AreaEffect areaEffect = null;
@@ -274,12 +275,13 @@ public class GameLoader {
         }
         return areaEffect;
     }
-    public ArrayList<Item> getItemAtTile(Element tileElement){
+
+    public ArrayList<Item> getItemAtTile(Element tileElement) {
         // Get the item if there is one
         ArrayList<Item> items = new ArrayList<>();
         NodeList itemNodes = tileElement.getElementsByTagName("item");
 
-        for(int i=0; i<itemNodes.getLength(); i++){
+        for (int i = 0; i < itemNodes.getLength(); i++) {
             Element itemElement = (Element) itemNodes.item(i);
             int id = Integer.parseInt(itemElement.getAttribute("id"));
 
@@ -296,14 +298,14 @@ public class GameLoader {
         return items;
     }
 
-    public void addEntities(Element mapElement, Map newMap){
+    public void addEntities(Element mapElement, Map newMap) {
         // TODO: Implement adding entities to the map from xml.
         // Get any entities that are on the tile.
         NodeList entityNodes = mapElement.getElementsByTagName("entity");
         ArrayList<NPC> npcList = new ArrayList<>();
         Avatar avatar = null;
         Entity entity;
-        for (int i = 0; i <entityNodes.getLength(); i++){
+        for (int i = 0; i < entityNodes.getLength(); i++) {
             Element entityElement = (Element) entityNodes.item(i);
             //TODO: Load whatever attributes are necessary
             //entity = new Entity();
@@ -311,21 +313,21 @@ public class GameLoader {
             int targetX = Integer.parseInt(pointValue[0]);
             int targetY = Integer.parseInt(pointValue[1]);
             Point p = new Point();
-            p.setLocation(targetX,targetY);
+            p.setLocation(targetX, targetY);
 
-            if ((entityElement.getAttribute("type")).contains("Avatar")){
+            if ((entityElement.getAttribute("type")).contains("Avatar")) {
                 avatar = getAvatar(entityElement, p, newMap);
                 entity = avatar;
-            }else {
+            } else {
                 NPC n = getNPC(entityElement, p, newMap);
                 npcList.add(n);
                 entity = n;
             }
             NodeList mountList = entityElement.getElementsByTagName("mount");
-            if (mountList.getLength() > 0){
-                Element mountElement = (Element)mountList.item(0);
+            if (mountList.getLength() > 0) {
+                Element mountElement = (Element) mountList.item(0);
                 //Element entityMount = (Element)mountElement.getElementsByTagName("entity").item(0);
-                Mount mount = (Mount)getNPC(mountElement,p,newMap);
+                Mount mount = (Mount) getNPC(mountElement, p, newMap);
                 entity.setMount(mount);
             }
 
@@ -335,19 +337,20 @@ public class GameLoader {
         game.setAvatar(avatar);
         game.setNpcList(npcList);
     }
-    public Avatar getAvatar(Element e, Point p, Map map){
+
+    public Avatar getAvatar(Element e, Point p, Map map) {
         Avatar avatar;
         String type = e.getAttribute("occupation");
-        switch(type) {
+        switch (type) {
             case "Smasher":
                 //You will have to set the map later on
                 avatar = new SmasherAvatar(p, map);
                 break;
             case "Sneak":
-                avatar = new SneakAvatar(p,map);
+                avatar = new SneakAvatar(p, map);
                 break;
             case "Summoner":
-                avatar = new SummonerAvatar(p,map);
+                avatar = new SummonerAvatar(p, map);
                 break;
             default: //This shouldn't happen
                 avatar = new SmasherAvatar(p, map);
@@ -357,29 +360,29 @@ public class GameLoader {
         return avatar;
     }
 
-    public NPC getNPC(Element e, Point p, Map map){
+    public NPC getNPC(Element e, Point p, Map map) {
         NPC npc = null;
         String type = e.getAttribute("type");
-        switch(type) {
+        switch (type) {
             case "Dragon":
                 npc = new Dragon(p, map);
                 break;
             case "ShopKeeper":
-                npc = new ShopKeeper(p,map);
+                npc = new ShopKeeper(p, map);
                 break;
             case "Pet":
-                npc = new Pet(p,map);
+                npc = new Pet(p, map);
                 break;
         }
-        updateEntity(e,npc);
+        updateEntity(e, npc);
         return npc;
     }
 
-    public void updateEntity(Element e, Entity entity){
+    public void updateEntity(Element e, Entity entity) {
         //Update Orientation
         String orientation = e.getAttribute("orientation");
-        for (Map.Direction direction : Map.Direction.values()){
-            if (direction.name().equals(orientation)){
+        for (Map.Direction direction : Map.Direction.values()) {
+            if (direction.name().equals(orientation)) {
                 entity.setOrientation(direction);
             }
         }
@@ -387,26 +390,29 @@ public class GameLoader {
         updateStats(e, entity);
         updateEquipped(e, entity);
         //TODO:
-        updateSkills(e,entity);
+        updateSkills(e, entity);
     }
-    public void updateInventory(Element e, Entity entity){
+
+    public void updateInventory(Element e, Entity entity) {
         NodeList list = e.getElementsByTagName("item-inv");
-        for (int i = 0; i < list.getLength(); i++){
-            Element item = (Element)list.item(i);
+        for (int i = 0; i < list.getLength(); i++) {
+            Element item = (Element) list.item(i);
             int id = Integer.parseInt(item.getAttribute("id"));
             //Items in the inventory has to be Takeable items
-            entity.addItemToInventory( (TakeableItem)Item.ItemDictionary.itemFromID(id) );
+            entity.addItemToInventory((TakeableItem) Item.ItemDictionary.itemFromID(id));
         }
     }
-    public void updateStats(Element e, Entity entity){
-        Element stats = (Element)(e.getElementsByTagName("stats").item(0));
-        int level = Integer.parseInt( stats.getAttribute("Level") );
-        for (int i = 0; i < level; i++){
+
+    public void updateStats(Element e, Entity entity) {
+        Element stats = (Element) (e.getElementsByTagName("stats").item(0));
+        int level = Integer.parseInt(stats.getAttribute("Level"));
+        for (int i = 0; i < level; i++) {
             entity.getStats().levelUp(); //Solely just levels up the entity
             entity.getStats().decrementSkillPoints(); //Needs to decrement the amount of skill points though (its just loading)
         }
 
     }
+
     public void updateEquipped(Element e, Entity entity) {
         NodeList equipedList = e.getElementsByTagName("equipment");
         Element equiped = (Element) equipedList.item(0);
@@ -418,16 +424,17 @@ public class GameLoader {
             if (value != -1) {
                 Item thisItem = Item.ItemDictionary.itemFromID(value);
                 //This has to be equippable item if Im getting it form that equipped view
-                entity.equipItem((EquippableItem)thisItem);
+                entity.equipItem((EquippableItem) thisItem);
             }
         }
     }
-    public void updateSkills(Element elm, Entity entity){
+
+    public void updateSkills(Element elm, Entity entity) {
         NodeList tmp = elm.getElementsByTagName("skills");
         if (tmp.getLength() > 0) {
             Element skills = (Element) tmp.item(0);
             NodeList skillList = skills.getElementsByTagName("skill");
-            for(int i = 0; i < skillList.getLength(); i++) {
+            for (int i = 0; i < skillList.getLength(); i++) {
                 Element skill = (Element) skillList.item(i);
                 String name = skill.getAttribute("name");
                 int value = Integer.parseInt(skill.getAttribute("value"));

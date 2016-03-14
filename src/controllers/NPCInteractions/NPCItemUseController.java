@@ -5,8 +5,6 @@ import models.Inventory;
 import models.entities.Entity;
 import models.entities.npc.NPC;
 import models.items.takeable.TakeableItem;
-import models.items.takeable.consumable.ConsumableItem;
-import models.items.takeable.equippable.EquippableItem;
 import utilities.StateManager;
 import utilities.Task;
 import utilities.TaskWrapper;
@@ -41,7 +39,7 @@ public class NPCItemUseController extends ViewController {
         this.npc = npc;
         this.inventory = entity.getInventory();
         this.itemNodeArrayList = inventory.getItemNodeArrayList();
-        ((InventoryView)view).setItemNodeList(this.itemNodeArrayList);
+        ((InventoryView) view).setItemNodeList(this.itemNodeArrayList);
     }
 
     @Override
@@ -57,19 +55,22 @@ public class NPCItemUseController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         nextItem = new Task() {
             @Override
             public void run() {
-                if (selectedItemIndex < itemNodeArrayList.size() - 1){
+                if (selectedItemIndex < itemNodeArrayList.size() - 1) {
                     selectedItemIndex++;
                     ((InventoryView) view).updateSelected(selectedItemIndex);
                 }
             }
+
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         useItem = new Task() {
@@ -78,12 +79,10 @@ public class NPCItemUseController extends ViewController {
                 TakeableItem currentItem = itemNodeArrayList.get(selectedItemIndex).getItem();
                 if (currentItem.isEquipable()) {
                     Toast.createToastWithTimer("Can't use that on the NPC", 500);
-                }
-                else if(currentItem.isConsumable()){
+                } else if (currentItem.isConsumable()) {
                     currentItem.onUse(npc);
                     entity.getInventory().removeItem(currentItem);
-                }
-                else{
+                } else {
                     Toast.createToastWithTimer("Nothing happened...", 1000);
                 }
                 selectedItemIndex--;
@@ -93,7 +92,8 @@ public class NPCItemUseController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
 

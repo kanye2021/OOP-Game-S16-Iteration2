@@ -14,10 +14,9 @@ import java.awt.geom.RoundRectangle2D;
 public class StatusViewport extends View {
 
     private final String RESOURCE_BASE_PATH = IOUtilities.getFileSystemDependentPath("./src/res/etc/");
-    private Stats stats;
     private final Font FIXED_FONT_MED = new Font("Courier New", 1, 18);
     private final Font FIXED_FONT_SMALL = new Font("Courier New", 1, 14);
-
+    private Stats stats;
     // Scalable Viewport Attributes
     private int viewportWidth;
     private int viewportHeight;
@@ -34,7 +33,7 @@ public class StatusViewport extends View {
     private boolean showDetails;
 
     public StatusViewport(int width, int height, Display display, Stats stats) {
-        super(width, height ,display);
+        super(width, height, display);
         this.stats = stats;
         showDetails = false;
         borderRadius = 40;
@@ -43,7 +42,7 @@ public class StatusViewport extends View {
         scaleView();
     }
 
-    public void toggleDetails(){
+    public void toggleDetails() {
         showDetails = !showDetails;
         getDisplay().repaint();
     }
@@ -57,14 +56,14 @@ public class StatusViewport extends View {
         drawStatusBars(g);
 
         // Draw the other stats if the user wants it
-        if(showDetails){
+        if (showDetails) {
             Graphics2D g2 = (Graphics2D) g.create();
             drawStatAttributes(g2);
         }
 
     }
 
-    private void drawLevelAndLives(Graphics g){
+    private void drawLevelAndLives(Graphics g) {
         String level = "Level: " + stats.getStat(Stats.Type.LEVEL);
 
         // Set the font
@@ -98,14 +97,14 @@ public class StatusViewport extends View {
 
         // Set the spacing between hearts
         int heartsX = livesX + (int) livesRect.getWidth();
-        int heartsY = livesY - (int) livesRect.getHeight() * 3/4;
+        int heartsY = livesY - (int) livesRect.getHeight() * 3 / 4;
         for (int i = 0; i < lives; i++) {
             g.drawImage(lifeImg, heartsX, heartsY, heartSize, heartSize, getDisplay());
             heartsX += heartSize + marginBtwnHearts;
         }
     }
 
-    private void drawStatusBars(Graphics g){
+    private void drawStatusBars(Graphics g) {
 
         // Start with the healthbar
         // Get the necessary stats
@@ -202,7 +201,6 @@ public class StatusViewport extends View {
         g.drawString(manaFractionString, manaFractionX, manaFractionY);
 
 
-
         // Draw the exp bar
         // Get the necessary stats
         int exp = stats.getStat(Stats.Type.EXPERIENCE);
@@ -252,7 +250,7 @@ public class StatusViewport extends View {
         g.drawString(expFractionString, expFractionX, expFractionY);
     }
 
-    private void drawStatAttributes(Graphics2D g){
+    private void drawStatAttributes(Graphics2D g) {
         // Get the ncessary stats
         String strength = "Strength: " + stats.getStat(Stats.Type.STRENGTH);
         String agility = "Agility: " + stats.getStat(Stats.Type.AGILITY);
@@ -310,7 +308,7 @@ public class StatusViewport extends View {
         AlphaComposite acomp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f);
         g.setComposite(acomp);
 
-        int startX = viewportWidth /2 - totalWidth /2 - 40;
+        int startX = viewportWidth / 2 - totalWidth / 2 - 40;
         int startY = viewportHeight - 4 * (int) strengthRect.getHeight() - 20;
         int width = totalWidth + 100;
         int height = viewportHeight - startY;
@@ -319,9 +317,9 @@ public class StatusViewport extends View {
         Shape statsCont = new RoundRectangle2D.Double(startX, startY, width, height, 20, 20);
         Shape oldClip = g.getClip();
         g.setClip(statsCont);
-        g.drawImage(statsParchment,startX, startY, width, height, getDisplay());
+        g.drawImage(statsParchment, startX, startY, width, height, getDisplay());
         g.setClip(oldClip);
-        
+
         // Set the alpha comp back to normal.
         acomp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
         g.setComposite(acomp);

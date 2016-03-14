@@ -45,6 +45,7 @@ public class SummonerAvatar extends Avatar {
         return new Summoner();
 
     }
+
     @Override
     public final String getType() {
 
@@ -66,6 +67,6 @@ public class SummonerAvatar extends Avatar {
         imagePaths.add(new ImageIcon(imageBasePath + "SE.png").getImage());
         imagePaths.add(new ImageIcon(imageBasePath + "SW.png").getImage());
         return imagePaths;
-        }
     }
+}
 

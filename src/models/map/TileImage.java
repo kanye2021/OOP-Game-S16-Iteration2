@@ -19,7 +19,7 @@ public class TileImage extends BufferedImage {
         g = this.createGraphics();
     }
 
-    public static TileImage copyImage(TileImage tileImage){
+    public static TileImage copyImage(TileImage tileImage) {
         TileImage b = new TileImage(tileImage.getWidth(), tileImage.getHeight(), tileImage.getType());
         Graphics g = b.getGraphics();
         g.drawImage(tileImage, 0, 0, null);
@@ -27,7 +27,7 @@ public class TileImage extends BufferedImage {
         return b;
     }
 
-    public void generate(Tile tile){
+    public void generate(Tile tile) {
 
         // Clear the Image
         g.setColor(Color.BLACK);
@@ -39,51 +39,51 @@ public class TileImage extends BufferedImage {
 
         // Draw the items
         Image item = tile.getItemImage();
-        if(item!=null){
+        if (item != null) {
             g.drawImage(item, 0, 0, getWidth(), getHeight(), null);
         }
 
         // Draw the decals
         Image decal = tile.getDecalImage();
-        if(decal!=null){
-            int width = getWidth() * 3/5;
-            int height = getHeight() * 3/5;
-            int x = getWidth()/2 - width/2;
-            int y = getHeight()/2 - height/2;
+        if (decal != null) {
+            int width = getWidth() * 3 / 5;
+            int height = getHeight() * 3 / 5;
+            int x = getWidth() / 2 - width / 2;
+            int y = getHeight() / 2 - height / 2;
             g.drawImage(decal, x, y, width, height, null);
         }
 
         Image projectile = tile.getProjectileImage();
-        if(projectile!=null){
-            int width = getWidth() * 3/4;
-            int height = getHeight() * 3/4;
-            int x = getWidth()/2 - width/2;
-            int y = getHeight()/2 - height/2;
+        if (projectile != null) {
+            int width = getWidth() * 3 / 4;
+            int height = getHeight() * 3 / 4;
+            int x = getWidth() / 2 - width / 2;
+            int y = getHeight() / 2 - height / 2;
 
-            g.drawImage(projectile,x,y,width,height,null);
+            g.drawImage(projectile, x, y, width, height, null);
         }
 
 
         // Draw the Entity
         Image entity = tile.getEntityImage();
-        if(entity!=null){
-            int width = getWidth() * 3/4;
-            int height = getHeight() * 3/4;
-            int x = getWidth()/2 - width/2;
-            int y = getHeight()/2 - height/2;
+        if (entity != null) {
+            int width = getWidth() * 3 / 4;
+            int height = getHeight() * 3 / 4;
+            int x = getWidth() / 2 - width / 2;
+            int y = getHeight() / 2 - height / 2;
 
             // TODO: I don't like that I have to do this....
             Mount m = tile.getEntity().getMount();
-            if(m!=null){
+            if (m != null) {
                 g.drawImage(m.getImage(), x, y, width, height, null);
 
                 width *= 0.50;
                 height *= 0.50;
-                x = getWidth()/2 - width/2;
-                y = getHeight()/2 - height/2;
+                x = getWidth() / 2 - width / 2;
+                y = getHeight() / 2 - height / 2;
 
                 g.drawImage(entity, x, y, width, height, null);
-            }else{
+            } else {
                 g.drawImage(entity, x, y, width, height, null);
             }
         }

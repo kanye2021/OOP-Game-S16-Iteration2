@@ -21,7 +21,7 @@ public class Display extends JPanel {
         setPreferredSize(new Dimension(width, height));
     }
 
-    public void setActiveView(View view){
+    public void setActiveView(View view) {
         activeView = view;
     }
 

@@ -11,14 +11,13 @@ import models.stats.StatModification;
 import models.stats.StatModificationList;
 import models.stats.Stats;
 import views.sprites.DecoratedSprite;
-import views.sprites.Sprite;
 
 /**
  * Created by aseber on 3/7/16.
  */
 public class boots extends EquippableItem {
 
-    public boots(equippableItemDecoration decoration){
+    public boots(equippableItemDecoration decoration) {
         ID = Item.ItemDictionary.getDictionaryItemFromID(1300 + decoration.IDModifier);
         name = "{NAME} Boots".replace("{NAME}", decoration.nameModifier);
         description = "Boots made of {NAME}".replace("{NAME}", decoration.descriptionModifier);

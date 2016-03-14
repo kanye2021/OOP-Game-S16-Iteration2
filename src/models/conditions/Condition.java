@@ -5,9 +5,7 @@
 
 package models.conditions;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -16,6 +14,51 @@ import java.util.HashMap;
  */
 
 public abstract class Condition {
+
+    private ArrayList<Variable> runtimeArguments = new ArrayList<>();
+    private HashMap<Integer, Object> parameters = new HashMap<>();
+
+    private void getRuntimeParameters(Object... args) {
+
+        int currentPlace = 0;
+
+        for (Variable variable : runtimeArguments) {
+
+            parameters.put(variable.ordinal(), args[currentPlace]);
+            currentPlace++;
+
+        }
+
+    }
+
+    protected final void setParameter(int integer, Object object) {
+
+        if (object == null) {
+
+            runtimeArguments.add(Variable.values()[integer]);
+
+        }
+
+        parameters.put(integer, object);
+
+    }
+
+    protected final Object getParameter(int integer) {
+
+        return parameters.get(integer);
+
+    }
+
+    public final boolean checkCondition(Object... args) {
+
+        getRuntimeParameters(args);
+        return checkConditionInternal();
+
+    }
+
+    protected abstract boolean checkConditionInternal();
+
+    //Check the conditions
 
     //The Item Comparison Enum
     public enum Comparison {
@@ -55,51 +98,6 @@ public abstract class Condition {
         PASS7,
         PASS8
     }
-
-    private ArrayList<Variable> runtimeArguments = new ArrayList<>();
-    private HashMap<Integer, Object> parameters = new HashMap<>();
-
-    private void getRuntimeParameters(Object... args) {
-
-        int currentPlace = 0;
-
-        for (Variable variable : runtimeArguments) {
-
-            parameters.put(variable.ordinal(), args[currentPlace]);
-            currentPlace++;
-
-        }
-
-    }
-
-    protected final void setParameter(int integer, Object object) {
-
-        if (object == null) {
-
-            runtimeArguments.add(Variable.values()[integer]);
-
-        }
-
-        parameters.put(integer, object);
-
-    }
-
-    protected final Object getParameter(int integer) {
-
-        return parameters.get(integer);
-
-    }
-
-    //Check the conditions
-
-    public final boolean checkCondition(Object... args) {
-
-        getRuntimeParameters(args);
-        return checkConditionInternal();
-
-    }
-
-    protected abstract boolean checkConditionInternal();
 
 }
 

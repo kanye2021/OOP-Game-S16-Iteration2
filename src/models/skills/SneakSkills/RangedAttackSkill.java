@@ -1,7 +1,6 @@
 package models.skills.SneakSkills;
 
 import models.attack.AngularAttack;
-import models.attack.LinearAttack;
 import models.attack.Projectile;
 import models.attack.StatusEffects;
 import models.entities.Entity;
@@ -14,12 +13,13 @@ import java.awt.event.KeyEvent;
  * Created by aseber on 2/25/16.
  */
 public class RangedAttackSkill extends ActiveSkill {
-    public RangedAttackSkill(){
+    public RangedAttackSkill() {
         cooldown = false;
-        cooldownTime=1*SECONDS;
+        cooldownTime = 1 * SECONDS;
 
 
     }
+
     @Override
     public SkillDictionary initID() {
 
@@ -39,15 +39,15 @@ public class RangedAttackSkill extends ActiveSkill {
 
     @Override
     public void onActivate(Entity entity) {
-        if(isCooldown()){
+        if (isCooldown()) {
             return;
         }
         cooldown = true;
         doTheCoolDown();
-        int damage  = damageSent(entity);
+        int damage = damageSent(entity);
 
-        Projectile projectile = new Projectile(damage,5, StatusEffects.StatusEffect.NONE, "sneak-rangedAttack.png");
-        new AngularAttack(entity,projectile);
+        Projectile projectile = new Projectile(damage, 5, StatusEffects.StatusEffect.NONE, "sneak-rangedAttack.png");
+        new AngularAttack(entity, projectile);
 
 
     }

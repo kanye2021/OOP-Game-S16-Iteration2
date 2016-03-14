@@ -32,8 +32,10 @@ import java.util.TimerTask;
 /**
  * Created by Bradley on 2/18/16.
  */
-public abstract class Entity{
+public abstract class Entity {
 
+    //Every Entity will an Animator object that does the animation
+    public Animator animator;
     protected Point location;
     protected Point startLocation;
     protected Map.Direction orientation;
@@ -45,33 +47,22 @@ public abstract class Entity{
     protected Occupation occupation;
     protected Map map;
     protected String type;
-
     protected int level;
     protected int money;
-
     // All entities have a faction
     protected FactionAssociation faction;
-
     // All entities should be able to have a pet.
     protected Pet pet;
-
     //Entity may have mount
     protected Mount mount;
-
     protected ArrayList<String> passableTerrain;
-
-
-    // Stuff for movement
-    private Timer movementTimer;
-    private boolean canMove;
-
-    //Every Entity will an Animator object that does the animation
-    public Animator animator;
-
     // Plans for sprite: Entity will have a getImage() method to return the image
     // to render on the AreaViewport. It will call sprite.getCurrentImage(orientation)
     // which will return the appropriate image.
     protected DirectionalSprite sprite;
+    // Stuff for movement
+    private Timer movementTimer;
+    private boolean canMove;
 
     public Entity(Point location, Map map) {
         this.money = 500;
@@ -101,10 +92,10 @@ public abstract class Entity{
         canMove = true;
     }
 
-    private int getMovementDelay(){
+    private int getMovementDelay() {
         int movementTimerDelay = 300 - (stats.getStat(Stats.Type.MOVEMENT) / 5);
 
-        if(movementTimerDelay < 50){
+        if (movementTimerDelay < 50) {
             movementTimerDelay = 50;
         }
         return movementTimerDelay;
@@ -118,7 +109,7 @@ public abstract class Entity{
 
     }
 
-    public boolean canTraverseTerrain(Terrain terrain){
+    public boolean canTraverseTerrain(Terrain terrain) {
         return passableTerrain.contains(terrain.getType());
     }
 
@@ -137,62 +128,91 @@ public abstract class Entity{
     public final Point getLocation() {
         return location;
     }
-    public Stats getStats(){return stats;}
-    public SkillList getSkills(){return skills;}
-    public String getOccupation(){
+
+    public Stats getStats() {
+        return stats;
+    }
+
+    public SkillList getSkills() {
+        return skills;
+    }
+
+    public String getOccupation() {
         return occupation.getOccupation();
     }
-    public Map.Direction getOrientation(){return orientation;}
-    public int getLevel(){
+
+    public Map.Direction getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(Map.Direction orientation) {
+        this.orientation = orientation;
+        if (mount != null) {
+            mount.setOrientation(orientation);
+        }
+
+    }
+
+    public int getLevel() {
         return level;
     }
-    public Map getMap(){return map;}
-    //Returns specific skill by name
-    public Skill getSpecificSkill(Skill.SkillDictionary skill){
-        Skill found = null;
-        for(int i =0; i < this.getSkills().size(); i++){
 
-            if(skill.equals(this.getSkills().get(i).initID())){
+    public Map getMap() {
+        return map;
+    }
+
+    // Used to go to a new map
+    public final void setMap(Map map) {
+        this.map = map;
+        updateBrain();
+    }
+
+    //Returns specific skill by name
+    public Skill getSpecificSkill(Skill.SkillDictionary skill) {
+        Skill found = null;
+        for (int i = 0; i < this.getSkills().size(); i++) {
+
+            if (skill.equals(this.getSkills().get(i).initID())) {
                 found = this.getSkills().get(i);
             }
         }
-        if(found != null) {
+        if (found != null) {
             return found;
-        }else{
+        } else {
 
             return null;
         }
     }
 
-    public void basicAttack(Entity entity){
+    public void basicAttack(Entity entity) {
 
         int cooldowntime = 0;
         int damage = entity.getStats().getStat(Stats.Type.STRENGTH);
         String occupation = entity.getOccupation();
 
-        if(occupation.contains("Smasher")){
+        if (occupation.contains("Smasher")) {
             damage *= 1;
             cooldowntime = 2000;
-        }else if(occupation.contains("Summoner")){
+        } else if (occupation.contains("Summoner")) {
             damage *= 2;
-            cooldowntime=3000;
-        }else if(occupation.contains("Sneak")){
-            cooldowntime=1000;
+            cooldowntime = 3000;
+        } else if (occupation.contains("Sneak")) {
+            cooldowntime = 1000;
             damage /= 2;
-        }else{
+        } else {
             System.err.println("Entity: BasicAttack: How did you get here");
         }
 
 
-        Projectile projectile = new Projectile(damage,1, StatusEffects.StatusEffect.NONE);
-        new LinearAttack(this,projectile);
+        Projectile projectile = new Projectile(damage, 1, StatusEffects.StatusEffect.NONE);
+        new LinearAttack(this, projectile);
     }
 
-    public final TileDetection move(Map.Direction direction){
+    public final TileDetection move(Map.Direction direction) {
 
         setOrientation(direction);
 
-        if(canMove){
+        if (canMove) {
             TileDetection td = map.moveEntity(Entity.this, direction);
             location = td.getLocation();
             canMove = false;
@@ -216,13 +236,13 @@ public abstract class Entity{
     }
 
     public final TileDetection teleport(Point point) {
-        TileDetection td =  map.moveEntity(Entity.this, point);
+        TileDetection td = map.moveEntity(Entity.this, point);
         location = td.getLocation();
         return td;
     }
 
     // Wrapper functions for Stats
-    public final void applyStatMod(StatModificationList statMods){
+    public final void applyStatMod(StatModificationList statMods) {
 
         if (statMods != null) {
 
@@ -232,7 +252,7 @@ public abstract class Entity{
 
     }
 
-    public final void removeStatMod(StatModificationList statMods){
+    public final void removeStatMod(StatModificationList statMods) {
 
         if (statMods != null) {
 
@@ -242,26 +262,27 @@ public abstract class Entity{
 
     }
 
-    public int getRadiusOfVisiblility(){
+    public int getRadiusOfVisiblility() {
         return stats.getStat(Stats.Type.RADIUS_OF_VISIBILITY);
-    }
-
-    // Wrappers for skills
-    public StatusEffects.StatusEffect getStatusEffect(){
-        return statusEffect;
-    }
-//Dont think I need setter?
-    public void setStatusEffect(StatusEffects.StatusEffect newStatusEffect){
-        this.statusEffect = newStatusEffect;
     }
     // TODO: Implement skill stuff.
 
+    // Wrappers for skills
+    public StatusEffects.StatusEffect getStatusEffect() {
+        return statusEffect;
+    }
+
+    //Dont think I need setter?
+    public void setStatusEffect(StatusEffects.StatusEffect newStatusEffect) {
+        this.statusEffect = newStatusEffect;
+    }
+
     // Wrapper functions for inventory interaction
-    public final Inventory getInventory(){
+    public final Inventory getInventory() {
         return inventory;
     }
 
-    public final boolean addItemToInventory(TakeableItem item){
+    public final boolean addItemToInventory(TakeableItem item) {
         boolean successfullyAdded = inventory.addItem(item);
         if (!successfullyAdded) {
             System.out.println("Cant pick up item. Inventory is Full. Please drop an item");
@@ -270,89 +291,81 @@ public abstract class Entity{
         } else return true;
     }
 
-
-    public final void equipItem(EquippableItem item){
+    public final void equipItem(EquippableItem item) {
 
         item.onUse(this);
 
     }
 
-    public final void dropItem(TakeableItem item){
+    public final void dropItem(TakeableItem item) {
         inventory.dropItem(item, map, location);
-    }
-
-    // Wrapper functions for equpped items interaction
-    // TODO: Might need more.
-    public final Equipment getEquipment(){
-        return equipment;
-    }
-
-    public final void unequipItem(EquippableItem item){
-        // Unequip (Which will remove stat mods)
-        equipment.unEquipItem(item, inventory);
     }
 
     // Wrappers for occupation
     // TODO: Implement occupation stuff. i.e. potentially
 
+    // Wrapper functions for equpped items interaction
+    // TODO: Might need more.
+    public final Equipment getEquipment() {
+        return equipment;
+    }
+
+    public final void unequipItem(EquippableItem item) {
+        // Unequip (Which will remove stat mods)
+        equipment.unEquipItem(item, inventory);
+    }
 
     public String getType() {
 
         return "Entity";
 
     }
-    public boolean getCanMove(){
+
+    public boolean getCanMove() {
         return canMove;
     }
-    public void setCanMove(boolean canMove){
+
+    public void setCanMove(boolean canMove) {
         this.canMove = canMove;
     }
 
-    // Used to go to a new map
-    public final void setMap(Map map){
-        this.map = map;
-        updateBrain();
-    }
     //Function needs to be overrided by NPC
     //TODO: Problem is caused because if you switch maps, the brain still thinks its on the old map
-    public void updateBrain(){}
+    public void updateBrain() {
+    }
+
     protected abstract StatModificationList initInitialStats();
+
     protected abstract Occupation initOccupation();
+
     protected abstract HashMap<Map.Direction, String> initSprites();
+
     protected abstract ArrayList<Image> getAnimatorImages();
 
     public abstract void startInteraction(NPC npc);
 
-    public final Image getImage(){
+    public final Image getImage() {
 //        sprite.setDirection(orientation);
 //        return sprite.getImage();
         return animator.update(System.currentTimeMillis());
     }
 
-    public int getLives(){
+    public int getLives() {
         return stats.getLives();
     }
 
-    public boolean isDead(){
+    public boolean isDead() {
         return stats.getLives() < 1;
     }
-
 
     // TODO: Pet methods may not belong here? just getting stuff 2 work.
     // They could belong here tho.
     public final Pet getPet() {
         return this.pet;
     }
+
     public final void setPet(Pet pet) {
         this.pet = pet;
-    }
-
-    public void setOrientation(Map.Direction orientation){
-        this.orientation = orientation;
-        if (mount != null){
-            mount.setOrientation(orientation);
-        }
-
     }
 
     // Wrapper to levelup an entity
@@ -362,7 +375,7 @@ public abstract class Entity{
         this.stats.levelUp();
     }
 
-    public void levelUpToast(){
+    public void levelUpToast() {
         level++;
         this.stats.levelUp();
         Toast.createToastWithTimer("You've leveled up! Click a skill to increase", 1500);
@@ -375,17 +388,17 @@ public abstract class Entity{
         handleDeath();
     }
 
-    private void handleDeath(){
+    private void handleDeath() {
 
         // Drop all items
         equipment.unEquipAll(inventory);
         inventory.dropAll(map, location);
 
         // Check to see if this was the last life.
-        if(isDead()){
+        if (isDead()) {
             System.out.println("AN ENTITY HAS LOST ALL ITS LIVES");
             map.removeEntityAt(location);
-        }else{
+        } else {
             System.out.println("GOTO START");
             teleport(startLocation);
         }
@@ -401,20 +414,20 @@ public abstract class Entity{
 
         int livesBefore = getLives();
         this.stats.modifyStat(Stats.Type.HEALTH, amount);
-        if(getLives()!=livesBefore){
+        if (getLives() != livesBefore) {
             handleDeath();
         }
     }
 
     //Weird hacky thing (All entities do not have amount unless otherwise specificed. Avatar will
     //override and return based on
-    public Mount getMount(){
+    public Mount getMount() {
         return mount;
     }
 
-    public void setMount(Mount mount){
+    public void setMount(Mount mount) {
         this.mount = mount;
-        for(String s : mount.getTerrain()){
+        for (String s : mount.getTerrain()) {
             passableTerrain.add(s);
         }
         StatModification moveSpeed = new StatModification(Stats.Type.MOVEMENT, 10);
@@ -423,12 +436,13 @@ public abstract class Entity{
         Point p = mount.getLocation();
         map.removeEntityAt(p);
     }
-    public void removeMount(){
+
+    public void removeMount() {
         if (mount != null) {
             mount.location = getOrientation().neighbor(getLocation());
             //Problem is that you are removing while the entity is already on the tile
             //map.moveEntity(mount, getOrientation()); //Tmp solution is to drop off mount in direction you are facing
-            for(String s : mount.getTerrain()){
+            for (String s : mount.getTerrain()) {
                 passableTerrain.remove(s);
             }
             map.insertEntity(mount);

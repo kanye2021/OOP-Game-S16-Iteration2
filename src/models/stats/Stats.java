@@ -1,8 +1,6 @@
 package models.stats;
 
 import utilities.MathUtilities;
-import utilities.Toast;
-import views.Display;
 
 import java.util.EnumMap;
 import java.util.TimerTask;
@@ -12,39 +10,6 @@ import java.util.TimerTask;
  */
 public class Stats {
 
-    public enum Type {
-        // Descriptor is just used to show the name of the stat on the view
-        LEVEL("Level"),
-        LIVES("Lives"),
-        STRENGTH("Strength"),
-        AGILITY("Agility"),
-        INTELLECT("Intellect"),
-        HARDINESS("Hardiness"),
-        EXPERIENCE("EXP"),
-        MOVEMENT("Movement"),
-        HEALTH("Health"),
-        MAX_HEALTH("Max-Health"),
-        MANA("Mana"),
-        MAX_MANA("Max-Mana"),
-        WEAPON_MODIFIER("Weapon-Damage"),
-        ARMOR_MODIFIER("Armor-Modifier"),
-        RADIUS_OF_VISIBILITY("Radius-of-Vis"),
-        EXP_TO_LEVEL("EXP-To-Level"),
-        LAST_EXP_TO_LEVEL("Last-EXP-To-Level"),
-        OFFSENSIVE_RATING("Offense"),
-        DEFENSIVE_RATING("Defense"),
-        ARMOR_RATING("Armor"),
-        SKILL_POINTS("Skill-Points"),
-        TOTAL_WEIGHT("Weight");
-
-        private String descriptor;
-
-        Type(String descriptor){this.descriptor = descriptor;}
-
-        public String getDescriptor() { return descriptor; }
-    }
-
-
     // Primary stats
     private int lives;
     private int strength;
@@ -53,14 +18,12 @@ public class Stats {
     private int hardiness;
     private int experience;
     private int movement;
-
     // Derived stats
     private int maxHealth;
     private int maxMana;
     private int offensiveRating;
     private int defensiveRating;
     private int armorRating;
-
     // Other useful parameters
     private int level;
     private int skillPointsAvailabile;
@@ -72,13 +35,10 @@ public class Stats {
     private int armorModifier;
     private int radiusOfVisiblility;
     private int totalWeight;
-
     private TimerTask currentTask;
     private String lastTaskType;
-
     private EnumMap<Type, StatsGetTask> statGetMap = new EnumMap<>(Type.class);
     private EnumMap<Type, StatsSetTask> statSetMap = new EnumMap<>(Type.class);
-
     public Stats() {
         this.level = 0;
         this.skillPointsAvailabile = 0;
@@ -122,11 +82,11 @@ public class Stats {
         statSetMap.put(Type.TOTAL_WEIGHT, (delta) -> modifyTotalWeight(delta));
     }
 
-    public void applyStatMod(StatModificationList statMod){
+    public void applyStatMod(StatModificationList statMod) {
         statMod.applyStats(this);
     }
 
-    public void removeStatMod(StatModificationList statMod){
+    public void removeStatMod(StatModificationList statMod) {
         statMod.removeStats(this);
     }
 
@@ -144,7 +104,7 @@ public class Stats {
 
     // Call this whenever a primary stat is changed. This holds the derived stats that won't be changed
     // by anything other than primary stats.
-    private void updateDerivedStats(){
+    private void updateDerivedStats() {
         maxHealth = hardiness + 10 * level;
         maxMana = intellect + 10 * level;
         offensiveRating = weaponModifier + strength + level;
@@ -221,8 +181,13 @@ public class Stats {
 
     }
 
-    private void fillHealth(){ health = maxHealth; }
-    private void fillMana(){ mana = maxMana; }
+    private void fillHealth() {
+        health = maxHealth;
+    }
+
+    private void fillMana() {
+        mana = maxMana;
+    }
 
     private void modifyMovement(int delta) {
         this.movement = MathUtilities.putInRange(0, this.movement + delta, Integer.MAX_VALUE);
@@ -257,11 +222,11 @@ public class Stats {
         updateDerivedStats();
     }
 
-    private void modifyRadiusOfVisibility(int delta){
+    private void modifyRadiusOfVisibility(int delta) {
         this.radiusOfVisiblility = MathUtilities.putInRange(0, this.radiusOfVisiblility + delta, Integer.MAX_VALUE);
     }
 
-    private void modifyTotalWeight(int delta){
+    private void modifyTotalWeight(int delta) {
         this.totalWeight = MathUtilities.putInRange(0, this.totalWeight + delta, Integer.MAX_VALUE);
     }
 
@@ -312,25 +277,90 @@ public class Stats {
     private int getLevel() {
         return this.level;
     }
-    private int getSkillPointsAvailabile() {return this.skillPointsAvailabile;}
 
-    private int getMaxHealth() { return maxHealth; }
+    private int getSkillPointsAvailabile() {
+        return this.skillPointsAvailabile;
+    }
 
-    private int getMaxMana() { return maxMana; }
+    private int getMaxHealth() {
+        return maxHealth;
+    }
 
-    private int getOffensiveRating() { return offensiveRating; }
+    private int getMaxMana() {
+        return maxMana;
+    }
 
-    private int getDefensiveRating() { return defensiveRating; }
+    private int getOffensiveRating() {
+        return offensiveRating;
+    }
 
-    private int getArmorRating() { return armorRating; }
+    private int getDefensiveRating() {
+        return defensiveRating;
+    }
 
-    private int getExpReqLvUp() { return expReqLvUp; }
+    private int getArmorRating() {
+        return armorRating;
+    }
 
-    private int getLastLvlExpReq() { return lastLvlExpReq; }
+    private int getExpReqLvUp() {
+        return expReqLvUp;
+    }
 
-    private TimerTask getCurrentTask() { return currentTask; }
+    private int getLastLvlExpReq() {
+        return lastLvlExpReq;
+    }
 
-    private String getLastTaskType() { return lastTaskType; }
+    private TimerTask getCurrentTask() {
+        return currentTask;
+    }
+
+    private String getLastTaskType() {
+        return lastTaskType;
+    }
+
+    private int getRadiusOfVisiblility() {
+        return radiusOfVisiblility;
+    }
+
+    private int getTotalWeight() {
+        return totalWeight;
+    }
+
+    public enum Type {
+        // Descriptor is just used to show the name of the stat on the view
+        LEVEL("Level"),
+        LIVES("Lives"),
+        STRENGTH("Strength"),
+        AGILITY("Agility"),
+        INTELLECT("Intellect"),
+        HARDINESS("Hardiness"),
+        EXPERIENCE("EXP"),
+        MOVEMENT("Movement"),
+        HEALTH("Health"),
+        MAX_HEALTH("Max-Health"),
+        MANA("Mana"),
+        MAX_MANA("Max-Mana"),
+        WEAPON_MODIFIER("Weapon-Damage"),
+        ARMOR_MODIFIER("Armor-Modifier"),
+        RADIUS_OF_VISIBILITY("Radius-of-Vis"),
+        EXP_TO_LEVEL("EXP-To-Level"),
+        LAST_EXP_TO_LEVEL("Last-EXP-To-Level"),
+        OFFSENSIVE_RATING("Offense"),
+        DEFENSIVE_RATING("Defense"),
+        ARMOR_RATING("Armor"),
+        SKILL_POINTS("Skill-Points"),
+        TOTAL_WEIGHT("Weight");
+
+        private String descriptor;
+
+        Type(String descriptor) {
+            this.descriptor = descriptor;
+        }
+
+        public String getDescriptor() {
+            return descriptor;
+        }
+    }
 
     private interface StatsGetTask {
 
@@ -343,9 +373,5 @@ public class Stats {
         void set(int delta);
 
     }
-
-    private int getRadiusOfVisiblility() { return radiusOfVisiblility; }
-
-    private int getTotalWeight(){return totalWeight;}
 
 }

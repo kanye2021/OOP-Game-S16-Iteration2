@@ -10,39 +10,20 @@ import java.awt.geom.Rectangle2D;
  */
 public class StartMenuView extends View {
 
-    public enum MenuOptions {
-        CREATE_GAME("Create Game"),
-        LOAD_GAME("Load Game"),
-        EXIT_GAME("Exit Game");
-
-        private String optionLabel;
-
-        MenuOptions(String s) {
-            this.optionLabel = s;
-        }
-
-        public String toString() {
-            return optionLabel;
-        }
-    }
-
     // Constants
     private final String TITLE = "Kanye 2020";
     private final String START_MENU_IMAGE_LOCATION = IOUtilities.getFileSystemDependentPath("./src/res/start_menu/");
-
     // Scalable variables.
     private int buttonWidth;
     private int buttonHeight;
-
     // Styling properties
     private Font titleFont;
     private Font generalFont;
     private int titleButtonMargin;
-
     // Data properties
     private MenuOptions selected;
 
-    public StartMenuView(int width, int height, Display display){
+    public StartMenuView(int width, int height, Display display) {
         super(width, height, display);
         selected = MenuOptions.CREATE_GAME;
     }
@@ -53,11 +34,12 @@ public class StartMenuView extends View {
 
     public void previousOption() {
         if (this.selected.ordinal() == 0) {
-            selected =  MenuOptions.values()[MenuOptions.values().length - 1];
+            selected = MenuOptions.values()[MenuOptions.values().length - 1];
         } else {
             selected = MenuOptions.values()[selected.ordinal() - 1];
         }
     }
+
     public void nextOption() {
         if (this.selected.ordinal() == MenuOptions.values().length - 1) {
             selected = MenuOptions.values()[0];
@@ -67,7 +49,7 @@ public class StartMenuView extends View {
     }
 
     @Override
-    public void scaleView(){
+    public void scaleView() {
         // Scale buttons
         buttonWidth = getScreenWidth() / 6;
         buttonHeight = getScreenHeight() / 25;
@@ -82,7 +64,7 @@ public class StartMenuView extends View {
     }
 
     @Override
-    public void render(Graphics g){
+    public void render(Graphics g) {
 
         renderBackground(g);
         renderTitle(g);
@@ -90,12 +72,11 @@ public class StartMenuView extends View {
         Toolkit.getDefaultToolkit().sync();
     }
 
-
-    private void renderBackground(Graphics g){
+    private void renderBackground(Graphics g) {
 
     }
 
-    private void renderTitle(Graphics g){
+    private void renderTitle(Graphics g) {
         g.setFont(titleFont);
         FontMetrics fm = g.getFontMetrics();
         int titleWidth = fm.stringWidth(TITLE);
@@ -106,7 +87,7 @@ public class StartMenuView extends View {
         g.drawString(TITLE, x, y);
     }
 
-    private void renderButtons(Graphics g){
+    private void renderButtons(Graphics g) {
 
 
         int start = g.getFontMetrics(titleFont).getHeight() + titleButtonMargin;
@@ -143,6 +124,22 @@ public class StartMenuView extends View {
             g.fillRect(boxX, boxY, boxDX, boxDY);
             g.setColor(secondaryColor);
             g.drawString(option.toString(), stringX, stringY);
+        }
+    }
+
+    public enum MenuOptions {
+        CREATE_GAME("Create Game"),
+        LOAD_GAME("Load Game"),
+        EXIT_GAME("Exit Game");
+
+        private String optionLabel;
+
+        MenuOptions(String s) {
+            this.optionLabel = s;
+        }
+
+        public String toString() {
+            return optionLabel;
         }
     }
 }

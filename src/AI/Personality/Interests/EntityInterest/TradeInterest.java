@@ -1,10 +1,8 @@
 package AI.Personality.Interests.EntityInterest;
 
 import AI.Memory.Memory;
-import AI.Memory.MotorInterface;
 import AI.Memory.Relationship;
 import AI.Memory.ThoughtInterface;
-import models.Equipment;
 import models.entities.Entity;
 import models.entities.npc.NPC;
 

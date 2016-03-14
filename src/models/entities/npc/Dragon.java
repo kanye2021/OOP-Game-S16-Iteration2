@@ -24,7 +24,7 @@ public class Dragon extends Mount {
     private int movement;
     private ArrayList<String> terrainTypes;
 
-    public Dragon(Point location,Map map) {
+    public Dragon(Point location, Map map) {
         super(location, map);
         passableTerrain.add("grass");
         terrainTypes = new ArrayList<>();
@@ -58,7 +58,7 @@ public class Dragon extends Mount {
     }
 
     @Override
-    public void initDialogue(){
+    public void initDialogue() {
         dialogue.add("Yo, I'm a dragon.");
         dialogue.add("Shut up and get on!");
     }
@@ -84,13 +84,15 @@ public class Dragon extends Mount {
         imagePaths.put(Map.Direction.NORTH_WEST, imageBasePath + "NW.png");
         return imagePaths;
     }
+
     @Override
     public String getType() {
 
         //return "Horse" + "-" + super.getType();
         return "Dragon";
     }
-    public void initActions(){
+
+    public void initActions() {
         actionList.add(new Talk(this));
         actionList.add(new Ride(this));
     }

@@ -4,7 +4,10 @@ import utilities.State;
 import utilities.StateManager;
 import utilities.Task;
 import utilities.TaskWrapper;
-import views.*;
+import views.AvatarCreationView;
+import views.LoadGameView;
+import views.StartMenuView;
+import views.View;
 
 import java.awt.event.KeyEvent;
 
@@ -17,7 +20,7 @@ public class StartMenuViewController extends ViewController {
     private Task nextOption;
     private Task selectOption;
 
-    public StartMenuViewController(View view, StateManager stateManager){
+    public StartMenuViewController(View view, StateManager stateManager) {
         super(view, stateManager);
     }
 
@@ -27,21 +30,23 @@ public class StartMenuViewController extends ViewController {
         previousOption = new Task() {
             @Override
             public void run() {
-                ((StartMenuView)view).previousOption();
+                ((StartMenuView) view).previousOption();
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         nextOption = new Task() {
             @Override
             public void run() {
-                ((StartMenuView)view).nextOption();
+                ((StartMenuView) view).nextOption();
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         selectOption = new Task() {
@@ -49,7 +54,7 @@ public class StartMenuViewController extends ViewController {
             public void run() {
                 State nextState;
 
-                switch (((StartMenuView)view).getSelected()) {
+                switch (((StartMenuView) view).getSelected()) {
                     case CREATE_GAME:
                         AvatarCreationView avatarCreationView = new AvatarCreationView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
                         AvatarCreationViewController avatarCreationViewController = new AvatarCreationViewController(avatarCreationView, stateManager);
@@ -69,7 +74,8 @@ public class StartMenuViewController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         addKeyPressMapping(new TaskWrapper(previousOption, "Previous"), KeyEvent.VK_UP);

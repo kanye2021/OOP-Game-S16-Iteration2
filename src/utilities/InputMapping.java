@@ -10,10 +10,12 @@ public class InputMapping extends HashMap<Integer, TaskWrapper> {
     private static Task emptyTask = new Task() {
 
         @Override
-        public void run() {}
+        public void run() {
+        }
 
         @Override
-        public void stop() {}
+        public void stop() {
+        }
 
     };
 

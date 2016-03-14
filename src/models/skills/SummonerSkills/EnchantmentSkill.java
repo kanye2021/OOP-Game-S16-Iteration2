@@ -7,9 +7,7 @@ import models.entities.Entity;
 import models.skills.ActiveSkill;
 import views.sprites.Sprite;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 /**
  * Created by aseber on 2/24/16.
@@ -19,12 +17,13 @@ public class EnchantmentSkill extends ActiveSkill {
     private int damage;
     private int range;
     private Projectile projectile;
-    public EnchantmentSkill(){
+
+    public EnchantmentSkill() {
         cooldown = false;
-        cooldownTime = 4*SECONDS;
+        cooldownTime = 4 * SECONDS;
         damage = 0;
         range = 4;
-        projectile = new Projectile(damage,range, StatusEffects.StatusEffect.SLEEP, "summoner-enchantment.png");
+        projectile = new Projectile(damage, range, StatusEffects.StatusEffect.SLEEP, "summoner-enchantment.png");
         cost = 10;
         level = 1;
     }
@@ -45,16 +44,16 @@ public class EnchantmentSkill extends ActiveSkill {
     @Override
     public void onActivate(Entity entity) {
         System.out.println("Enchantment skill is used");
-        if(isCooldown()){
+        if (isCooldown()) {
             System.out.println("CoolDown in affect");
             return;
         }
-        if(!payMana(entity,cost)){
+        if (!payMana(entity, cost)) {
             return;
         }
 
         doTheCoolDown();
-        new RadialAttack(entity,projectile);
+        new RadialAttack(entity, projectile);
 
     }
 

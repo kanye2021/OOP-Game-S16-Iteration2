@@ -1,7 +1,10 @@
 package models.occupation;
 
 import models.skills.SkillList;
-import models.skills.SneakSkills.*;
+import models.skills.SneakSkills.CreepSkill;
+import models.skills.SneakSkills.DetectRemoveTrapSkill;
+import models.skills.SneakSkills.PickPocketSkill;
+import models.skills.SneakSkills.RangedAttackSkill;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
 import models.stats.Stats;
@@ -15,10 +18,10 @@ public class Sneak extends Occupation {
     public SkillList initSkills() {
 
         return new SkillList(
-            new PickPocketSkill(),
-            new DetectRemoveTrapSkill(),
-            new CreepSkill(),
-            new RangedAttackSkill()
+                new PickPocketSkill(),
+                new DetectRemoveTrapSkill(),
+                new CreepSkill(),
+                new RangedAttackSkill()
         );
 
     }
@@ -36,11 +39,11 @@ public class Sneak extends Occupation {
                 new StatModification(Stats.Type.STRENGTH, 5),
                 new StatModification(Stats.Type.AGILITY, 20),
                 new StatModification(Stats.Type.HARDINESS, 750),
-                new StatModification(Stats.Type.MOVEMENT,5),
-                new StatModification(Stats.Type.INTELLECT,15),
+                new StatModification(Stats.Type.MOVEMENT, 5),
+                new StatModification(Stats.Type.INTELLECT, 15),
                 new StatModification(Stats.Type.RADIUS_OF_VISIBILITY, 8),
-                new StatModification(Stats.Type.HEALTH,Integer.MAX_VALUE),
-                new StatModification(Stats.Type.MANA,Integer.MAX_VALUE)
+                new StatModification(Stats.Type.HEALTH, Integer.MAX_VALUE),
+                new StatModification(Stats.Type.MANA, Integer.MAX_VALUE)
         );
 
         return modifications;

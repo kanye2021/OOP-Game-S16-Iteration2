@@ -13,6 +13,7 @@ public class InstantDeathAreaEffect extends AreaEffect {
     public InstantDeathAreaEffect() {
         init();
     }
+
     public void init() {
         decal = new Decal(Decal.Types.SKULL_CROSSBONES);
     }
@@ -27,7 +28,7 @@ public class InstantDeathAreaEffect extends AreaEffect {
         return "instant-death";
     }
 
-    public int getValue(){
+    public int getValue() {
         return 0;
     }
 }

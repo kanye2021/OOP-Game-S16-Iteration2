@@ -1,14 +1,8 @@
 package models;
 
 import models.attack.StatusEffects;
-import models.conditions.MapCondition;
-import models.entities.Entity;
 import models.entities.Entity;
 import models.map.Map;
-import models.skills.Skill;
-import models.skills.SkillList;
-import models.stats.Stats;
-import utilities.Animator;
 
 import java.awt.*;
 
@@ -21,9 +15,10 @@ public abstract class Attackion {
     protected int damage;//Total damage not including target defense
     protected int range;
     protected Map.Direction orientation;
-    public abstract void calculateDamage();
     protected Point origin;
     protected StatusEffects.StatusEffect statusEffect;
+
+    public abstract void calculateDamage();
 
     public boolean canAttack(Entity entity) {
         return entity.getStatusEffect() != StatusEffects.StatusEffect.SLEEP;

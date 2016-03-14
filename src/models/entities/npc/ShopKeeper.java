@@ -2,9 +2,7 @@ package models.entities.npc;
 
 import AI.Brain;
 import AI.Personality.Personality;
-import models.entities.npc.actions.Attack;
 import models.entities.npc.actions.Trade;
-import models.entities.npc.actions.Talk;
 import models.entities.npc.actions.UseItemOnNPC;
 import models.factions.Faction;
 import models.factions.FactionAssociation;
@@ -33,28 +31,31 @@ public class ShopKeeper extends NPC {
         modifyActions();
         brain = new Brain(this, Personality.FAT_LARD_SHOPKEEPER); // Agnostic is the default personailty.
     }
+
     //---------NPC Stuff------------
-    public void modifyActions(){
+    public void modifyActions() {
         actionList.add(new Trade(this));
     }
+
     @Override
-    public void initDialogue(){
+    public void initDialogue() {
         //dialogue.clear(); //Might be unnecessary
         actionList.add(new UseItemOnNPC(this));
         dialogue.add("Welcome to my store where I can sell you stuff!");
         dialogue.add("Don't have much though...");
     }
-    public void initInventory(){
+
+    public void initInventory() {
         int id = 1000; //starts at 1000 (HELMS)
         for (int i = 0; i < 2; i++) { //default level
             Item newItem = Item.ItemDictionary.itemFromID(id + i);
-            buy((TakeableItem)newItem);
+            buy((TakeableItem) newItem);
         }
     }
 
     ///------------Entity Stuff--------------
     //TODO: For now smashers are villagers
-    protected Occupation initOccupation(){
+    protected Occupation initOccupation() {
         return new Smasher();
     }
 
@@ -70,7 +71,7 @@ public class ShopKeeper extends NPC {
 
     }
 
-    protected HashMap<Map.Direction, String> initSprites(){
+    protected HashMap<Map.Direction, String> initSprites() {
         String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/entity-shopkeeper-");
 
         HashMap<Map.Direction, String> imagePaths = new HashMap<>();
@@ -84,23 +85,26 @@ public class ShopKeeper extends NPC {
         return imagePaths;
     }
 
-    public void talk(){
+    public void talk() {
 
     }
-    public void buy(TakeableItem item){
+
+    public void buy(TakeableItem item) {
         int currentValue = item.getMonetaryValue();
         item.setMonetaryValue(currentValue + 10); //NPCS add value to the item
         inventory.addItem(item);
     }
-    public void sell(TakeableItem item){
+
+    public void sell(TakeableItem item) {
         int currentValue = item.getMonetaryValue();
         item.setMonetaryValue(currentValue - 10); //Item value returns back to original
         inventory.removeItem(item);
     }
+
     @Override
     public final String getType() {
 
-       // return "ShopKeeper" + "-" + super.getType();
+        // return "ShopKeeper" + "-" + super.getType();
         return "ShopKeeper";
     }
 

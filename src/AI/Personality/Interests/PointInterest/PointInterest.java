@@ -14,8 +14,12 @@ public abstract class PointInterest extends Interest {
 
     }
 
-    public final Type getInterestType() { return Type.POINT; }
+    public final Type getInterestType() {
+        return Type.POINT;
+    }
+
     public abstract Interest createRuntimeInterest(NPC npc);
+
     public abstract double getInterestWeight();
 
 }

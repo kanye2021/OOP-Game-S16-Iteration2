@@ -1,6 +1,5 @@
 package controllers;
 
-import models.entities.Avatar;
 import utilities.InputMapping;
 import utilities.StateManager;
 import utilities.Task;
@@ -18,10 +17,10 @@ public abstract class ViewController {
 
     protected View view;
     protected StateManager stateManager;
-    private InputMapping keyPressMapping;
     protected boolean inRemappingKeysState;
+    private InputMapping keyPressMapping;
 
-    public ViewController(View view, StateManager stateManager){
+    public ViewController(View view, StateManager stateManager) {
         this.view = view;
         this.stateManager = stateManager;
         keyPressMapping = new InputMapping();
@@ -42,7 +41,7 @@ public abstract class ViewController {
     public void handleKeyPress(KeyEvent e) {
         // If we hit enter, or we are currently NOT remapping, handle via the VC's mappings
         // Because if we are remapping, ENTER saves the new mapping
-        if (e.getKeyCode() == KeyEvent.VK_ENTER || !inRemappingKeysState ) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER || !inRemappingKeysState) {
             keyPressMapping.inputKey(getKeyIntMapping(e));
         }
         // Otherwise let the VC handle the new mapping
@@ -58,20 +57,21 @@ public abstract class ViewController {
         // Method stub to be overriden by a subclass who wants to
     }
 
-    public void handleKeyRelease(KeyEvent e){
+    public void handleKeyRelease(KeyEvent e) {
         keyPressMapping.keyReleased(getKeyIntMapping(e));
     }
 
 
     // The default behavior of a mouse move is to do nothing. If a view controller wishes to do something on a mouse
     // move it must overrride this function.
-    public void handleMouseDragged(java.awt.event.MouseEvent e){
+    public void handleMouseDragged(java.awt.event.MouseEvent e) {
 
     }
 
-    public void handleMouseReleased(java.awt.event.MouseEvent e){
+    public void handleMouseReleased(java.awt.event.MouseEvent e) {
 
     }
+
     // The default behavior of a mouse move is to do nothing. If a view controller wishes to do something on a mouse
     // click it must overrride this function.
     public void handleMouseClicked(MouseEvent e) {
@@ -83,7 +83,6 @@ public abstract class ViewController {
     private final void initDefaultEscapeMapping() {
 
 
-
         Task altF4Task = new Task() {
             @Override
             public void run() {
@@ -91,7 +90,8 @@ public abstract class ViewController {
             }
 
             @Override
-            public void stop(){}
+            public void stop() {
+            }
         };
 
         addKeyPressMapping(new TaskWrapper(altF4Task, "Quit Game"), KeyEvent.VK_F4, KeyEvent.ALT_MASK);
@@ -110,7 +110,7 @@ public abstract class ViewController {
         return keyPressMapping;
     }
 
-    public final void onWindowResize(Component component){
+    public final void onWindowResize(Component component) {
         view.onWindowResize(component);
     }
 
@@ -121,7 +121,7 @@ public abstract class ViewController {
          * in order to ensure that there is no crossing paths with standard keys.
          */
 
-        return e.getKeyCode() + 1000*e.getModifiers();
+        return e.getKeyCode() + 1000 * e.getModifiers();
 
     }
 
@@ -136,7 +136,7 @@ public abstract class ViewController {
 
         for (int i = 1; i < key.length; i++) {
 
-            number += 1000*key[i];
+            number += 1000 * key[i];
 
         }
 

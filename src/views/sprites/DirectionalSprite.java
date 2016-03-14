@@ -1,7 +1,6 @@
 package views.sprites;
 
 import models.map.Map;
-import utilities.IOUtilities;
 
 import java.awt.*;
 import java.util.HashMap;

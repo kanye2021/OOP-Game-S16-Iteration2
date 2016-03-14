@@ -20,9 +20,9 @@ public class OneHandedWeaponSkill extends ActiveSkill {
     private int finalDamage;
     private int oneHandedWeaponLv;
 
-    public OneHandedWeaponSkill(){
-        cooldownTime = 2*SECONDS;
-        cooldown=false;
+    public OneHandedWeaponSkill() {
+        cooldownTime = 2 * SECONDS;
+        cooldown = false;
     }
 
     @Override
@@ -39,13 +39,13 @@ public class OneHandedWeaponSkill extends ActiveSkill {
 
     @Override
     public void onActivate(Entity entity) {
-        if(isCooldown()){
+        if (isCooldown()) {
             return;
         }
         doTheCoolDown();
         int strength = entity.getStats().getStat(Stats.Type.STRENGTH);
-        Projectile projectile = new Projectile(damageSent(entity),1, StatusEffects.StatusEffect.NONE);
-        new LinearAttack(entity,projectile);
+        Projectile projectile = new Projectile(damageSent(entity), 1, StatusEffects.StatusEffect.NONE);
+        new LinearAttack(entity, projectile);
     }
 
     @Override
@@ -58,7 +58,9 @@ public class OneHandedWeaponSkill extends ActiveSkill {
         return new Sprite(SKILL_ROOT_FILE_PATH + "smasher-oneHandedSkill.png");
     }
 
-    public int getCombatWeight(Entity entity){return (1*entity.getStats().getStat(Stats.Type.TOTAL_WEIGHT));}
+    public int getCombatWeight(Entity entity) {
+        return (1 * entity.getStats().getStat(Stats.Type.TOTAL_WEIGHT));
+    }
 
 
     public int getFinalDamage() {

@@ -1,7 +1,7 @@
 package views;
 
-import models.entities.npc.actions.Action;
 import models.entities.npc.NPC;
+import models.entities.npc.actions.Action;
 import utilities.IOUtilities;
 import utilities.SubState;
 
@@ -12,24 +12,23 @@ import java.util.ArrayList;
 /**
  * Created by dyeung on 2/28/16.
  */
-public class NPCMenuView extends View{
+public class NPCMenuView extends View {
     private final String RESOURCE_BASE_PATH = IOUtilities.getFileSystemDependentPath("./src/res/etc/");
-
+    int selectedOption;
     //Scalable variables
-    private int actionView_Width ;
+    private int actionView_Width;
     private int actionView_Height;
     private int actionView_Start_X;
     private int actionView_Start_Y;
     private Font buttonFont;
     private int buttonWidth;
     private int buttonHeight;
-
-    int selectedOption;
     //Actual Data to modify with
     private NPC npc;
     private ArrayList<SubState> substates;
-    public NPCMenuView(int width, int height, Display display, NPC npc){
-        super(width,height, display);
+
+    public NPCMenuView(int width, int height, Display display, NPC npc) {
+        super(width, height, display);
         this.npc = npc;
         selectedOption = 0;
         substates = new ArrayList<>();
@@ -41,10 +40,11 @@ public class NPCMenuView extends View{
             //Renders the base Menu view
             renderTitle(g);
             renderOptions(g);
-        }else {
+        } else {
             substates.get(0).render(g); //Renders the very first substate only
         }
     }
+
     @Override
     public void scaleView() {
 
@@ -66,7 +66,8 @@ public class NPCMenuView extends View{
         }
 
     }
-    public void renderTitle(Graphics g){
+
+    public void renderTitle(Graphics g) {
         // Draw the background
         g.setColor(new Color(25, 25, 25));
         g.fillRect(actionView_Start_X, actionView_Start_Y, actionView_Width, actionView_Height);
@@ -75,7 +76,8 @@ public class NPCMenuView extends View{
         //int startX = actionView_Start_X + actionView_Width/2;
         //g.drawImage(statsParchment,actionView_Start_X, actionView_Start_Y, actionView_Height, actionView_Width, getDisplay());
     }
-    public void renderOptions(Graphics g){
+
+    public void renderOptions(Graphics g) {
         ArrayList<Action> npcActions = npc.getActionList();
         int i = 0;
         Color primaryColor;
@@ -117,7 +119,8 @@ public class NPCMenuView extends View{
         }
 
     }
-    public void updateSelectedOption(int sel){
+
+    public void updateSelectedOption(int sel) {
         selectedOption = sel;
     }
 
@@ -125,11 +128,13 @@ public class NPCMenuView extends View{
         //s.setParent(this);
         this.substates.add(s);
     }
+
     public void insertSubState(SubState s, int index) {
         //s.setParent(this);
         this.substates.add(index, s);
     }
-    public void removeSubState(SubState s){
+
+    public void removeSubState(SubState s) {
         this.substates.remove(s);
     }
 }

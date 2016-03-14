@@ -12,8 +12,8 @@ import models.stats.StatModificationList;
 import models.stats.Stats;
 import views.sprites.DecoratedSprite;
 
-public class robe extends EquippableItem{
-    public robe(equippableItemDecoration decoration){
+public class robe extends EquippableItem {
+    public robe(equippableItemDecoration decoration) {
 
         ID = Item.ItemDictionary.getDictionaryItemFromID(1100 + decoration.IDModifier);
         name = "{NAME} Robe".replace("{NAME}", decoration.nameModifier);

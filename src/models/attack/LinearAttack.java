@@ -4,23 +4,25 @@ import models.Attackion;
 import models.entities.Entity;
 import models.map.Map;
 import models.map.Tile;
+
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.Queue;
+
 /**
  * Created by ben on 3/8/16.
  */
 
 //You are only supposed to call the constructor.  I.e new LinearAttack(Entity,Projectile);
-public class LinearAttack extends Attackion{
+public class LinearAttack extends Attackion {
     Point slope;
     Projectile projectile;
 
-    public LinearAttack(Entity entity,Projectile projectile){
+    public LinearAttack(Entity entity, Projectile projectile) {
         this.projectile = projectile;
         this.entity = entity;
         //If you cannot attack
-        if(!canAttack(entity)){
+        if (!canAttack(entity)) {
             return;
         }
         this.map = entity.getMap();
@@ -34,7 +36,7 @@ public class LinearAttack extends Attackion{
         launchAttack();
     }
 
-    private void launchAttack(){
+    private void launchAttack() {
         new Thread(new Runnable() {
             public void run() {
                 findEffectedTiles(slope); // Launches attack
@@ -55,64 +57,58 @@ public class LinearAttack extends Attackion{
 
     }
 
-    public void findSlope(Map.Direction orientation){
+    public void findSlope(Map.Direction orientation) {
 
 
-        if(orientation == Map.Direction.NORTH){
-            slope.x=0;
-            slope.y=-1;
+        if (orientation == Map.Direction.NORTH) {
+            slope.x = 0;
+            slope.y = -1;
 
-        }
-        else if(orientation == Map.Direction.NORTH_EAST){
+        } else if (orientation == Map.Direction.NORTH_EAST) {
             slope.x = 1;
             slope.y = -1;
-        }
-        else if(orientation == Map.Direction.SOUTH_EAST){
+        } else if (orientation == Map.Direction.SOUTH_EAST) {
             slope.x = 1;
             slope.y = 0;
-        }
-        else if(orientation == Map.Direction.SOUTH){
+        } else if (orientation == Map.Direction.SOUTH) {
             slope.x = 0;
             slope.y = 1;
-        }
-        else if(orientation == Map.Direction.SOUTH_WEST){
+        } else if (orientation == Map.Direction.SOUTH_WEST) {
             slope.x = -1;
             slope.y = 1;
-        }
-        else if(orientation == Map.Direction.NORTH_WEST){
+        } else if (orientation == Map.Direction.NORTH_WEST) {
             slope.x = -1;
             slope.y = 0;
-        }else{
+        } else {
             System.out.println("LinearAttack: HOW DID YOU GET THERE");
         }
     }
 
-    public void findEffectedTiles(Point slope){
+    public void findEffectedTiles(Point slope) {
 //        projectile.projectileMove(entity.getOrientation());
         Queue<PointNode> pointQueue = new LinkedList<>();
 
-        for(int i = 1;i<=range;i++){
-            pointQueue.add(new PointNode(origin,slope,i));//adds in all the nodes
+        for (int i = 1; i <= range; i++) {
+            pointQueue.add(new PointNode(origin, slope, i));//adds in all the nodes
         }
 
-
-        while(!pointQueue.isEmpty()){
+        while (!pointQueue.isEmpty()) {
 
 
             PointNode current = pointQueue.poll();//returns the top
             Point attackPoint = new Point();
 
-            attackPoint.x=current.target.x;
-            attackPoint.y=current.target.y;
+            attackPoint.x = current.target.x;
+            attackPoint.y = current.target.y;
             Tile desiredTile = map.getTileAt(attackPoint);
-            if(desiredTile!=null){
+            if (desiredTile != null) {
                 // Add the projectile to the tile.
                 map.insertProjectileAtPoint(projectile, attackPoint);
 
-                if(desiredTile.hasEntity()){
+                if (desiredTile.hasEntity()) {
                     Entity target = desiredTile.getEntity();
                     target.takeDamage(-damage);
-
+                    System.out.println("Hit entity!!!!");
                 }
 
                 try {
@@ -127,13 +123,13 @@ public class LinearAttack extends Attackion{
         }
     }
 
-    class PointNode{
+    class PointNode {
         Point target;
 
-        public PointNode(Point origin,Point offset,int distance){
+        public PointNode(Point origin, Point offset, int distance) {
             target = new Point();
-            this.target.x=origin.x+offset.x*distance;
-            this.target.y = origin.y+offset.y*distance;
+            this.target.x = origin.x + offset.x * distance;
+            this.target.y = origin.y + offset.y * distance;
         }
     }
 }

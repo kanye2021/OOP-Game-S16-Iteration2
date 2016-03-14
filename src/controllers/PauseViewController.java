@@ -1,10 +1,6 @@
 package controllers;
 
 import models.entities.Avatar;
-import utilities.State;
-import utilities.StateManager;
-import utilities.SubState;
-import utilities.Task;
 import utilities.*;
 import views.*;
 
@@ -29,7 +25,7 @@ public class PauseViewController extends ViewController {
     // Also necessary to add more substates n shit
     private GameViewController gameViewController;
 
-    public PauseViewController(View view, StateManager stateManager, Avatar avatar, GameViewController gameVC){
+    public PauseViewController(View view, StateManager stateManager, Avatar avatar, GameViewController gameVC) {
         super(view, stateManager);
         this.avatar = avatar;
         this.gameViewController = gameVC;
@@ -41,21 +37,23 @@ public class PauseViewController extends ViewController {
         previousOption = new Task() {
             @Override
             public void run() {
-                ((PauseView)view).previousOption();
+                ((PauseView) view).previousOption();
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         nextOption = new Task() {
             @Override
             public void run() {
-                ((PauseView)view).nextOption();
+                ((PauseView) view).nextOption();
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
         };
 
         selectOption = new Task() {
@@ -63,13 +61,13 @@ public class PauseViewController extends ViewController {
             public void run() {
                 State nextState;
 
-                switch (((PauseView)view).getSelected()) {
+                switch (((PauseView) view).getSelected()) {
                     case CONTINUE:
                         closePause.run();
                         break;
                     case SAVE_GAME:
                         SaveGameView saveGameView = new SaveGameView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
-                        GameState gS = (GameState)stateManager.getTop();
+                        GameState gS = (GameState) stateManager.getTop();
                         SaveGameViewController sGv = new SaveGameViewController(saveGameView, stateManager, gS);
                         nextState = new State(sGv, saveGameView);
                         stateManager.setActiveState(nextState);
@@ -86,7 +84,8 @@ public class PauseViewController extends ViewController {
                             }
 
                             @Override
-                            public void stop() {}
+                            public void stop() {
+                            }
                         });
                         // Add the substate
                         gameViewController.addSubState(sub);
@@ -104,7 +103,8 @@ public class PauseViewController extends ViewController {
             }
 
             @Override
-            public void stop() {}
+            public void stop() {
+            }
 
         };
 

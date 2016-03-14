@@ -1,8 +1,5 @@
 package models.items.decorations;
 
-import java.awt.*;
-import java.util.HashMap;
-
 /**
  * Created by David on 3/12/2016.
  */

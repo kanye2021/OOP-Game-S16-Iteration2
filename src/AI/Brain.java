@@ -20,7 +20,7 @@ public class Brain {
     protected MotorCortex motorCortex;
     protected Memory memory;
 
-    public Brain(NPC npc, Personality personality){
+    public Brain(NPC npc, Personality personality) {
         this.npc = npc;
         memory = new Memory(npc, personality);
         visualCortex = new VisualCortex(npc, memory);
@@ -29,24 +29,24 @@ public class Brain {
     }
 
     // This is called once per cycle to determine what the AI should do.
-    public void think(){
+    public void think() {
         visualCortex.process(); // What do you see in your surroundings.
         frontalLobe.process(); // What should you do based off of what you saw.
         motorCortex.process(); // Carry out the actions.
         memory.process();
     }
 
-    public void processAttack(){
+    public void processAttack() {
 
     }
 
     // This will return true if the pickpocket was succesfull. It will also initiate an attack if the npc noticed or got mad.
-    public boolean processPickpocket(double entityPickpocketAbility){
+    public boolean processPickpocket(double entityPickpocketAbility) {
         return true;
     }
 
     // Returns a boolean if the NPC will be persuaded.
-    public boolean processPersuasion(double entityPersuasiveness){
+    public boolean processPersuasion(double entityPersuasiveness) {
         return true;
     }
 

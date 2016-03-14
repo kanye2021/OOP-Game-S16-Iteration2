@@ -1,7 +1,5 @@
 package models.stats;
 
-import models.items.interactive.InteractiveItem;
-
 /**
  * Created by Bradley on 2/19/16.
  */
@@ -16,13 +14,13 @@ public class StatModification {
         this.modifyAmount = modifyAmount;
     }
 
-    public void apply(Stats stats){
+    public void apply(Stats stats) {
 
         stats.modifyStat(statToModify, modifyAmount);
 
     }
 
-    public void remove(Stats stats){
+    public void remove(Stats stats) {
 
         stats.modifyStat(statToModify, -modifyAmount);
 

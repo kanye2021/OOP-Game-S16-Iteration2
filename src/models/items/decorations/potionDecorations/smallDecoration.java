@@ -6,7 +6,7 @@ import models.items.decorations.consumableItemDecoration;
  * Created by David on 3/12/2016.
  */
 public class smallDecoration extends consumableItemDecoration {
-    public smallDecoration(){
+    public smallDecoration() {
 
         IDModifier = 1;
 

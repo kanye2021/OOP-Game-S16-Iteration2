@@ -4,7 +4,6 @@ import models.Equipment;
 import models.conditions.Condition;
 import models.conditions.ConditionList;
 import models.conditions.StatCondition;
-import models.items.Item;
 import models.items.takeable.equippable.EquippableItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
@@ -14,8 +13,8 @@ import views.sprites.Sprite;
 /**
  * Created by ben on 3/5/16.
  */
-public class Special_SwampHacksShirt extends EquippableItem{
-    public Special_SwampHacksShirt(){
+public class Special_SwampHacksShirt extends EquippableItem {
+    public Special_SwampHacksShirt() {
         ID = ItemDictionary.SWAMPHACKS_SHIRT;
         name = "SwampHacks Shirt";
         description = "A shirt that provides an unexpected amount of defense";

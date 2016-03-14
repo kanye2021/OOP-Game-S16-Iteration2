@@ -4,7 +4,6 @@ import models.entities.Entity;
 import models.items.Item;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -42,32 +41,32 @@ public class VisualInformation {
 
     }
 
-    public HashMap<Entity, Point> getEntities(){
+    public HashMap<Entity, Point> getEntities() {
         return entities;
     }
 
-    public HashMap<Item, Point> getItems(){
+    public HashMap<Item, Point> getItems() {
         return items;
     }
 
-    public boolean foundEntities(){
+    public boolean foundEntities() {
         return !entities.isEmpty();
     }
 
-    public boolean foundItems(){
+    public boolean foundItems() {
         return !items.isEmpty();
-    }
-
-    private interface setter {
-
-        void set(Object o, Point p);
-
     }
 
     public void forget() {
 
         entities.clear();
         items.clear();
+
+    }
+
+    private interface setter {
+
+        void set(Object o, Point p);
 
     }
 

@@ -1,4 +1,4 @@
- package views;
+package views;
 
 import models.entities.Avatar;
 import models.entities.Entity;
@@ -24,11 +24,11 @@ public class AreaViewport extends View {
     // Constants
     private final float MIN_OPACITY = 0.4f; // The min opacity for a visible tile
     private final float SEEN_OPACITY = 0.3f; // The min opacity for a seen tile.
-
+    // Some stuff for caching
+    public HashMap<Point, Tile> seenTiles = new HashMap<>();
     // The meat!!!
     private Map map;
     private Avatar avatar;
-
     // The veggies!!!!!
     private int viewportWidth;
     private int viewportHeight;
@@ -38,9 +38,6 @@ public class AreaViewport extends View {
     private int horizDistanceBtwnTiles; // This is derived from hexSize
     private int vertDistanceBtwnTiles; // This is derived from hexSize
     private Point viewportOffset; // This is used to drag the viewport around.
-
-    // Some stuff for caching
-    public HashMap<Point, Tile> seenTiles = new HashMap<>();
     private boolean reRender;
     private BufferedImage cachedViewport;
 
@@ -49,36 +46,9 @@ public class AreaViewport extends View {
 
     private HashMap<Entity, Integer> entityHealthMap;
     private HashMap<Entity, Integer> entityEffedUpHealthMap;
-
-
-    // Just a container to hold an entity and a location in order to draw the health bars w/o opacity messed up
-    private class EntityLocationTuple {
-        public Point point;
-        public Entity entity;
-        public EntityLocationTuple(Entity e, Point p) {
-            this.point = p;
-            this.entity = e;
-        }
-
-        public Point getPoint() {
-            return point;
-        }
-
-        public void setPoint(Point point) {
-            this.point = point;
-        }
-
-        public Entity getEntity() {
-            return entity;
-        }
-
-        public void setEntity(Entity entity) {
-            this.entity = entity;
-        }
-    }
     private ArrayList<EntityLocationTuple> entityLocationTuples;
 
-    public AreaViewport(int width, int height, Display display, Map map, Avatar avatar){
+    public AreaViewport(int width, int height, Display display, Map map, Avatar avatar) {
         super(width, height, display);
 
         entityLocationTuples = new ArrayList<EntityLocationTuple>();
@@ -90,32 +60,32 @@ public class AreaViewport extends View {
         scaleView();
         hexSize = 23;
         hexWidth = hexSize * 2;
-        hexHeight = Math.round((float)(Math.sqrt(3) /2 * hexWidth));
-        horizDistanceBtwnTiles = hexSize * 3 /2;
-        vertDistanceBtwnTiles = Math.round((float)(hexSize * Math.sqrt(3)));
+        hexHeight = Math.round((float) (Math.sqrt(3) / 2 * hexWidth));
+        horizDistanceBtwnTiles = hexSize * 3 / 2;
+        vertDistanceBtwnTiles = Math.round((float) (hexSize * Math.sqrt(3)));
         cachedViewport = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         reRender = true;
     }
 
-    public void setViewportOffset(Point offset){
+    public void setViewportOffset(Point offset) {
         viewportOffset = offset;
         reRender = true;
     }
 
     @Override
-    public void render(Graphics g){
+    public void render(Graphics g) {
 
-        if(map.needsToBeRendered() || reRender){
+        if (map.needsToBeRendered() || reRender) {
             Graphics g1 = cachedViewport.getGraphics();
 
 
             // Draw a black background
             g1.setColor(Color.BLACK);
-            g1.fillRect(0,0,viewportWidth, viewportHeight);
+            g1.fillRect(0, 0, viewportWidth, viewportHeight);
 
             // Get the avatar's location. This location will be shown in the center of the viewport.
             Point logicalPoint = avatar.getLocation();
-            Point pixelPoint = new Point(viewportWidth/2, viewportHeight/2);
+            Point pixelPoint = new Point(viewportWidth / 2, viewportHeight / 2);
 
             // Create a 2D graphcis obj
             Graphics2D g2 = (Graphics2D) g1.create();
@@ -145,7 +115,7 @@ public class AreaViewport extends View {
     }
 
     // This will traverse through all the tiles using a breadth first search. It will then render that tile.
-    private void breadthFirstRender(Point logicalPoint, Point pixelPoint, Graphics2D g){
+    private void breadthFirstRender(Point logicalPoint, Point pixelPoint, Graphics2D g) {
 
         // Get the radius of visibliity.
         int radiusOfVisibility = avatar.getRadiusOfVisiblility();
@@ -161,32 +131,31 @@ public class AreaViewport extends View {
         root.distanceFromAvatar = 0;
 
         // Offset the root based upon the offset ammound
-        root.pixelPoint.translate((int)viewportOffset.getX(), (int)viewportOffset.getY());
+        root.pixelPoint.translate((int) viewportOffset.getX(), (int) viewportOffset.getY());
         tileQueue.offer(root); // offer is analogous to push (or enqueue).
 
-        while(!tileQueue.isEmpty()){
+        while (!tileQueue.isEmpty()) {
 
             // Pop the current tile off the queue.
             TileNode currentTileNode = tileQueue.poll(); // poll is analogous to pop (or dequeue).
 
             // Check to see if the tile has already been renderred.
-            if((hasBeenRendered.get(currentTileNode.logicalPoint) == null) || !hasBeenRendered.get(currentTileNode.logicalPoint) && isInRangeOfViewport(currentTileNode.pixelPoint)) {
+            if ((hasBeenRendered.get(currentTileNode.logicalPoint) == null) || !hasBeenRendered.get(currentTileNode.logicalPoint) && isInRangeOfViewport(currentTileNode.pixelPoint)) {
                 hasBeenRendered.put(currentTileNode.logicalPoint, true); // Mark the tile as having been renderred.
 
                 // Render the current Tile
                 if (!displayDebugInformation) {
-                    if(currentTileNode.distanceFromAvatar < radiusOfVisibility){
+                    if (currentTileNode.distanceFromAvatar < radiusOfVisibility) {
 
                         // Mark this tile as having been seen.
                         seenTiles.put(new Point(currentTileNode.logicalPoint), new Tile(currentTileNode.tile));
 
                         // Set the opacity based on the distance from the avatar.
-                        float opacity = 1.0f - (1 - MIN_OPACITY)* (currentTileNode.distanceFromAvatar / (float)radiusOfVisibility);
+                        float opacity = 1.0f - (1 - MIN_OPACITY) * (currentTileNode.distanceFromAvatar / (float) radiusOfVisibility);
                         opacity = opacity < MIN_OPACITY ? MIN_OPACITY : opacity;
 
                         renderTile(currentTileNode, g, opacity); // Render the tile.
-                    }
-                    else if(seenTiles.get(currentTileNode.logicalPoint) != null){
+                    } else if (seenTiles.get(currentTileNode.logicalPoint) != null) {
                         currentTileNode.tile = seenTiles.get(currentTileNode.logicalPoint); // Switch out the actual tile with the seen tile.
                         renderTile(currentTileNode, g, SEEN_OPACITY);
                     }
@@ -198,7 +167,7 @@ public class AreaViewport extends View {
                 }
 
                 // Push all the adjacent nodes onto the queue
-                for(TileNode tileNode: getAdjacentTiles(currentTileNode)){
+                for (TileNode tileNode : getAdjacentTiles(currentTileNode)) {
                     tileNode.distanceFromAvatar = currentTileNode.distanceFromAvatar + 1;
                     tileQueue.offer(tileNode);
                 }
@@ -206,7 +175,7 @@ public class AreaViewport extends View {
         }
     }
 
-    private void renderTile(TileNode tileNode, Graphics2D g, float opacity){
+    private void renderTile(TileNode tileNode, Graphics2D g, float opacity) {
 
         // Do the actual Drawing here!
         Polygon tilePolygon = getHexTile(tileNode.pixelPoint);
@@ -231,17 +200,16 @@ public class AreaViewport extends View {
         g.drawImage(tileImage, tileX, tileY, hexWidth, hexHeight, getDisplay());
 
         // Add this entity to list of entities and their locations to render its health later alligator
-        if(tileNode.tile.getEntity()!=null){
+        if (tileNode.tile.getEntity() != null) {
             Entity entity = tileNode.tile.getEntity();
             Stats stats = entity.getStats();
-            this.entityLocationTuples.add(new EntityLocationTuple(entity, new Point((int)tileNode.pixelPoint.getX(), (int)tileNode.pixelPoint.getY())));
+            this.entityLocationTuples.add(new EntityLocationTuple(entity, new Point((int) tileNode.pixelPoint.getX(), (int) tileNode.pixelPoint.getY())));
             this.entityHealthMap.put(entity, stats.getStat(Stats.Type.HEALTH));
         }
 
 
         g.setClip(oldClip);
     }
-
 
     private void drawEntityHealthBar(Graphics g, EntityLocationTuple entityLocationHealthTriple) {
         Point p = entityLocationHealthTriple.point;
@@ -250,8 +218,8 @@ public class AreaViewport extends View {
 
         int oldHealth = entityHealthMap.get(entity).intValue();
 
-        int entityX = (int) p.getX() - hexWidth*3/8;
-        int entityY = (int) p.getY() - hexHeight*3/8;
+        int entityX = (int) p.getX() - hexWidth * 3 / 8;
+        int entityY = (int) p.getY() - hexHeight * 3 / 8;
 
         Stats stats = entity.getStats();
 
@@ -259,28 +227,24 @@ public class AreaViewport extends View {
         int entitysCurrentActualHealth = stats.getStat(Stats.Type.HEALTH);
         // Only render health on NPCs
         // Also only update health bar, if the entities current health is diff than its old health
-        if( !(entity == avatar)) {
+        if (!(entity == avatar)) {
 
+            if (!entityEffedUpHealthMap.containsKey(entity) || oldHealth != entitysCurrentActualHealth) {
 
-            if(!entityEffedUpHealthMap.containsKey(entity) || oldHealth != entitysCurrentActualHealth){
+                System.out.println("CHANGIN ENTITY HEALTH");
 
                 Skill observation = avatar.getSpecificSkill(Skill.SkillDictionary.OBSERVATION);
                 ObservationSkill observationSkill = (ObservationSkill) observation;
                 observationSkill.onUpdate(entity);
 
-                int effedUpHealth = observationSkill.getCombatPercentError(entitysCurrentActualHealth);
-
-
-                // Start with the healthbar
-                // Get the necessary stats
-
-
+                int effedUpHealth = observationSkill.getCombatError(entitysCurrentActualHealth);
 
                 entityEffedUpHealthMap.put(entity, effedUpHealth);
                 entityHealthMap.put(entity, entitysCurrentActualHealth);
             }
 
-            int health = entityEffedUpHealthMap.get(entity);
+//            int health = entityEffedUpHealthMap.get(entity);
+            int health = entitysCurrentActualHealth + entityEffedUpHealthMap.get(entity);
 
             int maxHealth = stats.getStat(Stats.Type.MAX_HEALTH);
 
@@ -330,103 +294,102 @@ public class AreaViewport extends View {
     }
 
     // This will be used in the BF traversal to get the list of adjacent tiles.
-    private ArrayList<TileNode> getAdjacentTiles(TileNode tile){
+    private ArrayList<TileNode> getAdjacentTiles(TileNode tile) {
         ArrayList<TileNode> adjacentTiles = new ArrayList<>();
 
         // Get the tile adjacent to the north.
         Point northLogicalPoint = new Point(tile.logicalPoint); // Get the tiles logical point
         northLogicalPoint.translate(0, -1);
-        
+
         Point northPixelPoint = new Point(tile.pixelPoint);     // Get the tiles pixel point;
         northPixelPoint.translate(0, -vertDistanceBtwnTiles);
 
         Tile northTile = map.getTileAt(northLogicalPoint);
-        if(northTile != null){
+        if (northTile != null) {
             adjacentTiles.add(new TileNode(northTile, northLogicalPoint, northPixelPoint));
         }
 
         // Get the tile to the south of the current position.
         Point southLogicalPoint = new Point(tile.logicalPoint);
         southLogicalPoint.translate(0, 1);
-        
+
         Point southPixelPoint = new Point(tile.pixelPoint);
         southPixelPoint.translate(0, vertDistanceBtwnTiles);
-        
+
         Tile southTile = map.getTileAt(southLogicalPoint);
-        if(southTile != null){
+        if (southTile != null) {
             adjacentTiles.add(new TileNode(southTile, southLogicalPoint, southPixelPoint));
         }
 
-        
+
         // Get the tile to the north west of the current position.
         Point northWestLogicalPoint = new Point(tile.logicalPoint);
         northWestLogicalPoint.translate(-1, 0);
 
         Point northWestPixelPoint = new Point(tile.pixelPoint);
         northWestPixelPoint.translate(-horizDistanceBtwnTiles, -vertDistanceBtwnTiles / 2);
-        
+
         Tile northWestTile = map.getTileAt(northWestLogicalPoint);
-        if(northWestTile != null){
+        if (northWestTile != null) {
             adjacentTiles.add(new TileNode(northWestTile, northWestLogicalPoint, northWestPixelPoint));
         }
-        
-        
+
+
         // Get the tile to the south east of the current position.
         Point southEastLogicalPoint = new Point(tile.logicalPoint);
         southEastLogicalPoint.translate(1, 0);
-        
+
         Point southEastPixelPoint = new Point(tile.pixelPoint);
         southEastPixelPoint.translate(horizDistanceBtwnTiles, vertDistanceBtwnTiles / 2);
-        
+
         Tile southEastTile = map.getTileAt(southEastLogicalPoint);
-        if(southEastTile != null){
+        if (southEastTile != null) {
             adjacentTiles.add(new TileNode(southEastTile, southEastLogicalPoint, southEastPixelPoint));
         }
 
-        
+
         // Get the tile to the north east of the current position.
         Point northEastLogicaPoint = new Point(tile.logicalPoint);
         northEastLogicaPoint.translate(1, -1);
 
         Point northEastPixelPoint = new Point(tile.pixelPoint);
         northEastPixelPoint.translate(horizDistanceBtwnTiles, -vertDistanceBtwnTiles / 2);
-        
+
         Tile northEastTile = map.getTileAt(northEastLogicaPoint);
-        if(northEastTile != null){
+        if (northEastTile != null) {
             adjacentTiles.add(new TileNode(northEastTile, northEastLogicaPoint, northEastPixelPoint));
         }
 
-        
         // Get the tile to the south west of the current position.
         Point southWestLogicalPoint = new Point(tile.logicalPoint);
         southWestLogicalPoint.translate(-1, 1);
-        
+
         Point southWestPixelPoint = new Point(tile.pixelPoint);
         southWestPixelPoint.translate(-horizDistanceBtwnTiles, vertDistanceBtwnTiles / 2);
 
         Tile southWestTile = map.getTileAt(southWestLogicalPoint);
-        if(southWestTile != null){
-            adjacentTiles.add(new TileNode(southWestTile,southWestLogicalPoint, southWestPixelPoint));
+        if (southWestTile != null) {
+            adjacentTiles.add(new TileNode(southWestTile, southWestLogicalPoint, southWestPixelPoint));
         }
 
         return adjacentTiles;
     }
-    
+
     // This determines of the image desired to be drawn is within the visible portion of the area viewport.
-    private boolean isInRangeOfViewport(Point p){
+    private boolean isInRangeOfViewport(Point p) {
         // Check if the x coordinate is in range
-        if(p.getX() + hexWidth/2 < 0 || p.getX() - hexWidth/2 > viewportWidth){
+        if (p.getX() + hexWidth / 2 < 0 || p.getX() - hexWidth / 2 > viewportWidth) {
             return false;
         }
 
         return !(p.getY() + hexHeight / 2 < 0 || p.getY() - hexHeight / 2 > viewportHeight);
     }
 
-    public Polygon getHexTile(Point center){
+    public Polygon getHexTile(Point center) {
 
         Polygon hex = new Polygon();
         // Add a point for each vertex on the hex
-        for(int i=0; i<6; i++){
+        for (int i = 0; i < 6; i++) {
             int angleDeg = 60 * i;
             double angleRad = Math.PI / 180 * angleDeg;
             int x = (int) (center.getX() + hexSize * Math.cos(angleRad));
@@ -454,14 +417,41 @@ public class AreaViewport extends View {
         this.avatar = a;
     }
 
+    // Just a container to hold an entity and a location in order to draw the health bars w/o opacity messed up
+    private class EntityLocationTuple {
+        public Point point;
+        public Entity entity;
+
+        public EntityLocationTuple(Entity e, Point p) {
+            this.point = p;
+            this.entity = e;
+        }
+
+        public Point getPoint() {
+            return point;
+        }
+
+        public void setPoint(Point point) {
+            this.point = point;
+        }
+
+        public Entity getEntity() {
+            return entity;
+        }
+
+        public void setEntity(Entity entity) {
+            this.entity = entity;
+        }
+    }
+
     // This is a simple data stortage class used for the traversing tile and rendering.
-    class TileNode{
+    class TileNode {
         public Tile tile;
         public Point logicalPoint;
         public Point pixelPoint;
         public int distanceFromAvatar;
 
-        public TileNode(Tile tile, Point logicalPoint, Point pixelPoint){
+        public TileNode(Tile tile, Point logicalPoint, Point pixelPoint) {
             this.tile = tile;
             this.logicalPoint = logicalPoint;
             this.pixelPoint = pixelPoint;
