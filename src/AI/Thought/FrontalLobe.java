@@ -45,11 +45,14 @@ public class FrontalLobe {
             if (currentDecision.isInterestValid(memory)) {
 
                 // Then check if we should get a new Interest based on scatter_brainedness
-                if (memory.getPersonality().getScatter_Brainedness() > rand) {
+                if (memory.getPersonality().getScatter_Brainedness() < rand) {
 
                     // If all of these are true, we may continue with our current decision!
-                    System.err.println(npc.getType() + " WERE GOOD" + memory.getPersonality().getScatter_Brainedness());
                     return;
+
+                } else {
+
+                    System.err.println("SCATTER");
 
                 }
 
@@ -58,7 +61,6 @@ public class FrontalLobe {
         }
 
         // Otherwise select a new decision
-        System.err.println(npc.getType() + " WERE NOT GOOD" + memory.getPersonality().getScatter_Brainedness());
         selectNewDecision();
 
     }

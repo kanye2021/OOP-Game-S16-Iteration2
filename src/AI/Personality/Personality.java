@@ -11,9 +11,10 @@ import models.entities.npc.actions.Attack;
  * Created by Bradley on 3/5/16.
  */
 public enum Personality {
-
+    
     DOG(0.25, 0.3, 0.2, new InterestList(new FollowInterest(1.0), new ExploreInterest(0.1))),
     DEFAULT(0.25, 0.0, 0.2, new InterestList(new ExploreInterest(0.1),new AttackInterest(0.1)));
+
     /*HITLER(1.0, 0.0, 0.0, 1.0, 1.0), // Will attack no matter what
     HOSTILE(0.9, 0.1, 0.1, 0.9, 1.0), // Will almost definitely attack
     ANGRY(0.7, 0.2, 0.2, 0.5, 1.0), // Is very likely to attack
