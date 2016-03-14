@@ -1,5 +1,6 @@
 package models.map;
 
+import models.attack.Projectile;
 import models.entities.Entity;
 import models.items.Item;
 import utilities.TileDetection;
@@ -87,6 +88,20 @@ public class Map {
             updateTile(point);
         }
 
+    }
+
+    public void insertProjectileAtPoint(Projectile projectile, Point point){
+        if(tiles.containsKey(point)){
+            tiles.get(point).addProjectile(projectile);
+            updateTile(point);
+        }
+    }
+
+    public void removeProjectileAtPoint(Point point){
+        if(tiles.containsKey(point)){
+            tiles.get(point).removeProjectile();
+            updateTile(point);
+        }
     }
 
 

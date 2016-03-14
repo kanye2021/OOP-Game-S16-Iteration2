@@ -8,6 +8,8 @@ import models.entities.Entity;
 import models.entities.npc.ShopKeeper;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
+import models.skills.CommonSkills.BargainSkill;
+import models.skills.Skill;
 import utilities.StateManager;
 import utilities.Task;
 import utilities.TaskWrapper;
@@ -52,6 +54,7 @@ public class NPCShopController extends ViewController {
         this.avatar = avatar;
         this.gameViewController = gvController;
         updateCurrentList();
+        initPriceByBargin();
     }
 
     @Override
@@ -173,5 +176,16 @@ public class NPCShopController extends ViewController {
     public void setClose(Task task){
         escape = task;
         addKeyPressMapping(new TaskWrapper(escape, "Exit"), KeyEvent.VK_BACK_SPACE);
+    }
+    public void initPriceByBargin(){
+        ArrayList<Inventory.ItemNode> inv = shopKeeper.getInventory().getItemNodeArrayList();
+        for(Inventory.ItemNode i : inv){
+            int itemValue = i.getItem().getMonetaryValue();
+            Skill bargin = avatar.getSpecificSkill(Skill.SkillDictionary.BARGAIN);
+            double discount = (((BargainSkill) bargin).getPercentDiscount()) * 10;
+            int newValue = itemValue - ((int)(itemValue * discount));
+            i.getItem().setMonetaryValue(newValue);
+        }
+
     }
 }

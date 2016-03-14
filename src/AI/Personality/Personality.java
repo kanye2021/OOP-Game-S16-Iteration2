@@ -11,7 +11,7 @@ import models.entities.npc.actions.Attack;
  * Created by Bradley on 3/5/16.
  */
 public enum Personality {
-    
+
     DOG(0.25, 0.3, 0.2, new InterestList(new FollowInterest(1.0), new ExploreInterest(0.1))),
     DEFAULT(0.25, 0.0, 0.2, new InterestList(new ExploreInterest(0.1),new AttackInterest(0.1)));
 

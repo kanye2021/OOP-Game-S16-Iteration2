@@ -61,10 +61,11 @@ public class Inventory {
     //Instance variables
     private ArrayList<ItemNode> itemNodeArrayList;
     private int maxCapacity;
-
+    private int money;
     //Initializes arrayList based of initialCapacity
-    public Inventory(int initialCapacity){
+    public Inventory(int initialCapacity, int moneyInput){
         maxCapacity = initialCapacity;
+        money = moneyInput;
         itemNodeArrayList = new ArrayList<ItemNode>(maxCapacity);
     }
 
@@ -200,6 +201,8 @@ public class Inventory {
         return itemNodeArrayList.size();
     }
 
-
+    public int getMoney(){
+        return money;
+    }
 
 }
