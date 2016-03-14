@@ -5,7 +5,6 @@ import models.attack.RadialAttack;
 import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
-import models.stats.Stats;
 import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
@@ -26,7 +25,7 @@ public class IndignationSkill extends ActiveSkill{
         cooldownTime = 3*SECONDS;
         damage = 1;
         range = 3;
-        projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);
+        projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE, "summoner-indignation.png");
         cost = 10;
         level = 1;
     }

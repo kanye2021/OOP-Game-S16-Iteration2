@@ -5,7 +5,6 @@ import models.attack.Projectile;
 import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
-import models.stats.Stats;
 import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
@@ -20,9 +19,9 @@ public class GroundDasherSkill extends ActiveSkill{
     private Projectile projectile;
     public GroundDasherSkill(){
         damage = 1;
-        range = 3;
+        range = 5;
         cooldownTime = 2*SECONDS;
-        projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);
+        projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE, "summoner-groundDasher.png");
         cost = 10;
         level = 1;
     }
