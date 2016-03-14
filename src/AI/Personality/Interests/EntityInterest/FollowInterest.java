@@ -1,5 +1,6 @@
 package AI.Personality.Interests.EntityInterest;
 
+import AI.Memory.Memory;
 import AI.Memory.Relationship;
 import AI.Memory.ThoughtInterface;
 import models.entities.Entity;
@@ -29,7 +30,7 @@ public class FollowInterest extends EntityInterest {
 
     }
 
-    public void update() {
+    public void update(Memory memory) {
 
         setPointOfInterest(entityOfInterest.getLocation());
 

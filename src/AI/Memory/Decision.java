@@ -33,8 +33,8 @@ public class Decision {
 
     }
 
-    public void updateInterest() {
-        interest.update();
+    public void updateInterest(Memory memory) {
+        interest.update(memory);
     }
 
     public String getInterestType() {

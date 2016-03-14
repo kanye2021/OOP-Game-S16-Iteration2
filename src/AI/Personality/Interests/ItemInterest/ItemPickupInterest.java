@@ -1,5 +1,6 @@
 package AI.Personality.Interests.ItemInterest;
 
+import AI.Memory.Memory;
 import AI.Memory.ThoughtInterface;
 import models.items.Item;
 import models.items.takeable.TakeableItem;
@@ -30,7 +31,7 @@ public class ItemPickupInterest extends ItemInterest {
 
     }
 
-    public void update() {
+    public void update(Memory memory) {
 
         // Do nothing, the item doesn't move!
 

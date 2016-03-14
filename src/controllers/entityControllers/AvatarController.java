@@ -273,7 +273,7 @@ public class AvatarController {
             }
             Equipment.Component component= item.getComponent();
             if(component == Equipment.Component.RANGED_WEAPON){
-                avatar.basicAttack(avatar,component);
+                avatar.basicAttack(avatar);
             }else{
                 //TODO:Add cooldown somehow.  I feel like I need to make this a function?
                 Projectile projectile = new Projectile(10*avatar.getStats().getStat(Stats.Type.LEVEL)+1,1, StatusEffects.StatusEffect.NONE);

@@ -1,5 +1,6 @@
 package AI.Personality.Interests;
 
+import AI.Memory.Memory;
 import AI.Memory.ThoughtInterface;
 
 import java.awt.*;
@@ -38,7 +39,7 @@ public abstract class Interest {
 
     }
 
-    public abstract void update();
+    public abstract void update(Memory memory);
 
     public abstract boolean isApplicable(ThoughtInterface memory);
 

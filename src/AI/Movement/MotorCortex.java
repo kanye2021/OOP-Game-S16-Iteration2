@@ -15,7 +15,7 @@ public class MotorCortex {
     private Random rng = new Random();
     double rand;
     private NPC npc;
-    private MotorInterface memory;
+    private Memory memory;
 
     public MotorCortex(NPC npc, Memory memory){
         this.npc = npc;
@@ -46,8 +46,7 @@ public class MotorCortex {
     // and see if it is close enough to interact with?
     private void updateInterest() {
 
-        //TODO: just me fucking around
-        memory.getDecision().updateInterest();
+        memory.getDecision().updateInterest(memory);
 
     }
 

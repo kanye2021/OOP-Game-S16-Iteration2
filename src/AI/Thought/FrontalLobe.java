@@ -150,7 +150,7 @@ public class FrontalLobe {
         if (validDecisions.validDecisionsToPick()) {
 
             Decision newDecision = validDecisions.pickChoice();
-            
+
             memory.setDecision(newDecision);
             newDecision.getSpecificInterest();
 
