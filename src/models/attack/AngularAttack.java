@@ -6,8 +6,7 @@ import models.map.Map;
 import models.map.Tile;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.Queue;
 
 /**
@@ -15,6 +14,7 @@ import java.util.Queue;
  */
 public class AngularAttack extends Attackion {
     //private Map map;
+    private Projectile projectile;
 
     public AngularAttack(Entity entity,Projectile projectile){
         this.entity=entity;
@@ -27,46 +27,90 @@ public class AngularAttack extends Attackion {
         this.range = projectile.range;
         this.orientation = entity.getOrientation();
         this.map = entity.getMap();
-        findBreadthFirstTile();
+        this.projectile = projectile;
+        launchAttack();
     }
+
+    public void launchAttack(){
+        new Thread(new Runnable() {
+            public void run() {
+                findBreadthFirstTile(); // Launches attack
+            }
+        }).start();
+    }
+
 
     public void findBreadthFirstTile(){
         Queue<PointNode> pointQueue = new LinkedList<>();
-        //pointQueue.add(new PointNode(origin));
-        Tile originTile = map.getTileAt(origin);
-        PointNode root = new PointNode(originTile,origin,0);
-
+        HashMap<Point, PointNode> hitTiles = new HashMap<>();
+        Point firstPoint = orientation.neighbor(origin);
+        Tile originTile = map.getTileAt(firstPoint);
+        PointNode root = new PointNode(originTile,firstPoint,1);
         pointQueue.add(root);
+
+        int currentDistance = 1;
+        HashMap<Point, PointNode> projectilesOnMap = new HashMap<>();
+
         while(!pointQueue.isEmpty()){
             PointNode current = pointQueue.poll();
-            Point attackPoint = new Point();
-
-            attackPoint.x=current.target.x;
-            attackPoint.y=current.target.y;
-            //System.out.println(attackPoint.x);
-            //System.out.println(attackPoint.y);
+            Point attackPoint = new Point(current.target);
             Tile desiredTile = map.getTileAt(attackPoint);
 
-            //System.out.println("How many times does this appear?");
+            if(desiredTile!=null && !hitTiles.containsKey(attackPoint)){
 
-            if(desiredTile.hasEntity()&&originTile!=desiredTile&&entity!=desiredTile.getEntity()){
-                Entity target = desiredTile.getEntity();
-                target.takeDamage(-damage);
-                //System.out.println("Has Entity yo");
-            }
-            for(PointNode pointNode: getAdjacentTiles(current,orientation)){
-                pointNode.range = current.range + 1;
-                pointQueue.offer(pointNode);
-                //System.out.println("CURRENT.RANGE IS "+ pointNode.range);
-                //System.out.println("RANGE IS "+ range);
-                /*if(pointNode.range>range){
+                // Mark this tile as hit.
+                hitTiles.put(new Point(attackPoint), current);
+
+                if(desiredTile.hasEntity()&&entity!=desiredTile.getEntity()){
+                    Entity target = desiredTile.getEntity();
+                    target.takeDamage(-damage);
+                    //System.out.println("Has Entity yo");
+                }
+
+                for(PointNode pointNode: getAdjacentTiles(current,orientation)){
+                    if(!hitTiles.containsKey(pointNode.target)){
+
+                        pointNode.range += 1;
+                        pointQueue.offer(pointNode);
+                    }
+                }
+
+
+                if(current.range == currentDistance){
+                    map.insertProjectileAtPoint(projectile, attackPoint);
+                    projectilesOnMap.put(new Point(attackPoint), current);
+                }else{
+                    currentDistance = current.range;
+
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    for(Iterator iterator = projectilesOnMap.keySet().iterator(); iterator.hasNext();){
+                        Point location = (Point)iterator.next();
+
+                        map.removeProjectileAtPoint(location);
+                        iterator.remove();
+                    }
+
+                    map.insertProjectileAtPoint(projectile, attackPoint);
+                    projectilesOnMap.put(new Point(attackPoint), current);
+                }
+
+                if(current.range>range){
+
+                    // Clear out any projectiles that are left on themap.
+                    for(Iterator iterator = projectilesOnMap.keySet().iterator(); iterator.hasNext();){
+                        Point location = (Point)iterator.next();
+
+                        map.removeProjectileAtPoint(location);
+                        iterator.remove();
+                    }
                     return;
-                }*/
+                }
             }
-            if(current.range>range){
-                return;
-            }
-
         }
     }
     private ArrayList<PointNode> getAdjacentTiles(PointNode pointNode, Map.Direction orientation){
@@ -79,7 +123,7 @@ public class AngularAttack extends Attackion {
 
             Tile northTile = map.getTileAt(northLogicalPoint);
             if(northTile != null){
-                adjacentTiles.add(new PointNode(northTile, northLogicalPoint,pointNode.range+1));
+                adjacentTiles.add(new PointNode(northTile, northLogicalPoint,pointNode.range));
             }
 
             if(pointNode.range%2!=0) {//if range is odd
@@ -89,7 +133,7 @@ public class AngularAttack extends Attackion {
 
                 Tile northWestTile = map.getTileAt(northWestLogicalPoint);
                 if (northWestTile != null) {
-                    adjacentTiles.add(new PointNode(northWestTile, northWestLogicalPoint, pointNode.range + 1));
+                    adjacentTiles.add(new PointNode(northWestTile, northWestLogicalPoint, pointNode.range));
                 }
 
 
@@ -99,7 +143,7 @@ public class AngularAttack extends Attackion {
 
                 Tile northEastTile = map.getTileAt(northEastLogicaPoint);
                 if (northEastTile != null) {
-                    adjacentTiles.add(new PointNode(northEastTile, northEastLogicaPoint, pointNode.range + 1));
+                    adjacentTiles.add(new PointNode(northEastTile, northEastLogicaPoint, pointNode.range));
                 }
             }
         }else if(orientation == Map.Direction.NORTH_EAST){
@@ -110,7 +154,7 @@ public class AngularAttack extends Attackion {
 
             Tile northEastTile = map.getTileAt(northEastLogicaPoint);
             if(northEastTile != null){
-                adjacentTiles.add(new PointNode(northEastTile, northEastLogicaPoint,pointNode.range+1));
+                adjacentTiles.add(new PointNode(northEastTile, northEastLogicaPoint,pointNode.range));
             }
 
 
@@ -122,15 +166,14 @@ public class AngularAttack extends Attackion {
 
                 Tile northTile = map.getTileAt(northLogicalPoint);
                 if (northTile != null) {
-                    adjacentTiles.add(new PointNode(northTile, northLogicalPoint, pointNode.range + 1));
+                    adjacentTiles.add(new PointNode(northTile, northLogicalPoint, pointNode.range));
                 }
                 // Get the tile to the south east of the current position.
                 Point southEastLogicalPoint = new Point(pointNode.target);
                 southEastLogicalPoint.translate(1, 0);
-
                 Tile southEastTile = map.getTileAt(southEastLogicalPoint);
                 if (southEastTile != null) {
-                    adjacentTiles.add(new PointNode(southEastTile, southEastLogicalPoint, pointNode.range + 1));
+                    adjacentTiles.add(new PointNode(southEastTile, southEastLogicalPoint, pointNode.range));
                 }
             }
         }else if(orientation == Map.Direction.SOUTH_EAST){
@@ -140,7 +183,7 @@ public class AngularAttack extends Attackion {
 
             Tile southEastTile = map.getTileAt(southEastLogicalPoint);
             if(southEastTile != null){
-                adjacentTiles.add(new PointNode(southEastTile, southEastLogicalPoint,pointNode.range+1));
+                adjacentTiles.add(new PointNode(southEastTile, southEastLogicalPoint,pointNode.range));
             }
             if(pointNode.range%2!=0) {
                 // Get the tile to the north east of the current position.
@@ -149,7 +192,7 @@ public class AngularAttack extends Attackion {
 
                 Tile northEastTile = map.getTileAt(northEastLogicaPoint);
                 if (northEastTile != null) {
-                    adjacentTiles.add(new PointNode(northEastTile, northEastLogicaPoint, pointNode.range + 1));
+                    adjacentTiles.add(new PointNode(northEastTile, northEastLogicaPoint, pointNode.range));
                 }
 
                 // Get the tile to the south of the current position.
@@ -159,7 +202,7 @@ public class AngularAttack extends Attackion {
 
                 Tile southTile = map.getTileAt(southLogicalPoint);
                 if (southTile != null) {
-                    adjacentTiles.add(new PointNode(southTile, southLogicalPoint, pointNode.range + 1));
+                    adjacentTiles.add(new PointNode(southTile, southLogicalPoint, pointNode.range));
                 }
             }
         }else if(orientation == Map.Direction.SOUTH){
@@ -169,7 +212,7 @@ public class AngularAttack extends Attackion {
 
             Tile southTile = map.getTileAt(southLogicalPoint);
             if(southTile != null){
-                adjacentTiles.add(new PointNode(southTile, southLogicalPoint,pointNode.range+1));
+                adjacentTiles.add(new PointNode(southTile, southLogicalPoint,pointNode.range));
             }
 
 
@@ -180,7 +223,7 @@ public class AngularAttack extends Attackion {
 
                 Tile southEastTile = map.getTileAt(southEastLogicalPoint);
                 if (southEastTile != null) {
-                    adjacentTiles.add(new PointNode(southEastTile, southEastLogicalPoint, pointNode.range + 1));
+                    adjacentTiles.add(new PointNode(southEastTile, southEastLogicalPoint, pointNode.range));
                 }
 
 
@@ -190,7 +233,7 @@ public class AngularAttack extends Attackion {
 
                 Tile southWestTile = map.getTileAt(southWestLogicalPoint);
                 if (southWestTile != null) {
-                    adjacentTiles.add(new PointNode(southWestTile, southWestLogicalPoint, pointNode.range + 1));
+                    adjacentTiles.add(new PointNode(southWestTile, southWestLogicalPoint, pointNode.range));
                 }
             }
         }else if(orientation == Map.Direction.SOUTH_WEST){
@@ -200,7 +243,7 @@ public class AngularAttack extends Attackion {
 
             Tile southWestTile = map.getTileAt(southWestLogicalPoint);
             if(southWestTile != null){
-                adjacentTiles.add(new PointNode(southWestTile,southWestLogicalPoint,pointNode.range+1));
+                adjacentTiles.add(new PointNode(southWestTile,southWestLogicalPoint,pointNode.range));
             }
             if(pointNode.range%2!=0) {
                 // Get the tile to the south of the current position.
@@ -210,7 +253,7 @@ public class AngularAttack extends Attackion {
 
                 Tile southTile = map.getTileAt(southLogicalPoint);
                 if (southTile != null) {
-                    adjacentTiles.add(new PointNode(southTile, southLogicalPoint, pointNode.range + 1));
+                    adjacentTiles.add(new PointNode(southTile, southLogicalPoint, pointNode.range));
                 }
 
                 // Get the tile to the north west of the current position.
@@ -219,7 +262,7 @@ public class AngularAttack extends Attackion {
 
                 Tile northWestTile = map.getTileAt(northWestLogicalPoint);
                 if (northWestTile != null) {
-                    adjacentTiles.add(new PointNode(northWestTile, northWestLogicalPoint, pointNode.range + 1));
+                    adjacentTiles.add(new PointNode(northWestTile, northWestLogicalPoint, pointNode.range));
                 }
             }
         }else if(orientation == Map.Direction.NORTH_WEST){
@@ -229,7 +272,7 @@ public class AngularAttack extends Attackion {
 
             Tile northWestTile = map.getTileAt(northWestLogicalPoint);
             if(northWestTile != null){
-                adjacentTiles.add(new PointNode(northWestTile, northWestLogicalPoint,pointNode.range+1));
+                adjacentTiles.add(new PointNode(northWestTile, northWestLogicalPoint,pointNode.range));
             }
             if(pointNode.range%2!=0) {
                 //SW Tile
@@ -238,7 +281,7 @@ public class AngularAttack extends Attackion {
 
                 Tile southWestTile = map.getTileAt(southWestLogicalPoint);
                 if (southWestTile != null) {
-                    adjacentTiles.add(new PointNode(southWestTile, southWestLogicalPoint, pointNode.range + 1));
+                    adjacentTiles.add(new PointNode(southWestTile, southWestLogicalPoint, pointNode.range));
                 }
                 // Get the tile adjacent to the north.
                 Point northLogicalPoint = new Point(pointNode.target); // Get the tiles logical point
@@ -247,7 +290,7 @@ public class AngularAttack extends Attackion {
 
                 Tile northTile = map.getTileAt(northLogicalPoint);
                 if (northTile != null) {
-                    adjacentTiles.add(new PointNode(northTile, northLogicalPoint, pointNode.range + 1));
+                    adjacentTiles.add(new PointNode(northTile, northLogicalPoint, pointNode.range));
                 }
             }
         }else{
