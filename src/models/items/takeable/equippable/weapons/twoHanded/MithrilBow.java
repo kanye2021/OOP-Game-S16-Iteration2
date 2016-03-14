@@ -19,7 +19,7 @@ public class MithrilBow extends EquippableItem{
         ID = Item.ItemDictionary.MITHRIL_BOW;
         name = "Mithril bow";
         description = "A bow made of mithril";
-        component = Equipment.Component.TWO_HANDED_WEAPON;
+        component = Equipment.Component.RANGED_WEAPON;
         sprite = new Sprite("./src/res/items/takeable/weapons/twoHanded/sneak-template-bow.png");
         monetaryValue = MITHRILCOST;
         onEquipModifications = new StatModificationList(
