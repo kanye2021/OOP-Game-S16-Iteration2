@@ -57,11 +57,11 @@ public class EnchantmentSkill extends ActiveSkill {
 
     @Override
     public Sprite initSprite() {
-        return new Sprite(SKILL_ROOT_FILE_PATH + "summoner-enchanment.png");
+        return new Sprite(SKILL_ROOT_FILE_PATH + "summoner-enchantment.png");
     }
 
     @Override
     public KeyEvent[] initActivatorKeys() {
-        return new KeyEvent[0];
+        return null;
     }
 }
