@@ -296,7 +296,7 @@ public class AngularAttack extends Attackion {
                 }
             }
         }else{
-            System.out.println("HOW DID YOU GET HERE");
+            System.err.println("AngularAttack: HOW DID YOU GET HERE");
         }
 
 

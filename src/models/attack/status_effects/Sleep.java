@@ -24,7 +24,6 @@ public class Sleep extends StatusEffects{
     }
     public void applySleep(Entity target){
         if(!target.getCanMove()){//If entity cannot move
-            System.out.println("The baby is already asleep");
             return;
         }
         //Find out how movement works
@@ -35,7 +34,6 @@ public class Sleep extends StatusEffects{
                     @Override
                     public void run() {
                         System.out.println(target.getStatusEffect().toString());
-                        System.out.println("I am awake!");
                         sleepUneffects(target);
 
                     }

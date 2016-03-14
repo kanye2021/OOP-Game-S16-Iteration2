@@ -150,7 +150,7 @@ public class FrontalLobe {
             Decision newDecision = validDecisions.pickChoice();
 
             memory.setDecision(newDecision);
-            System.out.println(npc.getType() + newDecision.getSpecificInterest());
+            System.out.println("FrontalLobe: " + npc.getType() + ": " + newDecision.getSpecificInterest());
 
         }
 

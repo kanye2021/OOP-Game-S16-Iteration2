@@ -79,9 +79,7 @@ public class SaveGameViewController extends ViewController{
     }
     public void saveGame(){
         String saveGameName = ((SaveGameView)view).getSaveFileName();
-        System.out.println("THE SAVE STATE NAME IS: " + saveGameName);
         if (saveGameName.isEmpty()) {
-            System.out.println("File name is empty");
             saveGameName = "No_File_Name.xml";
         }
         gameState.saveGame(saveGameName);

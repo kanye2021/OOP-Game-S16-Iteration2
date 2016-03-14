@@ -32,8 +32,6 @@ public abstract class EntityInterest extends Interest {
 
     @Override
     public String getSpecificInterest() {
-        String test = "EntityInterest";
-        System.out.println(test);
-        return test;
+        return "EntityInterest";
     }
 }

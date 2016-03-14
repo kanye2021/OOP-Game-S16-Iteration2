@@ -82,7 +82,6 @@ public class PauseViewController extends ViewController {
                         optionsViewController.setClose(new Task() {
                             @Override
                             public void run() {
-                                System.out.println("2:Did I close ");
                                 sub.dismiss();
                             }
 

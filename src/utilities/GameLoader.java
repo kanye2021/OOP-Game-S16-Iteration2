@@ -287,7 +287,7 @@ public class GameLoader {
 
             // If the item is legit, add it to the list.
             if (item == null) {
-                System.out.println("GameLoader: unrecognized itemID (id = " + id + ")");
+                System.err.println("GameLoader: unrecognized itemID (id = " + id + ")");
             } else {
                 items.add(item);
             }

@@ -274,8 +274,6 @@ public class SkillViewport extends View{
         // For somee reason screen is 25 pixels shorter?
         int mouseY = e.getY() - 25;
 
-        System.out.println("CLICKED X: " + mouseX + " Y: " + mouseY);
-
         int targetSkillNumber;
 
         // If within the Y range

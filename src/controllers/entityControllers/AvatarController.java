@@ -78,7 +78,6 @@ public class AvatarController {
         Skill firstSkill = avatar.getSkills().get(1);
         BindWoundsSkill bindWoundsSkill = (BindWoundsSkill) firstSkill;
         bindWoundsSkill.onActivate(avatar);
-        //System.out.println("Checkpoint 1");
     }
 
 
@@ -86,22 +85,19 @@ public class AvatarController {
         //if smasher, get first skill
         if(avatar.getOccupation().contains("Smasher")){
             //Technically the Smasher class has no actives
-
         }else if(avatar.getOccupation().contains("Summoner")){
             //first skill should be enchantment here
             Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.ENCHANTMENT);
-            System.out.println(firstSkill);
             EnchantmentSkill enchantmentSkill = (EnchantmentSkill) firstSkill;
             enchantmentSkill.onActivate(avatar);
 
         }else if(avatar.getOccupation().contains("Sneak")){
             //first skill should be enchantment here
             Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.CREEP);
-            System.out.println(firstSkill);
             CreepSkill creepSkill = (CreepSkill) firstSkill;
             creepSkill.onActivate(avatar);
         }else{
-            System.out.println("What are you");
+            System.err.println("AvatarController: Invalid Entity");
         }
     }
 
@@ -109,7 +105,6 @@ public class AvatarController {
         //if smasher, get first skill
         if (avatar.getOccupation().contains("Smasher")) {
             //Technically the Smasher class has no actives
-
         } else if (avatar.getOccupation().contains("Summoner")) {
             //Skill firstSkill = avatar.getSpecificSkill(Skill.SkillDictionary.CREEP);
             //System.out.println(firstSkill);
@@ -117,7 +112,6 @@ public class AvatarController {
             //creepSkill.onActivate(avatar);
             //first skill should be enchantment here
             Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.FIREBALL);
-            System.out.println(secondSkill);
             FireBallSkill fireBallSkill = (FireBallSkill) secondSkill;
             //Entity entity = (Entity) avatar;
             fireBallSkill.onActivate(avatar);
@@ -125,13 +119,11 @@ public class AvatarController {
         } else if (avatar.getOccupation().contains("Sneak")) {
             //first skill should be something..
             Skill secondSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
-            System.out.println(secondSkill);
             DetectRemoveTrapSkill detectSkill = (DetectRemoveTrapSkill) secondSkill;
             detectSkill.onActivate(avatar);
-            System.out.println("Hello World!");
 
         } else {
-            System.out.println("What are you");
+            System.err.println("AvatarController: Invalid Entity");
         }
     }
 
@@ -143,19 +135,17 @@ public class AvatarController {
         } else if (avatar.getOccupation().contains("Summoner")) {
             //first skill should be enchantment here
             Skill thirdSkill = avatar.getSpecificSkill(Skill.SkillDictionary.BOON);
-            System.out.println(thirdSkill);
             BoonSkill boonSkill = (BoonSkill) thirdSkill;
             boonSkill.onActivate(avatar);
         } else if (avatar.getOccupation().contains("Sneak")) {
             //first skill should be something..
             //first skill should be something..
             Skill thirdSkill = avatar.getSpecificSkill(Skill.SkillDictionary.PICK_POCKET);
-            System.out.println(thirdSkill);
             PickPocketSkill pickPocketSkill = (PickPocketSkill) thirdSkill;
             pickPocketSkill.onActivate(avatar);
 
         } else {
-            System.out.println("What are you");
+            System.err.println("AvatarController: Invalid Entity");
         }
     }
 
@@ -167,19 +157,17 @@ public class AvatarController {
         }else if(avatar.getOccupation().contains("Summoner")){
             //No more skills
             Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.INDIGNATION);
-            System.out.println(fourthSkill);
             IndignationSkill indignationSkill = (IndignationSkill) fourthSkill;
             indignationSkill.onActivate(avatar);
         }else if(avatar.getOccupation().contains("Sneak")){
             //first skill should be something..
             //first skill should be something..
             Skill fourthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.DETECT_REMOVE_TRAP);
-            System.out.println(fourthSkill);
             DetectRemoveTrapSkill detectRemoveTrapSkill = (DetectRemoveTrapSkill) fourthSkill;
             detectRemoveTrapSkill.onActivate(avatar);
 
         }else{
-            System.out.println("What are you");
+            System.err.println("AvatarController: Invalid Entity");
         }
     }
 
@@ -195,19 +183,15 @@ public class AvatarController {
             //IndignationSkill indignationSkill = (IndignationSkill) fourthSkill;
             //indignationSkill.onActivate(avatar);
             Skill fifthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.GROUND_DASHER);
-            System.out.println(fifthSkill);
             GroundDasherSkill groundDasherSkill = (GroundDasherSkill) fifthSkill;
             groundDasherSkill.onActivate(avatar);
 
         }else if(avatar.getOccupation().contains("Sneak")){
-            //first skill should be something..
-            //first skill should be something..
             Skill fifthSkill = avatar.getSpecificSkill(Skill.SkillDictionary.CREEP);
-            System.out.println(fifthSkill);
             CreepSkill creepSkill = (CreepSkill) fifthSkill;
             creepSkill.sneakBehind(avatar);
         }else{
-            System.out.println("What are you");
+            System.err.println("AvatarController: Invalid Entity");
         }
     }
     public void useBasicAttack(){
@@ -216,7 +200,6 @@ public class AvatarController {
             EquippableItem item = avatar.getEquipment().getEquipmentLocation(Equipment.Location.RIGHT_ARM);
             if(item==null){
                 Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.BRAWLING);
-                System.out.println("Brawling Skill");
                 BrawlingSkill brawlingSkill = (BrawlingSkill) basicSkill;
                 brawlingSkill.onActivate(avatar);
                 return;
@@ -225,18 +208,16 @@ public class AvatarController {
             Equipment.Component component= item.getComponent();
             if(component== Equipment.Component.ONE_HANDED_WEAPON){
                 Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.ONE_HANDED_WEAPON);
-                System.out.println("1h Skill");
                 OneHandedWeaponSkill OneHandSkill = (OneHandedWeaponSkill) basicSkill;
                 OneHandSkill.onActivate(avatar);
                 //call active skill one handed weapon
             }else if(component == Equipment.Component.TWO_HANDED_WEAPON){
                 Skill basicSkill = avatar.getSpecificSkill(Skill.SkillDictionary.TWO_HANDED_WEAPON);
-                System.out.println("2h Skill");
                 TwoHandedWeaponSkill TwoHandSkill = (TwoHandedWeaponSkill) basicSkill;
                 TwoHandSkill.onActivate(avatar);
                 //call active skill one handed weapon
             }else{
-                System.out.println("Wat");
+                System.err.println("AvatarController: Invalid Entity");
             }
                 //avatar.basicAttack(avatar,component);
 
@@ -287,7 +268,7 @@ public class AvatarController {
             }
 
         }else{
-            System.out.println("What are you");
+            System.err.println("AvatarController: Invalid Entity");
         }
     }
 

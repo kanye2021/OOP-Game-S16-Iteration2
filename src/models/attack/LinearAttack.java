@@ -83,7 +83,7 @@ public class LinearAttack extends Attackion{
             slope.x = -1;
             slope.y = 0;
         }else{
-            System.out.println("WTF HOW DID YOU GET THERE");
+            System.out.println("LinearAttack: HOW DID YOU GET THERE");
         }
     }
 
@@ -108,8 +108,6 @@ public class LinearAttack extends Attackion{
             if(desiredTile!=null){
                 // Add the projectile to the tile.
                 map.insertProjectileAtPoint(projectile, attackPoint);
-
-                System.out.println("LinearAttackMoved");
 
                 if(desiredTile.hasEntity()){
                     Entity target = desiredTile.getEntity();

@@ -136,7 +136,6 @@ public abstract class Entity{
     //Returns specific skill by name
     public Skill getSpecificSkill(Skill.SkillDictionary skill){
         Skill found = null;
-        System.out.println(this.getSkills());
         for(int i =0; i < this.getSkills().size(); i++){
 
             if(skill.equals(this.getSkills().get(i).initID())){
@@ -167,7 +166,7 @@ public abstract class Entity{
             cooldowntime=1000;
             damage /= 2;
         }else{
-            System.out.println("How did you get here");
+            System.err.println("Entity: BasicAttack: How did you get here");
         }
 
 

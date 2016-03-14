@@ -58,7 +58,6 @@ public class LoadGameViewController extends ViewController {
         selectOption = new Task() {
             @Override
             public void run() {
-                System.out.println("Ran");
                 loadGame();
             }
 
