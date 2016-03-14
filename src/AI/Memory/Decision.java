@@ -43,8 +43,8 @@ public class Decision {
 
     }
 
-    public void getSpecificInterest(){
-        interest.getSpecificInterest();
+    public String getSpecificInterest(){
+        return interest.getSpecificInterest();
     }
 
 

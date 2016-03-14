@@ -60,8 +60,6 @@ public class FollowInterest extends EntityInterest {
 
     @Override
     public String getSpecificInterest() {
-        String test = "FollowingInterest";
-        System.out.println(test);
-        return test;
+        return "FollowingInterest";
     }
 }
