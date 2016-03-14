@@ -1,4 +1,4 @@
-package views;
+ package views;
 
 import models.area_effects.AreaEffect;
 import models.entities.Avatar;
@@ -8,6 +8,8 @@ import models.map.Decal;
 import models.map.Map;
 import models.map.Terrain;
 import models.map.Tile;
+import models.skills.CommonSkills.ObservationSkill;
+import models.skills.Skill;
 import models.stats.Stats;
 
 import java.awt.*;
@@ -47,13 +49,33 @@ public class AreaViewport extends View {
     //Debug stuff
     private boolean displayDebugInformation = false;
 
+    private HashMap<Entity, Integer> entityHealthMap;
+    private HashMap<Entity, Integer> entityEffedUpHealthMap;
+
+
     // Just a container to hold an entity and a location in order to draw the health bars w/o opacity messed up
     private class EntityLocationTuple {
-        public final Point point;
-        public final Entity entity;
+        public Point point;
+        public Entity entity;
         public EntityLocationTuple(Entity e, Point p) {
             this.point = p;
             this.entity = e;
+        }
+
+        public Point getPoint() {
+            return point;
+        }
+
+        public void setPoint(Point point) {
+            this.point = point;
+        }
+
+        public Entity getEntity() {
+            return entity;
+        }
+
+        public void setEntity(Entity entity) {
+            this.entity = entity;
         }
     }
     private ArrayList<EntityLocationTuple> entityLocationTuples;
@@ -62,6 +84,8 @@ public class AreaViewport extends View {
         super(width, height, display);
 
         entityLocationTuples = new ArrayList<EntityLocationTuple>();
+        entityHealthMap = new HashMap<Entity, Integer>();
+        entityEffedUpHealthMap = new HashMap<Entity, Integer>();
         this.map = map;
         this.avatar = avatar;
         viewportOffset = new Point(0, 0);
@@ -112,7 +136,7 @@ public class AreaViewport extends View {
         g.drawImage(cachedViewport, 0, 0, viewportWidth, viewportHeight, getDisplay());
 
         for (EntityLocationTuple et : this.entityLocationTuples) {
-            drawEntityHealthBar(g, et.entity, et.point);
+            drawEntityHealthBar(g, et);
         }
 
         if (displayDebugInformation) {
@@ -202,59 +226,98 @@ public class AreaViewport extends View {
 
         // Add this entity to list of entities and their locations to render its health later alligator
         if(tileNode.tile.getEntity()!=null){
-            this.entityLocationTuples.add(new EntityLocationTuple(tileNode.tile.getEntity(), new Point((int)tileNode.pixelPoint.getX(), (int)tileNode.pixelPoint.getY())));
+            Entity entity = tileNode.tile.getEntity();
+            Stats stats = entity.getStats();
+            this.entityLocationTuples.add(new EntityLocationTuple(entity, new Point((int)tileNode.pixelPoint.getX(), (int)tileNode.pixelPoint.getY())));
+            this.entityHealthMap.put(entity, stats.getStat(Stats.Type.HEALTH));
         }
 
         g.setClip(oldClip);
     }
 
-    private void drawEntityHealthBar(Graphics g, Entity entity, Point p) {
+    private void drawEntityHealthBar(Graphics g, EntityLocationTuple entityLocationHealthTriple) {
+        Point p = entityLocationHealthTriple.point;
+        Entity entity = entityLocationHealthTriple.entity;
+
+
+        int oldHealth = entityHealthMap.get(entity).intValue();
+
         int entityX = (int) p.getX() - hexWidth*3/8;
         int entityY = (int) p.getY() - hexHeight*3/8;
 
         Stats stats = entity.getStats();
-        // Start with the healthbar
-        // Get the necessary stats
-        int health = stats.getStat(Stats.Type.HEALTH);
-        int maxHealth = stats.getStat(Stats.Type.MAX_HEALTH);
-
-        // Sizes
-        int healthBarWidth = getScreenWidth()/12;
-        int healthBarHeight = getScreenHeight()/53;
-
-        // Set the font
-        Font f = new Font("Courier New", 1, 14);
-        g.setFont(f);
 
 
-        // Set the location and size of the health bar.
-        int healthBarX = entityX - healthBarWidth/3;
-        int healthBarY = entityY - healthBarHeight;
+        int entitysCurrentActualHealth = stats.getStat(Stats.Type.HEALTH);
+        // Only render health on NPCs
+        // Also only update health bar, if the entities current health is diff than its old health
+        if( !(entity == avatar)) {
 
 
-        // Draw the outline of the health bar.
-        g.setColor(Color.RED);
-        g.fillRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
+            if(!entityEffedUpHealthMap.containsKey(entity) || oldHealth != entitysCurrentActualHealth){
 
-        // Determine what fraction of the healthbar should be shown.
-        double healthFraction = (double) health / (double) maxHealth;
-        int healthFillWidth = (int) (healthFraction * healthBarWidth);
+                Skill observation = avatar.getSpecificSkill(Skill.SkillDictionary.OBSERVATION);
+                ObservationSkill observationSkill = (ObservationSkill) observation;
+                observationSkill.onUpdate(entity);
 
-        // Fill the healthbar
-        g.setColor(Color.GREEN);
-        g.fillRect(healthBarX, healthBarY, healthFillWidth, healthBarHeight);
+                int effedUpHealth = observationSkill.getCombatPercentError(entitysCurrentActualHealth);
 
-        // Display the fraction of health
-        g.setColor(Color.WHITE);
-        String healthFractionString = "(" + health + "/" + maxHealth + ")";
-        FontMetrics fm = g.getFontMetrics(f);
 
-        // Place the font at the right of the bar
-        Rectangle2D healthFractionRect = fm.getStringBounds(healthFractionString, g);
+                // Start with the healthbar
+                // Get the necessary stats
 
-        int healthFractionX = healthBarX + (healthBarWidth - (int) healthFractionRect.getWidth())/2;
-        int healthFractionY = healthBarY + healthBarHeight - 4;
-        g.drawString(healthFractionString, healthFractionX, healthFractionY);
+
+
+                entityEffedUpHealthMap.put(entity, effedUpHealth);
+                entityHealthMap.put(entity, entitysCurrentActualHealth);
+            }
+
+            int health = entityEffedUpHealthMap.get(entity);
+
+            int maxHealth = stats.getStat(Stats.Type.MAX_HEALTH);
+
+            health = health > maxHealth ? maxHealth : health;
+            health = health < 0 ? 0 : health;
+
+            // Sizes
+            int healthBarWidth = getScreenWidth() / 12;
+            int healthBarHeight = getScreenHeight() / 53;
+
+            // Set the font
+            Font f = new Font("Courier New", 1, 14);
+            g.setFont(f);
+
+
+            // Set the location and size of the health bar.
+            int healthBarX = entityX - healthBarWidth / 3;
+            int healthBarY = entityY - healthBarHeight;
+
+
+            // Draw the outline of the health bar.
+            g.setColor(Color.RED);
+            g.fillRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
+
+            // Determine what fraction of the healthbar should be shown.
+            double healthFraction = (double) health / (double) maxHealth;
+            int healthFillWidth = (int) (healthFraction * healthBarWidth);
+
+            // Fill the healthbar
+            g.setColor(Color.GREEN);
+            g.fillRect(healthBarX, healthBarY, healthFillWidth, healthBarHeight);
+
+            // Display the fraction of health
+            g.setColor(Color.WHITE);
+            String healthFractionString = "(" + health + "/" + maxHealth + ")";
+            FontMetrics fm = g.getFontMetrics(f);
+
+            // Place the font at the right of the bar
+            Rectangle2D healthFractionRect = fm.getStringBounds(healthFractionString, g);
+
+            int healthFractionX = healthBarX + (healthBarWidth - (int) healthFractionRect.getWidth()) / 2;
+            int healthFractionY = healthBarY + healthBarHeight - 4;
+
+            g.drawString(healthFractionString, healthFractionX, healthFractionY);
+        }
 
     }
 
