@@ -43,7 +43,7 @@ public class AreaViewport extends View {
     private BufferedImage cachedViewport;
 
     //Debug stuff
-    private boolean displayDebugInformation = true;
+    private boolean displayDebugInformation = false;
 
     // Just a container to hold an entity and a location in order to draw the health bars w/o opacity messed up
     private class EntityLocationTuple {
@@ -151,17 +151,18 @@ public class AreaViewport extends View {
 
                 // Render the current Tile
                 if (!displayDebugInformation) {
-                    if (currentTileNode.distanceFromAvatar < radiusOfVisibility) {
+                    if(currentTileNode.distanceFromAvatar < radiusOfVisibility){
 
                         // Mark this tile as having been seen.
                         seenTiles.put(new Point(currentTileNode.logicalPoint), new Tile(currentTileNode.tile));
 
                         // Set the opacity based on the distance from the avatar.
-                        float opacity = 1.0f - (float) (currentTileNode.distanceFromAvatar * 0.15);
+                        float opacity = 1.0f - (1 - MIN_OPACITY)* (currentTileNode.distanceFromAvatar / (float)radiusOfVisibility);
                         opacity = opacity < MIN_OPACITY ? MIN_OPACITY : opacity;
 
                         renderTile(currentTileNode, g, opacity); // Render the tile.
-                    } else if (seenTiles.get(currentTileNode.logicalPoint) != null) {
+                    }
+                    else if(seenTiles.get(currentTileNode.logicalPoint) != null){
                         currentTileNode.tile = seenTiles.get(currentTileNode.logicalPoint); // Switch out the actual tile with the seen tile.
                         renderTile(currentTileNode, g, SEEN_OPACITY);
                     }

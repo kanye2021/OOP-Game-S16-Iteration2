@@ -1,11 +1,9 @@
 package models.map;
 
-import models.attack.Projectile;
 import models.entities.Entity;
 import models.items.Item;
-import utilities.ProjectileDetection;
 import utilities.TileDetection;
-import models.entities.npc.NPC;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,20 +15,6 @@ public class Map {
 
     // This enum contains all the directions on the map
     public enum Direction {
-        NORTH {
-            public Point neighbor(Point currentLocation){
-                Point n = new Point(currentLocation);
-                n.translate(0, -1);
-                return n;
-            }
-        },
-        NORTH_EAST {
-            public Point neighbor(Point currentLocation){
-                Point n = new Point(currentLocation);
-                n.translate(1, -1);
-                return n;
-            }
-        },
         SOUTH_EAST {
             public Point neighbor(Point currentLocation){
                 Point n = new Point(currentLocation);
@@ -56,6 +40,20 @@ public class Map {
             public Point neighbor(Point currentLocation){
                 Point n = new Point(currentLocation);
                 n.translate(-1, 0);
+                return n;
+            }
+        },
+        NORTH {
+            public Point neighbor(Point currentLocation){
+                Point n = new Point(currentLocation);
+                n.translate(0, -1);
+                return n;
+            }
+        },
+        NORTH_EAST {
+            public Point neighbor(Point currentLocation){
+                Point n = new Point(currentLocation);
+                n.translate(1, -1);
                 return n;
             }
         };

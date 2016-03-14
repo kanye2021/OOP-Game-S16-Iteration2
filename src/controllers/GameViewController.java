@@ -4,8 +4,10 @@ import controllers.NPCInteractions.NPCMenuController;
 import controllers.entityControllers.AvatarController;
 import models.entities.Avatar;
 import models.entities.npc.NPC;
+import models.items.Item;
 import models.map.Map;
 
+import models.map.Tile;
 import models.skills.ActiveSkill;
 import models.skills.Skill;
 import models.skills.SkillList;
@@ -17,6 +19,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by sergiopuleri on 2/18/16.

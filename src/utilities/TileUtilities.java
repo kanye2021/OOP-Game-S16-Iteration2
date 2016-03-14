@@ -15,12 +15,6 @@ public class TileUtilities {
     // This function intentionally ignores the center point
     public static HashMap<Tile, Point> getTilesRecursively(Map map, Point center, int radius) {
 
-//        function cube_spiral(center, radius):
-//        var results = [center]
-//        for each 1 ≤ k ≤ radius:
-//        results = results + cube_ring(center, k)
-//        return results
-
         HashMap<Tile, Point> tiles = new HashMap<>();
 
         for (int i = 1; i < radius; ++i) {
@@ -40,7 +34,7 @@ public class TileUtilities {
         Point point = new Point(center);
         Tile tileToAdd;
 
-        if (radius <= 1) {
+        if (radius < 1) {
 
             return tiles;
 
