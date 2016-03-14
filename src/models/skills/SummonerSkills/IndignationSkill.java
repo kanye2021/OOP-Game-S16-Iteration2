@@ -2,9 +2,11 @@ package models.skills.SummonerSkills;
 
 import models.attack.Projectile;
 import models.attack.RadialAttack;
+import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
+import views.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -23,9 +25,12 @@ public class IndignationSkill extends ActiveSkill{
     private int range;
     public IndignationSkill(){
         cooldown = false;
-        cooldownTime = 0;
+        cooldownTime = 3*SECONDS;
         damage = 1;
         range = 3;
+        projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);
+        cost = 10;
+        level = 1;
     }
     @Override
     public SkillDictionary initID() {
@@ -35,34 +40,29 @@ public class IndignationSkill extends ActiveSkill{
     }
 
     @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "summoner-indignation.png");
+    }
+
+
+    @Override
     public String getName() {
         return "Indigniation";
     }
 
     @Override
     public void onActivate(Entity entity) {
-        projectile = new Projectile(damage,range,5,entity.getMap(),initSprite());
-        if(cooldown){
 
+        if(isCooldown()){
             return;
         }
-        cooldown = true;
+        if(!payMana(entity,cost)){
+            return;
+        }
+        doTheCoolDown();
         System.out.println("Can you take this? INDIGNATION!");
-        Stats stats = entity.getStats();
-        int delta = 5;
+
         new RadialAttack(entity,projectile);
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-
-                        //System.out.println("Times Up");
-                        cooldown = false;
-                    }
-                },
-                cooldownTime
-        );
-
 
     }
 
@@ -75,8 +75,5 @@ public class IndignationSkill extends ActiveSkill{
 
     }
 
-    @Override
-    public ArrayList<Image> initSprite() {
-        return null;
-    }
+
 }

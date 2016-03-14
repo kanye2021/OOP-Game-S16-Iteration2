@@ -8,6 +8,8 @@ import models.items.takeable.TakeableItem;
 import models.map.Map;
 import models.map.Tile;
 import models.skills.ActiveSkill;
+import utilities.Toast;
+import views.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -18,10 +20,6 @@ import java.util.Random;
  * Created by aseber on 2/25/16.
  */
 
-//TODO:Get the inventory viewport to show that Item got stolen and that you have it
-    //TODO:SERGIO REED DIS.  SO I THINK IT DOESNT WORK B/C INVENTORY VIEW LOOKS AT ITEMS
-    //TODO:SO SINCE I ADDED IT TO THE ITEM NODES ARRAYLIST BUT NOT THE ITEMS IT DOESNT APPEAR
-    //TODO:IDK CURRENTLY HOW TO FIX
 public class PickPocketSkill extends ActiveSkill {
 
     public PickPocketSkill(){
@@ -30,6 +28,7 @@ public class PickPocketSkill extends ActiveSkill {
         cooldown = false;
         cooldownTime = 5*SECONDS;
         currentCooldownRemaining = 0;
+        level = 1;
     }
 
     @Override
@@ -43,12 +42,22 @@ public class PickPocketSkill extends ActiveSkill {
         return "Pickpocket";
     }
 
+
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "sneak-pickpocketSkill.png");
+    }
+
     @Override
     public void onActivate(Entity entity) {
-        if(cooldown){
+
+        if(isCooldown()) {
             System.out.println("Cooldown is not over yet!");
+        }
+        if(!payMana(entity,cost)){
             return;
         }
+
         Entity target = findEntity(entity);
         if(target == null){
             System.out.println("Target is not there");
@@ -59,6 +68,7 @@ public class PickPocketSkill extends ActiveSkill {
         Inventory targetInventory = target.getInventory();
         if(targetInventory.isEmpty()){
             System.out.println("Target did not have any items!!! Nothing 2 steal :(");
+            Toast.createToastWithTimer("Nothing to steal over here...", 1200);
             cooldown=false;
             return;
         } else {
@@ -67,6 +77,9 @@ public class PickPocketSkill extends ActiveSkill {
 
             // Pocket the item
             entityInventory.addItem(stolenItem);
+
+            //do toast
+            Toast.createToastWithTimer("You stole an item!", 1200);
 
             // Cool-down that skill
             doTheCoolDown();
@@ -116,11 +129,9 @@ public class PickPocketSkill extends ActiveSkill {
         Map map = entity.getMap();
         Tile desiredTile = map.getTileAt(desiredLocation);
 
-        if(desiredTile == null){
-            return null;
-        }
-        if(desiredTile.hasEntity()){
-            return desiredTile.getEntity();
+        if(desiredTile.hasEntity()&&payMana(entity,cost)){
+            return map.getEntityAt(desiredLocation);
+//            return desiredTile.getEntity();
         }
 
         return null;
@@ -167,8 +178,5 @@ public class PickPocketSkill extends ActiveSkill {
 
     }
 
-    @Override
-    public ArrayList<Image> initSprite() {
-        return null;
-    }
+
 }

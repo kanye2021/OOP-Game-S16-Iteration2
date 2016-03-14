@@ -2,12 +2,14 @@ package models.skills.SummonerSkills;
 
 import models.attack.LinearAttack;
 import models.attack.Projectile;
+import models.attack.StatusEffects;
 import models.entities.Avatar;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
 import utilities.Animator;
 import utilities.IOUtilities;
+import views.sprites.Sprite;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,8 +30,9 @@ public class FireBallSkill extends ActiveSkill{
         damage = 5;
         range = 3;
         speed = 200;
-        this.animator = new Animator(initSprite());
-        animator.setSpeed(speed);
+        cooldownTime = 1*SECONDS;
+        cost = 10;
+        level = 1;
     }
 
     @Override
@@ -40,6 +43,14 @@ public class FireBallSkill extends ActiveSkill{
     }
 
     @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "summoner-fireball.png");
+    }
+
+
+
+
+    @Override
     public String getName() {
         return "Fireball";
     }
@@ -47,8 +58,19 @@ public class FireBallSkill extends ActiveSkill{
 
     @Override
     public void onActivate(Entity entity) {
+        if(isCooldown()){
+            return;
+        }
+        if(!payMana(entity,cost)){
+            return;
+        }
+
+        doTheCoolDown();
         System.out.println("Can you take this? Fireball!");
-        Projectile projectile = new Projectile(damage,range,5,entity.getMap(),initSprite());
+        Projectile projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);
+
+        cooldown=true;
+
         new LinearAttack(entity,projectile);//This is the attack
 
 
@@ -65,15 +87,4 @@ public class FireBallSkill extends ActiveSkill{
 
     }
 
-    @Override
-    public ArrayList<Image> initSprite() {
-        String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/skills/summoner-fireball.png");
-
-
-        ArrayList<Image> imagePaths = new ArrayList<>();
-
-        imagePaths.add(new ImageIcon(imageBasePath).getImage());
-
-        return imagePaths;
-    }
 }

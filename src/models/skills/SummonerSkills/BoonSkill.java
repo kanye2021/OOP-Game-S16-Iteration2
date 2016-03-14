@@ -5,6 +5,7 @@ import models.skills.ActiveSkill;
 import models.skills.PassiveSkill;
 import models.skills.Skill;
 import models.stats.Stats;
+import views.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -17,6 +18,7 @@ public class BoonSkill extends ActiveSkill {
     public BoonSkill(){
         cooldown = false;
         cooldownTime = 5000;//5000 milliseconds
+        level = 1;
     }
     @Override
     public SkillDictionary initID() {
@@ -37,11 +39,14 @@ public class BoonSkill extends ActiveSkill {
     }
     @Override
     public void onActivate(Entity entity) {
-        if(cooldown){
+        if(isCooldown()){
             System.out.println("ANOTHA ONE");
             return;
         }
-        cooldown = true;
+        if(!payMana(entity,cost)){
+            return;
+        }
+        doTheCoolDown();
         System.out.println("Boon Skill Used");
         Stats stats = entity.getStats();
         int delta = 5;
@@ -68,7 +73,7 @@ public class BoonSkill extends ActiveSkill {
     }
 
     @Override
-    public ArrayList<Image> initSprite() {
+    public Sprite initSprite() {
         return null;
     }
 }

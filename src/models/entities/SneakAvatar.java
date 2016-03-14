@@ -45,11 +45,11 @@ public class SneakAvatar extends Avatar {
         return new Sneak();
 
     }
-
+    @Override
     public final String getType() {
 
         return "Sneak" + "-" + super.getType();
-
+        //return "Sneak_Avatar";
     }
 
     @Override

@@ -19,7 +19,7 @@ public class InstantDeathAreaEffect extends AreaEffect {
 
     @Override
     public void onTouch(Entity entity) {
-        entity.die();
+        entity.loseALife();
     }
 
     @Override
@@ -27,4 +27,7 @@ public class InstantDeathAreaEffect extends AreaEffect {
         return "instant-death";
     }
 
+    public int getValue(){
+        return 0;
+    }
 }

@@ -3,6 +3,7 @@ package models.skills.CommonSkills;
 import models.entities.Avatar;
 import models.entities.Entity;
 import models.skills.PassiveSkill;
+import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 import java.util.Random;
@@ -45,6 +46,13 @@ public class ObservationSkill extends PassiveSkill {
         upperBoundError = percentError;
         lowerBoundError = -percentError;
     }
+
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "common-observation.png");
+    }
+
+
     //TODO:Get this to be displayed on the area viewport
     public int getCombatPercentError() {
         resetBounds();

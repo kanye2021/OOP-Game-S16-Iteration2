@@ -76,8 +76,8 @@ public class TileImage extends BufferedImage {
             if(m!=null){
                 g.drawImage(m.getImage(), x, y, width, height, null);
 
-                width /= 2;
-                height /=2;
+                width *= 0.50;
+                height *= 0.50;
                 x = getWidth()/2 - width/2;
                 y = getHeight()/2 - height/2;
 

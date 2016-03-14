@@ -19,6 +19,10 @@ public class LinearAttack extends Attackion{
     public LinearAttack(Entity entity,Projectile projectile){
         this.projectile = projectile;
         this.entity = entity;
+        //If you cannot attack
+        if(!canAttack(entity)){
+            return;
+        }
         this.map = entity.getMap();
         this.origin = entity.getLocation();
         this.damage = projectile.damage;
@@ -28,6 +32,14 @@ public class LinearAttack extends Attackion{
         findSlope(orientation);
         findEffectedTiles(slope);
     }
+
+   /* @Override
+    public boolean canAttack(Entity entity) {
+        if(entity.getStatusEffect()== StatusEffects.StatusEffect.SLEEP){
+            return false;
+        }
+        return true;
+    }*/
 
     @Override
     public void calculateDamage() {
@@ -67,7 +79,7 @@ public class LinearAttack extends Attackion{
     }
 
     public void findEffectedTiles(Point slope){
-        projectile.projectileMove(entity.getOrientation());
+//        projectile.projectileMove(entity.getOrientation());
         Queue<PointNode> pointQueue = new LinkedList<>();
 
         for(int i = 1;i<=range;i++){

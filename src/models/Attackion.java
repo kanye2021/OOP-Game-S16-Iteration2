@@ -1,5 +1,6 @@
 package models;
 
+import models.attack.StatusEffects;
 import models.conditions.MapCondition;
 import models.entities.Entity;
 import models.entities.Entity;
@@ -22,5 +23,13 @@ public abstract class Attackion {
     protected Map.Direction orientation;
     public abstract void calculateDamage();
     protected Point origin;
+    protected StatusEffects.StatusEffect statusEffect;
+
+    public boolean canAttack(Entity entity) {
+        if(entity.getStatusEffect()== StatusEffects.StatusEffect.SLEEP){
+            return false;
+        }
+        return true;
+    }
 
 }

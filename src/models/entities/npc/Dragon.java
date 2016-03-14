@@ -1,5 +1,6 @@
 package models.entities.npc;
 
+
 import models.entities.npc.actions.Ride;
 import models.entities.npc.actions.Talk;
 import models.map.Map;
@@ -22,13 +23,14 @@ public class Dragon extends Mount {
     private ArrayList<String> terrainTypes;
 
     public Dragon(Point location,Map map) {
-        super(location, map, "Yo, I'm a dragon.", "Shut up and get on!");
+        super(location, map);
         passableTerrain.add("grass");
         terrainTypes = new ArrayList<>();
 
         movement = 10;
         terrainTypes.add("mountain");
-        initActions();
+        terrainTypes.add("grass");
+
 
     }
 
@@ -46,7 +48,11 @@ public class Dragon extends Mount {
     public void startInteraction(NPC npc) {
 
     }
-
+    @Override
+    public void initDialogue(){
+        dialogue.add("Yo, I'm a dragon.");
+        dialogue.add("Shut up and get on!");
+    }
     //Horse has no occuptation
     @Override
     protected Occupation initOccupation() {
@@ -68,17 +74,15 @@ public class Dragon extends Mount {
         imagePaths.put(Map.Direction.NORTH_WEST, imageBasePath + "NW.png");
         return imagePaths;
     }
+    @Override
     public String getType() {
 
-        return "Horse" + "-" + super.getType();
+        //return "Horse" + "-" + super.getType();
+        return "Dragon";
     }
     public void initActions(){
         actionList.add(new Talk(this));
         actionList.add(new Ride(this));
-    }
-    @Override
-    public void updateOrientation(Map.Direction direction){
-        orientation = direction;
     }
 
     @Override

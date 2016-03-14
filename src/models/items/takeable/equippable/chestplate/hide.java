@@ -12,16 +12,14 @@ import models.stats.StatModificationList;
 import models.stats.Stats;
 import views.sprites.DecoratedSprite;
 
-/**
- * Created by aseber on 3/9/16.
- */
+
 public class hide extends EquippableItem {
+    public hide(equippableItemDecoration decoration){
 
-    public hide(equippableItemDecoration decoration) {
+        ID = Item.ItemDictionary.getDictionaryItemFromID(1100 + decoration.IDModifier);
+        name = "{NAME} hide".replace("{NAME}", decoration.nameModifier);
+        description = "A hide made of {NAME}".replace("{NAME}", decoration.descriptionModifier);
 
-        ID = Item.ItemDictionary.getDictionaryItemFromID(1106 + decoration.IDModifier);
-        name = "{NAME} Hide".replace("{NAME}", decoration.nameModifier);
-        description = "A hide body made of {NAME}".replace("{NAME}", decoration.descriptionModifier);
         component = Equipment.Component.CHESTPLATE;
         sprite = new DecoratedSprite("./src/res/items/takeable/armor/chest/sneak-template-chestplate.png", decoration.colorMap);
         monetaryValue = decoration.monetaryModifier;

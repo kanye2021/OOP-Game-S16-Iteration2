@@ -12,14 +12,10 @@ import models.stats.StatModificationList;
 import models.stats.Stats;
 import views.sprites.DecoratedSprite;
 
-/**
- * Created by aseber on 3/9/16.
- */
-public class robe extends EquippableItem {
+public class robe extends EquippableItem{
+    public robe(equippableItemDecoration decoration){
 
-    public robe(equippableItemDecoration decoration) {
-
-        ID = Item.ItemDictionary.getDictionaryItemFromID(1113 + decoration.IDModifier);
+        ID = Item.ItemDictionary.getDictionaryItemFromID(1100 + decoration.IDModifier);
         name = "{NAME} Robe".replace("{NAME}", decoration.nameModifier);
         description = "A robe made of {NAME}".replace("{NAME}", decoration.descriptionModifier);
         component = Equipment.Component.CHESTPLATE;
@@ -35,5 +31,4 @@ public class robe extends EquippableItem {
         range = RANGE;
 
     }
-
 }

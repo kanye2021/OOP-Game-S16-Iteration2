@@ -2,6 +2,7 @@ package views;
 
 import models.entities.npc.actions.Action;
 import models.entities.npc.NPC;
+import utilities.IOUtilities;
 import utilities.SubState;
 
 import java.awt.*;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
  * Created by dyeung on 2/28/16.
  */
 public class NPCMenuView extends View{
+    private final String RESOURCE_BASE_PATH = IOUtilities.getFileSystemDependentPath("./src/res/etc/");
+
     //Scalable variables
     private int actionView_Width ;
     private int actionView_Height;
@@ -48,6 +51,8 @@ public class NPCMenuView extends View{
         actionView_Width = (getScreenWidth() / 6);
         //System.out.println("Action View: " + actionView_Width);
         actionView_Height = (int) (getScreenHeight() * 0.5);
+//        actionView_Start_Y = (int) (getScreenHeight() * 0.3);
+//        actionView_Start_X = getScreenWidth()/2;
         actionView_Start_Y = 0;
         actionView_Start_X = getScreenWidth() - actionView_Width;
 
@@ -65,6 +70,10 @@ public class NPCMenuView extends View{
         // Draw the background
         g.setColor(new Color(25, 25, 25));
         g.fillRect(actionView_Start_X, actionView_Start_Y, actionView_Width, actionView_Height);
+        //Image statsParchment = IOUtilities.getImageIcon(RESOURCE_BASE_PATH + "smaller_parchment.png").getImage();
+        //Switched the width and height since it looks better
+        //int startX = actionView_Start_X + actionView_Width/2;
+        //g.drawImage(statsParchment,actionView_Start_X, actionView_Start_Y, actionView_Height, actionView_Width, getDisplay());
     }
     public void renderOptions(Graphics g){
         ArrayList<Action> npcActions = npc.getActionList();
@@ -86,10 +95,10 @@ public class NPCMenuView extends View{
         for (String optionName : menuOptions) {
             Rectangle2D rectangle = fm.getStringBounds(optionName, g);
 
-            boxY = buttonHeight * i;
+            boxY = buttonHeight * i + actionView_Start_Y;
 
             int stringX = boxX + (int) (rectangle.getWidth() / 2);
-            int stringY = i * buttonHeight + (int) (rectangle.getHeight() / 2) + fm.getAscent();
+            int stringY = boxY + (int) (rectangle.getHeight() / 2) + fm.getAscent();
 
             if (i == selectedOption) {
                 primaryColor = Color.WHITE;

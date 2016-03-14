@@ -112,6 +112,10 @@ public class SkillViewport extends View{
             g.drawRect(skillBoxX, skillBoxY, skillBoxSize, skillBoxSize);
 
             // TODO: Do draw image when have images. Not rly a large priority tbh
+            // Draw item image
+            Image skillImage = currentSkill.getSprite().getImage();
+            g.drawImage(skillImage, skillBoxX + (skillBoxSize - imgSize) / 2, skillBoxY + (skillBoxSize - imgSize) / 2, imgSize, imgSize, null);
+
             // Draw skill image
 
 
@@ -129,18 +133,20 @@ public class SkillViewport extends View{
                 // Set font
                 g.setFont(keyBindFont);
                 fm = g.getFontMetrics(keyBindFont);
+                g.setColor(goldTrim);
 
                 // Get keybind
                 ActiveSkill currentActiveSkill = (ActiveSkill)currentSkill;
                 int keyCode = currentActiveSkill.getKeyBind();
                 keyBind = KeyEvent.getKeyText(keyCode);
                 textRect = fm.getStringBounds(keyBind, g);
-                g.drawString(keyBind, skillBoxX + (int)textRect.getWidth()/2 + topAndSideMargin, skillBoxY + (int)textRect.getHeight() - 1  + topAndSideMargin);
+                g.drawString(keyBind, skillBoxX + (int)textRect.getWidth()/2 + topAndSideMargin, skillBoxY + (int)textRect.getHeight() - 1  );
             }
 
             // Set font
             g.setFont(skillLabelFont);
             fm = g.getFontMetrics(skillLabelFont);
+            g.setColor(Color.WHITE);
 
             // Draw Skill level in Upper Right Corner
             String skillLvl = "Lvl " + Integer.toString(currentSkill.getLevel());
@@ -152,7 +158,6 @@ public class SkillViewport extends View{
                 double currentTime = currentSkill.getCooldownTimeRemaining();
                 drawAndUpdateCoolDown(g, skillBoxX, skillBoxY, currentTime, currentSkill);
             }
-
 
             // Draw option to level up this skill if have skill points
             if (stats.getStat(Stats.Type.SKILL_POINTS) > 0) {
@@ -262,7 +267,7 @@ public class SkillViewport extends View{
                     CDTimer.purge();   // Removes all cancelled tasks from this timer's task queue.
                 }
             };
-        }, 0, 500);
+        }, 0, 30);
     }
 
     public void handleMouseClick(MouseEvent e) {
@@ -310,7 +315,7 @@ public class SkillViewport extends View{
     public void scaleView() {
         // Slot sizes
         skillBoxSize = (int) (((double) getScreenWidth() / 15));
-        imgSize = (int) ((double) skillBoxSize * .80);
+        imgSize = (int) ((double) skillBoxSize * .40);
         levelUpBoxSize = (int) ((double) skillBoxSize * .60);
         plusIconSize = (int) ((double) skillBoxSize * .45);
 
@@ -338,17 +343,17 @@ public class SkillViewport extends View{
         skillLabelFontSize = keyBindFontSize;
         CDFontSize = getScreenWidth()/50;
 
-        skillLabelFont = new Font("Helvetica", Font.PLAIN, skillLabelFontSize);
+        skillLabelFont = new Font("Courier New", Font.PLAIN, skillLabelFontSize);
 
         // Setup keybind font
-        keyBindFont = new Font("Helvetica", Font.BOLD, keyBindFontSize);
+        keyBindFont = new Font("Courier New", Font.BOLD, keyBindFontSize);
         Map<TextAttribute, Object> attributes = new HashMap<>();
         attributes.put(TextAttribute.FAMILY, keyBindFont.getFamily());
-        attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD);
-        attributes.put(TextAttribute.SIZE, (int) (keyBindFont.getSize() * 1.2));
+        attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_EXTRABOLD);
+        attributes.put(TextAttribute.SIZE, (int) (keyBindFont.getSize() * 1.5));
         keyBindFont = Font.getFont(attributes);
 
-        CDFont = new Font("Helvetica", Font.PLAIN, CDFontSize);
+        CDFont = new Font("Courier New", Font.PLAIN, CDFontSize);
     }
 
 

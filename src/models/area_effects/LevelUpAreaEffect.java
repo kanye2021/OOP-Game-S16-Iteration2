@@ -18,7 +18,10 @@ public class LevelUpAreaEffect extends AreaEffect {
 
     @Override
     public void onTouch(Entity entity) {
-        entity.levelUp();
+        if(entity.getType().contains("Avatar"))
+            entity.levelUpToast();
+        else
+            entity.levelUp();
     }
 
     @Override
@@ -26,4 +29,7 @@ public class LevelUpAreaEffect extends AreaEffect {
         return "level-up";
     }
 
+    public int getValue(){
+        return 0;
+    }
 }

@@ -2,9 +2,11 @@ package models.skills.SummonerSkills;
 
 import models.attack.AngularAttack;
 import models.attack.Projectile;
+import models.attack.StatusEffects;
 import models.entities.Entity;
 import models.skills.ActiveSkill;
 import models.stats.Stats;
+import views.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -21,6 +23,11 @@ public class GroundDasherSkill extends ActiveSkill{
     public GroundDasherSkill(){
         damage = 1;
         range = 3;
+
+        cooldownTime = 2*SECONDS;
+        projectile = new Projectile(damage,range, StatusEffects.StatusEffect.NONE);
+        cost = 10;
+        level = 1;
     }
     @Override
     public SkillDictionary initID() {
@@ -33,15 +40,23 @@ public class GroundDasherSkill extends ActiveSkill{
         return "Ground Dasher";
     }
 
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "summoner-groundDasher.png");
+    }
+
 
     @Override
     public void onActivate(Entity entity) {
-        projectile = new Projectile(damage,range,5,entity.getMap(),initSprite());
-        if(cooldown){
+
+        if(isCooldown()){
             System.out.println("ANOTHA ONE");
             return;
         }
-        cooldown = true;
+        if(!payMana(entity,cost)){
+            return;
+        }
+        doTheCoolDown();
         System.out.println("Bruh its OG Dasher");
         new AngularAttack(entity,projectile);
         //This attack is in the models
@@ -69,8 +84,4 @@ public class GroundDasherSkill extends ActiveSkill{
 
     }
 
-    @Override
-    public ArrayList<Image> initSprite() {
-        return null;
-    }
 }

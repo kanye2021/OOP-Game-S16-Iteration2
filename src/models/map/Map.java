@@ -7,6 +7,7 @@ import utilities.ProjectileDetection;
 import utilities.TileDetection;
 import models.entities.npc.NPC;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -76,10 +77,10 @@ public class Map {
         updateTile(entity.getLocation());
     }
 
-    public void insertProjectile(Projectile projectile){
-        tiles.get(projectile.getLocation()).insertProjectile(projectile);
-        updateTile(projectile.getLocation());
-    }
+//    public void insertProjectile(Projectile projectile){
+//        tiles.get(projectile.getLocation()).insertProjectile(projectile);
+//        updateTile(projectile.getLocation());
+//    }
 
     // To insert an item on the map. Used when loading and dropping items
     public void insertItemAtPoint(Item item, Point point) {
@@ -161,24 +162,24 @@ public class Map {
         }
     }
 
-    // the projectile movement
-    public ProjectileDetection moveProjectile(Projectile projectile, Direction direction){
-        //Determine the location of the tile that the projectile wants to move
-        Point currentLocation = projectile.getLocation();
-        Point desiredLocation = direction.neighbor(currentLocation);
-
-        //get the tile at that location. Exit if it is not on the map.
-        Tile desiredTile = tiles.get(desiredLocation);
-        if(desiredLocation == null){
-            return new ProjectileDetection(null,currentLocation,false);
-        }
-
-        //Tell the tile that the projectile wants to move to it. If it is successful, the tile will return true and carry
-        //out any actions that will result from the move. If not, it will return false.
-        ProjectileDetection resultOfMovement = desiredTile.insertProjectile(projectile);
-
-        return resultOfMovement;
-    }
+//    // the projectile movement
+//    public ProjectileDetection moveProjectile(Projectile projectile, Direction direction){
+//        //Determine the location of the tile that the projectile wants to move
+//        Point currentLocation = projectile.getLocation();
+//        Point desiredLocation = direction.neighbor(currentLocation);
+//
+//        //get the tile at that location. Exit if it is not on the map.
+//        Tile desiredTile = tiles.get(desiredLocation);
+//        if(desiredLocation == null){
+//            return new ProjectileDetection(null,currentLocation,false);
+//        }
+//
+//        //Tell the tile that the projectile wants to move to it. If it is successful, the tile will return true and carry
+//        //out any actions that will result from the move. If not, it will return false.
+//        ProjectileDetection resultOfMovement = desiredTile.insertProjectile(projectile);
+//
+//        return resultOfMovement;
+//    }
 
     public Tile getTileAt(Point p){
         return tiles.get(p);
@@ -192,16 +193,16 @@ public class Map {
         return null;
     }
 
-    public Item getItemAt(Point p){
+    public ArrayList<Item> getItemAt(Point p){
         if(tiles.containsKey(p)){
-            return tiles.get(p).getItem();
+            return tiles.get(p).getItems();
         }
         return null;
     }
 
-    public void removeItemAt(Point p){
+    public void removeItemsAt(Point p){
         if (tiles.containsKey(p)) {
-            tiles.get(p).removeItem();
+            tiles.get(p).removeItems();
             updateTile(p);
         }
     }
@@ -210,6 +211,13 @@ public class Map {
         if (tiles.containsKey(p)){
             tiles.get(p).removeAreaEffect();
             tiles.get(p).removeDecal();
+            updateTile(p);
+        }
+    }
+
+    public void setDecalVisibilityAtPoint(boolean b, Point p){
+        if (tiles.containsKey(p)){
+            tiles.get(p).setDecalVisibility(b);
             updateTile(p);
         }
     }
@@ -249,5 +257,9 @@ public class Map {
 
     public void setNeedsToBeRendered(boolean b){
         changeSinceLastRender = b;
+    }
+
+    public HashMap<Point, Tile> getTiles(){
+        return tiles;
     }
 }

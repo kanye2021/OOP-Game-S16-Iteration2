@@ -10,14 +10,12 @@ import utilities.TileUtilities;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.HashSet;
-
+import java.util.ArrayList;
 /**
  * Created by Bradley on 3/5/16.
  */
 public class VisualCortex {
 
-    int cycles;
     private NPC npc;
     private Map map;
     private VisualInterface memory;
@@ -39,7 +37,6 @@ public class VisualCortex {
         Point pointOfTile;
 
         Entity entityAtTile;
-        Item itemAtTile;
         for (java.util.AbstractMap.Entry<Tile, Point> pair : tiles.entrySet()) {
 
             tile = pair.getKey();
@@ -53,13 +50,14 @@ public class VisualCortex {
 
             }
 
-            itemAtTile = tile.getItem();
-
-            if (itemAtTile != null) {
-
-                memory.addVisualInput(itemAtTile, pointOfTile);
-
+            // Get items here.
+            ArrayList<Item> itemList = tile.getItems();
+            for(Item item : itemList){
+                if(item!=null){
+                    memory.addVisualInput(item, pointOfTile);
+                }
             }
+
 
         }
 

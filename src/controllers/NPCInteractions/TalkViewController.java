@@ -5,6 +5,7 @@ import controllers.ViewController;
 import models.entities.npc.NPC;
 import utilities.StateManager;
 import utilities.Task;
+import utilities.TaskWrapper;
 import views.View;
 
 import java.awt.event.KeyEvent;
@@ -44,7 +45,7 @@ public class TalkViewController extends ViewController {
             public void stop(){}
         };
 
-        addKeyPressMapping(continueText, KeyEvent.VK_ENTER);
+        addKeyPressMapping(new TaskWrapper(continueText, "Continue"), KeyEvent.VK_ENTER);
     }
 
     public TalkViewController getTalkViewController(){
@@ -52,6 +53,7 @@ public class TalkViewController extends ViewController {
     }
     public void setClose(Task task){
         closeActions = task;
+        npc.resetDialogue();
     }
 
 }

@@ -3,6 +3,7 @@ package models.skills.CommonSkills;
 import models.entities.Entity;
 import models.skills.PassiveSkill;
 import models.skills.SkillList;
+import views.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 
@@ -37,6 +38,11 @@ public class BargainSkill extends PassiveSkill {
         bargainLv = getLevel();//Gets the newly updated level
         percentDiscount = (constant*(bargainLv-1))/100.0;
 
+    }
+
+    @Override
+    public Sprite initSprite() {
+        return new Sprite(SKILL_ROOT_FILE_PATH + "common-bargain.png");
     }
 
     public double getPercentDiscount() {//used for when you access the shop.
