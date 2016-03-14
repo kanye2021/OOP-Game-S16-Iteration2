@@ -19,9 +19,9 @@ public class Summoner extends Occupation {
             new BoonSkill(),
             new BaneSkill(),
             new StaffSkill(),
-                new FireBallSkill(),
-                new GroundDasherSkill(),
-                new IndignationSkill()
+            new FireBallSkill(),
+            new GroundDasherSkill(),
+            new IndignationSkill()
         );
 
     }

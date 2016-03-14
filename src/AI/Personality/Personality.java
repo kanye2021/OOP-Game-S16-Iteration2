@@ -16,7 +16,7 @@ public enum Personality {
     // FACTIONS!
     // check gameloop!
 
-    DOGE(0.075, 0.3, 0.15, new InterestList(new FollowInterest(1.0), new ExploreInterest(0.1))),
+    DOGE(0.075, -0.3, 0.15, new InterestList(new FollowInterest(1.0), new ExploreInterest(0.1))),
     FAT_LARD_SHOPKEEPER(0.03, -0.25, 0.95, new InterestList(new TradeInterest(0.75), new ExploreInterest(0.01))),
     SKINNY_SHOPKEEPER(0.03, -0.25, 0.1, new InterestList(new TradeInterest(0.75), new ExploreInterest(0.35), new ItemPickupInterest(0.5))),
     JORGE_BOSS(0.15, -0.85, 0.05, new InterestList(new AttackInterest(0.85), new ExploreInterest(0.35), new ItemPickupInterest(0.65))),

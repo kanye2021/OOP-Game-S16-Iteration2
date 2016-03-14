@@ -74,6 +74,6 @@ public class BoonSkill extends ActiveSkill {
 
     @Override
     public Sprite initSprite() {
-        return null;
+        return new Sprite(SKILL_ROOT_FILE_PATH + "summoner-boonSkill.png");
     }
 }
