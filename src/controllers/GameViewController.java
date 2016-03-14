@@ -226,7 +226,6 @@ public class GameViewController extends ViewController{
         //Open Pause
         Task openPause = new Task() {
             public void run(){
-                System.out.println("1:Am I in");
                 PauseView pauseView = new PauseView(getScreenWidth(), getScreenHeight(), getDisplay());
                 PauseViewController pauseViewController = new PauseViewController(pauseView, getStateManager(), avatarController.getAvatar(), GameViewController.this);
 
@@ -235,7 +234,6 @@ public class GameViewController extends ViewController{
                 pauseViewController.setClosePause(new Task() {
                     @Override
                     public void run() {
-                        System.out.println("2:Did I close ");
                         pauseSubstate.dismiss();
                     }
 
