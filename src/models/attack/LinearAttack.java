@@ -95,7 +95,6 @@ public class LinearAttack extends Attackion{
             pointQueue.add(new PointNode(origin,slope,i));//adds in all the nodes
         }
 
-
         while(!pointQueue.isEmpty()){
 
 
@@ -112,7 +111,7 @@ public class LinearAttack extends Attackion{
                 if(desiredTile.hasEntity()){
                     Entity target = desiredTile.getEntity();
                     target.takeDamage(-damage);
-
+                    System.out.println("Hit entity!!!!");
                 }
 
                 try {

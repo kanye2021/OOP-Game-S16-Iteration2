@@ -261,26 +261,22 @@ public class AreaViewport extends View {
         // Also only update health bar, if the entities current health is diff than its old health
         if( !(entity == avatar)) {
 
-
             if(!entityEffedUpHealthMap.containsKey(entity) || oldHealth != entitysCurrentActualHealth){
+
+                System.out.println("CHANGIN ENTITY HEALTH");
 
                 Skill observation = avatar.getSpecificSkill(Skill.SkillDictionary.OBSERVATION);
                 ObservationSkill observationSkill = (ObservationSkill) observation;
                 observationSkill.onUpdate(entity);
 
-                int effedUpHealth = observationSkill.getCombatPercentError(entitysCurrentActualHealth);
-
-
-                // Start with the healthbar
-                // Get the necessary stats
-
-
+                int effedUpHealth = observationSkill.getCombatError(entitysCurrentActualHealth);
 
                 entityEffedUpHealthMap.put(entity, effedUpHealth);
                 entityHealthMap.put(entity, entitysCurrentActualHealth);
             }
 
-            int health = entityEffedUpHealthMap.get(entity);
+//            int health = entityEffedUpHealthMap.get(entity);
+            int health = entitysCurrentActualHealth + entityEffedUpHealthMap.get(entity);
 
             int maxHealth = stats.getStat(Stats.Type.MAX_HEALTH);
 
@@ -395,7 +391,6 @@ public class AreaViewport extends View {
         if(northEastTile != null){
             adjacentTiles.add(new TileNode(northEastTile, northEastLogicaPoint, northEastPixelPoint));
         }
-
         
         // Get the tile to the south west of the current position.
         Point southWestLogicalPoint = new Point(tile.logicalPoint);
