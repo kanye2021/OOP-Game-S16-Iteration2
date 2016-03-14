@@ -25,13 +25,6 @@ public enum Personality {
     MICHAEL_SERA(0.0, 1.0, 1.0, 0.0, 0.0), // Complete pussy. You can walk all over this NPC.
     PET(0.1, 0.0, 0.1, 0.3, 0.1); // Basically an agnostic that won't trade.*/
     
-    /*private double attackOnSightProbability; // How likely he is to engage automatically.
-    private double tradeProbability; // How likely it is he will want to trade.
-    private double pursuadeProbablity; // How likelly you will be able to barder.
-    private double vigilance; // How likely he is to see you pickpocketing.
-    private double attackWhenAttackedProbability; // How likely he is to attack you if you pickpocket (and get caught) or attack.*/
-
-
     private double scatter_Brainedness;   // How likely the entity is to change their decision before it is completed
                                             // Exists on a continuum:
                                             // Clear-headed (0.0) <--------------------> Scatter-brain-Jane (1.0)
