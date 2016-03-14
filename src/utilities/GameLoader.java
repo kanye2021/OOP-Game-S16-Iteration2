@@ -289,7 +289,6 @@ public class GameLoader {
             if (item == null) {
                 System.out.println("GameLoader: unrecognized itemID (id = " + id + ")");
             } else {
-                System.out.println("GameLoader: successfully loaded an item (id = " + id + ")");
                 items.add(item);
             }
         }

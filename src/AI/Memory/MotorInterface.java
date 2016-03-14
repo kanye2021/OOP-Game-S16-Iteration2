@@ -10,6 +10,6 @@ public interface MotorInterface {
 
     Decision getDecision();
     Personality getPersonality();
-    NPC getNPCforAttack();
+    NPC getNPC();
 
 }

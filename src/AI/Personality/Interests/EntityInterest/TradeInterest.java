@@ -13,43 +13,42 @@ import java.awt.*;
 /**
  * Created by aseber on 3/11/16.
  */
-public class AttackInterest extends EntityInterest {
+public class TradeInterest extends EntityInterest {
 
-    public AttackInterest(double interestLevel) {
+    public TradeInterest(double interestLevel) {
 
         super(interestLevel);
 
     }
 
-    private AttackInterest(AttackInterest interest, Entity entityOfInterest, Point pointOfInterest) {
+    private TradeInterest(TradeInterest interest, Entity entityOfInterest, Point pointOfInterest) {
 
         super(interest.getInterestLevel(), entityOfInterest);
         setPointOfInterest(pointOfInterest);
 
     }
 
-    public AttackInterest createRuntimeInterest(Entity entityOfInterest, Point pointOfInterest) {
+    public TradeInterest createRuntimeInterest(Entity entityOfInterest, Point pointOfInterest) {
 
-        return new AttackInterest(this, entityOfInterest, pointOfInterest);
+        return new TradeInterest(this, entityOfInterest, pointOfInterest);
 
     }
 
     public void update(Memory memory) {
         NPC npc = memory.getNPC();
         npc.basicAttack(entityOfInterest);
-        //setPointOfInterest(entityOfInterest.getLocation());
+        setPointOfInterest(memory.getNPC().getLocation());
     }
 
     public double getInterestWeight(Entity entityOfInterest, ThoughtInterface memory) {
 
         Relationship relationship = memory.getEntityRelationship(entityOfInterest);
-        double relationshipValue = -relationship.getRelationshipValue();
-        double aggresiveness = memory.getPersonality().getAggressiveness();
+        double relationshipValue = relationship.getRelationshipValue();
         double weight = 0.0;
 
-        if (relationship.isEnemy()) {
+        if (relationship.isFriend()) {
 
-            weight = relationshipValue * 1000.0 * getInterestLevel() * aggresiveness;
+            weight = relationshipValue * 1000.0 * getInterestLevel();
 
         }
 
@@ -66,6 +65,6 @@ public class AttackInterest extends EntityInterest {
 
     @Override
     public String getSpecificInterest() {
-        return "AttackInterest";
+        return "TradeInterest";
     }
 }

@@ -50,10 +50,6 @@ public class FrontalLobe {
                     // If all of these are true, we may continue with our current decision!
                     return;
 
-                } else {
-
-                    System.err.println("SCATTER");
-
                 }
 
             }
@@ -73,7 +69,7 @@ public class FrontalLobe {
                 // friendly Faction should add some good weight
                 // especially those part of the same faction
                 // enemy faction should add some bad weight
-                double aggressiveFactor = memory.getPersonality().getAggressiveness();
+                double aggressiveFactor = -memory.getPersonality().getAggressiveness();
                 double scatter_brainedNess = memory.getPersonality().getScatter_Brainedness();
                 double scatterBrainFactor = scatter_brainedNess * rng.nextGaussian() - (scatter_brainedNess / 2);
                 double relationalValue = aggressiveFactor + scatterBrainFactor;
@@ -154,7 +150,7 @@ public class FrontalLobe {
             Decision newDecision = validDecisions.pickChoice();
 
             memory.setDecision(newDecision);
-//            newDecision.getSpecificInterest();
+            System.out.println(npc.getType() + newDecision.getSpecificInterest());
 
         }
 

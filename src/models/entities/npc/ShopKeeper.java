@@ -29,7 +29,7 @@ public class ShopKeeper extends NPC {
         passableTerrain.add("grass");
         initInventory(); //Adds items to the inventory
         modifyActions();
-        brain = new Brain(this, Personality.DEFAULT); // Agnostic is the default personailty.
+        brain = new Brain(this, Personality.FAT_LARD_SHOPKEEPER); // Agnostic is the default personailty.
     }
     //---------NPC Stuff------------
     public void modifyActions(){

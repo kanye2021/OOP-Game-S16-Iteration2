@@ -28,6 +28,30 @@ public class ExploreInterest extends PointInterest {
 
     public ExploreInterest createRuntimeInterest(NPC npc) {
 
+        return new ExploreInterest(this, createPointOfInterest(npc));
+
+    }
+
+    public void update(Memory memory) {
+
+        setPointOfInterest(createPointOfInterest(memory.getNPC()));
+
+    }
+
+    public double getInterestWeight() {
+
+        return 100 * getInterestLevel();
+
+    }
+
+    public boolean isApplicable(ThoughtInterface memory) {
+
+        return true;
+
+    }
+
+    private Point createPointOfInterest(NPC npc) {
+
         UniformPicker<Map.Direction> directionPicker = new UniformPicker<>();
         Point npcLocation = npc.getLocation();
 
@@ -42,33 +66,12 @@ public class ExploreInterest extends PointInterest {
         }
 
         Map.Direction direction = directionPicker.pickChoice();
-        Point pointOfInterest = direction.neighbor(npcLocation);
-        return new ExploreInterest(this, pointOfInterest);
-
-    }
-
-    public void update(Memory memory) {
-
-        // Do nothing, the item doesn't move!
-
-    }
-
-    public double getInterestWeight() {
-
-        return 100 * getInterestLevel();
-
-    }
-
-    public boolean isApplicable(ThoughtInterface memory) {
-
-        return !memory.getNPC().getLocation().equals(getPointOfInterest());
+        return direction.neighbor(npcLocation);
 
     }
 
     @Override
     public String getSpecificInterest() {
-        String test = "ExploreInterest";
-        System.out.println(test);
-        return test;
+        return "ExploreInterest";
     }
 }

@@ -22,7 +22,7 @@ public class Pet extends NPC {
     public Pet(Point location, Map map) {
         super(location, map);
         passableTerrain.add("grass");
-        brain = new Brain(this, Personality.DOG); // Agnostic is the default personailty.
+        brain = new Brain(this, Personality.DOGE); // Agnostic is the default personailty.
         this.orientation = Map.Direction.NORTH;
     }
 

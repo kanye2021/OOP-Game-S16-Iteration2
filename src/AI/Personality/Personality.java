@@ -1,37 +1,33 @@
 package AI.Personality;
 
-import AI.Personality.Interests.*;
 import AI.Personality.Interests.EntityInterest.AttackInterest;
 import AI.Personality.Interests.EntityInterest.FollowInterest;
+import AI.Personality.Interests.EntityInterest.TradeInterest;
+import AI.Personality.Interests.InterestList;
 import AI.Personality.Interests.ItemInterest.ItemPickupInterest;
 import AI.Personality.Interests.PointInterest.ExploreInterest;
-import models.entities.npc.actions.Attack;
 
 /**
  * Created by Bradley on 3/5/16.
  */
 public enum Personality {
 
-    DOG(0.25, 0.3, 0.2, new InterestList(new FollowInterest(1.0), new ExploreInterest(0.1))),
-    DEFAULT(0.25, 0.0, 0.2, new InterestList(new ExploreInterest(0.1),new AttackInterest(0.1)));
+    // should not trade unless avatar, should not follow unless followable
+    // FACTIONS!
+    // check gameloop!
 
-    /*HITLER(1.0, 0.0, 0.0, 1.0, 1.0), // Will attack no matter what
-    HOSTILE(0.9, 0.1, 0.1, 0.9, 1.0), // Will almost definitely attack
-    ANGRY(0.7, 0.2, 0.2, 0.5, 1.0), // Is very likely to attack
-    IRITABLE(0.6, 0.5, 0.5, 0.4, 0.8), // Will probably attack
-    AGNOSTIC(0.1, 0.1, 0.1, 0.3, 0.1 ), // Doesn't really want to help or hurt you
-    KIND(0.1, 0.8, 0.3, 0.4, 0.6), // WIll probably help you ,will still attack if you attack back.
-    FRIENDLY(0.0, 1.0, 0.5, 0.3, 0.5), // Very friendly, will want to help you. Will still attack if he catches you pick pocekting
-    PUSHOVER(0.0, 1.0, 0.8, 0.2, 0.3), // Will almost always let thing slide,
-    MICHAEL_SERA(0.0, 1.0, 1.0, 0.0, 0.0), // Complete pussy. You can walk all over this NPC.
-    PET(0.1, 0.0, 0.1, 0.3, 0.1); // Basically an agnostic that won't trade.*/
-    
+    DOGE(0.075, 0.3, 0.15, new InterestList(new FollowInterest(1.0), new ExploreInterest(0.1))),
+    FAT_LARD_SHOPKEEPER(0.03, -0.25, 0.95, new InterestList(new TradeInterest(0.75), new ExploreInterest(0.01))),
+    SKINNY_SHOPKEEPER(0.03, -0.25, 0.1, new InterestList(new TradeInterest(0.75), new ExploreInterest(0.35), new ItemPickupInterest(0.5))),
+    JORGE_BOSS(0.15, -0.85, 0.05, new InterestList(new AttackInterest(0.85), new ExploreInterest(0.35), new ItemPickupInterest(0.65))),
+    DEFAULT(0.05, -0.15, 0.2, new InterestList(new ExploreInterest(0.1)));
+
     private double scatter_Brainedness;   // How likely the entity is to change their decision before it is completed
                                             // Exists on a continuum:
                                             // Clear-headed (0.0) <--------------------> Scatter-brain-Jane (1.0)
     private double aggressiveness;        // How aggressive the entity is with other entities
                                             // Exists on a continuum:
-                                            // friendly (0.0) <---------- | passive (0.5) | ---------> aggressive(1.0)
+                                            // friendly (-1.0) <---------- | passive (0.0) | ---------> aggressive(1.0)
     private double laziness;              // How likely the entity is to not carry out a decision that tick
                                             // Exists on a continuum:
                                             // Cocaine cowboy  (0.0) <--------------------> Snorlax (1.0)
