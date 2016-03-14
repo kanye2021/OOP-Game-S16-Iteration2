@@ -23,6 +23,8 @@ import models.items.takeable.equippable.helmets.helmet;
 import models.items.takeable.equippable.shield.shield;
 import models.items.takeable.equippable.weapons.oneHanded.Special_EnergySword;
 import models.items.takeable.equippable.weapons.oneHanded.sword;
+import models.items.takeable.equippable.weapons.twoHanded.bow;
+import models.items.takeable.equippable.weapons.twoHanded.staff;
 import models.items.takeable.equippable.weapons.twoHanded.twoHandedSword;
 import models.items.takeable.quest.KeyOfKanye;
 import utilities.IOUtilities;
@@ -587,20 +589,20 @@ public abstract class Item {
 
         // Bows
 
-//        WOOD_BOW(1900) {public Item createInstance() {return new bow(new woodDecoration());}},
-//        IRON_BOW(1901) {public Item createInstance() {return new bow(new ironDecoration());}},
-//        STEEL_BOW(1902) {public Item createInstance() {return new bow(new steelDecoration());}},
-//        MITHRIL_BOW(1903) {public Item createInstance() {return new bow(new mithrilDecoration());}},
-//        GOLD_BOW(1904) {public Item createInstance() {return new bow(new goldDecoration());}},
-//        RUNITE_BOW(1905) {public Item createInstance() {return new bow(new runiteDecoration());}},
-//
-//        // Staff
-//        WOOD_STAFF(2100) {public Item createInstance() {return new staff(new woodDecoration());}},
-//        IRON_STAFF(2101) {public Item createInstance() {return new staff(new ironDecoration());}},
-//        STEEL_STAFF(2102) {public Item createInstance() {return new staff(new steelDecoration());}},
-//        MITHRIL_STAFF(2103) {public Item createInstance() {return new staff(new mithrilDecoration());}},
-//        GOLD_STAFF(2104) {public Item createInstance() {return new staff(new goldDecoration());}},
-//        RUNITE_STAFF(2105) {public Item createInstance() {return new staff(new runiteDecoration());}},
+        WOOD_BOW(1900) {public Item createInstance() {return new bow(new woodDecoration());}},
+        IRON_BOW(1901) {public Item createInstance() {return new bow(new ironDecoration());}},
+        STEEL_BOW(1902) {public Item createInstance() {return new bow(new steelDecoration());}},
+        MITHRIL_BOW(1903) {public Item createInstance() {return new bow(new mithrilDecoration());}},
+        GOLD_BOW(1904) {public Item createInstance() {return new bow(new goldDecoration());}},
+        RUNITE_BOW(1905) {public Item createInstance() {return new bow(new runiteDecoration());}},
+
+        // Staff
+        WOOD_STAFF(2100) {public Item createInstance() {return new staff(new woodDecoration());}},
+        IRON_STAFF(2101) {public Item createInstance() {return new staff(new ironDecoration());}},
+        STEEL_STAFF(2102) {public Item createInstance() {return new staff(new steelDecoration());}},
+        MITHRIL_STAFF(2103) {public Item createInstance() {return new staff(new mithrilDecoration());}},
+        GOLD_STAFF(2104) {public Item createInstance() {return new staff(new goldDecoration());}},
+        RUNITE_STAFF(2105) {public Item createInstance() {return new staff(new runiteDecoration());}},
 
 
         SWAMPHACKS_SHIRT(1800) {

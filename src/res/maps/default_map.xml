@@ -2366,9 +2366,11 @@
     </tile>
     <tile x="-10" y="7">
         <terrain type="grass"/>
+        <item id="1013" type="takeable"/>
     </tile>
     <tile x="-10" y="8">
         <terrain type="grass"/>
+        <item id="1009" type="takeable"/>
     </tile>
     <tile x="-10" y="9">
         <terrain type="grass"/>
@@ -2488,15 +2490,19 @@
     </tile>
     <tile x="-9" y="-11">
         <terrain type="grass"/>
+        <item id="1114" type="takeable"/>
     </tile>
     <tile x="-9" y="-10">
         <terrain type="grass"/>
+        <item id="1117" type="takeable"/>
     </tile>
     <tile x="-9" y="-9">
         <terrain type="grass"/>
+        <item id="1119" type="takeable"/>
     </tile>
     <tile x="-9" y="-8">
         <terrain type="grass"/>
+        <item id="1125" type="takeable"/>
     </tile>
     <tile x="-9" y="-7">
         <terrain type="grass"/>
@@ -2536,6 +2542,7 @@
     </tile>
     <tile x="-9" y="3">
         <terrain type="grass"/>
+        <item id="1113" type="takeable"/>
     </tile>
     <tile x="-9" y="4">
         <terrain type="grass"/>
@@ -2545,35 +2552,41 @@
     </tile>
     <tile x="-9" y="6">
         <terrain type="grass"/>
+        <item id="1802" type="takeable"/>
     </tile>
     <tile x="-9" y="7">
         <terrain type="grass"/>
+        <item id="1905" type="takeable"/>
     </tile>
     <tile x="-9" y="8">
         <terrain type="grass"/>
+        <item id="1901" type="takeable"/>
     </tile>
     <tile x="-9" y="9">
         <terrain type="grass"/>
     </tile>
     <tile x="-9" y="10">
         <terrain type="grass"/>
+        <item id="1900" type="takeable"/>
     </tile>
     <tile x="-9" y="11">
         <terrain type="grass"/>
     </tile>
     <tile x="-9" y="12">
         <terrain type="grass"/>
-        <item id="1706" type="takeable"/>
+        <item id="2100" type="takeable"/>
     </tile>
     <tile x="-9" y="13">
         <terrain type="grass"/>
-
+        <item id="2104" type="takeable"/>
     </tile>
     <tile x="-9" y="14">
         <terrain type="grass"/>
+        <item id="2103" type="takeable"/>
     </tile>
     <tile x="-9" y="15">
         <terrain type="grass"/>
+        <area-effect type="teleport" value="6,-2"/>
     </tile>
     <tile x="-9" y="16">
         <terrain type="mountain"/>
@@ -2953,12 +2966,16 @@
     </tile>
     <tile x="-6" y="-11">
         <terrain type="grass"/>
+        <item id="1800"/>
     </tile>
     <tile x="-6" y="-10">
         <terrain type="grass"/>
+        <item id="1800"/>
     </tile>
     <tile x="-6" y="-9">
         <terrain type="grass"/>
+        <item id="7011"/>
+
     </tile>
     <tile x="-6" y="-8">
         <terrain type="grass"/>
@@ -3103,12 +3120,15 @@
     </tile>
     <tile x="-5" y="-11">
         <terrain type="grass"/>
+        <item id="7011"/>
     </tile>
     <tile x="-5" y="-10">
         <terrain type="grass"/>
+        <item id="7011"/>
     </tile>
     <tile x="-5" y="-9">
         <terrain type="grass"/>
+        <item id="7011"/>
     </tile>
     <tile x="-5" y="-8">
         <terrain type="grass"/>
@@ -4680,6 +4700,7 @@
     </tile>
     <tile x="5" y="10">
         <terrain type="grass"/>
+        <area-effect type="level-up"/>
     </tile>
     <tile x="5" y="11">
         <terrain type="grass"/>
@@ -4791,12 +4812,15 @@
     </tile>
     <tile x="6" y="-3">
         <terrain type="grass"/>
+        <area-effect type="level-up"/>
     </tile>
     <tile x="6" y="-2">
         <terrain type="grass"/>
+        <area-effect type="level-up"/>
     </tile>
     <tile x="6" y="-1">
         <terrain type="grass"/>
+        <area-effect type="level-up"/>
     </tile>
     <tile x="6" y="0">
         <terrain type="grass"/>
@@ -4990,6 +5014,7 @@
     </tile>
     <tile x="7" y="13">
         <terrain type="grass"/>
+        <area-effect type="teleport" value="-8,-9"/>
     </tile>
     <tile x="7" y="14">
         <terrain type="grass"/>
