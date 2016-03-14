@@ -140,18 +140,18 @@ public class DetectRemoveTrapSkill extends ActiveSkill {
         if(areaEffect==null){
             foundATrap = false;
         }
-        String typeOfAOE = areaEffect.getType();
-        if(typeOfAOE== "trap"){
+        if (areaEffect != null) {
+            String typeOfAOE = areaEffect.getType();
+            if (typeOfAOE == "trap") {
 
-            System.out.println("Trap is here yo");
-            //return desiredTile;
-            map.setDecalVisibilityAtPoint(true, desiredLocation);
-            return desiredLocation;
+                System.out.println("Trap is here yo");
+                //return desiredTile;
+                map.setDecalVisibilityAtPoint(true, desiredLocation);
+                return desiredLocation;
+            } else {
+                System.out.println("Lol there is no trap here");
+            }
         }
-        else{
-            System.out.println("Lol there is no trap here");
-        }
-
         if (!foundATrap) {
             // Return null if couldnt find a trap
             return null;
