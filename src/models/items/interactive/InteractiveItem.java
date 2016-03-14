@@ -19,7 +19,6 @@ public abstract class InteractiveItem extends Item {
 
     public boolean onTouch(Entity entity) {
 
-        System.out.println("Interactive Item onTouch check: " + onTouchConditions.checkCondition(entity));
         return onTouchConditions.checkCondition(entity);
 
     }

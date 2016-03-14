@@ -149,7 +149,12 @@ public class FrontalLobe {
         if (validDecisions.validDecisionsToPick()) {
 
             Decision newDecision = validDecisions.pickChoice();
-            //System.out.println(npc.getType() + ": FrontalLobe: I picked a new decision: " + newDecision.getInterestType());
+            if (newDecision.getInterestType().equals("ENTITY")) {
+
+                System.out.println(npc.getType() + ": FrontalLobe: I picked a new decision: " + newDecision.getInterestType());
+
+            }
+
             memory.setDecision(newDecision);
 
         } else {
