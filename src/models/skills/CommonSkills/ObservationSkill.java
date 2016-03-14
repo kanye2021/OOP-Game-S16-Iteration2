@@ -14,15 +14,15 @@ import java.util.Random;
  */
 public class ObservationSkill extends PassiveSkill {
     private int observationLv;
-    private int percentError;
+    private float percentError;
     private int upperBoundError;
     private int lowerBoundError;
-    private final int constant = 4;
+    private final float constant = .04f;
     public ObservationSkill(){
         observationLv = 1;
-        percentError = 100;
-        upperBoundError = percentError;
-        lowerBoundError = -percentError;
+        percentError = 1.0f;
+//        upperBoundError = percentError;
+//        lowerBoundError = -percentError;
     }
 
     @Override
@@ -34,19 +34,16 @@ public class ObservationSkill extends PassiveSkill {
 
     @Override
     public String getName() {
-        return "Observation";
+        return "Observati<<<<<<< HEADon";
     }
 
 
     @Override
     public void onUpdate(Entity entity) {
         observationLv = getLevel();//Gets the newly updated level
-        percentError = 100 - constant*observationLv;
-    }
+        percentError = 1.0f - constant * level;
+        percentError = percentError < 0.001 ? 0.001f : percentError;
 
-    public void resetBounds(){
-        upperBoundError = percentError;
-        lowerBoundError = -percentError;
     }
 
     @Override
@@ -56,10 +53,15 @@ public class ObservationSkill extends PassiveSkill {
 
 
     //TODO:Get this to be displayed on the area viewport
-    public int getCombatPercentError() {
-        resetBounds();
+    public int getCombatPercentError(int expected) {
+//        resetBounds();
         Random random = new Random();
-        return (random.nextInt(upperBoundError-lowerBoundError+1)+lowerBoundError);
-    }
+        float sign = random.nextFloat();
+        sign = sign > 0.5 ? 1.0f : -1.0f;
 
+        float error = random.nextFloat() * percentError;
+
+        return (int) (sign * (error * expected) + expected);
+
+    }
 }
