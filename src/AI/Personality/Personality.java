@@ -13,7 +13,6 @@ import AI.Personality.Interests.PointInterest.ExploreInterest;
 public enum Personality {
 
     // should not trade unless avatar, should not follow unless followable
-    // FACTIONS!
     // check gameloop!
 
     DOGE(0.075, -0.3, 0.15, new InterestList(new FollowInterest(1.0), new ExploreInterest(0.1))),
