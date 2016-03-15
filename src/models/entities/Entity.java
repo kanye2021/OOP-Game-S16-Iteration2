@@ -396,10 +396,8 @@ public abstract class Entity {
 
         // Check to see if this was the last life.
         if (isDead()) {
-            System.out.println("AN ENTITY HAS LOST ALL ITS LIVES");
             map.removeEntityAt(location);
         } else {
-            System.out.println("GOTO START");
             teleport(startLocation);
         }
     }

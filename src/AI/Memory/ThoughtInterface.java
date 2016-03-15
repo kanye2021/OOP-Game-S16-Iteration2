@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 public interface ThoughtInterface extends MotorInterface {
 
-    void addEntityRelationship(Entity entity, double relationship);
+    void addEntityRelationship(Entity entity, Relationship relationship);
 
     void setEntityRelationship(Entity entity, double relationship);
 

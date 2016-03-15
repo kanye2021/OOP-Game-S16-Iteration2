@@ -231,8 +231,6 @@ public class AreaViewport extends View {
 
             if (!entityEffedUpHealthMap.containsKey(entity) || oldHealth != entitysCurrentActualHealth) {
 
-                System.out.println("CHANGIN ENTITY HEALTH");
-
                 Skill observation = avatar.getSpecificSkill(Skill.SkillDictionary.OBSERVATION);
                 ObservationSkill observationSkill = (ObservationSkill) observation;
                 observationSkill.onUpdate(entity);

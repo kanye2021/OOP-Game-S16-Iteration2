@@ -1,6 +1,7 @@
 package AI.Thought;
 
 import AI.Memory.Decision;
+import AI.Memory.Relationship;
 import AI.Memory.ThoughtInterface;
 import AI.Personality.Interests.EntityInterest.EntityInterest;
 import AI.Personality.Interests.Interest;
@@ -76,8 +77,9 @@ public class FrontalLobe {
 
                 double relationalValue = aggressiveFactor + scatterBrainFactor + factionFactor;
                 relationalValue = MathUtilities.putInRange(-1.0, relationalValue, 1.0);
-                System.out.println(npc.getType() + " FrontalLobe: Added " + entity.getType() + " as a new relationship: " + relationalValue);
-                memory.addEntityRelationship(entity, relationalValue);
+                Relationship relationship = new Relationship(relationalValue);
+                System.out.println("FrontalLobe: " + npc.getType() + " -> " + entity.getType() + ": " + relationship);
+                memory.addEntityRelationship(entity, relationship);
 
             }
 
@@ -153,7 +155,7 @@ public class FrontalLobe {
             Decision newDecision = validDecisions.pickChoice();
 
             memory.setDecision(newDecision);
-            System.out.println("FrontalLobe: " + npc.getType() + ": " + newDecision.getSpecificInterest());
+//            System.out.println("FrontalLobe: " + npc.getType() + ": " + newDecision.getSpecificInterest());
 
         }
 

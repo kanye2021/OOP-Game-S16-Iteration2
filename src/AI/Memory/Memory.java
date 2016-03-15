@@ -31,9 +31,9 @@ public class Memory implements VisualInterface, ThoughtInterface, MotorInterface
 
     }
 
-    public void addEntityRelationship(Entity entity, double relationship) {
+    public void addEntityRelationship(Entity entity, Relationship relationship) {
 
-        relationships.put(entity, new Relationship(relationship));
+        relationships.put(entity, relationship);
 
     }
 

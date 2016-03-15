@@ -108,7 +108,6 @@ public class LinearAttack extends Attackion {
                 if (desiredTile.hasEntity()) {
                     Entity target = desiredTile.getEntity();
                     target.takeDamage(-damage);
-                    System.out.println("Hit entity!!!!");
                 }
 
                 try {
