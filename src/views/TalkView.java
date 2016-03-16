@@ -1,6 +1,6 @@
 package views;
 
-import models.entities.npc.NPC;
+import models.entities.characters.npcs.NPC;
 
 import java.awt.*;
 

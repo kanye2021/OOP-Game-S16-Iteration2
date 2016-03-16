@@ -1,7 +1,6 @@
 package models.map;
 
-
-import models.entities.npc.Mount;
+import models.entities.mounts.Mount;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -73,7 +72,7 @@ public class TileImage extends BufferedImage {
             int y = getHeight() / 2 - height / 2;
 
             // TODO: I don't like that I have to do this....
-            Mount m = tile.getEntity().getMount();
+            Mount m = null;//tile.getEntity().getMount();
             if (m != null) {
                 g.drawImage(m.getImage(), x, y, width, height, null);
 

@@ -17,22 +17,21 @@ public class Sleep extends StatusEffects {
     }
 
     public void sleepEffects(Entity entity) {
-        entity.setCanMove(false);
+//        entity.setCanMove(false);
         //How do I disable attacks?
     }
 
     public void sleepUneffects(Entity entity) {
-        entity.setCanMove(true);
+//        entity.setCanMove(true);
     }
 
     public void applySleep(Entity target) {
-        if (!target.getCanMove()) {//If entity cannot move
+//        if (!target.getCanMove()) {//If entity cannot move
             return;
-        }
         //Find out how movement works
         //entity.setCanMove(false);
-        sleepEffects(target);
-        new java.util.Timer().schedule(
+//        sleepEffects(target);
+        /*new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
@@ -42,8 +41,7 @@ public class Sleep extends StatusEffects {
                     }
                 },
                 5000
-        );
-    }
+        );*/
     /*public void applySleep(){
         if(!entity.getCanMove()){//If entity cannot move
             System.out.println("The baby is already asleep");
@@ -60,6 +58,6 @@ public class Sleep extends StatusEffects {
                     }
                 },
                 2000
-        );
-    }*/
+        );*/
+    }
 }

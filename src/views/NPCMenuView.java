@@ -1,7 +1,7 @@
 package views;
 
-import models.entities.npc.NPC;
-import models.entities.npc.actions.Action;
+import models.entities.characters.npcs.NPC;
+import models.entities.characters.npcs.actions.Action;
 import utilities.IOUtilities;
 import utilities.SubState;
 

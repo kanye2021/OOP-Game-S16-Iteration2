@@ -1,10 +1,9 @@
 package AI.Personality.Interests.EntityInterest;
 
 import AI.Memory.Memory;
-import AI.Memory.Relationship;
+import utilities.RelationshipList;
 import AI.Memory.ThoughtInterface;
 import models.entities.Entity;
-import models.entities.npc.NPC;
 
 import java.awt.*;
 
@@ -33,14 +32,14 @@ public class AttackInterest extends EntityInterest {
     }
 
     public void update(Memory memory) {
-        NPC npc = memory.getNPC();
-        npc.basicAttack(entityOfInterest);
+        //NPC npc = memory.getNPC();
+        //npc.basicAttack(entityOfInterest);
         //setPointOfInterest(entityOfInterest.getLocation());
     }
 
     public double getInterestWeight(Entity entityOfInterest, ThoughtInterface memory) {
 
-        Relationship relationship = memory.getEntityRelationship(entityOfInterest);
+        RelationshipList.Relationship relationship = memory.getEntityRelationship(entityOfInterest);
         double relationshipValue = -relationship.getRelationshipValue();
         double aggresiveness = memory.getPersonality().getAggressiveness();
         double weight = 0.0;

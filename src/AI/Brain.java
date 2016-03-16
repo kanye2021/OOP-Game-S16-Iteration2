@@ -5,7 +5,7 @@ import AI.Movement.MotorCortex;
 import AI.Personality.Personality;
 import AI.Thought.FrontalLobe;
 import AI.Vision.VisualCortex;
-import models.entities.npc.NPC;
+import models.entities.Entity_Action_Interface;
 
 /**
  * Created by Bradley on 3/5/16.
@@ -14,21 +14,21 @@ public class Brain {
 
     // TODO: I don't think that the brain should have the npc (it should only be the other way around). Try to find a way
     // around having to do this.
-    protected NPC npc;
+    protected Entity_Action_Interface npc;
     protected VisualCortex visualCortex;
     protected FrontalLobe frontalLobe;
     protected MotorCortex motorCortex;
     protected Memory memory;
 
-    public Brain(NPC npc, Personality personality) {
+    public Brain(Entity_Action_Interface npc, Personality personality) {
         this.npc = npc;
         memory = new Memory(npc, personality);
-        visualCortex = new VisualCortex(npc, memory);
-        frontalLobe = new FrontalLobe(npc, memory);
-        motorCortex = new MotorCortex(npc, memory);
+        visualCortex = new VisualCortex(memory);
+        frontalLobe = new FrontalLobe(memory);
+        motorCortex = new MotorCortex(memory);
     }
 
-    // This is called once per cycle to determine what the AI should do.
+    // This is called once per cycle to determine what the AI_Interface should do.
     public void think() {
         visualCortex.process(); // What do you see in your surroundings.
         frontalLobe.process(); // What should you do based off of what you saw.

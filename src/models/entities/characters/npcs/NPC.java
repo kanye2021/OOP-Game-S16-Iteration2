@@ -1,11 +1,11 @@
-package models.entities.npc;
+package models.entities.characters.npcs;
 
 import AI.Brain;
 import AI.Personality.Personality;
 import models.entities.Entity;
-import models.entities.npc.actions.Action;
-import models.entities.npc.actions.Attack;
-import models.entities.npc.actions.Talk;
+import models.entities.characters.npcs.actions.Action;
+import models.entities.characters.npcs.actions.Attack;
+import models.entities.characters.npcs.actions.Talk;
 import models.map.Map;
 import models.stats.StatModificationList;
 
@@ -16,18 +16,15 @@ import java.util.ArrayList;
  * Created by aseber on 2/22/16.
  */
 public abstract class NPC extends Entity {
-    protected ArrayList<Action> actionList;
+    protected ArrayList<models.entities.characters.npcs.actions.Action> actionList = new ArrayList<>();
 
-    protected ArrayList<String> dialogue;
+    protected ArrayList<String> dialogue = new ArrayList<>();
     protected int dialogueLocation;
     protected Brain brain;
 
     public NPC(Point location, Map map) {
         super(location, map);
         brain = new Brain(this, Personality.DEFAULT); // Agnostic is the default personailty.
-        actionList = new ArrayList<>();
-        this.dialogue = new ArrayList<>();
-        dialogueLocation = 0;
         initNPC();
     }
 

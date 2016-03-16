@@ -2,8 +2,8 @@ package utilities;
 
 import controllers.GameViewController;
 import controllers.entityControllers.AvatarController;
-import models.entities.Avatar;
-import models.entities.npc.NPC;
+import models.entities.characters.avatars.Avatar;
+import models.entities.characters.npcs.NPC;
 import models.map.Map;
 import views.AreaViewport;
 import views.GameView;
@@ -105,7 +105,7 @@ public class GameState extends State {
             NPC npc = iterator.next();
 
             // Check to see if the npc died. If it did, remove it from the list.
-            if (npc.getLives() < 1) {
+            if (npc.isDead()) {
                 iterator.remove();
             } else {
                 npc.update();

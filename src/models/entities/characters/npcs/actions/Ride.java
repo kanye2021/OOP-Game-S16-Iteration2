@@ -1,10 +1,9 @@
-package models.entities.npc.actions;
+package models.entities.characters.npcs.actions;
 
 import controllers.GameViewController;
 import controllers.ViewController;
-import models.entities.Avatar;
-import models.entities.npc.Mount;
-import models.entities.npc.NPC;
+import models.entities.characters.avatars.Avatar;
+import models.entities.characters.npcs.NPC;
 import views.View;
 
 /**
@@ -17,7 +16,6 @@ public class Ride extends Action {
 
     @Override
     public void activate(View view, ViewController viewController) {
-        startRide();
         ((GameViewController) viewController).popTopSubState();
     }
 
@@ -31,8 +29,4 @@ public class Ride extends Action {
         this.avatar = avatar;
     }
 
-    public void startRide() {
-        avatar.setMount((Mount) npc);
-
-    }
 }

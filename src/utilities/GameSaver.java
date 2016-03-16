@@ -4,10 +4,10 @@ import models.Equipment;
 import models.Inventory;
 import models.area_effects.AreaEffect;
 import models.area_effects.TeleportAreaEffect;
-import models.entities.Avatar;
 import models.entities.Entity;
-import models.entities.npc.Mount;
-import models.entities.npc.NPC;
+import models.entities.characters.avatars.Avatar;
+import models.entities.characters.npcs.NPC;
+import models.entities.mounts.Mount;
 import models.items.Item;
 import models.map.Map;
 import models.map.Tile;
@@ -186,9 +186,9 @@ public class GameSaver {
         entity.appendChild(saveStats(doc, currentEntity));
         entity.appendChild(saveSkills(doc, currentEntity.getSkills()));
 
-        if (currentEntity.getMount() != null) { //if the entity has a mount
+        /*if (currentEntity.getMount() != null) { //if the entity has a mount
             entity.appendChild(saveMount(doc, currentEntity.getMount()));
-        }
+        }*/
         //TODO: Pet should be fine since they exist on the map and the location will realize its a pet
         return entity;
     }
@@ -252,7 +252,7 @@ public class GameSaver {
             String statString = type.getDescriptor();
             int value = currentStats.getStat(type);
             if (type.equals(Stats.Type.LEVEL)) {
-                value = entity.getLevel();
+                value = entity.getStats().getStat(Stats.Type.LEVEL);
             }
             stats.setAttributeNode(saveAttr(doc, statString, value));
         }

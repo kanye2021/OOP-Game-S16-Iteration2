@@ -1,7 +1,7 @@
 package AI.Memory;
 
 import AI.Personality.Personality;
-import models.entities.npc.NPC;
+import models.entities.Entity_Action_Interface;
 
 /**
  * Created by aseber on 3/12/16.
@@ -12,6 +12,6 @@ public interface MotorInterface {
 
     Personality getPersonality();
 
-    NPC getNPC();
+    Entity_Action_Interface getNPC();
 
 }

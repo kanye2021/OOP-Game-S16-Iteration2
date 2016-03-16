@@ -1,8 +1,6 @@
 package models.factions;
 
-import AI.Memory.Relationship;
-
-import java.util.HashMap;
+import utilities.RelationshipList;
 
 /**
  * Created by aseber on 3/14/16.
@@ -14,27 +12,26 @@ public enum Faction {
     ANIMAL,
     TRADE_GUILD;
 
-    private static final Relationship neutralRelationship = new Relationship(0.0);
 
     static {
 
-        RED.addAssociation(BLUE, new Relationship(-0.35));
-        RED.addAssociation(ANIMAL, new Relationship(-0.5));
+        RED.addAssociation(BLUE, -0.35);
+        RED.addAssociation(ANIMAL, -0.5);
 
-        BLUE.addAssociation(RED, new Relationship(-0.2));
-        BLUE.addAssociation(ANIMAL, new Relationship(-0.1));
+        BLUE.addAssociation(RED, -0.2);
+        BLUE.addAssociation(ANIMAL, -0.1);
 
-        ANIMAL.addAssociation(RED, new Relationship(-0.6));
-        ANIMAL.addAssociation(BLUE, new Relationship(0.2));
-        ANIMAL.addAssociation(TRADE_GUILD, new Relationship(0.1));
+        ANIMAL.addAssociation(RED, -0.6);
+        ANIMAL.addAssociation(BLUE, 0.2);
+        ANIMAL.addAssociation(TRADE_GUILD, 0.1);
 
     }
 
-    private HashMap<Faction, Relationship> factionRelations = new HashMap<>();
+    RelationshipList<Faction> factionRelations = new RelationshipList<>();
 
-    private void addAssociation(Faction otherFaction, Relationship relationship) {
+    private void addAssociation(Faction otherFaction, double relationship) {
 
-        factionRelations.put(otherFaction, relationship);
+        factionRelations.modifyRelationship(otherFaction, relationship);
 
     }
 
@@ -44,7 +41,7 @@ public enum Faction {
             return 1.0;
         }
 
-        return factionRelations.getOrDefault(otherFaction, neutralRelationship).getRelationshipValue();
+        return factionRelations.getRelationship(otherFaction).getRelationshipValue();
 
     }
 

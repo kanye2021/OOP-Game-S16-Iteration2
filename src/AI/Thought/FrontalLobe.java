@@ -1,7 +1,7 @@
 package AI.Thought;
 
 import AI.Memory.Decision;
-import AI.Memory.Relationship;
+import utilities.RelationshipList;
 import AI.Memory.ThoughtInterface;
 import AI.Personality.Interests.EntityInterest.EntityInterest;
 import AI.Personality.Interests.Interest;
@@ -9,7 +9,6 @@ import AI.Personality.Interests.InterestList;
 import AI.Personality.Interests.ItemInterest.ItemInterest;
 import AI.Personality.Interests.PointInterest.PointInterest;
 import models.entities.Entity;
-import models.entities.npc.NPC;
 import models.items.Item;
 import utilities.MathUtilities;
 import utilities.UniformPicker;
@@ -22,13 +21,11 @@ import java.util.Random;
  */
 public class FrontalLobe {
 
-    protected NPC npc;
     double rand;
     private Random rng = new Random();
     private ThoughtInterface memory;
 
-    public FrontalLobe(NPC npc, ThoughtInterface memory) {
-        this.npc = npc;
+    public FrontalLobe(ThoughtInterface memory) {
         this.memory = memory;
     }
 
@@ -73,13 +70,13 @@ public class FrontalLobe {
                 double aggressiveFactor = -memory.getPersonality().getAggressiveness();
                 double scatter_brainedNess = memory.getPersonality().getScatter_Brainedness();
                 double scatterBrainFactor = scatter_brainedNess * rng.nextGaussian() - (scatter_brainedNess / 2);
-                double factionFactor = npc.getFaction().getFactionWeight(entity.getFaction());
+                double factionFactor = 0.0;//npc.getFaction().getFactionWeight(entity.getFaction());
 
                 double relationalValue = aggressiveFactor + scatterBrainFactor + factionFactor;
                 relationalValue = MathUtilities.putInRange(-1.0, relationalValue, 1.0);
-                Relationship relationship = new Relationship(relationalValue);
-                System.out.println("FrontalLobe: " + npc.getType() + " -> " + entity.getType() + ": " + relationship);
-                memory.addEntityRelationship(entity, relationship);
+                memory.modifyEntityRelationship(entity, relationalValue);
+                RelationshipList.Relationship relationship = memory.getEntityRelationship(entity);
+                //System.out.println("FrontalLobe: " + npc.getType() + " -> " + entity.getType() + ": " + relationship);
 
             }
 
@@ -141,9 +138,9 @@ public class FrontalLobe {
 
         for (PointInterest interest : interests.getPointInterests()) {
 
-            weight = interest.getInterestWeight();
-            interestToAdd = interest.createRuntimeInterest(npc);
-            validDecisions.addChoice(new Decision(interestToAdd), weight);
+            //weight = interest.getInterestWeight();
+            //interestToAdd = interest.createRuntimeInterest(npc);
+            //validDecisions.addChoice(new Decision(interestToAdd), weight);
 
         }
 

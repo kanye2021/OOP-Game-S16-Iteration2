@@ -1,8 +1,8 @@
-package models.entities.npc.actions;
+package models.entities.characters.npcs.actions;
 
 import controllers.ViewController;
-import models.entities.Avatar;
-import models.entities.npc.NPC;
+import models.entities.characters.avatars.Avatar;
+import models.entities.characters.npcs.NPC;
 import views.View;
 
 

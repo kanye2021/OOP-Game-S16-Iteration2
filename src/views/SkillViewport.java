@@ -304,7 +304,7 @@ public class SkillViewport extends View {
 
     private void levelUpSkill(Skill skill) {
         skill.incrementLevel();
-        stats.decrementSkillPoints();
+        stats.modifyStat(Stats.Type.SKILL_POINTS, -1);
     }
 
     @Override

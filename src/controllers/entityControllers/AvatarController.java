@@ -5,8 +5,7 @@ import models.Equipment;
 import models.attack.LinearAttack;
 import models.attack.Projectile;
 import models.attack.StatusEffects;
-import models.entities.Avatar;
-import models.entities.npc.NPC;
+import models.entities.characters.avatars.Avatar;
 import models.items.takeable.equippable.EquippableItem;
 import models.map.Map;
 import models.skills.CommonSkills.BindWoundsSkill;
@@ -302,7 +301,7 @@ public class AvatarController {
     }
 
     public boolean avatarIsAlive() {
-        return avatar.getLives() > 0;
+        return !avatar.isDead();
     }
 
     public void setMovementDirection(Map.Direction direction) {
@@ -313,17 +312,9 @@ public class AvatarController {
         this.movementDirection = null;
     }
 
-    public void startInteraction(NPC npc) {
-        avatar.startInteraction(npc);
-    }
-
     //I am so sorry for doing this...
     public Avatar getAvatar() {
         return avatar;
-    }
-
-    public void unMount() {
-        avatar.removeMount();
     }
 
     public SkillList getAvatarsSkills() {

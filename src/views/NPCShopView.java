@@ -1,8 +1,8 @@
 package views;
 
 import models.Inventory;
-import models.entities.Avatar;
-import models.entities.npc.NPC;
+import models.entities.characters.avatars.Avatar;
+import models.entities.characters.npcs.NPC;
 import models.items.takeable.TakeableItem;
 import utilities.IOUtilities;
 import views.sprites.Sprite;

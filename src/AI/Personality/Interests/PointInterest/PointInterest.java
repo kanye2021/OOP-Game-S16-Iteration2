@@ -1,7 +1,7 @@
 package AI.Personality.Interests.PointInterest;
 
 import AI.Personality.Interests.Interest;
-import models.entities.npc.NPC;
+import models.entities.characters.npcs.NPC;
 
 /**
  * Created by aseber on 3/13/16.

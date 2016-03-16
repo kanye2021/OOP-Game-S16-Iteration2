@@ -1,10 +1,10 @@
-package models.entities.npc.actions;
+package models.entities.characters.npcs.actions;
 
 import controllers.GameViewController;
 import controllers.NPCInteractions.NPCShopController;
 import controllers.ViewController;
-import models.entities.Avatar;
-import models.entities.npc.NPC;
+import models.entities.characters.avatars.Avatar;
+import models.entities.characters.npcs.NPC;
 import utilities.SubState;
 import utilities.Task;
 import views.NPCShopView;

@@ -2,8 +2,9 @@ package AI.Memory;
 
 import AI.Personality.Personality;
 import models.entities.Entity;
-import models.entities.npc.NPC;
+import models.entities.Entity_Action_Interface;
 import models.items.Item;
+import utilities.RelationshipList;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -14,9 +15,10 @@ import java.util.HashMap;
 public class Memory implements VisualInterface, ThoughtInterface, MotorInterface {
 
     // The NPC
-    NPC npc;
+    Entity_Action_Interface npc;
     //map of entity relationships
-    private HashMap<Entity, Relationship> relationships = new HashMap<>();
+    private RelationshipList<Entity> relationships = new RelationshipList<>();
+//    private HashMap<Entity, Relationship> relationships = new HashMap<>();
     // The visual (short term) memory
     private VisualInformation visualMemory = new VisualInformation();
     // The decision
@@ -24,40 +26,28 @@ public class Memory implements VisualInterface, ThoughtInterface, MotorInterface
     // The entities personality
     private Personality personality;
 
-    public Memory(NPC npc, Personality personality) {
+    public Memory(Entity_Action_Interface npc, Personality personality) {
 
         this.npc = npc;
         this.personality = personality;
 
     }
 
-    public void addEntityRelationship(Entity entity, Relationship relationship) {
-
-        relationships.put(entity, relationship);
-
-    }
-
-    public void setEntityRelationship(Entity entity, double relationship) {
-
-        relationships.get(entity).setRelationship(relationship);
-
-    }
-
     public void modifyEntityRelationship(Entity entity, double relationship) {
 
-        relationships.get(entity).modifyRelationship(relationship);
+        relationships.modifyRelationship(entity, relationship);
 
     }
 
-    public Relationship getEntityRelationship(Entity entity) {
+    public RelationshipList.Relationship getEntityRelationship(Entity entity) {
 
-        return relationships.get(entity);
+        return relationships.getRelationship(entity);
 
     }
 
     public boolean relationshipExists(Entity entity) {
 
-        return relationships.containsKey(entity);
+        return relationships.relationshipExists(entity);
 
     }
 
@@ -111,7 +101,7 @@ public class Memory implements VisualInterface, ThoughtInterface, MotorInterface
 
     }
 
-    public NPC getNPC() {
+    public Entity_Action_Interface getNPC() {
 
         return npc;
 

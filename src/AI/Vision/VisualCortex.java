@@ -2,28 +2,21 @@ package AI.Vision;
 
 import AI.Memory.VisualInterface;
 import models.entities.Entity;
-import models.entities.npc.NPC;
-import models.items.Item;
 import models.map.Map;
 import models.map.Tile;
-import utilities.TileUtilities;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Bradley on 3/5/16.
  */
 public class VisualCortex {
 
-    private NPC npc;
     private Map map;
     private VisualInterface memory;
 
-    public VisualCortex(NPC npc, VisualInterface memory) {
-        this.npc = npc;
-        this.map = npc.getMap();
+    public VisualCortex(VisualInterface memory) {
+        //this.map = npc.getMap();
         this.memory = memory;
     }
 
@@ -32,13 +25,13 @@ public class VisualCortex {
     public void process() {
 
         // Get all the tiles the entity can see
-        HashMap<Tile, Point> tiles = TileUtilities.getTilesRecursively(map, npc.getLocation(), npc.getRadiusOfVisiblility());
+        //HashMap<Tile, Point> tiles = TileUtilities.getTilesRecursively(map, npc.getLocation(), npc.getRadiusOfVisiblility());
 
         Tile tile;
         Point pointOfTile;
 
         Entity entityAtTile;
-        for (java.util.AbstractMap.Entry<Tile, Point> pair : tiles.entrySet()) {
+        /*for (java.util.AbstractMap.Entry<Tile, Point> pair : tiles.entrySet()) {
 
             tile = pair.getKey();
             pointOfTile = pair.getValue();
@@ -60,7 +53,7 @@ public class VisualCortex {
             }
 
 
-        }
+        }*/
 
     }
 

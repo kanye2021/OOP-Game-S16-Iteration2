@@ -1,7 +1,7 @@
 package utilities;
 
 import models.entities.Entity;
-import models.entities.npc.NPC;
+import models.entities.characters.npcs.NPC;
 
 import java.awt.*;
 

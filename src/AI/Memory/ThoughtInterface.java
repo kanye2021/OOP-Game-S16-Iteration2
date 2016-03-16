@@ -2,8 +2,9 @@ package AI.Memory;
 
 import AI.Personality.Personality;
 import models.entities.Entity;
-import models.entities.npc.NPC;
+import models.entities.Entity_Action_Interface;
 import models.items.Item;
+import utilities.RelationshipList;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -13,13 +14,9 @@ import java.util.HashMap;
  */
 public interface ThoughtInterface extends MotorInterface {
 
-    void addEntityRelationship(Entity entity, Relationship relationship);
-
-    void setEntityRelationship(Entity entity, double relationship);
-
     void modifyEntityRelationship(Entity entity, double relationship);
 
-    Relationship getEntityRelationship(Entity entity);
+    RelationshipList.Relationship getEntityRelationship(Entity entity);
 
     boolean relationshipExists(Entity entity);
 
@@ -35,6 +32,6 @@ public interface ThoughtInterface extends MotorInterface {
 
     void setDecision(Decision newDecision);
 
-    NPC getNPC();
+    Entity_Action_Interface getNPC();
 
 }

@@ -2,10 +2,15 @@ package utilities;
 
 import models.area_effects.*;
 import models.entities.*;
-import models.entities.npc.Dragon;
-import models.entities.npc.Mount;
-import models.entities.npc.NPC;
-import models.entities.npc.ShopKeeper;
+import models.entities.characters.avatars.Avatar;
+import models.entities.characters.avatars.SmasherAvatar;
+import models.entities.characters.avatars.SneakAvatar;
+import models.entities.characters.avatars.SummonerAvatar;
+import models.entities.characters.npcs.NPC;
+import models.entities.characters.npcs.shopkeepers.ShopKeeper;
+import models.entities.mounts.Dragon;
+import models.entities.mounts.Mount;
+import models.entities.pets.Pet;
 import models.items.Item;
 import models.items.takeable.TakeableItem;
 import models.items.takeable.equippable.EquippableItem;
@@ -82,7 +87,6 @@ public class GameLoader {
         newMap.insertEntity(newVillager);
         ArrayList<NPC> tmpList = new ArrayList<>();
         tmpList.add(newVillager);
-        tmpList.add(pet);
         game.setNpcList(tmpList);
 
 
@@ -327,8 +331,6 @@ public class GameLoader {
             if (mountList.getLength() > 0) {
                 Element mountElement = (Element) mountList.item(0);
                 //Element entityMount = (Element)mountElement.getElementsByTagName("entity").item(0);
-                Mount mount = (Mount) getNPC(mountElement, p, newMap);
-                entity.setMount(mount);
             }
 
 
@@ -365,13 +367,13 @@ public class GameLoader {
         String type = e.getAttribute("type");
         switch (type) {
             case "Dragon":
-                npc = new Dragon(p, map);
+//                npc = new Dragon(p, map);
                 break;
             case "ShopKeeper":
-                npc = new ShopKeeper(p, map);
+//                npc = new ShopKeeper(p, map);
                 break;
             case "Pet":
-                npc = new Pet(p, map);
+//                npc = new Pet(p, map);
                 break;
         }
         updateEntity(e, npc);
@@ -407,8 +409,8 @@ public class GameLoader {
         Element stats = (Element) (e.getElementsByTagName("stats").item(0));
         int level = Integer.parseInt(stats.getAttribute("Level"));
         for (int i = 0; i < level; i++) {
-            entity.getStats().levelUp(); //Solely just levels up the entity
-            entity.getStats().decrementSkillPoints(); //Needs to decrement the amount of skill points though (its just loading)
+//            entity.getStats().levelUp(); //Solely just levels up the entity
+//            entity.getStats().decrementSkillPoints(); //Needs to decrement the amount of skill points though (its just loading)
         }
 
     }

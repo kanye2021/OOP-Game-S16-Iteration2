@@ -2,7 +2,7 @@ package AI.Personality.Interests.PointInterest;
 
 import AI.Memory.Memory;
 import AI.Memory.ThoughtInterface;
-import models.entities.npc.NPC;
+import models.entities.characters.npcs.NPC;
 import models.map.Map;
 import utilities.UniformPicker;
 
@@ -34,7 +34,7 @@ public class ExploreInterest extends PointInterest {
 
     public void update(Memory memory) {
 
-        setPointOfInterest(createPointOfInterest(memory.getNPC()));
+        //setPointOfInterest(createPointOfInterest(memory.getNPC()));
 
     }
 

@@ -1,7 +1,7 @@
 package AI.Personality.Interests.EntityInterest;
 
 import AI.Memory.Memory;
-import AI.Memory.Relationship;
+import utilities.RelationshipList;
 import AI.Memory.ThoughtInterface;
 import models.entities.Entity;
 
@@ -40,7 +40,7 @@ public class FollowInterest extends EntityInterest {
     public double getInterestWeight(Entity entityOfInterest, ThoughtInterface memory) {
 
         double weight = 0.0;
-        Relationship relationship = memory.getEntityRelationship(entityOfInterest);
+        RelationshipList.Relationship relationship = memory.getEntityRelationship(entityOfInterest);
 
         if (relationship.isFriend()) {
 

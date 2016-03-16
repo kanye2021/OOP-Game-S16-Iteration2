@@ -40,8 +40,6 @@ public class Stats {
     private EnumMap<Type, StatsGetTask> statGetMap = new EnumMap<>(Type.class);
     private EnumMap<Type, StatsSetTask> statSetMap = new EnumMap<>(Type.class);
     public Stats() {
-        this.level = 0;
-        this.skillPointsAvailabile = 0;
 
         statGetMap.put(Type.LEVEL, () -> getLevel());
         statGetMap.put(Type.SKILL_POINTS, () -> getSkillPointsAvailabile());
@@ -65,8 +63,10 @@ public class Stats {
         statGetMap.put(Type.DEFENSIVE_RATING, () -> getDefensiveRating());
         statGetMap.put(Type.ARMOR_RATING, () -> getArmorRating());
         statGetMap.put(Type.TOTAL_WEIGHT, () -> getTotalWeight());
+        statGetMap.put(Type.SKILL_POINTS, () -> getSkillPointsAvailabile());
 
         statSetMap.put(Type.LIVES, (delta) -> modifyLives(delta));
+        statSetMap.put(Type.LEVEL, (delta) -> modifyLevel(delta));
         statSetMap.put(Type.SKILL_POINTS, (delta) -> modifySkillPoints(delta));
         statSetMap.put(Type.STRENGTH, (delta) -> modifyStrength(delta));
         statSetMap.put(Type.AGILITY, (delta) -> modifyAgility(delta));
@@ -80,6 +80,8 @@ public class Stats {
         statSetMap.put(Type.ARMOR_MODIFIER, (delta) -> modifyArmorModifier(delta));
         statSetMap.put(Type.RADIUS_OF_VISIBILITY, (delta) -> modifyRadiusOfVisibility(delta));
         statSetMap.put(Type.TOTAL_WEIGHT, (delta) -> modifyTotalWeight(delta));
+        statSetMap.put(Type.SKILL_POINTS, (delta) -> modifySkillPoints(delta));
+
     }
 
     public void applyStatMod(StatModificationList statMod) {
@@ -98,7 +100,17 @@ public class Stats {
 
     public void modifyStat(Type type, int delta) {
 
-        statSetMap.get(type).set(delta);
+        StatsSetTask task = statSetMap.get(type);
+
+        if (task != null) {
+
+            task.set(delta);
+
+        } else {
+
+            System.err.println(type);
+
+        }
 
     }
 
@@ -124,6 +136,12 @@ public class Stats {
 
     }
 
+    private void modifyLevel(int delta) {
+
+        System.err.println("Stats: Modifying level when you shouldn't be!");
+
+    }
+
     private void modifyStrength(int delta) {
         this.strength = MathUtilities.putInRange(0, this.strength + delta, Integer.MAX_VALUE);
         updateDerivedStats();
@@ -146,21 +164,6 @@ public class Stats {
 
     private void modifySkillPoints(int delta) {
         this.skillPointsAvailabile = MathUtilities.putInRange(0, this.skillPointsAvailabile + delta, Integer.MAX_VALUE);
-    }
-
-    // Wrapper for modify level
-    public void levelUp() {
-        modifyExperience(expReqLvUp);
-    }
-
-    // Wrapper to decrement skill points
-    public void decrementSkillPoints() {
-        modifySkillPoints(-1);
-    }
-
-    // Wrapper to animate loosing a life (health bar slides down)
-    public void loseALife() {
-        modifyHealth(-maxHealth);
     }
 
     private void modifyExperience(int delta) {
@@ -228,7 +231,7 @@ public class Stats {
         this.totalWeight = MathUtilities.putInRange(0, this.totalWeight + delta, Integer.MAX_VALUE);
     }
 
-    public int getLives() {
+    private int getLives() {
         return this.lives;
     }
 

@@ -1,7 +1,6 @@
 package models.attack;
 
 import models.Attackion;
-import models.attack.status_effects.Sleep;
 import models.entities.Entity;
 import models.map.Tile;
 
@@ -72,7 +71,7 @@ public class RadialAttack extends Attackion {
                     target.takeDamage(-damage);
                     if (statusEffect != StatusEffects.StatusEffect.NONE) {
                         target.setStatusEffect(statusEffect);
-                        new Sleep(target);
+                        //new Sleep(target);
                     }
 
                 }

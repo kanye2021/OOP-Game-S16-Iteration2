@@ -1,6 +1,6 @@
 package controllers;
 
-import models.entities.Avatar;
+import models.entities.characters.avatars.Avatar;
 import utilities.*;
 import views.*;
 

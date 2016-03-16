@@ -1,6 +1,6 @@
 package views;
 
-import models.entities.Avatar;
+import models.entities.characters.avatars.Avatar;
 import models.map.Map;
 import models.skills.SkillList;
 import models.stats.Stats;

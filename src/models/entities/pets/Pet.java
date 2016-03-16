@@ -1,13 +1,18 @@
-package models.entities.npc;
+package models.entities.pets;
 
 
-import models.entities.npc.actions.Ride;
-import models.entities.npc.actions.Talk;
+import AI.Brain;
+import AI.Personality.Personality;
+import models.entities.AI_Interface;
+import models.entities.Entity;
 import models.factions.Faction;
 import models.factions.FactionAssociation;
 import models.map.Map;
 import models.occupation.Occupation;
 import models.occupation.Sneak;
+import models.stats.StatModification;
+import models.stats.StatModificationList;
+import models.stats.Stats;
 import utilities.IOUtilities;
 
 import javax.swing.*;
@@ -16,62 +21,58 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by denzel on 3/1/16.
+ * Created by sergiopuleri on 2/27/16.
  */
-public class Dragon extends Mount {
+public class Pet extends Entity implements AI_Interface {
 
-    //movement and terrain
-    private int movement;
-    private ArrayList<String> terrainTypes;
+    Brain brain;
 
-    public Dragon(Point location, Map map) {
+    public Pet(Point location, Map map) {
         super(location, map);
         passableTerrain.add("grass");
-        terrainTypes = new ArrayList<>();
-
-        movement = 10;
-        terrainTypes.add("mountain");
-        terrainTypes.add("grass");
-
-
+        brain = new Brain(this, Personality.DOGE); // Agnostic is the default personailty.
+        this.orientation = Map.Direction.NORTH;
     }
 
     @Override
-    public ArrayList<String> getTerrain() {
-        return terrainTypes;
+    protected final StatModificationList initInitialStats() {
+
+        return new StatModificationList(
+                new StatModification(Stats.Type.LIVES, 1),
+                new StatModification(Stats.Type.LEVEL, 6),
+                new StatModification(Stats.Type.AGILITY, 12),
+                new StatModification(Stats.Type.STRENGTH, 8),
+                new StatModification(Stats.Type.INTELLECT, 3),
+                new StatModification(Stats.Type.HARDINESS, 14)
+        );
+
     }
+
+    // Whenever Avatar moves Pet will follow, etc
 
     @Override
-    public int getMovement() {
-        return movement;
+    protected Occupation initOccupation() {
+        // Pets have no occupation?
+        // Pets can be SNeaks i guess for now.
+        return new Sneak();
     }
 
-    @Override
-    public void startInteraction(NPC npc) {
-
-    }
 
     protected final FactionAssociation initFaction() {
 
-        return new FactionAssociation(0.35, Faction.ANIMAL);
+        return new FactionAssociation(1.0, Faction.BLUE);
 
     }
 
-    @Override
-    public void initDialogue() {
-        dialogue.add("Yo, I'm a dragon.");
-        dialogue.add("Shut up and get on!");
-    }
+    public final void update() {
 
-    //Horse has no occuptation
-    @Override
-    protected Occupation initOccupation() {
-        return new Sneak();
+        brain.think();
+
     }
 
     @Override
     protected HashMap<Map.Direction, String> initSprites() {
-        String imageBasePath = IOUtilities.getFileSystemDependentPath("src/res/entitys/entity-reddragon-");
+        String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/pet-samples/raichu/");
 
 
         HashMap<Map.Direction, String> imagePaths = new HashMap<>();
@@ -85,25 +86,20 @@ public class Dragon extends Mount {
         return imagePaths;
     }
 
+    public void talk() {
+
+    }
+
     @Override
     public String getType() {
 
-        //return "Horse" + "-" + super.getType();
-        return "Dragon";
-    }
+        return "Pet" + "-" + super.getType();
 
-    public void initActions() {
-        actionList.add(new Talk(this));
-        actionList.add(new Ride(this));
     }
 
     @Override
     protected ArrayList<Image> getAnimatorImages() {
-
-
-        String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/entity-reddragon-");
-
-
+        String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/pet-samples/raichu/");
         ArrayList<Image> imagePaths = new ArrayList<>();
 
         imagePaths.add(new ImageIcon(imageBasePath + "N.png").getImage());

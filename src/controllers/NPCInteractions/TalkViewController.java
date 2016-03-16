@@ -2,7 +2,7 @@ package controllers.NPCInteractions;
 
 import controllers.GameViewController;
 import controllers.ViewController;
-import models.entities.npc.NPC;
+import models.entities.characters.npcs.NPC;
 import utilities.StateManager;
 import utilities.Task;
 import utilities.TaskWrapper;

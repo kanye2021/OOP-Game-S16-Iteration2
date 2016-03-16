@@ -1,7 +1,7 @@
 package views;
 
-import models.entities.Avatar;
 import models.entities.Entity;
+import models.entities.characters.avatars.Avatar;
 import models.map.Map;
 import models.map.Tile;
 import models.skills.CommonSkills.ObservationSkill;

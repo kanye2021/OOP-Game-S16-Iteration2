@@ -1,9 +1,10 @@
-package models.entities.npc;
+package models.entities.characters.npcs.shopkeepers;
 
 import AI.Brain;
 import AI.Personality.Personality;
-import models.entities.npc.actions.Trade;
-import models.entities.npc.actions.UseItemOnNPC;
+import models.entities.characters.npcs.NPC;
+import models.entities.characters.npcs.actions.Trade;
+import models.entities.characters.npcs.actions.UseItemOnNPC;
 import models.factions.Faction;
 import models.factions.FactionAssociation;
 import models.items.Item;
@@ -66,10 +67,6 @@ public class ShopKeeper extends NPC {
     }
 
     //TODO: Refactor this because NPC's shouldn't start interaction I believe.
-    @Override
-    public void startInteraction(NPC npc) {
-
-    }
 
     protected HashMap<Map.Direction, String> initSprites() {
         String imageBasePath = IOUtilities.getFileSystemDependentPath("./src/res/entitys/entity-shopkeeper-");

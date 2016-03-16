@@ -1,4 +1,4 @@
-package AI.Memory;
+package utilities;
 
 import utilities.MathUtilities;
 
@@ -13,8 +13,10 @@ public class RelationshipList<T> {
 
     private HashMap<T, Relationship> relationships = new HashMap<>();
 
-    public void addRelationship(T key, Relationship relationship) {
+    public void modifyRelationship(T key, double delta) {
 
+        Relationship relationship = getRelationship(key);
+        relationship.modifyRelationship(delta);
         relationships.put(key, relationship);
 
     }
@@ -22,6 +24,12 @@ public class RelationshipList<T> {
     public Relationship getRelationship(T key) {
 
         return relationships.getOrDefault(key, DEFAULT_RELATIONSHIP);
+
+    }
+
+    public boolean relationshipExists(T key) {
+
+        return relationships.containsKey(key);
 
     }
 
@@ -36,14 +44,14 @@ public class RelationshipList<T> {
 
         }
 
-        protected void setRelationship(double setValue) {
+        private void setRelationship(double setValue) {
 
             MathUtilities.putInRange(-1.0, setValue, 1.0);
             this.relationship = setValue;
 
         }
 
-        protected void modifyRelationship(double delta) {
+        private void modifyRelationship(double delta) {
 
             double newValue = this.relationship + delta;
             MathUtilities.putInRange(-1.0, newValue, 1.0);

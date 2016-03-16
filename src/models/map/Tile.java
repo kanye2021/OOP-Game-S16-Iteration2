@@ -6,6 +6,7 @@ import models.area_effects.AreaEffect;
 import models.attack.Projectile;
 import models.entities.Entity;
 import models.items.Item;
+import models.stats.Stats;
 import utilities.TileDetection;
 
 import java.awt.*;
@@ -79,7 +80,7 @@ public class Tile {
     // in the logic that consumes this function (and it has been).
     public TileDetection insertEntity(Entity entity) {
         TileDetection result = new TileDetection(null, null, false, false);
-        int entityLivesBeforeInteraciton = entity.getLives();
+        int entityLivesBeforeInteraciton = entity.getStats().getStat(Stats.Type.LIVES);
 
         // Check to see if this entity can pass here.
 
@@ -130,7 +131,7 @@ public class Tile {
         }
 
         // Indicate that the move was successful only if it didnt result in the entity dieing.
-        if (entity.getLives() == entityLivesBeforeInteraciton) {
+        if (entity.getStats().getStat(Stats.Type.LIVES) == entityLivesBeforeInteraciton) {
             this.entity = entity;
             result.setMoved(true);
         }

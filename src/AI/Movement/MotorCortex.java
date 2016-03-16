@@ -1,7 +1,7 @@
 package AI.Movement;
 
 import AI.Memory.Memory;
-import models.entities.npc.NPC;
+import models.entities.Entity_Action_Interface;
 import models.map.Map;
 import utilities.NavigationUtilities;
 
@@ -14,11 +14,9 @@ public class MotorCortex {
     double rand;
     //Needed so the toast doesn't constantly pop up
     private Random rng = new Random();
-    private NPC npc;
     private Memory memory;
 
-    public MotorCortex(NPC npc, Memory memory) {
-        this.npc = npc;
+    public MotorCortex(Memory memory) {
         this.memory = memory;
     }
 
@@ -45,8 +43,8 @@ public class MotorCortex {
 
         updateInterest();
 
-        Map.Direction directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), memory.getDecision().getPointOfInterest());
-        npc.move(directionToMove);
+        //Map.Direction directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), memory.getDecision().getPointOfInterest());
+        //npc.move(directionToMove);
 
     }
 

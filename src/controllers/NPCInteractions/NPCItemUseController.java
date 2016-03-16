@@ -3,7 +3,7 @@ package controllers.NPCInteractions;
 import controllers.ViewController;
 import models.Inventory;
 import models.entities.Entity;
-import models.entities.npc.NPC;
+import models.entities.characters.npcs.NPC;
 import models.items.takeable.TakeableItem;
 import utilities.StateManager;
 import utilities.Task;

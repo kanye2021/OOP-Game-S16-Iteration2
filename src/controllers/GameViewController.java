@@ -2,8 +2,9 @@ package controllers;
 
 import controllers.NPCInteractions.NPCMenuController;
 import controllers.entityControllers.AvatarController;
-import models.entities.Avatar;
-import models.entities.npc.NPC;
+import models.entities.Entity;
+import models.entities.characters.avatars.Avatar;
+import models.entities.characters.npcs.NPC;
 import models.map.Map;
 import models.skills.ActiveSkill;
 import models.skills.Skill;
@@ -230,7 +231,7 @@ public class GameViewController extends ViewController {
             @Override
             public void run() {
                 EquipmentView equipmentView = new EquipmentView(view.getScreenWidth(), view.getScreenHeight(), view.getDisplay());
-                EquipmentViewController equipmentViewController = new EquipmentViewController(equipmentView, getStateManager(), avatarController.getAvatar());
+                EquipmentViewController equipmentViewController = new EquipmentViewController(equipmentView, getStateManager(), (Entity) avatarController.getAvatar());
                 SubState equipmentSubState = new SubState(equipmentViewController, equipmentView);
                 // Add closing task.
                 equipmentViewController.setCloseEquipmentTask(new Task() {
@@ -282,7 +283,6 @@ public class GameViewController extends ViewController {
         Task unMount = new Task() {
             @Override
             public void run() {
-                avatarController.unMount();
             }
 
             @Override
@@ -476,7 +476,7 @@ public class GameViewController extends ViewController {
                 });
                 // Add the substate
                 addSubState(npcActionSubState);
-                avatarController.startInteraction(npc);
+//                avatarController.startInteraction(npc);
             }
         }
     }

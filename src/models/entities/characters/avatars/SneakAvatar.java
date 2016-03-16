@@ -1,4 +1,4 @@
-package models.entities;
+package models.entities.characters.avatars;
 
 import models.map.Map;
 import models.occupation.Occupation;

@@ -1,5 +1,6 @@
-package models.entities.npc;
+package models.entities.characters.npc;
 
+import models.entities.characters.npcs.NPC;
 import models.factions.Faction;
 import models.factions.FactionAssociation;
 import models.map.Map;
@@ -17,13 +18,9 @@ import java.util.HashMap;
  */
 public class Enemy extends NPC {
     public Enemy(Point location, Map map) {
+
         super(location, map);
 
-    }
-
-    @Override
-    public void startInteraction(NPC npc) {
-        super.startInteraction();
     }
 
     protected Occupation initOccupation() {

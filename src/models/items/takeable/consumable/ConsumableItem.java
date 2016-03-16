@@ -1,7 +1,7 @@
 package models.items.takeable.consumable;
 
 import models.entities.Entity;
-import models.entities.npc.NPC;
+import models.entities.characters.npcs.NPC;
 import models.items.takeable.TakeableItem;
 import models.stats.StatModificationList;
 
