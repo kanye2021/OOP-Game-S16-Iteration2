@@ -29,7 +29,6 @@ public class Special_Yeezy extends EquippableItem {
                 new StatCondition(null, CHUCKNORRISLV, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = CHUCKNORRISWEIGHT;
-        range = RANGE;
     }
 
 }

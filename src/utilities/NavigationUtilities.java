@@ -10,7 +10,7 @@ import java.awt.*;
  */
 public final class NavigationUtilities {
 
-    public static final Map.Direction getDirectionToMove(Entity entity, Point startPoint, Point endPoint) {
+    public static final Map.Direction getDirectionToMove(Entity entity, Point endPoint) {
 
         double minimumDistance = Double.MAX_VALUE;
         Map.Direction minimumDirection = null;
@@ -18,7 +18,7 @@ public final class NavigationUtilities {
         // Find the movement vector that results in the pet being the closest to its owner.
         for (Map.Direction direction : Map.Direction.values()) {
 
-            Point newStartLocation = direction.neighbor(startPoint);
+            Point newStartLocation = direction.neighbor(entity.getLocation());
 
             double newDistance = newStartLocation.distanceSq(endPoint);
 

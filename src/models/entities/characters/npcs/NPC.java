@@ -8,6 +8,7 @@ import models.entities.characters.npcs.actions.Attack;
 import models.entities.characters.npcs.actions.Talk;
 import models.map.Map;
 import models.stats.StatModificationList;
+import utilities.Updatable;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by aseber on 2/22/16.
  */
-public abstract class NPC extends Entity {
+public abstract class NPC extends Entity implements Updatable {
     protected ArrayList<models.entities.characters.npcs.actions.Action> actionList = new ArrayList<>();
 
     protected ArrayList<String> dialogue = new ArrayList<>();

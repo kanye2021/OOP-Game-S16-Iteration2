@@ -6,14 +6,14 @@ import models.conditions.ConditionList;
 import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.decorations.equippableItemDecoration;
-import models.items.takeable.equippable.EquippableItem;
+import models.items.takeable.equippable.weapons.WeaponItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
 import models.stats.Stats;
 import views.sprites.DecoratedSprite;
 
 
-public class staff extends EquippableItem {
+public class staff extends WeaponItem {
     public staff(equippableItemDecoration decoration) {
         ID = Item.ItemDictionary.getDictionaryItemFromID(2100 + decoration.IDModifier);
         name = "{NAME} Staff".replace("{NAME}", decoration.nameModifier);

@@ -15,6 +15,7 @@ import models.items.takeable.equippable.boots.Special_Yeezy;
 import models.items.takeable.equippable.boots.boots;
 import models.items.takeable.equippable.chestplate.*;
 import models.items.takeable.equippable.gloves.gloves;
+import models.items.takeable.equippable.greaves.chaps;
 import models.items.takeable.equippable.greaves.greaves;
 import models.items.takeable.equippable.greaves.skirt;
 import models.items.takeable.equippable.helmets.coif;
@@ -41,7 +42,7 @@ public abstract class Item {
     protected ItemDictionary ID;
     protected Drawable sprite;
 
-    public static Image getBagImage() {
+    public static final Image getBagImage() {
         return IOUtilities.getImageIcon(IOUtilities.getFileSystemDependentPath("./src/res/items/bag.png")).getImage();
     }
 

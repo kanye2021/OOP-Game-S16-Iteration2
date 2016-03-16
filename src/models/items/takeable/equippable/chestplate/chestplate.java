@@ -32,7 +32,6 @@ public class chestplate extends EquippableItem {
                 new StatCondition(null, decoration.levelRequiredModifier, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = decoration.weightModifier;
-        range = RANGE;
     }
 
 }

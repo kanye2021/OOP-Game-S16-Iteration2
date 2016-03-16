@@ -1,4 +1,4 @@
-package models.items.takeable.equippable.chestplate;
+package models.items.takeable.equippable.greaves;
 
 import models.Equipment;
 import models.conditions.Condition;
@@ -32,7 +32,6 @@ public class chaps extends EquippableItem {
                 new StatCondition(null, decoration.levelRequiredModifier, Stats.Type.LEVEL, Condition.Comparison.AT_LEAST)
         );
         itemWeight = decoration.weightModifier;
-        range = RANGE;
 
     }
 

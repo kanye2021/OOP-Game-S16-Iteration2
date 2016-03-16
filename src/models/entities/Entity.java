@@ -15,10 +15,7 @@ import models.skills.Skill;
 import models.skills.SkillList;
 import models.stats.StatModificationList;
 import models.stats.Stats;
-import utilities.Animator;
-import utilities.EntityAction;
-import utilities.TileDetection;
-import utilities.Toast;
+import utilities.*;
 import views.sprites.DirectionalSprite;
 
 import java.awt.*;
@@ -30,7 +27,7 @@ import java.util.TimerTask;
 /**
  * Created by Bradley on 2/18/16.
  */
-public abstract class Entity implements utilities.updatable, Entity_Action_Interface {
+public abstract class Entity implements Updatable, Entity_Action_Interface {
 
     //Every Entity will an Animator object that does the animation
     public Animator animator;
@@ -164,6 +161,12 @@ public abstract class Entity implements utilities.updatable, Entity_Action_Inter
 
             return null;
         }
+    }
+
+    public final boolean shouldRemove() {
+
+        return isDead();
+
     }
 
     public void basicAttack(Entity entity) {

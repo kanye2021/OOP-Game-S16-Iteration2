@@ -8,14 +8,14 @@ import models.conditions.OccupationCondition;
 import models.conditions.StatCondition;
 import models.items.Item;
 import models.items.decorations.equippableItemDecoration;
-import models.items.takeable.equippable.EquippableItem;
+import models.items.takeable.equippable.weapons.WeaponItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
 import models.stats.Stats;
 import views.sprites.DecoratedSprite;
 
 
-public class bow extends EquippableItem {
+public class bow extends WeaponItem {
     public bow(equippableItemDecoration decoration) {
         ID = Item.ItemDictionary.getDictionaryItemFromID(1900 + decoration.IDModifier);
         name = "{NAME} Bow".replace("{NAME}", decoration.nameModifier);

@@ -66,7 +66,6 @@ public class Stats {
         statGetMap.put(Type.SKILL_POINTS, () -> getSkillPointsAvailabile());
 
         statSetMap.put(Type.LIVES, (delta) -> modifyLives(delta));
-        statSetMap.put(Type.LEVEL, (delta) -> modifyLevel(delta));
         statSetMap.put(Type.SKILL_POINTS, (delta) -> modifySkillPoints(delta));
         statSetMap.put(Type.STRENGTH, (delta) -> modifyStrength(delta));
         statSetMap.put(Type.AGILITY, (delta) -> modifyAgility(delta));
@@ -94,23 +93,28 @@ public class Stats {
 
     public int getStat(Type type) {
 
-        return statGetMap.get(type).get();
+        return statGetMap.getOrDefault(type, () -> defaultGetter()).get();
 
     }
 
     public void modifyStat(Type type, int delta) {
 
-        StatsSetTask task = statSetMap.get(type);
+        statSetMap.getOrDefault(type, (delta2) -> defaultSetter(delta2)).set(delta);
 
-        if (task != null) {
+    }
 
-            task.set(delta);
+    // A default getter for when the programmer tries to get a type that is unmapped (therefore ungettable)
+    private int defaultGetter() {
 
-        } else {
+        System.err.println("Stats: Error in getStat method, asked for a type that did not have a getter initialized.");
+        return -1;
 
-            System.err.println(type);
+    }
 
-        }
+    // A default setter for when the programmer tries to set a type that is unmapped (therefore unsettable)
+    private void defaultSetter(int delta) {
+
+        System.err.println("Stats: Error in setStat method, asked for a type that did not have a setter initialized.");
 
     }
 
@@ -133,12 +137,6 @@ public class Stats {
             System.out.println("KILL ME!");
 
         }
-
-    }
-
-    private void modifyLevel(int delta) {
-
-        System.err.println("Stats: Modifying level when you shouldn't be!");
 
     }
 

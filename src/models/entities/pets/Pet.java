@@ -66,6 +66,7 @@ public class Pet extends Entity implements AI_Interface {
 
     public final void update() {
 
+        System.out.println("ha");
         brain.think();
 
     }

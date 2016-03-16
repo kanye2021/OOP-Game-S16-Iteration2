@@ -58,7 +58,7 @@ public class EquippableItem extends TakeableItem {
     protected int itemWeight;
     //Currently range is kind of bad design since range is only for weapons but putting it here
     //For now In case of special stuff that increases range make it
-    protected int range;
+
 
     //Concatenate the ranges and get 144? Last number of muliplication table in
     //elementary school?  Illuminati confirmed

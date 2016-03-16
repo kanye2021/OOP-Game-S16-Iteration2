@@ -7,13 +7,6 @@ import models.items.takeable.equippable.EquippableItem;
  */
 public abstract class WeaponItem extends EquippableItem {
 
-    //component = Equipment.Component.WEAPON;
-
-    public void onUse() {
-
-
-    }
-
-    public abstract void onActivate(); // Method to describe what happens when a weapons is fired
+    protected int range;
 
 }

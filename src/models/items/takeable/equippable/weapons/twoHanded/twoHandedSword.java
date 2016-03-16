@@ -6,7 +6,7 @@ import models.conditions.ConditionList;
 import models.conditions.OccupationCondition;
 import models.conditions.StatCondition;
 import models.items.decorations.equippableItemDecoration;
-import models.items.takeable.equippable.EquippableItem;
+import models.items.takeable.equippable.weapons.WeaponItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
 import models.stats.Stats;
@@ -15,7 +15,7 @@ import views.sprites.DecoratedSprite;
 /**
  * Created by aseber on 3/2/16.
  */
-public class twoHandedSword extends EquippableItem {
+public class twoHandedSword extends WeaponItem {
     public twoHandedSword(equippableItemDecoration decoration) {
         ID = ItemDictionary.getDictionaryItemFromID(1700 + decoration.IDModifier);
         name = "{NAME} 2h Sword".replace("{NAME}", decoration.nameModifier);

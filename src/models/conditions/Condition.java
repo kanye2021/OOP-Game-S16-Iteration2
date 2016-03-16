@@ -15,16 +15,16 @@ import java.util.HashMap;
 
 public abstract class Condition {
 
-    private ArrayList<Variable> runtimeArguments = new ArrayList<>();
+    private ArrayList<Integer> runtimeArguments = new ArrayList<>();
     private HashMap<Integer, Object> parameters = new HashMap<>();
 
     private void getRuntimeParameters(Object... args) {
 
         int currentPlace = 0;
 
-        for (Variable variable : runtimeArguments) {
+        for (Integer integer : runtimeArguments) {
 
-            parameters.put(variable.ordinal(), args[currentPlace]);
+            parameters.put(integer, args[currentPlace]);
             currentPlace++;
 
         }
@@ -35,7 +35,7 @@ public abstract class Condition {
 
         if (object == null) {
 
-            runtimeArguments.add(Variable.values()[integer]);
+            runtimeArguments.add(integer);
 
         }
 
@@ -85,18 +85,6 @@ public abstract class Condition {
         public int getID() {
             return ordinal();
         }
-    }
-
-    private enum Variable {
-        PASS0,
-        PASS1,
-        PASS2,
-        PASS3,
-        PASS4,
-        PASS5,
-        PASS6,
-        PASS7,
-        PASS8
     }
 
 }

@@ -5,7 +5,7 @@ import models.conditions.Condition;
 import models.conditions.ConditionList;
 import models.conditions.StatCondition;
 import models.items.Item;
-import models.items.takeable.equippable.EquippableItem;
+import models.items.takeable.equippable.weapons.WeaponItem;
 import models.stats.StatModification;
 import models.stats.StatModificationList;
 import models.stats.Stats;
@@ -14,7 +14,7 @@ import views.sprites.Sprite;
 /**
  * Created by ben on 3/5/16.
  */
-public class Special_EnergySword extends EquippableItem {
+public class Special_EnergySword extends WeaponItem {
     public Special_EnergySword() {
         ID = Item.ItemDictionary.ENERGY_SWORD;
         name = "Energy Sword";

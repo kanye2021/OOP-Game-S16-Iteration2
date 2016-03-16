@@ -1,8 +1,9 @@
 package AI.Movement;
 
 import AI.Memory.Memory;
-import models.entities.Entity_Action_Interface;
+import models.entities.Entity;
 import models.map.Map;
+import utilities.EntityAction;
 import utilities.NavigationUtilities;
 
 import java.util.Random;
@@ -23,7 +24,7 @@ public class MotorCortex {
     public void process() {
 
         rand = rng.nextDouble();
-        //TODO Need to figure out the laziness factor
+
         if (memory.getPersonality().getLaziness() > rand) {
             return;
         }
@@ -43,8 +44,10 @@ public class MotorCortex {
 
         updateInterest();
 
-        //Map.Direction directionToMove = NavigationUtilities.getDirectionToMove(npc, npc.getLocation(), memory.getDecision().getPointOfInterest());
-        //npc.move(directionToMove);
+        System.out.println("ha");
+
+        Map.Direction directionToMove = NavigationUtilities.getDirectionToMove((Entity) memory.getNPC(), memory.getDecision().getPointOfInterest());
+        memory.getNPC().pushAction((entity) -> entity.move(directionToMove));
 
     }
 
